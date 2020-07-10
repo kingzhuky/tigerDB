@@ -1,0 +1,14 @@
+.tableClass{
+  margin-top: 20px;
+}
+
+
+.serachpage{
+  margin:0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: end;
+  flex-flow: column;
+}
+
+

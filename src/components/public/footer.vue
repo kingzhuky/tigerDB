@@ -1,0 +1,22 @@
+<template>
+  <div class="box-card-footer">TIGER © 2020 Bioinformatics Platform of SYSUCC. All Rights Reserved</div>
+</template>
+
+<script>
+export default {};
+</script>
+
+<style>
+.box-card-footer {
+  position: absolute;
+
+  background-color: #efeded;
+  text-align: center;
+  height: 50px;
+  width: 100%;
+  color: #77777e;
+  line-height: 50px;
+  font-size: 17px;
+  bottom: 0;
+}
+</style>

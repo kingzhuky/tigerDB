@@ -1,0 +1,3 @@
+{"BRCA":[{"dataset":"BRCA","Description":" BRCA-TCGA(100) ","PMID":"30753825","reference":"ref"}],
+"ACC":[{"dataset":"ACC","Description":"ACC-TCGA(1200)-Desrciption1","PMID":"30753825","reference":"Riaz N, Havel J J, Makarov V, et al. Tumor and microenvironment evolution during immunotherapy with nivolumab[J]. Cell, 2017, 171(4): 934-949. e16."},
+	{"dataset":"ACC-GEO","Description":"ACC-GEO(300)-Desrciption2","PMID":"30753825","reference":"Gide T N, Quek C, Menzies A M, et al. Distinct immune cell populations define response to anti-PD-1 monotherapy and anti-PD-1/anti-CTLA-4 combined therapy[J]. Cancer cell, 2019, 35(2): 238-255. e6."}]}

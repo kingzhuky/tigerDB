@@ -1,0 +1,170 @@
+<template>
+  
+  <div >
+    <div id="scaterid" style="width: 600px;height:400px;"></div>
+    <el-table v-loading="loading" :data="tableData" max-height="600" style="width: 100%">
+      <el-table-column prop="GENE_SYMBOL" align="center" border label="GENE SYMBOL"></el-table-column>
+      <el-table-column prop="Condition" align="center" border label="Condition"></el-table-column>
+      <el-table-column prop="Dataset" align="center" border label="Dataset"></el-table-column>
+      <el-table-column prop="Cancer_Type" align="center" border label="Cancer Type"></el-table-column>
+      <el-table-column prop="Statistical_Result" align="center" border label="Statistical Result"></el-table-column>
+      <el-table-column prop="P_Value" align="center" border label="P-Value"></el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [],
+      loading: false
+    };
+  },
+  mounted () {
+    this.draw_chart()
+  },
+
+  methods: {
+    draw_chart() {
+      var targetdiv = document.getElementById('scaterid');
+      let myChart_mercor = this.$echarts.init(targetdiv);
+      //cdn替换为
+      //let myChart_mercor = window.echarts.init(targetdiv)
+      var hours = [
+        "BCC",
+        "BTCC",
+        "HCC",
+        "HNSC",
+        "MCC",
+        "MPAL",
+        "NSCLC",
+        "PDAC",
+        "SKCM",
+        "TNBC"
+      ];
+      var days = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+
+      var data = [
+        [Math.abs(3.1415), "BCC", "T-cell", 3.1415],
+        [Math.abs(-2.345), "MPAL", "B-cell", -2.345]
+      ];
+
+      var option2 = {
+        title: {
+          text: "Cell Type Marker ( |Log2FC| )",
+          link: "https://github.com/pissang/echarts-next/graphs/punch-card"
+        },
+        legend: {
+          data: ["Punch Card"],
+          left: "right"
+        },
+        polar: {},
+        angleAxis: {
+          type: "category",
+          data: hours,
+          boundaryGap: false,
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#999",
+              type: "dashed"
+            }
+          },
+          axisLine: {
+            show: false
+          }
+        },
+        radiusAxis: {
+          type: "value",
+          data: days,
+          axisLine: {
+            show: false
+          },
+          axisLabel: {
+            rotate: 45
+          }
+        },
+        series: [
+          {
+            name: "Cell Type Marker",
+            type: "scatter",
+            coordinateSystem: "polar",
+            symbolSize: 20,
+            emphasis: {
+              label: {
+                borderWidth: 1.5,
+                show: true,
+                position: "right",
+                distance: 10,
+                color: "rgba(255, 255, 255, 1)",
+                fontStyle: "normal",
+                fontWeight: "bold",
+                fontFamily: "Arial",
+                fontSize: 15,
+                align: "left",
+                verticalAlign: "middle",
+                backgroundColor: "rgba(50, 50, 50, 0.8)",
+                borderColor: "rgba(0, 0, 0, 1)",
+                padding: [9, 9, 9, 9],
+                borderRadius: [5, 5, 5, 5],
+                lineHeight: 25,
+                formatter:
+                  "CancerType: {@[1]}\nCellType: {@[2]}\nLog2FC: {@[3]}"
+              }
+            },
+            data: data
+          }
+        ]
+      };
+      var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+      myChart_mercor.clear();
+      myChart_mercor.setOption(option2);
+      window.onresize = function() {
+        myChart_mercor.resize();
+      };
+    },
+    //获取表格数据
+    getTableData(gene) {
+      this.loading = true;
+      this.$http
+        .get("/tiger/home.php", {
+          params: {
+            gene: gene,
+            type: "home"
+          }
+        })
+        .then(res => {
+          if (res.data.status === 200) {
+            this.tableData = res.data.list;
+            this.loading = false;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+};
+</script>
+
+
+<style>
+</style>

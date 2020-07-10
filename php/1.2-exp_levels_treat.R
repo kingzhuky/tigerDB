@@ -1,0 +1,75 @@
+library(dplyr)
+library(data.table)
+library(ggplot2)
+library(ggsci)
+library(ggpubr)
+
+Args <- commandArgs(T)
+#Args <- c("TP53","Melanoma_GSE115821_ALL","None","None","TRUE","pdf")
+gene <- unlist(strsplit(Args[1],split=','))
+mergedatasets <- unlist(strsplit(Args[2],split=','))
+normalMed <- Args[3]
+normalGene <- Args[4]
+Log.scale <- Args[5]
+datatype <- Args[6]
+
+loading.data.path <- "Response_data/"
+result.path <- "./img/"
+
+maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_"),
+                    normalMed,normalGene,Log.scale,
+                    datatype,"box",sep="-")
+
+# whether.res.exist <- file.exists(paste0(result.path,maintitle1,".png"))
+# if( sum(whether.res.exist) == 0){
+  title.gene <- ifelse(length(gene) > 1, ifelse(length(gene) <= 3, paste0(gene,collapse = ","), "Custom_Geneset"), gene)
+  load(paste0(loading.data.path,"ResponseData.RData"))
+  exp.mergearray <- NULL
+  for (sl.dataset in mergedatasets){
+    exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(normalGene,gene)]
+    exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
+    exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
+    exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
+    exp.mergearray <- rbind(exp.mergearray,t(exp.array))
+  }
+  exp.mergearray <- data.table(sample_id = rownames(exp.mergearray), exp.mergearray)
+  plot.data <- exp.mergearray[sample.info[,.(sample_id,Treatment)], on = c("sample_id"),nomatch = F]
+  if (normalMed == "gene"){
+    plot.data$gene.exp <- plot.data[,CustomGene]/plot.data[,NormalGene]
+    plot.data <- plot.data[abs(gene.exp) != Inf,] ## delete nonsense values
+    title.plot <- paste(title.gene,"normalized",sep = "-")
+  }else{
+    plot.data$gene.exp <- plot.data[,CustomGene]
+    title.plot <- title.gene
+  }
+  plot.data$group <- plot.data$Treatment
+  plot.data$group[plot.data$group != "PRE"] <- "POST"
+  if(unique(plot.data$group) > 1){
+    if (Log.scale == "TRUE") {
+      plot.data$gene.exp <- log2(plot.data$gene.exp + 1)
+      ylab <- paste("log2( FPKM + 1 )")
+    }else{
+      ylab <- "FPKM"
+    }
+    response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
+                      geom_violin()+
+                      geom_boxplot(width = .4)+
+                      theme_bw() + labs(x= element_blank(),y = ylab) +
+                      ggtitle(paste(title.plot,"BoxPlot",sep="-")) +
+                      theme(plot.title=element_text(size = 20, hjust=0.5),
+                            axis.title.y = element_text(size = 15, face = "plain", color = "black"),
+                            axis.text = element_text(size = 15, face = "plain", color = "black")) +
+                      stat_compare_means(aes(group = group),label.x.npc = 0.45, size = 6,label.sep = "\n")
+    
+    if(datatype == "png"){
+      filename = paste0(result.path,maintitle1,".png")
+    }else{
+      filename = paste0(result.path,maintitle1,".pdf")
+    }
+    ggsave(filename = filename,plot = response.plot, dpi = 100)
+  }else{
+    maintitle1 <- "0"
+  }
+# }
+cat(paste(maintitle1,sep=","))
+

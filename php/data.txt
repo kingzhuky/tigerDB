@@ -1,0 +1,16 @@
+cancer	datasets
+GBM	PRJNA482620
+GBM	PRJNA498500
+Melanoma	SRP094781
+Melanoma	PRJEB23709
+Melanoma	PRJNA392120
+Melanoma 	phs000452
+Melanoma	GSE115821
+Melanoma	GSE96619
+Melanoma	GSE100797
+Melanoma 	SRP070710
+basal cell carcinoma	PRJNA509911
+clear cell carcinoma	PRJNA398334
+metastatic head and neck cancer	PRJNA527992
+PBMC	PRJNA472360
+RCC	GSE67501
