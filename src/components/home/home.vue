@@ -86,7 +86,7 @@ export default {
   name: "home",
   data: function() {
     return {
-      homeShow: true,
+      homeShow: false,
       isActive: true,
       restaurants: [],
       showSnackbar: false,

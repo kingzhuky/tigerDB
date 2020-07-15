@@ -1,13 +1,12 @@
 <template>
   
-  <div >
+  <div v-loading="loading">
     <div id="scaterid" style="width: 600px;height:400px;"></div>
-    <el-table v-loading="loading" :data="tableData" max-height="600" style="width: 100%">
+    <el-table  :data="tableData" max-height="600" style="width: 100%">
       <el-table-column prop="GENE_SYMBOL" align="center" border label="GENE SYMBOL"></el-table-column>
-      <el-table-column prop="Condition" align="center" border label="Condition"></el-table-column>
-      <el-table-column prop="Dataset" align="center" border label="Dataset"></el-table-column>
-      <el-table-column prop="Cancer_Type" align="center" border label="Cancer Type"></el-table-column>
-      <el-table-column prop="Statistical_Result" align="center" border label="Statistical Result"></el-table-column>
+      <el-table-column prop="CellType" align="center" border label="Dataset"></el-table-column>
+      <el-table-column prop="CancerType" align="center" border label="Cancer Type"></el-table-column>
+      <el-table-column prop="Log2FoldChange" align="center" border label="Log2FC"></el-table-column>
       <el-table-column prop="P_Value" align="center" border label="P-Value"></el-table-column>
     </el-table>
   </div>
@@ -22,34 +21,35 @@ export default {
     };
   },
   mounted () {
-    this.draw_chart()
+    //this.getTableData("A1BG-AS1")
   },
 
   methods: {
-    draw_chart() {
+    draw_chart(cancer,data) {
       var targetdiv = document.getElementById('scaterid');
       let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
       //let myChart_mercor = window.echarts.init(targetdiv)
-      var hours = [
-        "BCC",
-        "BTCC",
-        "HCC",
-        "HNSC",
-        "MCC",
-        "MPAL",
-        "NSCLC",
-        "PDAC",
-        "SKCM",
-        "TNBC"
-      ];
+      // var hours = [
+      //   "BCC",
+      //   "BTCC",
+      //   "HCC",
+      //   "HNSC",
+      //   "MCC",
+      //   "MPAL",
+      //   "NSCLC",
+      //   "PDAC",
+      //   "SKCM",
+      //   "TNBC"
+      // ];
+      var hours =cancer;
       var days = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
 
-      var data = [
-        [Math.abs(3.1415), "BCC", "T-cell", 3.1415],
-        [Math.abs(-2.345), "MPAL", "B-cell", -2.345]
-      ];
-
+      // var data = [
+      //   [Math.abs(3.1415), "BCC", "T-cell", 3.1415],
+      //   [Math.abs(-2.345), "MPAL", "B-cell", -2.345]
+      // ];
+      var data =data;
       var option2 = {
         title: {
           text: "Cell Type Marker ( |Log2FC| )",
@@ -117,24 +117,6 @@ export default {
           }
         ]
       };
-      var option = {
-            title: {
-                text: 'ECharts 入门示例'
-            },
-            tooltip: {},
-            legend: {
-                data:['销量']
-            },
-            xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-            },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        };
       myChart_mercor.clear();
       myChart_mercor.setOption(option2);
       window.onresize = function() {
@@ -147,14 +129,17 @@ export default {
       this.$http
         .get("/tiger/home.php", {
           params: {
-            gene: gene,
-            type: "home"
+            gene: gene
+            //type: "home"
           }
         })
         .then(res => {
           if (res.data.status === 200) {
-            this.tableData = res.data.list;
-            this.loading = false;
+            console.log(Object.values(res.data.cancer))
+            console.log(res.data.list)
+            this.draw_chart(Object.values(res.data.cancer),res.data.list)
+            this.tableData=res.data.tabledata
+            this.loading=false
           }
         })
         .catch(error => {
@@ -167,4 +152,7 @@ export default {
 
 
 <style>
+div#scaterid {
+    margin: 0 auto;
+}
 </style>
