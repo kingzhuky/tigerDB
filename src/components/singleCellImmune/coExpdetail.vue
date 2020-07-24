@@ -8,7 +8,6 @@
           </div>
         </el-card>
       </div>
-
       <div class="infor">
         <el-card>
           <div class="wergeneinfo">
@@ -18,10 +17,7 @@
                   <template slot="title">
                     Optional <i class="el-icon-setting"></i>
                   </template>
-                 
-                 
                   <el-row class="detail1">Correlation Coefficient</el-row>
-
                   <el-row>
                     <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
                     <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
@@ -34,15 +30,11 @@
               </el-collapse>
             </div>
           </div>
-
           <p class="card-title">Scatter Plot of Co-expression</p>
-
           <el-row v-loading="loading" v-show="resultShow" class="detailimg">
             <img id="scimmuscater" :src="imgUrlWgcna"  />
           </el-row>
             <div v-show="!resultShow" id="norult" v-loading="loading">No result</div>
-
-
         </el-card>
       </div>
       <v-goTop></v-goTop>

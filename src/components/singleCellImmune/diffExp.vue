@@ -8,7 +8,6 @@
       
     </el-row>
     <br />
-
     <el-table
       class="wertable"
       id="scDiffExpTable"
@@ -52,7 +51,8 @@
       :gene="clickGene"
       :cancer="cancer"
       :gloclu="gloclu"
-      :subclu="subclu"
+      :subClu="subClu"
+      :subClucoptions="subClucoptions"
     ></v-expdetail>
   </div>
 </template>
@@ -71,7 +71,8 @@ export default {
    props: {
       cancer: String,
       gloclu: String,
-      subclu: Array
+      subClu: Array,
+      subClucoptions: Array
     },
   data() {
     return {
@@ -191,13 +192,13 @@ export default {
       sortCol:"",
       sortOrder:'',
       tableDataheader: [
-      ]
+      ],
     };
   },
 
   mounted: function() {
     this.getTableData( 1,"","");
-   
+    console.log(this.subClu)
   },
 
   watch: {
@@ -315,6 +316,7 @@ export default {
     //点击单个格子
     heandleclick(row, column) {
       if (column["label"] !== "gene") {
+        this.subClu=this.subClucoptions
         this.isShow = true;
         this.clickGene=row["gene"]
         this.$refs.detailPlot.genePlot(row["gene"]);

@@ -11,26 +11,47 @@
 
       <div class="infor">
         <el-card>
-          <el-row
-          v-show="geneshow"
-            v-loading="geneloading"
-            v-for="item in geneplots.split(',')"
-            :key="item"
-            class="detailimg"
-          >
-            <img id="singleimg" :src="'tiger/img/'+item" />
-            <el-divider></el-divider>
-          </el-row>
+          <el-row>
+            <el-col :span="16" :offset="2" >
+              <el-row
+                v-show="geneshow"
+                v-loading="geneloading"
+                v-for="item in geneplots.split(',')"
+                :key="item"
+                class="detailimg"
+              >
+                <img id="singleimg" :src="'tiger/img/'+item" />
+                <el-divider></el-divider>
+              </el-row>
 
-          <el-row
-          v-show="evolushow"
-            v-loading="evoluloading"
-            v-for="item in evoluplots.split(',')"
-            :key="item"
-            class="detailimg"
-          >
-            <img id="singleimg" :src="'tiger/img/'+item" />
-            <el-divider></el-divider>
+              <el-row
+                v-show="evolushow"
+                v-loading="evoluloading"
+                v-for="item in evoluplots.split(',')"
+                :key="item"
+                class="detailimg"
+              >
+                <img id="singleimg" :src="'tiger/img/'+item" />
+                <el-divider></el-divider>
+              </el-row>
+            </el-col>
+            <el-col  :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
+            <div id="norult">No result</div>
+          </el-col>
+            <el-col :span="5" :offset="1" id="homeInput">
+              Optional
+              <i class="el-icon-setting"></i>
+              <br />
+              <br />
+              <el-select v-model="subClu" multiple>
+                <el-option v-for="item in subClucoptions" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+              <br />
+              <br />
+              <el-row class="plot">
+                <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
+              </el-row>
+            </el-col>
           </el-row>
         </el-card>
       </div>
@@ -45,23 +66,27 @@ import goTop from "../public/goTop";
 export default {
   props: {
     gene: {
-      type: String
+      type: String,
     },
     cancer: {
-      type: String
+      type: String,
     },
-    subclu: {
-      type: Array
+    subClu: {
+      type: Array,
     },
     gloclu: {
-      type: String
-    }
+      type: String,
+    },
+    subClucoptions: Array,
+    clickGene: {
+      type: String,
+    },
   },
 
   data() {
     return {
-      geneshow:true,
-      evolushow:true,
+      geneshow: true,
+      evolushow: true,
       tableLoading: "",
       normalMed: "None",
       normalGene: "",
@@ -71,22 +96,22 @@ export default {
       responseGroupOption: [
         {
           value: "CR",
-          label: "CR"
+          label: "CR",
         },
         {
           value: "PR",
-          label: "PR"
-        }
+          label: "PR",
+        },
       ],
       noresponseGroupOption: [
         {
           value: "PD",
-          label: "PD"
+          label: "PD",
         },
         {
           value: "SD",
-          label: "SD"
-        }
+          label: "SD",
+        },
       ],
 
       imgpathBox: "",
@@ -96,7 +121,7 @@ export default {
       evoluloading: true,
       geneloading: true,
       geneplots: "",
-      evoluplots: ""
+      evoluplots: "",
     };
   },
 
@@ -108,36 +133,38 @@ export default {
       }
       return true;
     },
-
+    clickPlot() {
+      this.genePlot(this.clickGene);
+      this.evoluPlot(this.clickGene);
+    },
 
     genePlot(clickgene) {
       if (this.checkInput()) {
         var that = this;
         that.geneloading = true;
-         that.geneshow=true
+        that.geneshow = true;
         this.$http
           .get("/tiger/scimmudiffexpdetailgene.php", {
             params: {
               cancer: this.cancer,
               gene: clickgene,
               gloclu: this.gloclu,
-              subclu: this.subclu.join(",")
-            }
+              subclu: this.subClu.join(","),
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
               if (res.data.output[0] === "0") {
-               
-                that.geneshow=false
+                that.geneshow = false;
               } else {
-                that.geneshow=true
+                that.geneshow = true;
                 setTimeout((that.geneplots = res.data.output[0]), 1000);
               }
               //that.geneplots = res.data.output[0];
               that.geneloading = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
@@ -152,48 +179,48 @@ export default {
             params: {
               cancer: this.cancer,
               gloclu: this.gloclu,
-              subclu: this.subclu.join(","),
-              gene: clickgene
-            }
+              subclu: this.subClu.join(","),
+              gene: clickgene,
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
               if (res.data.output[0] === "0") {
-                that.evolushow=false
+                that.evolushow = false;
                 //alert("no gene file");
               } else {
-                that.evolushow=true
+                that.evolushow = true;
                 setTimeout((that.evoluplots = res.data.output[0]), 1000);
               }
               //that.evoluplots = res.data.output[0];
               that.evoluloading = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
-    }
+    },
   },
 
   computed: {
-    imgUrlWgcna: function() {
+    imgUrlWgcna: function () {
       return "tiger/img/" + this.imgpath + ".png";
     },
-    imgUrlBox: function() {
+    imgUrlBox: function () {
       return "tiger/img/" + this.imgpathBox + ".png";
     },
-    imgUrlBar: function() {
+    imgUrlBar: function () {
       return "tiger/img/" + this.imgpathBar + ".png";
     },
-    imgUrlEvo: function() {
+    imgUrlEvo: function () {
       return "tiger/img/" + this.imgpathEvo + ".png";
-    }
+    },
   },
 
   components: {
-    "v-goTop": goTop
-  }
+    "v-goTop": goTop,
+  },
 };
 </script>
 

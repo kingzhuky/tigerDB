@@ -1,12 +1,9 @@
 //cdn 引入减
-import Vue from 'vue'
-
-//不变
-import Router from 'vue-router'
+//import Vue from 'vue'
 
 //cdn 引入减
-Vue.use(Router)
-
+//Vue.use(VueRouter)
+//import VueRouter from 'vue-router'
 const home = () => import('@/components/home/home')
 const immuneResponse = () => import('@/components/immuneResponse/home')
 const immuneSignature = () => import('@/components/immuneSignature')
@@ -16,7 +13,7 @@ const download = () => import('@/components/download')
 const help = () => import('@/components/help')
 const contact = () => import('@/components/contact')
 
-export default new Router({
+export default new VueRouter({
   //mode: 'history',
   //base:'/m6a2target',
   routes: [{

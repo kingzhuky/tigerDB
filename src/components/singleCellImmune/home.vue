@@ -3,18 +3,18 @@
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
         <el-row>
-          <el-col :span="5" :offset="1">
+          <el-col :span="7" :offset="1">
             <p class="scImmuTitle">Select A Cancer Type</p>
           </el-col>
-          <el-col :span="5" :offset="1">
+          <el-col :span="7" :offset="1">
             <p class="scImmuTitle">Select A Global Cluster</p>
           </el-col>
-          <el-col :span="5" :offset="1">
+          <!-- <el-col :span="5" :offset="1">
             <p class="scImmuTitle">Select A Sub Cluster</p>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row>
-          <el-col :span="5" :offset="1" id="homeInput">
+          <el-col :span="7" :offset="1" id="homeInput">
             <el-select v-model="cancer" @change="cancerSelectChange" placeholder="Cancer">
               <el-option
                 v-for="item in canceroptions"
@@ -24,7 +24,7 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="5" :offset="1" id="homeInput">
+          <el-col :span="7" :offset="1" id="homeInput">
             <el-select v-model="gloClu" @change="gloCluChange">
               <el-option
                 v-for="item in gloCluoptions"
@@ -34,7 +34,7 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="5" :offset="1" id="homeInput">
+          <!-- <el-col :span="5" :offset="1" id="homeInput">
             <el-select v-model="subClu"  multiple>
               <el-option
                 v-for="item in subClucoptions"
@@ -43,8 +43,8 @@
                 :value="item.sub"
               ></el-option>
             </el-select>
-          </el-col>
-          <el-col :span="4" :offset="1">
+          </el-col> -->
+          <el-col :span="7" :offset="1">
             <el-button id="homebt" @click="analysis">Go</el-button>
           </el-col>
         </el-row>
@@ -59,7 +59,8 @@
               ref="overviewRef"
               :cancer="cancer"
               :gloclu="gloClu"
-              :subclu="subClu"
+              :subClucoptions="subClucoptions"
+              :subClu="subClu"
               :is="overviewVue"
             ></component>
           </el-tab-pane>
@@ -67,7 +68,8 @@
             <component
               :cancer="cancer"
               :gloclu="gloClu"
-              :subclu="subClu"
+              :subClucoptions="subClucoptions"
+              :subClu="subClu"
               ref="diffexpRef"
               :is="diffexpVue"
             ></component>
@@ -110,15 +112,20 @@ export default {
       genelist: "",
       cancer: "BCC",
       gloClu: "All",
-      subClu: [
-        "B-cell",
-        "CAF",
-        "DC",
-        "Endothelial",
-        "Macrophages",
-        "Myofibroblasts",
-        "pDC"
-      ],
+      subClu:[
+      "B-cell",
+      "CAF",
+      "DC",
+      "Endothelial",
+      "Macrophages",
+      "Melanocytes",
+      "Myofibroblasts",
+      "NK",
+      "pDC",
+      "Plasma",
+      "T-cell",
+      "Tumor",
+    ],
       canceroptions: [
         {
           value: "ACC",
@@ -321,12 +328,12 @@ export default {
     },
 
     cancerSelectChange() {
-      this.subClu = [];
+      this.subClucoptions = [];
       this.getgloClu();
       this.activeName = "overview";
     },
     gloCluChange() {
-      this.subClu = [];
+      this.subClucoptions = [];
       this.getcrossClu();
       this.activeName = "overview";
       this.$refs.diffexpRef.getTableData();
@@ -359,6 +366,7 @@ export default {
         })
         .then(res => {
           this.subClucoptions = res.data.list;
+          this.subClu = res.data.list;
         });
     },
 

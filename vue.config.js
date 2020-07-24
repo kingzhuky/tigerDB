@@ -46,7 +46,7 @@ module.exports = {
   // webpack配置
   chainWebpack: () => { },
   configureWebpack:  config => {
-    if (isProd) {
+    //if (isProd) {
       config.plugins.push(new CompressionWebpackPlugin({
         algorithm: 'gzip',
         test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
@@ -55,16 +55,16 @@ module.exports = {
       })
       ),
       config.externals = {
-        // 'vue': 'Vue', //cdn 引入加
-        // 'axios':'axios',
-        //'vue-router': 'VueRouter',
-        // 'vue-lazyload':'vue-lazyload',
-        // 'element-ui': 'ELEMENT',
-        // 'echarts':'echarts'
+        'vue': 'Vue', //cdn 引入加
+        'axios':'axios',
+        'vue-router': 'VueRouter',
+        'vue-lazyload':'vue-lazyload',
+        'element-ui': 'ELEMENT',
+        'echarts':'echarts'
 
 
       }
-    }
+    //}
   },
   // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,

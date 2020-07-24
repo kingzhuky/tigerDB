@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import echarts from "echarts"
 export default {
   data() {
     return {
@@ -27,9 +28,9 @@ export default {
   methods: {
     draw_chart(cancer,data) {
       var targetdiv = document.getElementById('scaterid');
-      let myChart_mercor = this.$echarts.init(targetdiv);
+      //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
-      //let myChart_mercor = window.echarts.init(targetdiv)
+      let myChart_mercor = window.echarts.init(targetdiv)
       // var hours = [
       //   "BCC",
       //   "BTCC",

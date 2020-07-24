@@ -67,7 +67,7 @@
 import footer from "./components/public/footer";
 
 //cdn 引入加
-//Vue.use(VueLazyload)
+Vue.use(VueLazyload)
 
 export default {
   name: "app",
