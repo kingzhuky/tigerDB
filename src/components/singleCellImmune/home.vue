@@ -447,7 +447,8 @@ export default {
   font-size: 18px;
 }
 .homedesrc {
-  font-size: 20px;
+  font-size: 23px !important;
+  line-height: 30px !important;
 }
 
 #homebt {

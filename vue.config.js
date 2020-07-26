@@ -32,7 +32,7 @@ proxyObj['/dgidb/*'] = {
   target: dgidb,
   changeOrigin: true,
   pathRewrite: {
-      '^/dgidb':'/dgidb' //路径无api 所以重写为空
+      '^/dgidb':'/' //路径无api 所以重写为空
   }
 };
 
@@ -40,7 +40,7 @@ proxyObj['/m6a2target/*'] = {
   target: m6a2target,
   changeOrigin: true,
   pathRewrite: {
-      '^/m6a2target/':'/m6a2target/' 
+      '^/m6a2target':'/' 
   }
 };
 

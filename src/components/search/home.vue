@@ -77,7 +77,7 @@ export default {
       restaurants: [],
       showSnackbar: false,
       seargene: "PDCD1",
-      activeName: "celltype",
+      activeName: "generalInformation",
       celltypeVue: "",
       diffexpVue: "",
       survivalVue: "",
@@ -86,7 +86,7 @@ export default {
     };
   },
   created() {
-    this.celltypeVue = wercelltype;
+    this.generalInformationVue = wergeneralInformation;
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -131,7 +131,8 @@ export default {
         alert("Please input Gene");
       } else {
         this.homeShow = true;
-        this.$refs.celltypeVueRef.getTableData();
+        this.$refs.generalInformationVueRef.getdatagene();
+        this.$refs.generalInformationVueRef.tableDetail(this.seargene);
         //toTarget(820);
       }
     },

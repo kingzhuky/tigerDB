@@ -11,54 +11,52 @@
 
       <div class="infor">
         <el-card>
-          
           <p class="card-title">Article Infomations</p>
           <el-table :data="articleData" style="width: 100%" v-loading="artloading">
-            <el-table-column prop="title" label="" width="180"></el-table-column>
-            <el-table-column prop="value" label="" ></el-table-column>
+            <el-table-column prop="title" label width="180"></el-table-column>
+            <el-table-column prop="value" label></el-table-column>
           </el-table>
           <div v-show="drugshow">
-          <p class="card-title">drug-gene interactions</p>
-          <el-row v-loading="loading" class="detailimg">
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="drugName" label="Drug" width="180">
-                <template slot-scope="scope">
-                  <a
-                    :href="'http://dgidb.org/drugs/'+scope.row.drugName"
-                    target="_blank"
-                    class="buttonText"
-                  >{{scope.row.drugName}}</a>
-                </template>
-              </el-table-column>
-              <el-table-column prop="interactionTypes" label="Interaction Type" width="180"></el-table-column>
-              <el-table-column prop="sources" label="sources">
-                <template slot-scope="scope">
-                  <a
-                    v-for="source in scope.row.sources"
-                    :key="source"
-                    :href="'http://dgidb.org/sources/'+source"
-                    target="_blank"
-                    class="buttonText"
-                  >{{source}},</a>
-                </template>
-              </el-table-column>
-              <el-table-column prop="pmids" label="PMIDs">
-                <template slot-scope="scope">
-                  <a
-                    v-for="pmid in scope.row.pmids"
-                    :key="pmid"
-                    :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term='+pmid"
-                    target="_blank"
-                    class="buttonText"
-                  >{{pmid}},</a>
-                </template>
-              </el-table-column>
-              <el-table-column prop="score" label="Score"></el-table-column>
-            </el-table>
-          </el-row>
-        </div>
+            <p class="card-title">drug-gene interactions</p>
+            <el-row v-loading="loading" class="detailimg">
+              <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="drugName" label="Drug" width="180">
+                  <template slot-scope="scope">
+                    <a
+                      :href="'http://dgidb.org/drugs/'+scope.row.drugName"
+                      target="_blank"
+                      class="buttonText"
+                    >{{scope.row.drugName}}</a>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="interactionTypes" label="Interaction Type" width="180"></el-table-column>
+                <el-table-column prop="sources" label="sources">
+                  <template slot-scope="scope">
+                    <a
+                      v-for="source in scope.row.sources"
+                      :key="source"
+                      :href="'http://dgidb.org/sources/'+source"
+                      target="_blank"
+                      class="buttonText"
+                    >{{source}},</a>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="pmids" label="PMIDs">
+                  <template slot-scope="scope">
+                    <a
+                      v-for="pmid in scope.row.pmids"
+                      :key="pmid"
+                      :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term='+pmid"
+                      target="_blank"
+                      class="buttonText"
+                    >{{pmid}},</a>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="score" label="Score"></el-table-column>
+              </el-table>
+            </el-row>
+          </div>
         </el-card>
-        
       </div>
       <v-goTop></v-goTop>
     </div>
@@ -73,28 +71,28 @@ import goTop from "./public/goTop";
 export default {
   props: {
     gene: {
-      type: String
+      type: String,
     },
     cancer: {
-      type: String
+      type: String,
     },
     datatype: {
-      type: String
-    }
+      type: String,
+    },
   },
 
   data() {
     return {
-      drugshow:false,
+      drugshow: false,
       tableLoading: "",
       normalMed: "None",
       normalGene: "",
       logScale: "FALSE",
       imgpath: "",
       loading: true,
-      artloading:true,
+      artloading: true,
       tableData: [],
-      articleData: []
+      articleData: [],
     };
   },
   mounted() {
@@ -121,24 +119,24 @@ export default {
       this.$http
         .get("/dgidb/api/v2/interactions.json", {
           params: {
-            genes: gene
-          }
+            genes: gene,
+          },
         })
-        .then(function(res) {
+        .then(function (res) {
           // if (res.data.status == 0) {
           //console.log(res.data.matchedTerms[0]["interactions"]);
-          if (res.data.matchedTerms[0]["interactions"]){
-            that.drugshow=true
+          if (res.data.matchedTerms[0]["interactions"]) {
+            that.drugshow = true;
             that.tableData = res.data.matchedTerms[0]["interactions"];
-          //that.imgpath = res.data.output[2];
-          that.loading = false;
-          }else{
-            that.drugshow=false
+            //that.imgpath = res.data.output[2];
+            that.loading = false;
+          } else {
+            that.drugshow = false;
           }
-          
+
           //}
         })
-        .catch(function(res) {
+        .catch(function (res) {
           console.log(res);
         });
     },
@@ -149,12 +147,12 @@ export default {
       this.$http
         .get("/tiger/immunescreendetail.php", {
           params: {
-            tabl: 'immunescreenartle',
-            colu:'dataset_id',
-            coluvalue:sample
-          }
+            tabl: "immunescreenartle",
+            colu: "dataset_id",
+            coluvalue: sample,
+          },
         })
-        .then(function(res) {
+        .then(function (res) {
           // if (res.data.status == 0) {
           //console.log(res.data.matchedTerms[0]["interactions"]);
           that.articleData = res.data.list;
@@ -162,7 +160,7 @@ export default {
           that.artloading = false;
           //}
         })
-        .catch(function(res) {
+        .catch(function (res) {
           console.log(res);
         });
     },
@@ -181,31 +179,31 @@ export default {
               normalMed: this.normalMed,
               normalGene: this.normalMed == "None" ? "None" : this.normalGene,
               logScale: this.logScale,
-              datatype: "png"
-            }
+              datatype: "png",
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
               that.imgpath = res.data.output[2];
               that.loading = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
-    }
+    },
   },
 
   computed: {
-    imgUrlWgcna: function() {
+    imgUrlWgcna: function () {
       return "tiger/img/" + this.imgpath + ".png";
-    }
+    },
   },
 
   components: {
-    "v-goTop": goTop
-  }
+    "v-goTop": goTop,
+  },
 };
 </script>
 
