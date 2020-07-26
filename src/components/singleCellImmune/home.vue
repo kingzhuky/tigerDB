@@ -3,10 +3,10 @@
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
         <el-row>
-          <el-col :span="7" :offset="1">
+          <el-col :span="11" :offset="1">
             <p class="scImmuTitle">Select A Cancer Type</p>
           </el-col>
-          <el-col :span="7" :offset="1">
+          <el-col :span="10" :offset="1">
             <p class="scImmuTitle">Select A Global Cluster</p>
           </el-col>
           <!-- <el-col :span="5" :offset="1">
@@ -14,7 +14,7 @@
           </el-col> -->
         </el-row>
         <el-row>
-          <el-col :span="7" :offset="1" id="homeInput">
+          <el-col :span="11" :offset="1" id="homeInput">
             <el-select v-model="cancer" @change="cancerSelectChange" placeholder="Cancer">
               <el-option
                 v-for="item in canceroptions"
@@ -24,7 +24,7 @@
               ></el-option>
             </el-select>
           </el-col>
-          <el-col :span="7" :offset="1" id="homeInput">
+          <el-col :span="10" :offset="1" id="homeInput">
             <el-select v-model="gloClu" @change="gloCluChange">
               <el-option
                 v-for="item in gloCluoptions"
@@ -44,9 +44,9 @@
               ></el-option>
             </el-select>
           </el-col> -->
-          <el-col :span="7" :offset="1">
+          <!-- <el-col :span="7" :offset="1">
             <el-button id="homebt" @click="analysis">Go</el-button>
-          </el-col>
+          </el-col> -->
         </el-row>
       </el-row>
     </el-card>
@@ -64,7 +64,17 @@
               :is="overviewVue"
             ></component>
           </el-tab-pane>
-          <el-tab-pane label="Differential Expression Analysis" name="scdiffexp">
+          <el-tab-pane label="Cell Type Marker" name="celltype">
+            <component
+              :cancer="cancer"
+              :gloclu="gloClu"
+              :subClucoptions="subClucoptions"
+              :subClu="subClu"
+              ref="celltypeRef"
+              :is="celltypeVue"
+            ></component>
+          </el-tab-pane>
+           <el-tab-pane label="Differential Expression Analysis" name="scdiffexp">
             <component
               :cancer="cancer"
               :gloclu="gloClu"
@@ -77,9 +87,16 @@
           <el-tab-pane label="Co-expression Analysis" name="coexp">
             <component ref="coexpRef" :cancer="cancer" :gloclu="gloClu" :is="coexpVue"></component>
           </el-tab-pane>
-          <!-- <el-tab-pane label="Evolutionary Analysis" name="evolu">
-          <component :is="evoluVue"></component>
-          </el-tab-pane>-->
+          <el-tab-pane label="Cross Talk" name="crosstalk">
+          <component 
+          :is="crosstalkVue"
+          :cancer="cancer"
+          :gloclu="gloClu"
+          :subClucoptions="subClucoptions"
+          :subClu="subClu"
+          ref="crosstalkRef"
+          ></component>
+          </el-tab-pane>
         </el-tabs>
       </el-card>
     </div>
@@ -90,7 +107,8 @@
 const weroverview = resolve => require(["./overview.vue"], resolve);
 const wercoexp = resolve => require(["./coExp.vue"], resolve);
 const werdiffexp = resolve => require(["./diffExp.vue"], resolve);
-//const werevolu = resolve => require(["./evolutionary.vue"], resolve);
+const wercelltype = resolve => require(["./celltype.vue"], resolve);
+const wercrosstalk = resolve => require(["./crosstalk.vue"], resolve);
 
 export default {
   data() {
@@ -101,6 +119,8 @@ export default {
       diffexpVue: "",
       coexpVue: "",
       evoluVue: "",
+      celltypeVue: "",
+      crosstalkVue: "",
       norgene: "CD3D",
       qvalcutoff: "0.25",
       expcutoff: 0.25,
@@ -334,9 +354,11 @@ export default {
     },
     gloCluChange() {
       this.subClucoptions = [];
-      this.getcrossClu();
+      this.getcrossClu()
       this.activeName = "overview";
-      this.$refs.diffexpRef.getTableData();
+      
+      //this.$refs.diffexpRef.reset();
+      //this.$refs.diffexpRef.getTableData();
     },
 
 
@@ -354,6 +376,7 @@ export default {
           this.getcrossClu();
         });
     },
+    
 
     getcrossClu() {
       this.$http
@@ -367,6 +390,9 @@ export default {
         .then(res => {
           this.subClucoptions = res.data.list;
           this.subClu = res.data.list;
+          this.$refs.overviewRef.Plot(this.cancer,
+          this.gloClu,
+          this.subClu.join(","));
         });
     },
 
@@ -379,6 +405,8 @@ export default {
         this.gloClu,
         this.subClu.join(",")
       );
+      this.$refs.diffexpRef.reset();
+      this.$refs.celltypeRef.reset();
       this.$refs.overviewRef.getcrossClu(cancer);
     },
     handleClick(tab, event) {
@@ -396,6 +424,14 @@ export default {
         case "coexp":
           this.coexpVue = wercoexp;
           this.$refs.coexpRef.getTableData();
+          break;
+        case "celltype":
+          this.celltypeVue = wercelltype;
+          this.$refs.celltypeRef.getTableData();
+          break;
+        case "crosstalk":
+          this.crosstalkVue = wercrosstalk;
+          this.$refs.crosstalkRef.searchCro();
           break;
       }
     }

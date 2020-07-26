@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-        DIFF
+        wergeneralInformation
       </el-col>
     </el-row>
   </div>

@@ -39,6 +39,9 @@
           <el-menu-item index="/immuneScreen">
             <div class="header-nav">Immune Screening</div>
           </el-menu-item>
+           <el-menu-item index="/search">
+            <div class="header-nav">Search</div>
+          </el-menu-item>
            <el-menu-item index="/help">
             <div class="header-nav">Help</div>
           </el-menu-item>

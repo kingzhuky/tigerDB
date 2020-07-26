@@ -13,7 +13,7 @@
         <el-card>
           <el-row>
             <el-col :span="16" :offset="2" >
-              <el-row
+              <!-- <el-row
                 v-show="geneshow"
                 v-loading="geneloading"
                 v-for="item in geneplots.split(',')"
@@ -22,9 +22,9 @@
               >
                 <img id="singleimg" :src="'tiger/img/'+item" />
                 <el-divider></el-divider>
-              </el-row>
+              </el-row> -->
 
-              <!-- <el-row
+              <el-row
                 v-show="evolushow"
                 v-loading="evoluloading"
                 v-for="item in evoluplots.split(',')"
@@ -33,7 +33,7 @@
               >
                 <img id="singleimg" :src="'tiger/img/'+item" />
                 <el-divider></el-divider>
-              </el-row> -->
+              </el-row>
             </el-col>
             <el-col  :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
             <div id="norult">No result</div>
@@ -120,8 +120,8 @@ export default {
       imgpathEvo: "",
       evoluloading: true,
       geneloading: true,
-      geneplots: "",
-      //evoluplots: "",
+      //geneplots: "",
+      evoluplots: "",
     };
   },
 
@@ -134,34 +134,66 @@ export default {
       return true;
     },
     clickPlot() {
-      this.genePlot(this.clickGene);
-      //this.evoluPlot(this.clickGene);
+      //this.genePlot(this.clickGene);
+      this.evoluPlot(this.clickGene);
     },
 
-    genePlot(clickgene) {
+    // genePlot(clickgene) {
+    //   if (this.checkInput()) {
+    //     var that = this;
+    //     that.geneloading = true;
+    //     that.geneshow = true;
+    //     this.$http
+    //       .get("/tiger/scimmudiffexpdetailgene.php", {
+    //         params: {
+    //           cancer: this.cancer,
+    //           gene: clickgene,
+    //           gloclu: this.gloclu,
+    //           subclu: this.subClu.join(","),
+    //         },
+    //       })
+    //       .then(function (res) {
+    //         if (res.data.status == 0) {
+    //           if (res.data.output[0] === "0") {
+    //             that.geneshow = false;
+    //           } else {
+    //             that.geneshow = true;
+    //             setTimeout((that.geneplots = res.data.output[0]), 1000);
+    //           }
+    //           //that.geneplots = res.data.output[0];
+    //           that.geneloading = false;
+    //         }
+    //       })
+    //       .catch(function (res) {
+    //         console.log(res);
+    //       });
+    //   }
+    // },
+
+    evoluPlot(clickgene) {
       if (this.checkInput()) {
         var that = this;
-        that.geneloading = true;
-        that.geneshow = true;
+        that.evoluloading = true;
         this.$http
-          .get("/tiger/scimmudiffexpdetailgene.php", {
+          .get("/tiger/scimmudiffexpdetailevlou.php", {
             params: {
               cancer: this.cancer,
-              gene: clickgene,
               gloclu: this.gloclu,
               subclu: this.subClu.join(","),
+              gene: clickgene,
             },
           })
           .then(function (res) {
             if (res.data.status == 0) {
               if (res.data.output[0] === "0") {
-                that.geneshow = false;
+                that.evolushow = false;
+                //alert("no gene file");
               } else {
-                that.geneshow = true;
-                setTimeout((that.geneplots = res.data.output[0]), 1000);
+                that.evolushow = true;
+                setTimeout((that.evoluplots = res.data.output[0]), 1000);
               }
-              //that.geneplots = res.data.output[0];
-              that.geneloading = false;
+              //that.evoluplots = res.data.output[0];
+              that.evoluloading = false;
             }
           })
           .catch(function (res) {
@@ -169,38 +201,6 @@ export default {
           });
       }
     },
-
-  //   evoluPlot(clickgene) {
-  //     if (this.checkInput()) {
-  //       var that = this;
-  //       that.evoluloading = true;
-  //       this.$http
-  //         .get("/tiger/scimmudiffexpdetailevlou.php", {
-  //           params: {
-  //             cancer: this.cancer,
-  //             gloclu: this.gloclu,
-  //             subclu: this.subClu.join(","),
-  //             gene: clickgene,
-  //           },
-  //         })
-  //         .then(function (res) {
-  //           if (res.data.status == 0) {
-  //             if (res.data.output[0] === "0") {
-  //               that.evolushow = false;
-  //               //alert("no gene file");
-  //             } else {
-  //               that.evolushow = true;
-  //               setTimeout((that.evoluplots = res.data.output[0]), 1000);
-  //             }
-  //             //that.evoluplots = res.data.output[0];
-  //             that.evoluloading = false;
-  //           }
-  //         })
-  //         .catch(function (res) {
-  //           console.log(res);
-  //         });
-  //     }
-  //   },
   },
 
   computed: {

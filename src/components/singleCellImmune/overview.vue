@@ -12,8 +12,8 @@
               </div>
             </el-col>
             <el-col :span="5" :offset="1" id="homeInput">
-              Optional
-              <i class="el-icon-setting"></i>
+              
+              <i class="el-icon-setting"></i>Optional
               <br />
               <br />
               <el-select v-model="subClu" multiple>
@@ -27,7 +27,7 @@
             </el-col>
           </el-row>
         </el-card>
-        <el-card id="scummuviewer">
+        <!-- <el-card id="scummuviewer">
           <p class="card-title">Cross Talk</p>
           <el-row>
             <el-col :span="6" :offset="2">
@@ -75,7 +75,7 @@
             </el-row>
             <div v-show="!scimmuresShow" id="norult">No result</div>
           </div>
-        </el-card>
+        </el-card> -->
       </div>
 
       <v-goTop></v-goTop>
@@ -131,7 +131,7 @@ export default {
     //console.log(this.subClu)
     let subClu2 = this.subClu.join(",");
     this.Plot(this.cancer, this.gloclu, subClu2);
-    this.getcrossClu(this.cancer);
+    //this.getcrossClu(this.cancer);
   },
 
   methods: {
@@ -152,31 +152,32 @@ export default {
       };
     },
 
-    getcrossClu(cancer) {
-      this.$http
-        .get("/tiger/" + cancer + "/" + cancer + "/crosstalk.class.txt")
-        .then((res) => {
-          this.crossClucoptions = res.data.replace(/"/g, "").split("\n");
-          //this.crossClu=this.crossClucoptions[0,4]
-        });
-    },
+    // getcrossClu(cancer) {
+    //   this.$http
+    //     .get("/tiger/" + cancer + "/" + cancer + "/crosstalk.class.txt")
+    //     .then((res) => {
+    //       this.crossClucoptions = res.data.replace(/"/g, "").split("\n");
+    //       //this.crossClu=this.crossClucoptions[0,4]
+    //     });
+    // },
 
-    selectchange() {
-      this.$http
-        .get("/tiger/genesug.php", {
-          params: {
-            gene: this.seargene,
-            type: "ligandreceptor",
-          },
-        })
-        .then((res) => {
-          this.restaurants = res.data.list;
-        });
+    // selectchange() {
+    //   this.$http
+    //     .get("/tiger/genesug.php", {
+    //       params: {
+    //         gene: this.seargene,
+    //         type: "ligandreceptor",
+    //       },
+    //     })
+    //     .then((res) => {
+    //       this.restaurants = res.data.list;
+    //     });
+    // },
+    reset(){
+      this.plots=[]
     },
 
     checkdataset() {
-      console.log(Array.isArray(this.crossClu) && this.crossClu.length === 0);
-      console.log(this.seargene === "");
       if (
         (Array.isArray(this.crossClu) && this.crossClu.length === 0) ||
         this.seargene.trim() === ""
@@ -186,38 +187,38 @@ export default {
       return false;
     },
 
-    searchCro() {
-      if (!this.checkdataset()) {
-        this.scimmuresShow = true;
-        this.scimmuShow = true;
-        this.crossloading = true;
-        var that = this;
+    // searchCro() {
+    //   if (!this.checkdataset()) {
+    //     this.scimmuresShow = true;
+    //     this.scimmuShow = true;
+    //     this.crossloading = true;
+    //     var that = this;
 
-        this.$http
-          .get("/tiger/singlecellcross.php", {
-            params: {
-              cancer: this.cancer,
-              subclu: this.crossClu.join(","),
-              ligand: this.seargene.trim().split("_", 2)[0],
-              recepto: this.seargene.trim().split("_", 2)[1],
-            },
-          })
-          .then(function (res) {
-            if (res.data.status == 0) {
-              setTimeout((that.crossplots = res.data.output[0]), 1000);
-              //that.crossplots = res.data.output[0];
-              that.crossloading = false;
-            } else {
-              that.scimmuresShow = false;
-            }
-          })
-          .catch(function (res) {
-            console.log(res);
-          });
-      } else {
-        alert("Please  select cross Clusters");
-      }
-    },
+    //     this.$http
+    //       .get("/tiger/singlecellcross.php", {
+    //         params: {
+    //           cancer: this.cancer,
+    //           subclu: this.crossClu.join(","),
+    //           ligand: this.seargene.trim().split("_", 2)[0],
+    //           recepto: this.seargene.trim().split("_", 2)[1],
+    //         },
+    //       })
+    //       .then(function (res) {
+    //         if (res.data.status == 0) {
+    //           setTimeout((that.crossplots = res.data.output[0]), 1000);
+    //           //that.crossplots = res.data.output[0];
+    //           that.crossloading = false;
+    //         } else {
+    //           that.scimmuresShow = false;
+    //         }
+    //       })
+    //       .catch(function (res) {
+    //         console.log(res);
+    //       });
+    //   } else {
+    //     alert("Please  select cross Clusters");
+    //   }
+    // },
 
     clickPlot() {
       let subClu2 = this.subClu.join(",");

@@ -15,7 +15,7 @@
               <el-collapse>
                 <el-collapse-item title="Optional" name="1">
                   <template slot="title">
-                    Optional <i class="el-icon-setting"></i>
+                     <i class="el-icon-setting"></i>Optional
                   </template>
                   <el-row class="detail1">Correlation Coefficient</el-row>
                   <el-row>

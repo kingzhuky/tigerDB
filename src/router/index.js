@@ -12,6 +12,7 @@ const singleCellImmune = () => import('@/components/singleCellImmune/home')
 const download = () => import('@/components/download')
 const help = () => import('@/components/help')
 const contact = () => import('@/components/contact')
+const search = () => import('@/components/search/home')
 
 export default new VueRouter({
   //mode: 'history',
@@ -40,6 +41,10 @@ export default new VueRouter({
       path: '/immuneScreen',
       name: 'immuneScreen',
       component: immuneScreen
+    },{
+      path: '/search/:gene?',
+      name: 'search',
+      component: search
     }, {
       path: '/download',
       name: 'download',

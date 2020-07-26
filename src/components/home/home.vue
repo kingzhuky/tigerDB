@@ -29,6 +29,7 @@
             </el-row>
             <el-col :span="14" id="homeInput">
               <el-autocomplete
+                @input="selectchange"
                 v-model="seargene"
                 placeholder="Please Input Gene Symbol"
                 :fetch-suggestions="querySearchAsync"
@@ -41,98 +42,34 @@
         </el-col>
       </el-row>
     </div>
-    <br />
-    <br />
-    <br />
-    <div id="homecard">
-      <el-card v-show="homeShow" >
-        <div>
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
-            <el-tab-pane label="Cell Type Marker" name="celltype">
-              <component :is="celltypeVue" ref="celltypeVueRef"></component>
-            </el-tab-pane>
-
-             <el-tab-pane label="Differential Expression Analysis" name="diffexp">
-              <component :is="diffexpVue"></component>
-            </el-tab-pane>
-
-            <el-tab-pane label="Survival Analysis" name="survival">
-              <component :is="survivalVue"></component>
-            </el-tab-pane>
-
-            <el-tab-pane label="Signature Analysis" name="signature">
-              <component :is="signatureVue"></component>
-            </el-tab-pane>
-          </el-tabs>
-
-          
-        </div>
-      </el-card>
-    </div>
   </div>
 </template>
 
 <script>
-import { toTarget } from "../../../static/js/utils.js";
-
-const wercelltype = resolve => require(["./celltype.vue"], resolve);
-const wersurvival = resolve => require(["./survival.vue"], resolve);
-const werdiffexp = resolve => require(["./diffexp.vue"], resolve);
-const wersignature = resolve => require(["./signature.vue"], resolve);
-
-
+//import { toTarget } from "../../../static/js/utils.js";
 
 export default {
   name: "home",
-  data: function() {
+  data: function () {
     return {
-      homeShow: false,
-      isActive: true,
-      restaurants: [],
-      showSnackbar: false,
       seargene: "PDCD1",
-      activeName: "celltype",
-      celltypeVue:"",
-      diffexpVue: "",
-      survivalVue: "",
-      signatureVue: ""
+      genesug: "/m6a2target/api/genesug",
+      restaurants: [],
     };
-  },
- created() {
-    this.celltypeVue = wercelltype;
   },
 
   methods: {
-        handleClick(tab, event) {
-      this.checkVue(tab.name);
-    },
-    checkVue(name) {
-      switch (name) {
-        case "celltype":
-          this.celltypeVue = wercelltype;
-          break;
-        case "diffexp":
-          this.diffexpVue = werdiffexp;
-          break;
-        case "survival":
-          this.survivalVue = wersurvival;
-          break;
-        case "signature":
-          this.signatureVue = wersignature;
-          break;
-      }
-    },
-   
-
-    submsearch() {
-      if (this.seargene == "") {
-        alert("Please input Gene");
-      } else {
-        this.homeShow = true;
-        this.$refs.celltypeVueRef.getTableData(this.seargene);
-              toTarget(820);
-
-      }
+    selectchange() {
+      this.$http
+        .get(this.genesug, {
+          params: {
+            species:'Human',
+            gene: this.seargene,
+          },
+        })
+        .then((res) => {
+          this.restaurants = res.data.datasetinfo;
+        });
     },
     querySearchAsync(queryString, cb) {
       var restaurants = this.restaurants;
@@ -143,14 +80,29 @@ export default {
     },
 
     createStateFilter(queryString) {
-      return restaurant => {
+      return (restaurant) => {
         return (
           restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
           0
         );
       };
+    },
+  
+
+  submsearch() {
+    console.log(this.seargene);
+    if (this.seargene.trim() === "") {
+      alert("Please input Gene");
+    } else {
+      this.$router.push({
+        name: "search",
+        params: {
+          gene: this.seargene,
+        },
+      });
     }
   }
+  },
 };
 </script>
 

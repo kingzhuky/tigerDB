@@ -15,6 +15,9 @@
 <script>
 import echarts from "echarts"
 export default {
+   props: {
+      seargene: String,
+    },
   data() {
     return {
       tableData: [],
@@ -22,7 +25,7 @@ export default {
     };
   },
   mounted () {
-    //this.getTableData("A1BG-AS1")
+    this.getTableData(this.seargene)
   },
 
   methods: {

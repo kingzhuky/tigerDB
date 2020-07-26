@@ -45,7 +45,7 @@
     <!-- <button @click="scrollCol">scrollCol</button> -->
 
     <!-- 详细页显示与否 -->
-    <v-expdetail
+    <v-celltypedetail
       ref="detailPlot"
       v-show="isShow"
       :gene="clickGene"
@@ -53,7 +53,7 @@
       :gloclu="gloclu"
       :subClu="subClu"
       :subClucoptions="subClucoptions"
-    ></v-expdetail>
+    ></v-celltypedetail>
   </div>
 </template>
 
@@ -265,7 +265,7 @@ export default {
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
-            type: "singlecelldiff_"+this.cancer+"_"+this.gloclu,
+            type: "singlecelldiff_"+this.cancer+"_"+this.gloclu+"_tn",
             draw: page,
             search: this.searchinput.trim(),
             start: (page-1)* 20,
@@ -308,8 +308,7 @@ export default {
     },
 
     searchChange(){
-            this.loading = true
-
+      this.loading = true
       this.loadDir=""
       this.tableData = [];
       this.loadpage = 1;
@@ -324,8 +323,8 @@ export default {
         this.subClu=this.subClucoptions
         this.isShow = true;
         this.clickGene=row["gene"]
-        this.$refs.detailPlot.genePlot(row["gene"]);
-        //this.$refs.detailPlot.evoluPlot(row["gene"]);
+        //this.$refs.detailPlot.genePlot(row["gene"]);
+        this.$refs.detailPlot.evoluPlot(row["gene"]);
         //this.$refs.detailPlot.tableDetail("expression", 1, "");
         toTarget(820);
       }
@@ -342,12 +341,12 @@ export default {
       return {
         background: mycolr["background"],
         color: mycolr["color"],
-        cursor:mycolr["cursor"]
+        //cursor:mycolr["cursor"]
       };
     }
   },
   components: {
-    "v-expdetail": () => import("./expdetail.vue")
+    "v-celltypedetail": () => import("./celltypedetail.vue")
   }
 };
 </script>

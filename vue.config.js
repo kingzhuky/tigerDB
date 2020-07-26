@@ -12,9 +12,11 @@ let target = '';
 if(env==='production'){  // 生产环境
   target = proEnv.hosturl;
   dgidb = proEnv.dgidb;
+  m6a2target=proEnv.m6a2target;
 }else{  // 本地环境
   target = devEnv.hosturl;
   dgidb = devEnv.dgidb;
+  m6a2target=devEnv.m6a2target;
 }
 // 生成代理配置对象
 let proxyObj = {};
@@ -31,6 +33,14 @@ proxyObj['/dgidb/*'] = {
   changeOrigin: true,
   pathRewrite: {
       '^/dgidb':'/dgidb' //路径无api 所以重写为空
+  }
+};
+
+proxyObj['/m6a2target/*'] = {
+  target: m6a2target,
+  changeOrigin: true,
+  pathRewrite: {
+      '^/m6a2target/':'/m6a2target/' 
   }
 };
 
