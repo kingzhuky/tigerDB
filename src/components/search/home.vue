@@ -26,29 +26,30 @@
       </el-card>
 
       <br />
-      <el-card class="tableSearch" v-show="ValidatedTable">result</el-card>
     </div>
     <div id="homecard">
       <el-card v-show="homeShow">
         <div>
           <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
-
             <el-tab-pane label="General Information" name="generalInformation">
-              <component :is="generalInformationVue" ref="generalInformationVueRef" :seargene="seargene"></component>
+              <component
+                :is="generalInformationVue"
+                ref="generalInformationVueRef"
+                :seargene="seargene"
+              ></component>
             </el-tab-pane>
 
+            <el-tab-pane label="immune Response" name="survival">
+              <component  :is="survivalVue" ref="immuResponseVueRef" :seargene="seargene"></component>
+            </el-tab-pane>
 
-            <el-tab-pane label="Single-Cell Immunity" name="celltype">
+            <el-tab-pane label="Single-Cell Immunity" name="SingleCellImmunity">
               <component :is="celltypeVue" ref="celltypeVueRef" :seargene="seargene"></component>
             </el-tab-pane>
-<!-- 
+            <!-- 
             <el-tab-pane label="Differential Expression Analysis" name="diffexp">
               <component :is="diffexpVue"></component>
-            </el-tab-pane> -->
-
-            <el-tab-pane label="Survival Analysis" name="survival">
-              <component :is="survivalVue"></component>
-            </el-tab-pane>
+            </el-tab-pane>-->
 
             <el-tab-pane label="Signature Analysis" name="signature">
               <component :is="signatureVue"></component>
@@ -62,21 +63,22 @@
 
 
 <script>
-const wercelltype = (resolve) => require(["./celltype.vue"], resolve);
-const wersurvival = (resolve) => require(["./survival.vue"], resolve);
+const wercelltype = (resolve) => require(["./SingleCellImmunity.vue"], resolve);
+const wersurvival = (resolve) => require(["./immuneResponse.vue"], resolve);
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
-const wergeneralInformation = (resolve) => require(["./generalInformation.vue"], resolve);
+//const wergeneralInformation = "./generalInformation.vue";
 
-
+import wergeneralInformation from "./generalInformation.vue";
 
 export default {
   data() {
     return {
-      homeShow: false,
+      genesug: "m6a2target/genesug",
+      homeShow: true,
       isActive: true,
       restaurants: [],
       showSnackbar: false,
-      seargene: "PDCD1",
+      seargene: "A2M",
       activeName: "generalInformation",
       celltypeVue: "",
       diffexpVue: "",
@@ -97,8 +99,6 @@ export default {
     });
   },
   mounted() {
-    this.celllineoptions = this.humanoptions;
-    this.typeweroptions = this.hgweroptions;
     if (this.$route.params.gene !== undefined) {
       this.seargene = this.$route.params.gene;
       this.submsearch();
@@ -112,11 +112,12 @@ export default {
 
     checkVue(name) {
       switch (name) {
-        case "celltype":
+        case "SingleCellImmunity":
           this.celltypeVue = wercelltype;
           break;
         case "survival":
           this.survivalVue = wersurvival;
+          //this.$refs.immuResponseVueRef.plot();
           break;
         case "signature":
           this.signatureVue = wersignature;
@@ -141,7 +142,7 @@ export default {
       this.$http
         .get(this.genesug, {
           params: {
-            species: 'Human',
+            species: "Human",
             gene: this.seargene,
           },
         })
@@ -166,11 +167,26 @@ export default {
       };
     },
   },
-  components: {},
+  components: {
+    generalInformationVue: wergeneralInformation,
+  },
 };
 </script>
 
 <style>
+
+.textitem {
+  padding-bottom: 20px;
+}
+.card-title {
+  text-align: left;
+  padding-left: 10px;
+  border-left: 5px solid rgb(20, 146, 140);
+  color: rgb(20, 146, 140);
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+}
 #readme {
   color: rgb(20, 146, 140);
   font-weight: bold;

@@ -348,11 +348,13 @@ export default {
     },
 
     cancerSelectChange() {
+      //this.$refs.coexpRef.reset()
       this.subClucoptions = [];
       this.getgloClu();
       this.activeName = "overview";
     },
     gloCluChange() {
+      //this.$refs.coexpRef.reset()
       this.subClucoptions = [];
       this.getcrossClu()
       this.activeName = "overview";
@@ -374,6 +376,7 @@ export default {
           this.gloCluoptions = res.data.list;
           this.gloClu = res.data.list[0].glo;
           this.getcrossClu();
+          
         });
     },
     

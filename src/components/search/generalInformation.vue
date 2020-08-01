@@ -128,7 +128,7 @@ export default {
   },
   data() {
     return {
-      getdetailgene: "m6a2target/api/getdetailgene",
+      getdetailgene: "m6a2target/getdetailgene",
       detailgene: [],
       werdetailgene: [],
       detailload: true,

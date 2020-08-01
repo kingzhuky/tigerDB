@@ -52,8 +52,9 @@ export default {
   name: "home",
   data: function () {
     return {
+
       seargene: "PDCD1",
-      genesug: "/m6a2target/api/genesug",
+      genesug: "/m6a2target/genesug",
       restaurants: [],
     };
   },

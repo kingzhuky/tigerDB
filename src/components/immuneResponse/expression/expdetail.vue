@@ -76,7 +76,7 @@
             </div>
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
-            <div class="detailimg" v-loading="loading">
+            <div class="detailimg">
               <el-table
                 ref="singleTable"
                 border
