@@ -2,9 +2,13 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-        <el-input v-model="searchinput" @change="searchChange" placeholder="Input Gene Symbol"></el-input>
+        <el-autocomplete
+          v-model="searchinput"
+          placeholder="Please Input Gene Symbol"
+          :fetch-suggestions="querySearchAsync"
+          @change="searchChange"
+        ></el-autocomplete>
       </el-col>
-      
     </el-row>
     <br />
 
@@ -25,7 +29,6 @@
       style="100%"
     >
       <el-table-column fixed property="gene" label align="center" width="110" id="geneCol"></el-table-column>
-      <!-- :property="item" -->
 
       <el-table-column
         v-for="(item,index) in tableDataheader"
@@ -67,7 +70,7 @@ import {
   toTarget,
   gStyle,
   move,
-  stop
+  stop,
 } from "../../../../static/js/utils.js";
 
 //import{getColumn2} from "../../public/pubjs.js"
@@ -79,137 +82,137 @@ export default {
       wercorcancer_data: [
         {
           value: "ACC",
-          label: "ACC"
+          label: "ACC",
         },
         {
           value: "BLCA",
-          label: "BLCA"
+          label: "BLCA",
         },
         {
           value: "BRCA",
-          label: "BRCA"
+          label: "BRCA",
         },
         {
           value: "CESC",
-          label: "CESC"
+          label: "CESC",
         },
         {
           value: "CHOL",
-          label: "CHOL"
+          label: "CHOL",
         },
         {
           value: "COAD",
-          label: "COAD"
+          label: "COAD",
         },
         {
           value: "DLBC",
-          label: "DLBC"
+          label: "DLBC",
         },
         {
           value: "ESCA",
-          label: "ESCA"
+          label: "ESCA",
         },
         {
           value: "GBM",
-          label: "GBM"
+          label: "GBM",
         },
         {
           value: "HNSC",
-          label: "HNSC"
+          label: "HNSC",
         },
         {
           value: "KICH",
-          label: "KICH"
+          label: "KICH",
         },
         {
           value: "KIRC",
-          label: "KIRC"
+          label: "KIRC",
         },
         {
           value: "KIRP",
-          label: "KIRP"
+          label: "KIRP",
         },
         {
           value: "LIHC",
-          label: "LIHC"
+          label: "LIHC",
         },
         {
           value: "LAML",
-          label: "LAML"
+          label: "LAML",
         },
         {
           value: "LGG",
-          label: "LGG"
+          label: "LGG",
         },
         {
           value: "LUAD",
-          label: "LUAD"
+          label: "LUAD",
         },
         {
           value: "LUSC",
-          label: "LUSC"
+          label: "LUSC",
         },
         {
           value: "MESO",
-          label: "MESO"
+          label: "MESO",
         },
         {
           value: "OV",
-          label: "OV"
+          label: "OV",
         },
         {
           value: "PAAD",
-          label: "PAAD"
+          label: "PAAD",
         },
         {
           value: "PCPG",
-          label: "PCPG"
+          label: "PCPG",
         },
         {
           value: "READ",
-          label: "READ"
+          label: "READ",
         },
         {
           value: "SKCM",
-          label: "SKCM"
+          label: "SKCM",
         },
         {
           value: "SARC",
-          label: "SARC"
+          label: "SARC",
         },
         {
           value: "STAD",
-          label: "STAD"
+          label: "STAD",
         },
         {
           value: "TGCT",
-          label: "TGCT"
+          label: "TGCT",
         },
         {
           value: "THCA",
-          label: "THCA"
+          label: "THCA",
         },
         {
           value: "THYM",
-          label: "THYM"
+          label: "THYM",
         },
         {
           value: "UCEC",
-          label: "UCEC"
+          label: "UCEC",
         },
         {
           value: "UCS",
-          label: "UCS"
-        }
+          label: "UCS",
+        },
       ],
       datatype: {
-        type: String
+        type: String,
       },
       m6aMsg: {
-        type: String
+        type: String,
       },
       cancerMsg: {
-        type: String
+        type: String,
       },
       loading: true,
       isShow: false,
@@ -219,12 +222,11 @@ export default {
       loadDir: "",
       sortCol: "",
       sortOrder: "",
-      tableDataheader: [
-      ]
+      tableDataheader: [],
     };
   },
 
-  mounted: function() {
+  mounted: function () {
     this.getColumn("tablecolumn", "expresponse");
     //var checkExist =getColumn2("tablecolumn", "expresponse");
     //console.log(checkExist.status)
@@ -241,25 +243,37 @@ export default {
           move();
           break;
       }
-    }
+    },
   },
 
   methods: {
+    querySearchAsync(queryString, cb) {
+      this.$http
+        .get("/m6a2target/genesug", {
+          params: {
+            gene: this.searchinput,
+            species: "Human",
+          },
+        })
+        .then((res) => {
+          cb(res.data.datasetinfo);
+        });
+    },
     getColumn(tabl, mycolumn) {
       this.$http
         .get("/tiger/tablecolumn.php", {
           params: {
             tabl: tabl,
-            mycolumn: mycolumn
-          }
+            mycolumn: mycolumn,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             //console.log(res.data.list);
             this.tableDataheader = res.data.list;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -342,10 +356,10 @@ export default {
             start: (page - 1) * 20,
             length: 20,
             sortcol: sortCol,
-            sortorder: sortOrder === null ? "None" : sortOrder
-          }
+            sortorder: sortOrder === null ? "None" : sortOrder,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             this.loading = false;
             if (this.loadDir === "down") {
@@ -353,31 +367,31 @@ export default {
                 this.tableData.length - 20,
                 this.tableData.length
               );
-              res.data.list.forEach(n => {
+              res.data.list.forEach((n) => {
                 this.tableData.push(n);
               });
             } else if (this.loadDir === "up") {
               if (res.data.list.length !== 0) {
                 let old = this.tableData.slice(0, 20);
                 this.tableData = res.data.list;
-                old.forEach(n => {
+                old.forEach((n) => {
                   this.tableData.push(n);
                 });
               }
             } else {
-              res.data.list.forEach(n => {
+              res.data.list.forEach((n) => {
                 this.tableData.push(n);
               });
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
 
-    searchChange(){
-      this.loading =true
+    searchChange() {
+      this.loading = true;
       this.loadDir = "";
       this.tableData = [];
       this.loadpage = 1;
@@ -385,8 +399,6 @@ export default {
       this.sortOrder = "";
       this.getTableData("expresponse", this.loadpage, "", "");
     },
-
- 
 
     //点击单个格子
     heandleclick(row, column) {
@@ -399,26 +411,25 @@ export default {
         this.$refs.detailPlot.getSampleDetail(column["label"]);
         toTarget(820);
       }
-
     },
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["label"]]===null){
+      if (row[column["label"]] === null) {
         return {
-            background: "white"
-          }
+          background: "white",
+        };
       }
       var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
-        color: mycolr["color"]
+        color: mycolr["color"],
       };
-    }
+    },
   },
   components: {
-    "v-expdetail": () => import("./expdetail.vue")
-  }
+    "v-expdetail": () => import("./expdetail.vue"),
+  },
 };
 </script>
 

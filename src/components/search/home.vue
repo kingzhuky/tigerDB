@@ -16,7 +16,6 @@
               style="min-width:100px"
               placeholder="Input Gene Symbol"
               :fetch-suggestions="querySearchAsync"
-              @input="selectchange"
             ></el-autocomplete>
           </el-col>
           <el-col :span="4">
@@ -144,35 +143,22 @@ export default {
       }
     },
 
-    selectchange() {
+  
+
+     querySearchAsync(queryString, cb) {
       this.$http
-        .get(this.genesug, {
+        .get("/m6a2target/genesug", {
           params: {
-            species: "Human",
             gene: this.seargene,
+            species: "Human",
           },
         })
         .then((res) => {
-          this.restaurants = res.data.datasetinfo;
+          cb(res.data.datasetinfo);
         });
     },
-    querySearchAsync(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString
-        ? restaurants.filter(this.createStateFilter(queryString))
-        : restaurants;
-      cb(results);
-    },
-
-    createStateFilter(queryString) {
-      return (restaurant) => {
-        return (
-          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
-          0
-        );
-      };
-    },
   },
+    
   components: {
     generalInformationVue: wergeneralInformation,
   },

@@ -1,67 +1,64 @@
 <template>
   <transition name="move3">
-    <div >
-   
-       <el-card id="scummuviewer">
-          <p class="card-title">Cross Talk</p>
-          <el-row>
+    <div>
+      <el-card id="scummuviewer">
+        <p class="card-title">Cross Talk</p>
+        <el-row>
+          <el-col :span="6" :offset="2">
+            <el-row>
+              <span id="homespan">Select Clusters</span>
+            </el-row>
+          </el-col>
+          <el-col :span="5" :offset="2">
+            <el-row>
+              <span id="homespan">Search Ligand or Receptor</span>
+            </el-row>
+          </el-col>
+        </el-row>
+        <br />
+        <el-row>
+          <el-col :span="20" :offset="2">
+            <el-col :span="10" :offset="0">
+              <el-select
+                v-model="crossClu"
+                multiple
+                placeholder="Select Cluster"
+                v-loading="crossCluloading"
+              >
+                <el-option v-for="item in crossClucoptions" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="6" id="homeInput">
+              <el-autocomplete
+                v-model="seargene"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="Search Ligand or Receptor"
+                :trigger-on-focus="false"
+              ></el-autocomplete>
+            </el-col>
             <el-col :span="6" :offset="2">
-              <el-row>
-                <span id="homespan">Select Clusters</span>
-              </el-row>
+              <el-button id="scimmubt" @click="searchCro">Search</el-button>
             </el-col>
-            <el-col :span="5" :offset="2">
-              <el-row>
-                <span id="homespan">Search Ligand or Receptor</span>
-              </el-row>
-            </el-col>
-          </el-row>
-          <br />
-          <el-row>
-            <el-col :span="20" :offset="2">
-              <el-col :span="10" :offset="0">
-                <el-select v-model="crossClu" multiple placeholder="Select Cluster" v-loading="crossCluloading">
-                  <el-option
-                    v-for="item in crossClucoptions"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                  ></el-option>
-                </el-select>
-              </el-col>
-              <el-col :span="6" id="homeInput">
-                <el-autocomplete
-                  v-model="seargene"
-                  :fetch-suggestions="querySearchAsync"
-                  placeholder="Search Ligand or Receptor"
-                  @input="selectchange"
-                ></el-autocomplete>
-              </el-col>
-              <el-col :span="6" :offset="2">
-                <el-button id="scimmubt" @click="searchCro">Search</el-button>
-              </el-col>
-            </el-col>
+          </el-col>
+        </el-row>
+
+        <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
+          <el-row class="detailimg">
+            <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[0]+'.png'" />
+            <el-divider></el-divider>
           </el-row>
 
-          <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
-            
-            <el-row class="detailimg">
-              <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[0]+'.png'" />
-              <el-divider></el-divider>
-            </el-row>
-
-            <el-row class="detailimg" v-if="crossplots.split(',').length>1">
-              <el-col :span="12">
+          <el-row class="detailimg" v-if="crossplots.split(',').length>1">
+            <el-col :span="12">
               <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[1]+'.png'" />
-              </el-col>
-              <el-col :span="12">
+            </el-col>
+            <el-col :span="12">
               <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[2]+'.png'" />
-              </el-col>
-            </el-row>
-            
-          </div>
-          <div v-show="scimmuShowNoRes" id="norult">No result</div>
-        </el-card>
+            </el-col>
+          </el-row>
+        </div>
+        <div v-show="scimmuShowNoRes" id="norult">No result</div>
+      </el-card>
       <v-goTop></v-goTop>
     </div>
   </transition>
@@ -92,7 +89,7 @@ export default {
 
   data() {
     return {
-      crossCluloading:true,
+      crossCluloading: true,
       crossloading: false,
       plots: "",
       crossplots: "",
@@ -123,17 +120,29 @@ export default {
     },
 
     getcrossClu(cancer) {
-      this.crossCluloading=true
+      this.crossCluloading = true;
       this.$http
         .get("/tiger/" + cancer + "/" + cancer + "/crosstalk.class.txt")
         .then((res) => {
           this.crossClucoptions = res.data.replace(/"/g, "").split("\n");
-          this.crossClu=[this.crossClucoptions[0]]
-          this.crossCluloading=false
+          this.crossClu = [this.crossClucoptions[0]];
+          this.crossCluloading = false;
         });
     },
-
-    selectchange() {
+    createStateFilter(queryString) {
+      return (restaurant) => {
+        return (
+          restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
+          0
+        );
+      };
+    },
+    querySearchAsync(queryString, cb) {
+      // var restaurants = this.restaurants;
+      // var results = queryString
+      //   ? restaurants.filter(this.createStateFilter(queryString))
+      //   : restaurants;
+      // console.log(results)
       this.$http
         .get("/tiger/genesug.php", {
           params: {
@@ -142,12 +151,14 @@ export default {
           },
         })
         .then((res) => {
-          this.restaurants = res.data.list;
+          cb(res.data.list);
         });
+      
     },
 
+   
 
-     checkdataset() {
+    checkdataset() {
       if (
         (Array.isArray(this.crossClu) && this.crossClu.length === 0) ||
         this.seargene.trim() === ""
@@ -157,19 +168,15 @@ export default {
       return false;
     },
 
-    reset(){
-      this.scimmuShow=false
-      this.scimmuShowNoRes=false
-
-
-
+    reset() {
+      this.scimmuShow = false;
+      this.scimmuShowNoRes = false;
     },
-
 
     searchCro() {
       if (!this.checkdataset()) {
         this.scimmuShow = true;
-        this.scimmuShowNoRes=false
+        this.scimmuShowNoRes = false;
         this.crossloading = true;
         var that = this;
 
@@ -188,7 +195,7 @@ export default {
               //that.crossplots = res.data.output[0];
             } else {
               that.scimmuShow = false;
-              that.scimmuShowNoRes=true
+              that.scimmuShowNoRes = true;
             }
             that.crossloading = false;
           })
@@ -199,9 +206,7 @@ export default {
         alert("Please  select cross Clusters");
       }
     },
-
   },
-
 
   components: {
     "v-goTop": goTop,

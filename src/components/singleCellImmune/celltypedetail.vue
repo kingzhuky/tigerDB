@@ -12,32 +12,6 @@
       <div class="infor">
         <el-card>
           <el-row>
-            <el-col :span="16" :offset="2" >
-              <!-- <el-row
-                v-show="geneshow"
-                v-loading="geneloading"
-                v-for="item in geneplots.split(',')"
-                :key="item"
-                class="detailimg"
-              >
-                <img id="singleimg" :src="'tiger/img/'+item" />
-                <el-divider></el-divider>
-              </el-row> -->
-
-              <el-row
-                v-show="evolushow"
-                v-loading="evoluloading"
-                v-for="item in evoluplots.split(',')"
-                :key="item"
-                class="detailimg"
-              >
-                <img id="singleimg" :src="'tiger/img/'+item" />
-                <el-divider></el-divider>
-              </el-row>
-            </el-col>
-            <el-col  :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
-            <div id="norult">No result</div>
-          </el-col>
             <el-col :span="5" :offset="1" id="homeInput">
               
               <i class="el-icon-setting"></i>Optional
@@ -52,6 +26,24 @@
                 <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
               </el-row>
             </el-col>
+            <el-col :span="16" :offset="2" >
+             
+
+              <el-row
+                v-show="evolushow"
+                v-loading="evoluloading"
+                v-for="item in evoluplots.split(',')"
+                :key="item"
+                class="detailimg"
+              >
+                <img id="singleimg" :src="'tiger/img/'+item" />
+                <el-divider></el-divider>
+              </el-row>
+            </el-col>
+            <el-col  :span="16" :offset="2" v-show="!evolushow" v-loading="loading">
+            <div id="norult">No result</div>
+            </el-col>
+            
           </el-row>
         </el-card>
       </div>
@@ -85,7 +77,6 @@ export default {
 
   data() {
     return {
-      geneshow: true,
       evolushow: true,
       tableLoading: "",
       normalMed: "None",

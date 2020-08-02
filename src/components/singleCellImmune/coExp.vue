@@ -1,10 +1,14 @@
 <template>
   <div>
-    <el-row>
+    <el-row id="coExpInput">
       <br />
       <br />
       <el-col :span="8" :offset="6">
-        <el-input v-model="searchinput" placeholder="Input Gene Symbol"></el-input>
+        <el-autocomplete
+        v-model="searchinput"
+        placeholder="Please Input Gene Symbol"
+        :fetch-suggestions="querySearchAsyncA"
+      ></el-autocomplete>
       </el-col>
       <el-col :span="4">
         <el-button id="homebt" @click="searchClick" icon="el-icon-search"></el-button>
@@ -13,7 +17,11 @@
     <br />
     <br />
     <el-col :span="4" :offset="20">
-      <el-input v-model="search" placeholder="Search Gene Symbol"></el-input>
+      <el-autocomplete
+        v-model="search"
+        placeholder="Please Input Gene Symbol"
+        :fetch-suggestions="querySearchAsync"
+      ></el-autocomplete>
     </el-col>
     <div v-show="tableShow" v-loading="loading">
       <el-table
@@ -24,7 +32,6 @@
         max-height="800"
         :data="tableData.filter(data => !search || data.gene.toLowerCase().includes(search.toLowerCase()))"
         @cell-click="heandleclick"
-        
         style="100%"
       >
         <el-table-column
@@ -58,13 +65,13 @@ import {
   toTarget,
   gStyle,
   move,
-  stop
+  stop,
 } from "../../../static/js/utils.js";
 
 export default {
   props: {
     cancer: String,
-    gloclu: String
+    gloclu: String,
   },
   data() {
     return {
@@ -74,138 +81,138 @@ export default {
       wercorcancer_data: [
         {
           value: "ACC",
-          label: "ACC"
+          label: "ACC",
         },
         {
           value: "BLCA",
-          label: "BLCA"
+          label: "BLCA",
         },
         {
           value: "BRCA",
-          label: "BRCA"
+          label: "BRCA",
         },
         {
           value: "CESC",
-          label: "CESC"
+          label: "CESC",
         },
         {
           value: "CHOL",
-          label: "CHOL"
+          label: "CHOL",
         },
         {
           value: "COAD",
-          label: "COAD"
+          label: "COAD",
         },
         {
           value: "DLBC",
-          label: "DLBC"
+          label: "DLBC",
         },
         {
           value: "ESCA",
-          label: "ESCA"
+          label: "ESCA",
         },
         {
           value: "GBM",
-          label: "GBM"
+          label: "GBM",
         },
         {
           value: "HNSC",
-          label: "HNSC"
+          label: "HNSC",
         },
         {
           value: "KICH",
-          label: "KICH"
+          label: "KICH",
         },
         {
           value: "KIRC",
-          label: "KIRC"
+          label: "KIRC",
         },
         {
           value: "KIRP",
-          label: "KIRP"
+          label: "KIRP",
         },
         {
           value: "LIHC",
-          label: "LIHC"
+          label: "LIHC",
         },
         {
           value: "LAML",
-          label: "LAML"
+          label: "LAML",
         },
         {
           value: "LGG",
-          label: "LGG"
+          label: "LGG",
         },
         {
           value: "LUAD",
-          label: "LUAD"
+          label: "LUAD",
         },
         {
           value: "LUSC",
-          label: "LUSC"
+          label: "LUSC",
         },
         {
           value: "MESO",
-          label: "MESO"
+          label: "MESO",
         },
         {
           value: "OV",
-          label: "OV"
+          label: "OV",
         },
         {
           value: "PAAD",
-          label: "PAAD"
+          label: "PAAD",
         },
         {
           value: "PCPG",
-          label: "PCPG"
+          label: "PCPG",
         },
         {
           value: "READ",
-          label: "READ"
+          label: "READ",
         },
         {
           value: "SKCM",
-          label: "SKCM"
+          label: "SKCM",
         },
         {
           value: "SARC",
-          label: "SARC"
+          label: "SARC",
         },
         {
           value: "STAD",
-          label: "STAD"
+          label: "STAD",
         },
         {
           value: "TGCT",
-          label: "TGCT"
+          label: "TGCT",
         },
         {
           value: "THCA",
-          label: "THCA"
+          label: "THCA",
         },
         {
           value: "THYM",
-          label: "THYM"
+          label: "THYM",
         },
         {
           value: "UCEC",
-          label: "UCEC"
+          label: "UCEC",
         },
         {
           value: "UCS",
-          label: "UCS"
-        }
+          label: "UCS",
+        },
       ],
       search: "",
       datatype: {
-        type: String
+        type: String,
       },
       m6aMsg: {
-        type: String
+        type: String,
       },
       cancerMsg: {
-        type: String
+        type: String,
       },
       loading: false,
       isShow: false,
@@ -213,19 +220,18 @@ export default {
       tableData: [],
       loadDir: "",
       tableDataheader: [],
-      oldcancer:"",
-      oldgloclu:""
+      oldcancer: "",
+      oldgloclu: "",
     };
   },
 
-  mounted: function() {
+  mounted: function () {
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     this.getTableData();
   },
 
   watch: {
-    
     loading() {
       switch (this.loading) {
         case true:
@@ -235,11 +241,35 @@ export default {
           move();
           break;
       }
-    }
+    },
   },
 
   methods: {
- plot() {
+    querySearchAsync(queryString, cb) {
+      this.$http
+        .get("/m6a2target/genesug", {
+          params: {
+            gene: this.search,
+            species: "Human",
+          },
+        })
+        .then((res) => {
+          cb(res.data.datasetinfo);
+        });
+    },
+    querySearchAsyncA(queryString, cb) {
+      this.$http
+        .get("/m6a2target/genesug", {
+          params: {
+            gene: this.searchinput,
+            species: "Human",
+          },
+        })
+        .then((res) => {
+          cb(res.data.datasetinfo);
+        });
+    },
+    plot() {
       if (
         (this.oldcancer !== this.cancer) |
         (this.oldcancer === "") |
@@ -255,15 +285,15 @@ export default {
       this.getTableData();
     },
     getTableData2(file) {
-      this.tableData=[]
+      this.tableData = [];
       this.$http
         .get("/tiger/img/" + file + ".json")
-        .then(res => {
+        .then((res) => {
           this.loading = false;
           this.tableDataheader = Object.keys(res.data[0]);
           this.tableData = res.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -275,15 +305,15 @@ export default {
           params: {
             cancer: this.cancer,
             gloclu: this.gloclu,
-            gene: this.searchinput.trim()
-          }
+            gene: this.searchinput.trim(),
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 0) {
             this.getTableData2(res.data.output[0]);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -304,13 +334,13 @@ export default {
       var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
-        color: mycolr["color"]
+        color: mycolr["color"],
       };
-    }
+    },
   },
   components: {
-    "v-coexpdetail": () => import("./coExpdetail.vue")
-  }
+    "v-coexpdetail": () => import("./coExpdetail.vue"),
+  },
 };
 </script>
 
@@ -318,6 +348,10 @@ export default {
 <style>
 .el-table__fixed {
   cursor: not-allowed;
+}
+
+#coExpInput .el-autocomplete {
+    width: 100%;
 }
 
 #scCoExpTable th {

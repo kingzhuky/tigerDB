@@ -2,8 +2,12 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-        <el-input v-model="searchinput" @change="searchChange" placeholder="Input Gene Symbol"></el-input>
-      </el-col>
+<el-autocomplete
+          v-model="searchinput"
+          placeholder="Please Input Gene Symbol"
+          :fetch-suggestions="querySearchAsync"
+          @change="searchChange"
+        ></el-autocomplete>      </el-col>
       
     </el-row>
     <br />
@@ -206,6 +210,18 @@ export default {
   },
 
   methods: {
+     querySearchAsync(queryString, cb) {
+      this.$http
+        .get("/m6a2target/genesug", {
+          params: {
+            gene: this.searchinput,
+            species: "Human",
+          },
+        })
+        .then((res) => {
+          cb(res.data.datasetinfo);
+        });
+    },
     getColumn(tabl, mycolumn) {
       this.$http
         .get("/tiger/tablecolumn.php", {

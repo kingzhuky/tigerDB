@@ -12,6 +12,20 @@
       <div class="infor">
         <el-card>
           <el-row>
+             <el-col :span="5" :offset="1" id="homeInput">
+              
+              <i class="el-icon-setting"></i>Optional
+              <br />
+              <br />
+              <el-select v-model="subClu" multiple>
+                <el-option v-for="item in subClucoptions" :key="item" :label="item" :value="item"></el-option>
+              </el-select>
+              <br />
+              <br />
+              <el-row class="plot">
+                <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
+              </el-row>
+            </el-col>
             <el-col :span="16" :offset="2" >
               <el-row
                 v-show="geneshow"
@@ -38,20 +52,7 @@
             <el-col  :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
             <div id="norult">No result</div>
           </el-col>
-            <el-col :span="5" :offset="1" id="homeInput">
-              
-              <i class="el-icon-setting"></i>Optional
-              <br />
-              <br />
-              <el-select v-model="subClu" multiple>
-                <el-option v-for="item in subClucoptions" :key="item" :label="item" :value="item"></el-option>
-              </el-select>
-              <br />
-              <br />
-              <el-row class="plot">
-                <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
-              </el-row>
-            </el-col>
+           
           </el-row>
         </el-card>
       </div>
@@ -86,7 +87,6 @@ export default {
   data() {
     return {
       geneshow: true,
-      evolushow: true,
       tableLoading: "",
       normalMed: "None",
       normalGene: "",

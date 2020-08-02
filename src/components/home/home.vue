@@ -29,7 +29,6 @@
             </el-row>
             <el-col :span="14" id="homeInput">
               <el-autocomplete
-                @input="selectchange"
                 v-model="seargene"
                 placeholder="Please Input Gene Symbol"
                 :fetch-suggestions="querySearchAsync"
@@ -52,32 +51,23 @@ export default {
   name: "home",
   data: function () {
     return {
-
       seargene: "PDCD1",
-      genesug: "/m6a2target/genesug",
       restaurants: [],
     };
   },
 
   methods: {
-    selectchange() {
+    querySearchAsync(queryString, cb) {
       this.$http
-        .get(this.genesug, {
+        .get("/m6a2target/genesug", {
           params: {
-            species:'Human',
             gene: this.seargene,
+            species: "Human",
           },
         })
         .then((res) => {
-          this.restaurants = res.data.datasetinfo;
+          cb(res.data.datasetinfo);
         });
-    },
-    querySearchAsync(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString
-        ? restaurants.filter(this.createStateFilter(queryString))
-        : restaurants;
-      cb(results);
     },
 
     createStateFilter(queryString) {
@@ -88,21 +78,20 @@ export default {
         );
       };
     },
-  
 
-  submsearch() {
-    console.log(this.seargene);
-    if (this.seargene.trim() === "") {
-      alert("Please input Gene");
-    } else {
-      this.$router.push({
-        name: "search",
-        params: {
-          gene: this.seargene,
-        },
-      });
-    }
-  }
+    submsearch() {
+      console.log(this.seargene);
+      if (this.seargene.trim() === "") {
+        alert("Please input Gene");
+      } else {
+        this.$router.push({
+          name: "search",
+          params: {
+            gene: this.seargene,
+          },
+        });
+      }
+    },
   },
 };
 </script>
