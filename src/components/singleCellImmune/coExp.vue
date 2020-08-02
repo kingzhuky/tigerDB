@@ -212,11 +212,15 @@ export default {
       loadpage: 1,
       tableData: [],
       loadDir: "",
-      tableDataheader: []
+      tableDataheader: [],
+      oldcancer:"",
+      oldgloclu:""
     };
   },
 
   mounted: function() {
+    this.oldcancer = this.cancer;
+    this.oldgloclu = this.gloclu;
     this.getTableData();
   },
 
@@ -235,6 +239,18 @@ export default {
   },
 
   methods: {
+ plot() {
+      if (
+        (this.oldcancer !== this.cancer) |
+        (this.oldcancer === "") |
+        (this.oldgloclu !== this.gloclu) |
+        (this.oldgloclu === "")
+      ) {
+        this.oldcancer = this.cancer;
+        this.oldgloclu = this.gloclu;
+        this.getTableData(1, "", "");
+      }
+    },
     searchClick() {
       this.getTableData();
     },
@@ -278,7 +294,6 @@ export default {
       if (column["label"] !== "gene") {
         this.isShow = true;
         this.$refs.detailPlot.Plot(row["gene"], column["label"]);
-        console.log(column["label"]);
         //this.$refs.detailPlot.tableDetail("expression", 1, "");
         toTarget(820);
       }

@@ -420,21 +420,21 @@ export default {
         case "overview":
           this.overviewVue = weroverview;
           break;
+        case "celltype":
+          this.celltypeVue = wercelltype;
+          this.$refs.celltypeRef.plot();
+          break;
         case "scdiffexp":
           this.diffexpVue = werdiffexp;
-          this.$refs.diffexpRef.getTableData();
+          this.$refs.diffexpRef.plot();
           break;
         case "coexp":
           this.coexpVue = wercoexp;
-          this.$refs.coexpRef.getTableData();
-          break;
-        case "celltype":
-          this.celltypeVue = wercelltype;
-          this.$refs.celltypeRef.getTableData();
+          this.$refs.coexpRef.plot();
           break;
         case "crosstalk":
           this.crosstalkVue = wercrosstalk;
-          this.$refs.crosstalkRef.searchCro();
+          this.$refs.crosstalkRef.reset();
           break;
       }
     }

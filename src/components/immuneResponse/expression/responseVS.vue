@@ -309,7 +309,6 @@ export default {
           this.sortOrder
         );
         if (this.loadpage > 1) {
-          console.log(this.loadpage);
           scrollRow("responseTable", 400);
           this.loading = false;
         }

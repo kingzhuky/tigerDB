@@ -8,7 +8,9 @@
             <div id="scaterid" style="width: 600px;height:400px;"></div>
           </el-col>
           <el-col :span="4" :offset="1">
-            <br> <br><br> 
+            <br />
+            <br />
+            <br />
             <el-row>
               <el-select v-model="cancer" @change="cancerSelectChange" placeholder="Cancer">
                 <el-option
@@ -19,7 +21,8 @@
                 ></el-option>
               </el-select>
             </el-row>
-            <br> <br>
+            <br />
+            <br />
             <el-row>
               <el-select v-model="gloClu" @change="gloCluChange">
                 <el-option
@@ -30,7 +33,8 @@
                 ></el-option>
               </el-select>
             </el-row>
-            <br> <br>
+            <br />
+            <br />
             <el-row class="plot">
               <el-button id="anabt" @click="clickPlot()" style="width:210px">Plot</el-button>
             </el-row>
@@ -46,6 +50,17 @@
           <img id="singleimg" width="550px" :src="imgUrlBox" />
 
           <img id="singleimg" width="550px" :src="imgUrlBar" />
+        </div>
+      </el-card>
+    </div>
+
+    <div class="textitem">
+      <el-card v-if="singleCellCorShow" v-loading="singleCellCorloading">
+        <p
+          class="card-title"
+        >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
+        <div class="geneExp">
+          <div id="singleCellCorTumor" class="scaterPlot" style="width: 1200px;height:1000px;"></div>
         </div>
       </el-card>
     </div>
@@ -91,10 +106,12 @@ export default {
   data() {
     return {
       //tableData: [],
-      singleCellImmuTumorshow:false,
-      singleCellImmuTumorloading:false,
-      singleCellImmuResponseshow:false,
-      singleCellImmuResponseloading:false,
+      singleCellImmuTumorshow: true,
+      singleCellImmuTumorloading: false,
+      singleCellImmuResponseshow: true,
+      singleCellImmuResponseloading: false,
+      singleCellCorShow: true,
+      singleCellCorloading: false,
       loading: false,
       gloCluoptions: [],
       gloclu: "All",
@@ -107,36 +124,48 @@ export default {
       imgpathBar: "",
       imgpathBar1: "",
       imgpathBar2: "",
+      oldseargene: "",
     };
   },
   mounted() {
     this.$nextTick(() => {
+      this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
       this.getcancer();
       this.getgloClu();
       this.getScaData(this.seargene, "Responder", "singleCellImmuTumor");
       this.getScaData(this.seargene, "Responder", "singleCellImmuResponse");
+      this.getDiagramData(this.seargene, "singleCellCorTumor");
     });
   },
 
   computed: {
     imgUrlBox: function () {
-      return this.imgpathBox ;
+      return this.imgpathBox;
     },
     imgUrlBar: function () {
-      return  this.imgpathBar ;
+      return this.imgpathBar;
     },
     imgUrlBar2: function () {
-      return this.imgpathBar2 ;
+      return this.imgpathBar2;
     },
     imgUrlBar3: function () {
-      return  this.imgpathBar3;
+      return this.imgpathBar3;
     },
   },
 
   methods: {
+    Plot() {
+      if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
+        this.oldseargene = this.seargene;
+        this.clickPlot(this.seargene);
+      }
+    },
     clickPlot() {
       this.genePlot(this.seargene);
+      this.getScaData(this.seargene, "Responder", "singleCellImmuTumor");
+      this.getScaData(this.seargene, "Responder", "singleCellImmuResponse");
+      this.getDiagramData(this.seargene, "singleCellCorTumor");
     },
     genePlot(clickgene) {
       var that = this;
@@ -158,7 +187,8 @@ export default {
             } else {
               that.imgpathBox = "tiger/img/" + res.data.output[0].split(",")[0];
               that.imgpathBar = "tiger/img/" + res.data.output[0].split(",")[1];
-              that.imgpathBar2 = "tiger/img/" + res.data.output[0].split(",")[2];
+              that.imgpathBar2 =
+                "tiger/img/" + res.data.output[0].split(",")[2];
               //that.imgpathBar3='tiger/img/'+res.data.output[0].split(',')[3]
               that.geneshow = true;
             }
@@ -325,12 +355,114 @@ export default {
           if (res.data.status === 200) {
             this.draw_chart_sca(res.data.list, id);
             //this.diffExpRespontableData = res.data.datatable;
+            this.singleCellImmuTumorshow = true;
+            this.singleCellImmuResponseshow = true;
             this.cardLoading = false;
           }
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    getDiagramData(gene, id) {
+      this.singleCellCorloading = true;
+      this.$http
+        .get("/tiger/searchcoea.php", {
+          params: {
+            gene: gene,
+          },
+        })
+        .then((res) => {
+          if (res.data.status === 200) {
+            this.draw_chart_Diagram(res.data, id);
+            this.singleCellCorShow = true;
+            this.singleCellCorloading = false;
+          } else {
+            this.singleCellCorShow = false;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    draw_chart_Diagram(data, id) {
+      var targetdiv = document.getElementById(id);
+      //let myChart_mercor = this.$echarts.init(targetdiv);
+      //cdn替换为
+      let myChart_mercor = window.echarts.init(targetdiv);
+
+      let option = {
+        title: {
+          text: "Sankey Diagram",
+        },
+        tooltip: {
+          trigger: "item",
+          triggerOn: "mousemove",
+        },
+        
+        series: [
+          {
+            type: "sankey",
+            data: data.nodes,
+            links: data.links,
+            focusNodeAdjacency: true,
+            levels: [
+              {
+                depth: 0,
+                itemStyle: {
+                  color: "#fbb4ae",
+                },
+                lineStyle: {
+                  color: "source",
+                  opacity: 0.6,
+                },
+              },
+              {
+                depth: 1,
+                itemStyle: {
+                  color: "#b3cde3",
+                },
+                lineStyle: {
+                  color: "source",
+                  opacity: 0.6,
+                },
+              },
+              {
+                depth: 2,
+                itemStyle: {
+                  color: "#ccebc5",
+                },
+                lineStyle: {
+                  color: "source",
+                  opacity: 0.6,
+                },
+              },
+              
+            ],
+            lineStyle: {
+              curveness: 0.5,
+            },
+          },
+        ],
+      };
+
+
+      // if(option.series.length!==0){
+      //   option["dataZoom"]  =[
+      //   {   // 这个dataZoom组件，默认控制x轴。
+      //       type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+      //       start: 10,      // 左边在 10% 的位置。
+      //       end: 60         // 右边在 60% 的位置。
+      //   }]
+      // }
+
+      myChart_mercor.clear();
+      myChart_mercor.setOption(option);
+      window.onresize = function () {
+        myChart_mercor.resize();
+      };
     },
 
     draw_chart_sca(data, id) {

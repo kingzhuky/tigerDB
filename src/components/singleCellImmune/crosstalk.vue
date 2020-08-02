@@ -60,7 +60,7 @@
             </el-row>
             
           </div>
-          <div v-show="!scimmuresShow" id="norult">No result</div>
+          <div v-show="scimmuShowNoRes" id="norult">No result</div>
         </el-card>
       <v-goTop></v-goTop>
     </div>
@@ -101,7 +101,7 @@ export default {
       crossClucoptions: [],
       crossClu: [],
       seargene: "HLA-A_CD3G",
-      //evoluplots: "",
+      scimmuShowNoRes: false,
     };
   },
 
@@ -127,9 +127,8 @@ export default {
       this.$http
         .get("/tiger/" + cancer + "/" + cancer + "/crosstalk.class.txt")
         .then((res) => {
-          console.log(res.data.replace(/"/g, "").split("\n"))
           this.crossClucoptions = res.data.replace(/"/g, "").split("\n");
-          this.crossClu=this.crossClucoptions
+          this.crossClu=[this.crossClucoptions[0]]
           this.crossCluloading=false
         });
     },
@@ -149,8 +148,6 @@ export default {
 
 
      checkdataset() {
-      console.log(Array.isArray(this.crossClu) && this.crossClu.length === 0);
-      console.log(this.seargene === "");
       if (
         (Array.isArray(this.crossClu) && this.crossClu.length === 0) ||
         this.seargene.trim() === ""
@@ -160,11 +157,19 @@ export default {
       return false;
     },
 
+    reset(){
+      this.scimmuShow=false
+      this.scimmuShowNoRes=false
+
+
+
+    },
+
 
     searchCro() {
       if (!this.checkdataset()) {
-        this.scimmuresShow = true;
         this.scimmuShow = true;
+        this.scimmuShowNoRes=false
         this.crossloading = true;
         var that = this;
 
@@ -182,7 +187,8 @@ export default {
               setTimeout((that.crossplots = res.data.output[0]), 1000);
               //that.crossplots = res.data.output[0];
             } else {
-              that.scimmuresShow = false;
+              that.scimmuShow = false;
+              that.scimmuShowNoRes=true
             }
             that.crossloading = false;
           })

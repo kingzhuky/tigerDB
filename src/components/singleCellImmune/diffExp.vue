@@ -191,12 +191,16 @@ export default {
       loadDir: "",
       sortCol:"",
       sortOrder:'',
+       oldcancer:"",
+      oldgloclu:"",
       tableDataheader: [
       ],
     };
   },
 
   mounted: function() {
+    this.oldcancer = this.cancer;
+        this.oldgloclu = this.gloclu;
     this.getTableData( 1,"","");
     console.log(this.subClu)
   },
@@ -216,6 +220,21 @@ export default {
   },
 
   methods: {
+
+     plot() {
+      if (
+        (this.oldcancer !== this.cancer) |
+        (this.oldcancer === "") |
+        (this.oldgloclu !== this.gloclu) |
+        (this.oldgloclu === "")
+      ) {
+        this.oldcancer = this.cancer;
+        this.oldgloclu = this.gloclu;
+        this.getTableData(1, "", "");
+      }
+    },
+
+
     sortChangeClick(column, prop, order){
       console.log(column.prop,column.order)
       this.loadDir=""

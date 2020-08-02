@@ -39,21 +39,21 @@
               ></component>
             </el-tab-pane>
 
-            <el-tab-pane label="immune Response" name="survival">
-              <component  :is="survivalVue" ref="immuResponseVueRef" :seargene="seargene"></component>
+            <el-tab-pane label="Immune Response" name="immuneResponse">
+              <component  :is="immuneResponseVue" ref="immuResponseVueRef" :seargene="seargene"></component>
             </el-tab-pane>
 
-            <el-tab-pane label="Single-Cell Immunity" name="SingleCellImmunity">
-              <component :is="celltypeVue" ref="celltypeVueRef" :seargene="seargene"></component>
+            <el-tab-pane label="Single-Cell Immunity" name="singleCellImmunity">
+              <component :is="singleCellImmunityVue" ref="singleCellImmunityVueRef" :seargene="seargene"></component>
             </el-tab-pane>
-            <!-- 
-            <el-tab-pane label="Differential Expression Analysis" name="diffexp">
-              <component :is="diffexpVue"></component>
-            </el-tab-pane>-->
+<!--             
+            <el-tab-pane label="Immune Screening" name="immuneScreening">
+              <component :is="immuneScreeningVue" :seargene="seargene"></component>
+            </el-tab-pane> -->
 
-            <el-tab-pane label="Signature Analysis" name="signature">
+            <!-- <el-tab-pane label="Signature Analysis" name="signature">
               <component :is="signatureVue"></component>
-            </el-tab-pane>
+            </el-tab-pane> -->
           </el-tabs>
         </div>
       </el-card>
@@ -63,11 +63,11 @@
 
 
 <script>
-const wercelltype = (resolve) => require(["./SingleCellImmunity.vue"], resolve);
-const wersurvival = (resolve) => require(["./immuneResponse.vue"], resolve);
+const wercelltype = (resolve) => require(["./singleCellImmunity.vue"], resolve);
+const werimmuneResponse = (resolve) => require(["./immuneResponse.vue"], resolve);
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
 //const wergeneralInformation = "./generalInformation.vue";
-
+const werimmuneScreening= (resolve) => require(["./immuneScreening.vue"], resolve);
 import wergeneralInformation from "./generalInformation.vue";
 
 export default {
@@ -78,11 +78,11 @@ export default {
       isActive: true,
       restaurants: [],
       showSnackbar: false,
-      seargene: "A2M",
+      seargene: "A1BG",
       activeName: "generalInformation",
-      celltypeVue: "",
-      diffexpVue: "",
-      survivalVue: "",
+      singleCellImmunityVue: "",
+      immuneScreeningVue: "",
+      immuneResponseVue: "",
       signatureVue: "",
       generalInformationVue: "",
     };
@@ -112,18 +112,23 @@ export default {
 
     checkVue(name) {
       switch (name) {
-        case "SingleCellImmunity":
-          this.celltypeVue = wercelltype;
-          break;
-        case "survival":
-          this.survivalVue = wersurvival;
-          //this.$refs.immuResponseVueRef.plot();
-          break;
-        case "signature":
-          this.signatureVue = wersignature;
-          break;
         case "generalInformation":
           this.generalInformationVue = wergeneralInformation;
+          break;
+        case "immuneResponse":
+          this.immuneResponseVue = werimmuneResponse;
+          this.$refs.immuResponseVueRef.plot();
+          break;
+        case "singleCellImmunity":
+          this.singleCellImmunityVue = wercelltype;
+          this.$refs.singleCellImmunityVueRef.Plot();
+          break;
+        // case "signature":
+        //   this.signatureVue = wersignature;
+        //   break;
+
+        case "immuneScreening":
+          this.immuneScreeningVue = werimmuneScreening;
           break;
       }
     },
@@ -132,9 +137,10 @@ export default {
         alert("Please input Gene");
       } else {
         this.homeShow = true;
+        this.activeName = "generalInformation";
         this.$refs.generalInformationVueRef.getdatagene();
         this.$refs.generalInformationVueRef.tableDetail(this.seargene);
-        //toTarget(820);
+        
       }
     },
 
@@ -252,5 +258,12 @@ div#readmeCard {
 #serachbt {
   font-size: 24px !important;
   margin-left: 70px !important;
+}
+
+#tab-generalInformation, #tab-immuneResponse, #tab-singleCellImmunity, #tab-immuneResponse ,#tab-immuneScreening{
+    font-size: 20px;
+    height: 55px;
+    padding: 10px;
+    font-weight: bold !important;
 }
 </style>

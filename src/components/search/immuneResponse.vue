@@ -12,7 +12,12 @@
       :title="'Differential expression between pre-therapy and post-therapy'"
       ref="immuResponseVueRefTherapy"
     ></v-resultcard>
-    <v-resultcard :conditi="'Survival'" :seargene="seargene" ref="immuResponseVueRefSurvival" :title="'Survival analysis'"></v-resultcard>
+    <v-resultcard
+      :conditi="'Survival'"
+      :seargene="seargene"
+      ref="immuResponseVueRefSurvival"
+      :title="'Survival analysis'"
+    ></v-resultcard>
   </div>
 </template>
 
@@ -23,22 +28,33 @@ export default {
   },
   data() {
     return {
-      oldseargene:""
+      oldseargene: "",
     };
   },
 
-  methods:{
+  mounted() {
+    this.oldseargene = this.seargene;
+  },
 
-    plot(){
-      if((this.oldseargene!==this.seargene)|this.oldseargene===""){
-        this.$refs.immuResponseVueRefResponder.getTableData(this.seargene, "Responder");
-        this.$refs.immuResponseVueRefTherapy.getTableData(this.seargene, "Therapy");
-        this.$refs.immuResponseVueRefSurvival.getTableData(this.seargene, "Survival");
-        this.oldseargene=this.seargene
+  methods: {
+    plot() {
+      if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
+        this.oldseargene = this.seargene;
+        this.$refs.immuResponseVueRefResponder.getTableData(
+          this.seargene,
+          "Responder"
+        );
+        this.$refs.immuResponseVueRefTherapy.getTableData(
+          this.seargene,
+          "Therapy"
+        );
+        this.$refs.immuResponseVueRefSurvival.getTableData(
+          this.seargene,
+          "Survival"
+        );
+        
       }
-      
-    }
-
+    },
   },
 
   components: {
@@ -49,7 +65,6 @@ export default {
 
 
 <style>
-
 .detailimg {
   text-align: center;
 }

@@ -133,15 +133,20 @@ export default {
       werdetailgene: [],
       detailload: true,
       targetshow: false,
-      wershow: false,
+      wershow: true,
       tableData: [],
       drugshow: false,
     };
   },
 
+
+  mounted: function() {
+     this.getdatagene()
+     this.tableDetail()
+  },
   methods: {
     getdatagene() {
-      this.detailload = false;
+      this.detailload = true;
       this.$http
         .get(this.getdetailgene, {
           params: {
