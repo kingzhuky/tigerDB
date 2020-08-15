@@ -55,7 +55,7 @@
     </div>
 
     <div class="textitem">
-      <el-card v-if="singleCellCorShow" v-loading="singleCellCorloading">
+      <el-card v-show="singleCellCorShow" v-loading="singleCellCorloading">
         <p
           class="card-title"
         >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
@@ -66,7 +66,7 @@
     </div>
 
     <div class="textitem">
-      <el-card v-if="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
+      <el-card v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
         <p class="card-title">Differential expression between tumor and normal per cell type</p>
         <div class="geneExp">
           <div id="singleCellImmuTumor" class="scaterPlot" style="width: 600px;height:400px;"></div>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="textitem">
-      <el-card v-if="singleCellImmuResponseshow" v-loading="singleCellImmuResponseloading">
+      <el-card v-show="singleCellImmuResponseshow" v-loading="singleCellImmuResponseloading">
         <p
           class="card-title"
         >Differential expression between response and non-response per cell type</p>
@@ -106,15 +106,15 @@ export default {
   data() {
     return {
       //tableData: [],
-      singleCellImmuTumorshow: true,
+      singleCellImmuTumorshow: false,
       singleCellImmuTumorloading: false,
-      singleCellImmuResponseshow: true,
+      singleCellImmuResponseshow: false,
       singleCellImmuResponseloading: false,
-      singleCellCorShow: true,
+      singleCellCorShow: false,
       singleCellCorloading: false,
       loading: false,
       gloCluoptions: [],
-      gloclu: "All",
+      gloClu: "All",
       cancer: "BCC",
       canceroptions: [],
       subClu: [],
@@ -133,9 +133,9 @@ export default {
       this.getTableData(this.seargene);
       this.getcancer();
       this.getgloClu();
-      this.getScaData(this.seargene, "Responder", "singleCellImmuTumor");
-      this.getScaData(this.seargene, "Responder", "singleCellImmuResponse");
-      this.getDiagramData(this.seargene, "singleCellCorTumor");
+      // this.getScaData(this.seargene, "home_scdiffexp_tn", "singleCellImmuTumor");
+      // this.getScaData(this.seargene, "home_scdiffexp_rnr", "singleCellImmuResponse");
+      //this.getDiagramData(this.seargene, "singleCellCorTumor");
     });
   },
 
@@ -162,10 +162,10 @@ export default {
       }
     },
     clickPlot() {
-      this.genePlot(this.seargene);
-      this.getScaData(this.seargene, "Responder", "singleCellImmuTumor");
-      this.getScaData(this.seargene, "Responder", "singleCellImmuResponse");
       this.getDiagramData(this.seargene, "singleCellCorTumor");
+      this.getScaData(this.seargene, "home_scdiffexp_tn", "singleCellImmuTumor");
+      this.getScaData(this.seargene, "home_scdiffexp_rnr", "singleCellImmuResponse");
+      this.genePlot(this.seargene);
     },
     genePlot(clickgene) {
       var that = this;
@@ -189,7 +189,7 @@ export default {
               that.imgpathBar = "tiger/img/" + res.data.output[0].split(",")[1];
               that.imgpathBar2 =
                 "tiger/img/" + res.data.output[0].split(",")[2];
-              //that.imgpathBar3='tiger/img/'+res.data.output[0].split(',')[3]
+              that.imgpathBar3='tiger/img/'+res.data.output[0].split(',')[3]
               that.geneshow = true;
             }
             //that.geneplots = res.data.output[0];
@@ -343,7 +343,13 @@ export default {
     },
 
     getScaData(gene, conditi, id) {
-      this.cardLoading = true;
+       if (id==="singleCellImmuTumor"){
+        this.singleCellImmuTumorshow = true;
+        this.singleCellImmuTumorloading=true;
+      }else{
+        this.singleCellImmuResponseshow = true;
+        this.singleCellImmuResponseloading=true;
+      }
       this.$http
         .get("/tiger/homeresponse.php", {
           params: {
@@ -353,11 +359,30 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            this.draw_chart_sca(res.data.list, id);
-            //this.diffExpRespontableData = res.data.datatable;
-            this.singleCellImmuTumorshow = true;
-            this.singleCellImmuResponseshow = true;
-            this.cardLoading = false;
+
+            if (res.data.list.length===0){
+              if (id==="singleCellImmuTumor"){
+                this.singleCellImmuTumorshow = false;
+              }else{
+                this.singleCellImmuResponseshow = false;
+              }
+            }else{
+              this.draw_chart_sca(res.data.list, id);
+              if (id==="singleCellImmuTumor"){
+                this.singleCellImmuTumorloading=false;
+              }else{
+                this.singleCellImmuResponseloading=false;
+              }
+
+            }
+
+            
+          }else{
+            if (id==="singleCellImmuTumor"){
+              this.singleCellImmuTumorshow = false;
+            }else{
+              this.singleCellImmuResponseshow = false;
+            }
           }
         })
         .catch((error) => {
@@ -366,6 +391,7 @@ export default {
     },
 
     getDiagramData(gene, id) {
+      this.singleCellCorShow = true;
       this.singleCellCorloading = true;
       this.$http
         .get("/tiger/searchcoea.php", {
@@ -375,9 +401,14 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            this.draw_chart_Diagram(res.data, id);
-            this.singleCellCorShow = true;
-            this.singleCellCorloading = false;
+            if (res.data.links.length!==0){
+               this.draw_chart_Diagram(res.data, id);
+              this.singleCellCorShow = true;
+              this.singleCellCorloading = false;
+            }else{
+              this.singleCellCorShow = false;
+            }
+           
           } else {
             this.singleCellCorShow = false;
           }

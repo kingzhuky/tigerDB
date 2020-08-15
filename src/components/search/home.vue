@@ -45,10 +45,10 @@
             <el-tab-pane label="Single-Cell Immunity" name="singleCellImmunity">
               <component :is="singleCellImmunityVue" ref="singleCellImmunityVueRef" :seargene="seargene"></component>
             </el-tab-pane>
-<!--             
-            <el-tab-pane label="Immune Screening" name="immuneScreening">
+            
+            <!-- <el-tab-pane label="Immune Screening" name="immuneScreening">
               <component :is="immuneScreeningVue" :seargene="seargene"></component>
-            </el-tab-pane> -->
+            </el-tab-pane>  -->
 
             <!-- <el-tab-pane label="Signature Analysis" name="signature">
               <component :is="signatureVue"></component>
@@ -139,6 +139,7 @@ export default {
         this.activeName = "generalInformation";
         this.$refs.generalInformationVueRef.getdatagene();
         this.$refs.generalInformationVueRef.tableDetail(this.seargene);
+        this.$refs.generalInformationVueRef.getdataReactome();
         
       }
     },
