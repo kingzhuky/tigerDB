@@ -188,10 +188,16 @@ export default {
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
+      var xAxis=""
+      if (this.conditi==="Survival"){
+        xAxis="ZScore"
+      }else{
+        xAxis="LogFC"
+      }
 
       let option = {
-        xAxis: {},
-        yAxis: {},
+        xAxis: xAxis,
+        yAxis: {name:"P-Value"},
         tooltip: {
           formatter: "{c}",
         },

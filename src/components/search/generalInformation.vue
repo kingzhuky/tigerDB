@@ -46,10 +46,10 @@
             <el-table :data="ReactomeTableData" style="width: 100%">
               <el-table-column prop="ensembl" label="Ensembl" width="180">
               </el-table-column>
-              <el-table-column prop="reactomeid" label="reactome ID" width="180"></el-table-column>
+              <el-table-column prop="reactomeid" label="Reactome ID" width="180"></el-table-column>
               <el-table-column label="reactome URL">
                   <template slot-scope="scope">
-                <a v-html="scope.row.reactomeurl"></a>
+                <a :href="scope.row.reactomeurl" target="_blank">{{scope.row.reactomeurl}}</a>
               </template>
               </el-table-column>
               <el-table-column prop="description" label="Description">
@@ -172,8 +172,10 @@ export default {
         .then((res) => {
           (this.ReactomeTableData = res.data.list),
             (this.ReactomeLoading = false);
-          if (this.ReactomeTableData.length != 0) {
+          if (res.data.list.length != 0) {
             this.ReactomeShow = true;
+          }else{
+            this.ReactomeShow = false
           }
         });
     },

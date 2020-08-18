@@ -46,13 +46,12 @@
               <component :is="singleCellImmunityVue" ref="singleCellImmunityVueRef" :seargene="seargene"></component>
             </el-tab-pane>
             
-            <!-- <el-tab-pane label="Immune Screening" name="immuneScreening">
+            <el-tab-pane label="Immune Screening" name="immuneScreening">
               <component :is="immuneScreeningVue" :seargene="seargene"></component>
-            </el-tab-pane>  -->
-
-            <!-- <el-tab-pane label="Signature Analysis" name="signature">
+            </el-tab-pane> 
+            <el-tab-pane label="Signature Analysis" name="signature">
               <component :is="signatureVue"></component>
-            </el-tab-pane> -->
+            </el-tab-pane> 
           </el-tabs>
         </div>
       </el-card>
@@ -122,9 +121,9 @@ export default {
           this.singleCellImmunityVue = wercelltype;
           this.$refs.singleCellImmunityVueRef.Plot();
           break;
-        // case "signature":
-        //   this.signatureVue = wersignature;
-        //   break;
+        case "signature":
+          this.signatureVue = wersignature;
+          break;
 
         case "immuneScreening":
           this.immuneScreeningVue = werimmuneScreening;
@@ -247,7 +246,7 @@ div#readmeCard {
   margin-left: 70px !important;
 }
 
-#tab-generalInformation, #tab-immuneResponse, #tab-singleCellImmunity, #tab-immuneResponse ,#tab-immuneScreening{
+#tab-generalInformation, #tab-immuneResponse, #tab-singleCellImmunity, #tab-immuneResponse ,#tab-immuneScreening,#tab-signature{
     font-size: 20px;
     height: 55px;
     padding: 10px;

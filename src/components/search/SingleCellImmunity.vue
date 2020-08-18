@@ -40,52 +40,56 @@
             </el-row>
           </el-col>
         </el-row>
-      </el-card>
-    </div>
 
-    <div class="textitem">
-      <el-card v-if="geneshow" v-loading="geneloading">
-        <p class="card-title">Gene Expression in cell type selected</p>
-        <div class="geneExp">
-          <img id="singleimg" width="550px" :src="imgUrlBox" />
+        <div class="textitem" v-if="geneshow" v-loading="geneloading">
+          <p class="card-title">Gene Expression in cell type selected</p>
+          <div class="geneExp">
+            <img id="singleimg" width="550px" :src="imgUrlBox" />
 
-          <img id="singleimg" width="550px" :src="imgUrlBar" />
+            <img id="singleimg" width="550px" :src="imgUrlBar" />
+          </div>
+        </div>
+
+        <div class="textitem" v-show="singleCellCorShow" v-loading="singleCellCorloading">
+          <p
+            class="card-title"
+          >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
+          <div class="geneExp">
+            <div id="singleCellCorTumor" class="scaterPlot" style="width: 1200px;height:1000px;"></div>
+          </div>
         </div>
       </el-card>
     </div>
 
-    <div class="textitem">
-      <el-card v-show="singleCellCorShow" v-loading="singleCellCorloading">
-        <p
-          class="card-title"
-        >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
-        <div class="geneExp">
-          <div id="singleCellCorTumor" class="scaterPlot" style="width: 1200px;height:1000px;"></div>
-        </div>
-      </el-card>
-    </div>
-
-    <div class="textitem">
-      <el-card v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
+    <el-card>
+      <div class="textitem" v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
         <p class="card-title">Differential expression between tumor and normal per cell type</p>
         <div class="geneExp">
           <div id="singleCellImmuTumor" class="scaterPlot" style="width: 600px;height:400px;"></div>
-          <img id="singleimg" width="550px" :src="imgUrlBar2" />
+        <div v-show="singleCellImmuTumorImgshow" v-loading="singleCellImmuTumorImgloading" >
+           <img id="singleimg"   width="550px" height="550px" :src="imgpathBar2"   />
         </div>
-      </el-card>
-    </div>
+        </div>
+      </div>
 
-    <div class="textitem">
-      <el-card v-show="singleCellImmuResponseshow" v-loading="singleCellImmuResponseloading">
+      <div
+        class="textitem"
+        v-show="singleCellImmuResponseshow"
+        v-loading="singleCellImmuResponseloading"
+      >
         <p
           class="card-title"
         >Differential expression between response and non-response per cell type</p>
         <div class="geneExp">
           <div id="singleCellImmuResponse" class="scaterPlot" style="width: 600px;height:400px;"></div>
-          <img id="singleimg" width="550px" :src="imgUrlBar3" />
+          
+        <div v-show="singleCellImmuResponseImgshow" v-loading="singleCellImmuResponseImgloading" >
+          <img id="singleimg"  width="550px" height="550px" :src="imgpathBar3" />
         </div>
-      </el-card>
-    </div>
+
+        </div>
+      </div>
+    </el-card>
 
     <!-- <el-table :data="tableData" max-height="600" style="width: 100%">
       <el-table-column prop="GENE_SYMBOL" align="center" border label="GENE SYMBOL"></el-table-column>
@@ -106,6 +110,11 @@ export default {
   data() {
     return {
       //tableData: [],
+      singleCellImmuTumorImgshow: false,
+      singleCellImmuTumorImgloading: false,
+      singleCellImmuResponseImgshow: false,
+      singleCellImmuResponseImgloading: false,
+      singleCellCorShow: false,
       singleCellImmuTumorshow: false,
       singleCellImmuTumorloading: false,
       singleCellImmuResponseshow: false,
@@ -125,6 +134,7 @@ export default {
       imgpathBar1: "",
       imgpathBar2: "",
       oldseargene: "",
+      imgpathBar3:"",
     };
   },
   mounted() {
@@ -146,12 +156,12 @@ export default {
     imgUrlBar: function () {
       return this.imgpathBar;
     },
-    imgUrlBar2: function () {
-      return this.imgpathBar2;
-    },
-    imgUrlBar3: function () {
-      return this.imgpathBar3;
-    },
+    // imgUrlBar2: function () {
+    //   return this.imgpathBar2;
+    // },
+    // imgUrlBar3: function () {
+    //   return this.imgpathBar3;
+    // },
   },
 
   methods: {
@@ -163,10 +173,19 @@ export default {
     },
     clickPlot() {
       this.getDiagramData(this.seargene, "singleCellCorTumor");
-      this.getScaData(this.seargene, "home_scdiffexp_tn", "singleCellImmuTumor");
-      this.getScaData(this.seargene, "home_scdiffexp_rnr", "singleCellImmuResponse");
+      this.getScaData(
+        this.seargene,
+        "home_scdiffexp_tn",
+        "singleCellImmuTumor"
+      );
+      this.getScaData(
+        this.seargene,
+        "home_scdiffexp_rnr",
+        "singleCellImmuResponse"
+      );
       this.genePlot(this.seargene);
     },
+
     genePlot(clickgene) {
       var that = this;
       that.geneloading = true;
@@ -176,7 +195,7 @@ export default {
           params: {
             cancer: this.cancer,
             gene: clickgene,
-            gloclu: this.gloclu,
+            gloclu: this.gloClu,
             subclu: this.subClu.join(","),
           },
         })
@@ -185,11 +204,12 @@ export default {
             if (res.data.output[0] === "0") {
               that.geneshow = false;
             } else {
-              that.imgpathBox = "tiger/img/" + res.data.output[0].split(",")[0];
-              that.imgpathBar = "tiger/img/" + res.data.output[0].split(",")[1];
-              that.imgpathBar2 =
-                "tiger/img/" + res.data.output[0].split(",")[2];
-              that.imgpathBar3='tiger/img/'+res.data.output[0].split(',')[3]
+              that.imgpathBox = "/tiger/img/" + res.data.output[0].split(",")[0];
+              that.imgpathBar = "/tiger/img/" + res.data.output[0].split(",")[1];
+              // that.imgpathBar2 =
+              //   "tiger/img/" + res.data.output[0].split(",")[2];
+              // that.imgpathBar3 =
+              //   "tiger/img/" + res.data.output[0].split(",")[3];
               that.geneshow = true;
             }
             //that.geneplots = res.data.output[0];
@@ -343,12 +363,16 @@ export default {
     },
 
     getScaData(gene, conditi, id) {
-       if (id==="singleCellImmuTumor"){
+      if (id === "singleCellImmuTumor") {
         this.singleCellImmuTumorshow = true;
-        this.singleCellImmuTumorloading=true;
-      }else{
+        this.singleCellImmuTumorImgshow = false;
+        this.imgpathBar2=""
+        this.singleCellImmuTumorloading = true;
+      } else {
         this.singleCellImmuResponseshow = true;
-        this.singleCellImmuResponseloading=true;
+        this.singleCellImmuResponseImgshow = false;
+        this.singleCellImmuResponseloading = true;
+        this.imgpathBar3=""
       }
       this.$http
         .get("/tiger/homeresponse.php", {
@@ -359,28 +383,24 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-
-            if (res.data.list.length===0){
-              if (id==="singleCellImmuTumor"){
+            if (res.data.list.length === 0) {
+              if (id === "singleCellImmuTumor") {
                 this.singleCellImmuTumorshow = false;
-              }else{
+              } else {
                 this.singleCellImmuResponseshow = false;
               }
-            }else{
+            } else {
               this.draw_chart_sca(res.data.list, id);
-              if (id==="singleCellImmuTumor"){
-                this.singleCellImmuTumorloading=false;
-              }else{
-                this.singleCellImmuResponseloading=false;
+              if (id === "singleCellImmuTumor") {
+                this.singleCellImmuTumorloading = false;
+              } else {
+                this.singleCellImmuResponseloading = false;
               }
-
             }
-
-            
-          }else{
-            if (id==="singleCellImmuTumor"){
+          } else {
+            if (id === "singleCellImmuTumor") {
               this.singleCellImmuTumorshow = false;
-            }else{
+            } else {
               this.singleCellImmuResponseshow = false;
             }
           }
@@ -401,14 +421,13 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            if (res.data.links.length!==0){
-               this.draw_chart_Diagram(res.data, id);
+            if (res.data.links.length !== 0) {
+              this.draw_chart_Diagram(res.data, id);
               this.singleCellCorShow = true;
               this.singleCellCorloading = false;
-            }else{
+            } else {
               this.singleCellCorShow = false;
             }
-           
           } else {
             this.singleCellCorShow = false;
           }
@@ -416,6 +435,66 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+
+    differentialExpressionPlot(cancer,gloclu,subClu,id) {
+        var that = this;
+
+      if (id === "singleCellImmuTumor") {
+         that.singleCellImmuTumorImgloading = true;
+        that.singleCellImmuTumorImgshow = true;
+        } else {
+          that.singleCellImmuResponseImgshow = true;
+        that.singleCellImmuResponseImgloading = true;
+
+      }
+        
+       
+        this.$http
+          .get("/tiger/scimmudiffexpdetailgene.php", {
+            params: {
+              cancer: cancer,
+              gene: this.seargene,
+              gloclu: gloclu,
+              subclu: subClu,
+            },
+          })
+          .then(function (res) {
+
+
+            if (res.data.status == 0) {
+              if (res.data.output[0] === "0") {
+                  if (id === "singleCellImmuTumor") {
+                    that.singleCellImmuTumorImgshow = false;
+                  } else {
+                    that.singleCellImmuResponseImgshow = false;
+                  }
+              } else {
+                if (id === "singleCellImmuTumor") {
+                  that.singleCellImmuTumorImgshow = true;
+                  that.singleCellImmuTumorImgloading = false;
+                  that.imgpathBar2 = "/tiger/img/" + res.data.output[0].split(',')[2]
+
+                } else {
+                  that.singleCellImmuResponseImgshow = true;
+                  that.singleCellImmuResponseImgloading =false;
+                  that.imgpathBar3 = "/tiger/img/" + res.data.output[0].split(',')[2]
+                }
+
+              }              
+            }else{
+               if (id === "singleCellImmuTumor") {
+                    that.singleCellImmuTumorImgshow = false;
+                  } else {
+                    that.singleCellImmuResponseImgshow = false;
+                  }
+            }
+          })
+          .catch(function (res) {
+            console.log(res);
+          });
+      
     },
 
     draw_chart_Diagram(data, id) {
@@ -432,7 +511,7 @@ export default {
           trigger: "item",
           triggerOn: "mousemove",
         },
-        
+
         series: [
           {
             type: "sankey",
@@ -470,7 +549,6 @@ export default {
                   opacity: 0.6,
                 },
               },
-              
             ],
             lineStyle: {
               curveness: 0.5,
@@ -478,7 +556,6 @@ export default {
           },
         ],
       };
-
 
       // if(option.series.length!==0){
       //   option["dataZoom"]  =[
@@ -497,14 +574,15 @@ export default {
     },
 
     draw_chart_sca(data, id) {
+      var that = this;
       var targetdiv = document.getElementById(id);
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
 
       let option = {
-        xAxis: {},
-        yAxis: {},
+        xAxis: {name:"Log2FoldChange"},
+        yAxis: {name:"P Value"},
         tooltip: {
           formatter: "{c}",
         },
@@ -519,6 +597,14 @@ export default {
 
       myChart_mercor.clear();
       myChart_mercor.setOption(option);
+
+      myChart_mercor.on("click", function (param) {
+        if (param.componentSubType === "scatter") {
+          //console.log(param.data);
+          that.differentialExpressionPlot(param.data[2],param.data[3],param.data[4],id)
+        }
+      });
+
       window.onresize = function () {
         myChart_mercor.resize();
       };
