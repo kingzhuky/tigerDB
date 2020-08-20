@@ -52,17 +52,20 @@
       </el-card>
     </div>
 
-    
-      <div class="textitem">
-        <el-card v-loading="singleCellCorloading">
+    <div class="textitem">
+      <el-card v-loading="singleCellCorloading">
         <p
           class="card-title"
         >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
         <div>
-           <el-row class="selectrow">
-          <el-col :span="6">
-            <span class="demonstration">DataSet:</span>
-            <el-select v-model="CancerType" @change="CancerTypeSelectChange" placeholder="DataSet">
+          <el-row class="selectrow">
+            <el-col :span="6">
+              <span class="demonstration">DataSet:</span>
+              <el-select
+                v-model="CancerType"
+                @change="CancerTypeSelectChange"
+                placeholder="DataSet"
+              >
                 <el-option
                   v-for="item in canceroptions"
                   :key="item.cancer"
@@ -70,11 +73,11 @@
                   :value="item.cancer"
                 ></el-option>
               </el-select>
-          </el-col>
+            </el-col>
 
-          <el-col :span="6" >
-            <span class="demonstration">Global Cluster:</span>
-            <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
+            <el-col :span="6">
+              <span class="demonstration">Global Cluster:</span>
+              <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
                 <el-option
                   v-for="item in gloCluoptions"
                   :key="item.glo"
@@ -82,11 +85,11 @@
                   :value="item.glo"
                 ></el-option>
               </el-select>
-          </el-col>
+            </el-col>
 
-           <el-col :span="6">
-            <span class="demonstration">Cell Type:</span>
-            <el-select v-model="CellType" v-loading="CellTypeLoading">
+            <el-col :span="6" >
+              <span class="demonstration">Cell Type:</span>
+              <el-select v-model="CellType" v-loading="CellTypeLoading">
                 <el-option
                   v-for="item in CellTypeCluoptions"
                   :key="item.CellType"
@@ -94,14 +97,12 @@
                   :value="item.CellType"
                 ></el-option>
               </el-select>
-          </el-col>
-           <el-col :span="6" :offset="1">
-            <el-button @click="searchTable">Search</el-button>
-          </el-col>
-
-
-        </el-row>
-         <br>
+            </el-col>
+            <el-col :span="5" :offset="1">
+              <el-button @click="searchTable">Search</el-button>
+            </el-col>
+          </el-row>
+          <br />
           <!-- <div id="singleCellCorTumor" class="scaterPlot" style="width: 1200px;height:1000px;"></div> -->
           <el-row>
             <el-table :data="ReactomeTableData" max-height="600" style="width: 100%">
@@ -115,10 +116,10 @@
               <el-table-column prop="SCID" label="SCID"></el-table-column>
             </el-table>
           </el-row>
-          <br>
+          <br />
           <el-row>
             <el-pagination
-            class="scPagination"
+              class="scPagination"
               background
               :page-sizes="[10, 20, 50, 100]"
               :page-size="pageSize"
@@ -130,9 +131,8 @@
             ></el-pagination>
           </el-row>
         </div>
-        </el-card>
-      </div>
-    
+      </el-card>
+    </div>
 
     <el-card v-show="singleCellshow">
       <div class="textitem" v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
@@ -184,10 +184,10 @@ export default {
       currentPage: 1,
       pageSize: 20,
       total: 200,
-      CellTypeLoading:false,
-      GlobalCluster:"All",
-      CellType:"Endothelial",
-      CancerType:"BCC",
+      CellTypeLoading: false,
+      GlobalCluster: "All",
+      CellType: "Endothelial",
+      CancerType: "BCC",
       singleCellshow: false,
       singleCellImmuTumorImgshow: false,
       singleCellImmuTumorImgloading: false,
@@ -223,7 +223,7 @@ export default {
       this.getgloClu();
       // this.getScaData(this.seargene, "home_scdiffexp_tn", "singleCellImmuTumor");
       // this.getScaData(this.seargene, "home_scdiffexp_rnr", "singleCellImmuResponse");
-      this.getDiagramData(this.seargene, "singleCellCorTumor",1,10);
+      this.getDiagramData(this.seargene, "singleCellCorTumor", 1, 10);
     });
   },
 
@@ -245,7 +245,7 @@ export default {
   methods: {
     handleSizeChange(val) {
       this.pageSize = val;
-      this.currentPage =1;
+      this.currentPage = 1;
       this.getDiagramData(this.seargene, "singleCellCorTumor", 1, val);
     },
     handleCurrentChange(val) {
@@ -257,7 +257,7 @@ export default {
         this.pageSize
       );
     },
-    Plot() {
+    plot() {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
         this.oldseargene = this.seargene;
         this.clickPlot(this.seargene);
@@ -330,16 +330,15 @@ export default {
       this.getgloClu();
     },
 
-   
-    CancerTypeSelectChange(){
-      this.GlobalCluster="All"
-      this.getCellType()
+    CancerTypeSelectChange() {
+      this.GlobalCluster = "All";
+      this.getCellType();
     },
-     GlobalClusterChange(){
-      this.getCellType()
+    GlobalClusterChange() {
+      this.getCellType();
     },
     getCellType() {
-      this.CellTypeLoading=true
+      this.CellTypeLoading = true;
       this.$http
         .get("/tiger/scCelltype.php", {
           params: {
@@ -350,11 +349,11 @@ export default {
         .then((res) => {
           this.CellTypeCluoptions = res.data.list;
           this.CellType = res.data.list[0].CellType;
-          this.CellTypeLoading=false
+          this.CellTypeLoading = false;
         });
     },
-    searchTable(){
-      this.getDiagramData(this.seargene, "singleCellCorTumor",1,10);
+    searchTable() {
+      this.getDiagramData(this.seargene, "singleCellCorTumor", 1, 10);
     },
 
     getgloClu() {
@@ -546,17 +545,17 @@ export default {
             gene: gene,
             currentPage: currentPage,
             pageSize: pageSize,
-            GlobalCluster:this.GlobalCluster,
-            CellType:this.CellType,
-            CancerType:this.CancerType
+            GlobalCluster: this.GlobalCluster,
+            CellType: this.CellType,
+            CancerType: this.CancerType,
           },
         })
         .then((res) => {
           if (res.data.status === 200) {
             this.ReactomeTableData = res.data.list;
-            this.total = res.data.total[0];            
+            this.total = res.data.total[0];
             this.singleCellCorloading = false;
-          } 
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -744,7 +743,7 @@ div#scaterid {
   margin: 0 auto;
 }
 .scPagination.el-pagination.is-background {
-    text-align: center;
+  text-align: center;
 }
 .geneExp {
   display: flex;

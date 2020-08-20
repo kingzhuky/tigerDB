@@ -39,7 +39,8 @@ export default {
       getPlotUrl: "",
       detailimgShow:true,
       articleData:[],
-      artloading:true
+      artloading:true,
+      oldseargene:""
     };
   },
 
@@ -54,12 +55,19 @@ export default {
 
   mounted() {
     this.$nextTick(() => {
-      this.getTableData(this.seargene, "Responder");
-      this.artivcleDetail("B16_NK")
+      this.plot()
     });
   },
 
   methods: {
+    plot(){
+      if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
+        this.oldseargene = this.seargene;
+        this.getTableData(this.seargene, "Responder");
+        this.artivcleDetail("B16_NK")
+      }
+      
+    },
      artivcleDetail(sample) {
       var that = this;
       that.artloading = true;

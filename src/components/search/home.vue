@@ -47,10 +47,10 @@
             </el-tab-pane>
             
             <el-tab-pane label="Immune Screening" name="immuneScreening">
-              <component :is="immuneScreeningVue" :seargene="seargene"></component>
+              <component :is="immuneScreeningVue" ref="immuneScreeningVueRef" :seargene="seargene"></component>
             </el-tab-pane> 
             <el-tab-pane label="Signature Analysis" name="signature">
-              <component :is="signatureVue"></component>
+              <component :is="signatureVue" ref="immuSignatureRef" :gene="seargene"></component>
             </el-tab-pane> 
           </el-tabs>
         </div>
@@ -66,6 +66,8 @@ const werimmuneResponse = (resolve) => require(["./immuneResponse.vue"], resolve
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
 //const wergeneralInformation = "./generalInformation.vue";
 const werimmuneScreening= (resolve) => require(["./immuneScreening.vue"], resolve);
+//const wersignature = () => import('@/components/immuneSignatureTable')
+
 import wergeneralInformation from "./generalInformation.vue";
 
 export default {
@@ -119,14 +121,15 @@ export default {
           break;
         case "singleCellImmunity":
           this.singleCellImmunityVue = wercelltype;
-          this.$refs.singleCellImmunityVueRef.Plot();
+          this.$refs.singleCellImmunityVueRef.plot();
+          break;
+        case "immuneScreening":
+          this.immuneScreeningVue = werimmuneScreening;
+          this.$refs.immuneScreeningVueRef.plot();
           break;
         case "signature":
           this.signatureVue = wersignature;
-          break;
-
-        case "immuneScreening":
-          this.immuneScreeningVue = werimmuneScreening;
+          this.$refs.immuSignatureRef.plot();
           break;
       }
     },
