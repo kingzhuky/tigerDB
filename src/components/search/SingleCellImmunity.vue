@@ -134,7 +134,7 @@
       </el-card>
     </div>
 
-    <el-card v-show="singleCellshow">
+    <el-card >
       <div class="textitem" v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
         <p class="card-title">Differential expression between tumor and normal per cell type</p>
         <div class="geneExp">
@@ -188,7 +188,6 @@ export default {
       GlobalCluster: "All",
       CellType: "Endothelial",
       CancerType: "BCC",
-      singleCellshow: false,
       singleCellImmuTumorImgshow: false,
       singleCellImmuTumorImgloading: false,
       singleCellImmuResponseImgshow: false,
@@ -219,11 +218,24 @@ export default {
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
+
+       this.getScaData(
+        this.seargene,
+        "home_scdiffexp_tn",
+        "singleCellImmuTumor"
+      );
+      this.getScaData(
+        this.seargene,
+        "home_scdiffexp_rnr",
+        "singleCellImmuResponse"
+      );
+     
       this.getcancer();
       this.getgloClu();
       // this.getScaData(this.seargene, "home_scdiffexp_tn", "singleCellImmuTumor");
       // this.getScaData(this.seargene, "home_scdiffexp_rnr", "singleCellImmuResponse");
       this.getDiagramData(this.seargene, "singleCellCorTumor", 1, 10);
+
     });
   },
 
@@ -261,17 +273,7 @@ export default {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
         this.oldseargene = this.seargene;
         this.clickPlot(this.seargene);
-      }
-    },
-    clickPlot() {
-      this.singleCellshow = true;
-      this.getDiagramData(
-        this.seargene,
-        "singleCellCorTumor",
-        this.currentPage,
-        this.pageSize
-      );
-      this.getScaData(
+        this.getScaData(
         this.seargene,
         "home_scdiffexp_tn",
         "singleCellImmuTumor"
@@ -281,6 +283,16 @@ export default {
         "home_scdiffexp_rnr",
         "singleCellImmuResponse"
       );
+      }
+    },
+    clickPlot() {
+      this.getDiagramData(
+        this.seargene,
+        "singleCellCorTumor",
+        this.currentPage,
+        this.pageSize
+      );
+
       this.genePlot(this.seargene);
     },
 
@@ -500,6 +512,7 @@ export default {
         this.singleCellImmuResponseloading = true;
         this.imgpathBar3 = "";
       }
+     
       this.$http
         .get("/tiger/homeresponse.php", {
           params: {
@@ -530,6 +543,7 @@ export default {
               this.singleCellImmuResponseshow = false;
             }
           }
+         
         })
         .catch((error) => {
           console.log(error);

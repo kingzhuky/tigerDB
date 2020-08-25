@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="10" :offset="2">
-     <div id="singleCellTitle"> Tumor vs Normal / Response vs Non-response</div>
+     <div id="singleCellTitle"> {{this.vstype}}</div>
       </el-col>
       <el-col :span="4" :offset="8">
         <el-autocomplete
@@ -230,6 +230,7 @@ export default {
       oldcancer: "",
       oldgloclu: "",
       tableDataheader: [],
+      vstype:''
     };
   },
 
@@ -237,7 +238,7 @@ export default {
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     this.getTableData(1, "", "");
-    console.log(this.subClu);
+    this.getgloClu()
   },
 
   watch: {
@@ -254,6 +255,19 @@ export default {
   },
 
   methods: {
+    getgloClu() {
+      this.vstype=''
+      this.$http
+        .get("/tiger/scglocluster.php", {
+          params: {
+            cancer: this.cancer,
+            type: "singlecelldiffvs"
+          }
+        })
+        .then(res => {
+          this.vstype = res.data.list[0].glo;          
+        });
+    },
     querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {
@@ -277,6 +291,7 @@ export default {
         this.oldcancer = this.cancer;
         this.oldgloclu = this.gloclu;
         this.getTableData(1, "", "");
+        this.getgloClu()
       }
     },
 

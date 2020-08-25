@@ -172,9 +172,10 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            this.draw_chart(res.data.list);
-            this.diffExpRespontableData = res.data.datatable;
             this.cardLoading=false
+            this.diffExpRespontableData = res.data.datatable;
+            this.draw_chart(res.data.list);
+            
           }
         })
         .catch((error) => {
@@ -196,7 +197,7 @@ export default {
       }
 
       let option = {
-        xAxis: xAxis,
+        xAxis:{name:xAxis} ,
         yAxis: {name:"P-Value"},
         tooltip: {
           formatter: "{c}",
