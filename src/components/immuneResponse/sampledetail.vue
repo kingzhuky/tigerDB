@@ -33,7 +33,7 @@ export default {
     getTableData(sample) {
       this.loading = true;
       this.$http
-        .get("/tiger/immunescreendetail.php", {
+        .get("/tiger/immunescreendetail2.php", {
           params: {
             colu:"DatasetID",
             coluvalue: sample,

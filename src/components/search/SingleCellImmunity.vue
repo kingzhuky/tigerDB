@@ -44,9 +44,9 @@
         <div class="textitem" v-if="geneshow" v-loading="geneloading">
           <p class="card-title">Gene Expression in cell type selected</p>
           <div class="geneExp">
-            <img id="singleimg" width="550px" :src="imgUrlBox" />
+            <img id="singleimg"  :src="imgUrlBox" />
 
-            <img id="singleimg" width="550px" :src="imgUrlBar" />
+            <img id="singleimg" :src="imgUrlBar" />
           </div>
         </div>
       </el-card>
@@ -140,7 +140,7 @@
         <div class="geneExp">
           <div id="singleCellImmuTumor" class="scaterPlot" style="width: 600px;height:400px;"></div>
           <div v-show="singleCellImmuTumorImgshow" v-loading="singleCellImmuTumorImgloading">
-            <img id="singleimg" width="550px" height="550px" :src="imgpathBar2" />
+            <img id="singleimg"  :src="imgpathBar2" />
           </div>
         </div>
       </div>
@@ -157,7 +157,7 @@
           <div id="singleCellImmuResponse" class="scaterPlot" style="width: 600px;height:400px;"></div>
 
           <div v-show="singleCellImmuResponseImgshow" v-loading="singleCellImmuResponseImgloading">
-            <img id="singleimg" width="550px" height="550px" :src="imgpathBar3" />
+            <img id="singleimg"  :src="imgpathBar3" />
           </div>
         </div>
       </div>

@@ -56,8 +56,6 @@
       :gene="clickGene"
       :cancer="cancer"
       :gloclu="gloclu"
-      :subClu="subClu"
-      :subClucoptions="subClucoptions"
     ></v-expdetail>
   </div>
 </template>
@@ -341,7 +339,7 @@ export default {
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
-            type: "singlecelldiff_" + this.cancer + "_" + this.gloclu,
+            type: "scdiffmat_" + this.cancer ,
             draw: page,
             search: this.searchinput.trim(),
             start: (page - 1) * 20,

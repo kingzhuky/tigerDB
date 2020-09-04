@@ -143,7 +143,7 @@ export default {
       var that = this;
       that.detailload = true;
       this.$http
-        .get("/tiger/immunescreendetail.php", {
+        .get("/tiger/searchGene.php", {
           params: {
             tabl: "home_geneinfo",
             colu: "Symbol",

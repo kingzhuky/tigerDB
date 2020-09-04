@@ -16,6 +16,19 @@
                     <el-form-item label="Ariticle">
                       <span>{{ props.row.ariticle_name }}</span>
                     </el-form-item>
+                    <br>
+                    <el-form-item label="PMID">
+                      <span>{{ props.row.PMID }}</span>
+                    </el-form-item>
+                    <br>
+                   <el-form-item label="First author">
+                      <span>{{ props.row.First_author }}</span>
+                    </el-form-item>
+                    <br>
+                     <el-form-item label="Journal">
+                      <span>{{ props.row.Journal }}</span>
+                    </el-form-item>
+                    <br>
                     <el-form-item label="Abstract">
                       <span>{{ props.row.Abstract }}</span>
                     </el-form-item>
@@ -24,10 +37,10 @@
               </el-table-column>
               <el-table-column label="Gene" prop="GENE_SYMBOL"></el-table-column>
               <el-table-column label="Dataset" prop="Dataset_name"></el-table-column>
-              <el-table-column label="Log2FC" prop="Log2FoldChange"></el-table-column>
               <el-table-column label="Cancer Type" prop="Cancer_type"></el-table-column>
               <el-table-column label="Model" prop="Model"></el-table-column>
-              <el-table-column label="PMID" prop="PMID"></el-table-column>
+              <el-table-column label="Log2FC" prop="Log2FoldChange"></el-table-column>
+              <el-table-column label="Relation to immunity" prop="Relation"></el-table-column>
             </el-table>
 
             <!-- <el-table :data="articleData" style="width: 100%" >

@@ -50,10 +50,11 @@
     </el-table>
 
     <div class="colorbar">
-      <span>Low lg(P-value) &amp; logFC&lt;0</span>
+      <span>Receptivity</span>
       <span class="heatMapTable--colorbar"></span>
-      <span>High -lg(P-value) &amp; logFC&gt;0</span>
+      <span>Resistance</span>
     </div>
+    <div id="Log2FC">Log2FC</div>
     </el-card>
     
 
@@ -416,6 +417,8 @@ div#readmeCard {
     border-color: rgb(20, 146, 140);
     margin-bottom: 20px;
 }
-
+div#Log2FC {
+    text-align: center;
+}
 
 </style>

@@ -145,7 +145,7 @@ export default {
       var that = this;
       that.artloading = true;
       this.$http
-        .get("/tiger/immunescreendetail.php", {
+        .get("/tiger/immunescreendetail2.php", {
           params: {
             tabl: "immunescreenartle",
             colu: "dataset_id",

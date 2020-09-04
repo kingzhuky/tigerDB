@@ -128,9 +128,9 @@ export default {
 </script>
 
 <style>
-img#scimmuscater {
+/* img#scimmuscater {
     width: 600px;
-}
+} */
 </style>
 
 

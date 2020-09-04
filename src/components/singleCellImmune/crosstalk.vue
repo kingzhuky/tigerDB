@@ -4,12 +4,17 @@
       <el-card id="scummuviewer">
         <p class="card-title">Cross Talk</p>
         <el-row>
-          <el-col :span="6" :offset="2">
+          <el-col :span="6" :offset="1">
+            <el-row>
+              <span id="homespan">Select Cell</span>
+            </el-row>
+          </el-col>
+          <el-col :span="6" >
             <el-row>
               <span id="homespan">Select Clusters</span>
             </el-row>
           </el-col>
-          <el-col :span="5" :offset="2">
+          <el-col :span="4">
             <el-row>
               <span id="homespan">Search Ligand or Receptor</span>
             </el-row>
@@ -17,8 +22,18 @@
         </el-row>
         <br />
         <el-row>
-          <el-col :span="20" :offset="2">
-            <el-col :span="10" :offset="0">
+             <el-col :span="6" :offset="1">
+              <el-select
+                v-model="gloclu"
+                placeholder="Select Cluster"
+              >
+                <el-option label="ALl Cells" value="ALl"></el-option>
+                <el-option label="T cells" value="Tcells"></el-option>
+                <el-option label="B cells" value="Bcells"></el-option>
+              </el-select>
+            </el-col>
+
+            <el-col :span="6" :offset="0">
               <el-select
                 v-model="crossClu"
                 multiple
@@ -36,10 +51,9 @@
                 :trigger-on-focus="false"
               ></el-autocomplete>
             </el-col>
-            <el-col :span="6" :offset="2">
+            <el-col :span="4" >
               <el-button id="scimmubt" @click="searchCro">Search</el-button>
             </el-col>
-          </el-col>
         </el-row>
 
         <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
@@ -75,13 +89,10 @@ export default {
     cancer: {
       type: String,
     },
-    subClu: {
-      type: Array,
-    },
-    gloclu: {
-      type: String,
-    },
-    subClucoptions: Array,
+    // subClu: {
+    //   type: Array,
+    // },
+    //subClucoptions: Array,
     clickGene: {
       type: String,
     },
@@ -89,6 +100,7 @@ export default {
 
   data() {
     return {
+      gloclu:"All",
       crossCluloading: true,
       crossloading: false,
       plots: "",
@@ -184,6 +196,7 @@ export default {
           .get("/tiger/singlecellcross.php", {
             params: {
               cancer: this.cancer,
+              gloclu: this.gloclu,
               subclu: this.crossClu.join(","),
               ligand: this.seargene.trim().split("_", 2)[0],
               recepto: this.seargene.trim().split("_", 2)[1],

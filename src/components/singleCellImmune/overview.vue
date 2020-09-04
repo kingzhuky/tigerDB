@@ -1,81 +1,19 @@
 <template>
   <transition name="move3">
     <div class="detail-card">
-      <div class="infor">
-        <el-card>
-          <p class="card-title">Overview</p>
-          <el-row v-loading="loading" class="detailimg">
-            <el-col :span="16" :offset="2">
-              <div v-for="item in plots.split(',')" :key="item">
+      <div class="infor" v-loading="loading" >
+        <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
+          <p class="card-title">{{gloclu}}</p>
+          <el-row class="detailimg">
+            <el-col :span="20" :offset="2">
+              <div v-for="item in plotsres[gloclu]" :key="item">
                 <img id="singleimg" :src="'tiger/img/'+item+'.png'" />
                 <el-divider></el-divider>
               </div>
             </el-col>
-            <el-col :span="5" :offset="1" id="homeInput">
-              
-              <i class="el-icon-setting"></i>Optional
-              <br />
-              <br />
-              <el-select v-model="subClu" multiple>
-                <el-option v-for="item in subClucoptions" :key="item" :label="item" :value="item"></el-option>
-              </el-select>
-              <br />
-              <br />
-              <el-row class="plot">
-                <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
-              </el-row>
-            </el-col>
           </el-row>
         </el-card>
-        <!-- <el-card id="scummuviewer">
-          <p class="card-title">Cross Talk</p>
-          <el-row>
-            <el-col :span="6" :offset="2">
-              <el-row>
-                <span id="homespan">Select Clusters</span>
-              </el-row>
-            </el-col>
-            <el-col :span="5" :offset="2">
-              <el-row>
-                <span id="homespan">Search Ligand or Receptor</span>
-              </el-row>
-            </el-col>
-          </el-row>
-          <br />
-          <el-row>
-            <el-col :span="20" :offset="2">
-              <el-col :span="10" :offset="0">
-                <el-select v-model="crossClu" multiple placeholder="Select Cluster">
-                  <el-option
-                    v-for="item in crossClucoptions"
-                    :key="item"
-                    :label="item"
-                    :value="item"
-                  ></el-option>
-                </el-select>
-              </el-col>
-              <el-col :span="8" id="homeInput">
-                <el-autocomplete
-                  v-model="seargene"
-                  :fetch-suggestions="querySearchAsync"
-                  placeholder="Search Ligand or Receptor"
-                  @input="selectchange"
-                ></el-autocomplete>
-              </el-col>
-              <el-col :span="6">
-                <el-button id="scimmubt" @click="searchCro">Search</el-button>
-              </el-col>
-            </el-col>
-          </el-row>
-
-          <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
-            <el-row v-for="item2 in crossplots.split(',')" :key="item2" class="detailimg">
-              <img id="singleimg" :src="'tiger/img/'+item2+'.png'" />
-              <el-divider></el-divider>
-            </el-row>
-            <div v-show="!scimmuresShow" id="norult">No result</div>
-          </div>
-        </el-card> -->
+        
       </div>
 
       <v-goTop></v-goTop>
@@ -86,7 +24,6 @@
 <script>
 import goTop from "../public/goTop";
 
-//import { downloadFile } from "../../../static/js/utils.js";
 
 export default {
   props: {
@@ -94,44 +31,30 @@ export default {
     scimmuresShow: false,
     gloclu: String,
     cancer: String,
-    subClucoptions: Array,
-    subClu: Array,
+    gloCluoptions: Array
+    //subClu: Array,
   },
 
   data() {
     return {
       loading: true,
       crossloading: false,
-      plots: "",
-      crossplots: "",
+      //plots: [],
+      //crossplots: "",
       seargene: "HLA-A_CD3G",
       restaurants: [],
       crossClucoptions: [],
       crossClu: [],
+      gloclures:[],
+      plotsres:{}
       //subClucoptions: [],
       //subClu: [],
     };
   },
 
   mounted() {
-    // this.subClu = [
-    //   "B-cell",
-    //   "CAF",
-    //   "DC",
-    //   "Endothelial",
-    //   "Macrophages",
-    //   "Melanocytes",
-    //   "Myofibroblasts",
-    //   "NK",
-    //   "pDC",
-    //   "Plasma",
-    //   "T-cell",
-    //   "Tumor",
-    // ];
-    //console.log(this.subClu)
-    let subClu2 = this.subClu.join(",");
-    this.Plot(this.cancer, this.gloclu, subClu2);
-    //this.getcrossClu(this.cancer);
+   
+    this.clickPlot();
   },
 
   methods: {
@@ -174,7 +97,8 @@ export default {
     //     });
     // },
     reset(){
-      this.plots=[]
+      this.gloclures=[],
+      this.plotsres={}
     },
 
     checkdataset() {
@@ -221,24 +145,36 @@ export default {
     // },
 
     clickPlot() {
-      let subClu2 = this.subClu.join(",");
-      this.Plot(this.cancer, this.gloclu, subClu2);
+      this.gloclures=[],
+      this.plotsres={}
+      //let subClu2 = this.subClu.join(",");
+      for (let gloclu of  this.gloCluoptions){
+        console.log(this.gloCluoptions)
+        console.log(gloclu)
+        this.Plot(this.cancer, gloclu["glo"]);
+      }
     },
 
-    Plot(cancer, gloclu, subclu) {
+    Plot(cancer, gloclu) {
       var that = this;
       that.loading = true;
       this.$http
         .get("/tiger/singlecellimmu.php", {
           params: {
             cancer: cancer,
-            gloclu: gloclu,
-            subclu: subclu,
+            gloclu: gloclu
+            //subclu: subclu,
           },
         })
         .then(function (res) {
           if (res.data.status == 0) {
-            setTimeout((that.plots = res.data.output[0]), 1000);
+            that.gloclures.push(gloclu)
+            that.plotsres[gloclu]=res.data.output[0].split(',')
+            // if (that.plots===[]){
+            //   that.plots=res.data.output[0].split(',')
+            // }else{
+            //     that.plots.push(...res.data.output[0].split(','))
+            // }
             that.loading = false;
           }
         })
@@ -255,8 +191,11 @@ export default {
 </script>
 
 <style>
-img#singleimg {
-  width: 700px;
+/* img#singleimg {
+  width: 600px;
+} */
+.overiewcard {
+    margin-top: 20px;
 }
 div#pane-overview {
   font-size: 16px;

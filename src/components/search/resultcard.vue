@@ -197,8 +197,11 @@ export default {
       }
 
       let option = {
-        xAxis:{name:xAxis} ,
-        yAxis: {name:"P-Value"},
+        xAxis:{
+          name:xAxis,
+          offset:0
+        } ,
+        yAxis: {name:"–log10(pvalue)"},
         tooltip: {
           formatter: "{c}",
         },

@@ -12,7 +12,7 @@
       <div class="infor">
         <el-card>
           <el-row>
-             <el-col :span="5" :offset="1" id="homeInput">
+             <!-- <el-col :span="5" :offset="1" id="homeInput">
               
               <i class="el-icon-setting"></i>Optional
               <br />
@@ -25,8 +25,8 @@
               <el-row class="plot">
                 <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
               </el-row>
-            </el-col>
-            <el-col :span="16" :offset="2" >
+            </el-col> -->
+            <el-col :span="20" :offset="2" >
               <el-row
                 v-show="geneshow"
                 v-loading="geneloading"
@@ -72,13 +72,13 @@ export default {
     cancer: {
       type: String,
     },
-    subClu: {
-      type: Array,
-    },
+    // subClu: {
+    //   type: Array,
+    // },
     gloclu: {
       type: String,
     },
-    subClucoptions: Array,
+    //subClucoptions: Array,
     clickGene: {
       type: String,
     },
@@ -149,7 +149,8 @@ export default {
               cancer: this.cancer,
               gene: clickgene,
               gloclu: this.gloclu,
-              subclu: this.subClu.join(","),
+              type: "exp"
+              //subclu: this.subClu.join(","),
             },
           })
           .then(function (res) {

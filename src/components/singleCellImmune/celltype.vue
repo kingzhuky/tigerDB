@@ -47,9 +47,8 @@
       v-show="isShow"
       :gene="clickGene"
       :cancer="cancer"
-      :gloclu="gloclu"
-      :subClu="subClu"
-      :subClucoptions="subClucoptions"
+      :celltype="celltype"
+      :tabname="'celltype'"
     ></v-celltypedetail>
   </div>
 </template>
@@ -67,7 +66,7 @@ import {
 export default {
   props: {
     cancer: String,
-    gloclu: String,
+    //gloclu: String,
     subClu: Array,
     subClucoptions: Array,
   },
@@ -221,13 +220,13 @@ export default {
       sortOrder: "",
       tableDataheader: [],
       oldcancer:"",
-      oldgloclu:""
+      celltype:""
     };
   },
 
   mounted: function () {
     this.oldcancer = this.cancer;
-        this.oldgloclu = this.gloclu;
+        //this.oldgloclu = this.gloclu;
     this.getTableData(1, "", "");
   },
 
@@ -248,12 +247,9 @@ export default {
     plot() {
       if (
         (this.oldcancer !== this.cancer) |
-        (this.oldcancer === "") |
-        (this.oldgloclu !== this.gloclu) |
-        (this.oldgloclu === "")
+        (this.oldcancer === "") 
       ) {
         this.oldcancer = this.cancer;
-        this.oldgloclu = this.gloclu;
         this.getTableData(1, "", "");
       }
     },
@@ -303,7 +299,7 @@ export default {
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
-            type: "singlecelldiff_" + this.cancer + "_" + this.gloclu + "_tn",
+            type: "scmarkermat_" + this.cancer,
             draw: page,
             search: this.searchinput.trim(),
             start: (page - 1) * 20,
@@ -358,8 +354,9 @@ export default {
         this.subClu = this.subClucoptions;
         this.isShow = true;
         this.clickGene = row["gene"];
+        this.celltype=column["label"]
         //this.$refs.detailPlot.genePlot(row["gene"]);
-        this.$refs.detailPlot.evoluPlot(row["gene"]);
+        this.$refs.detailPlot.evoluPlot(row["gene"],column["label"]);
         //this.$refs.detailPlot.tableDetail("expression", 1, "");
         toTarget(820);
       }

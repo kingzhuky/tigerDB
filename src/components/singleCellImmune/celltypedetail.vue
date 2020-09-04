@@ -4,7 +4,7 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{ gene }} -- {{cancer}}</h1>
+            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}} -- {{ celltype }} -- {{gloclu}} -- {{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -12,7 +12,7 @@
       <div class="infor">
         <el-card>
           <el-row>
-            <el-col :span="5" :offset="1" id="homeInput">
+            <!-- <el-col :span="5" :offset="1" id="homeInput">
               
               <i class="el-icon-setting"></i>Optional
               <br />
@@ -25,22 +25,24 @@
               <el-row class="plot">
                 <el-button id="anabt" @click="clickPlot()" style="width:80%">Plot</el-button>
               </el-row>
-            </el-col>
-            <el-col :span="16" :offset="2" >
+            </el-col> -->
              
 
               <el-row
                 v-show="evolushow"
                 v-loading="evoluloading"
-                v-for="item in evoluplots.split(',')"
-                :key="item"
+                
                 class="detailimg"
               >
-                <img id="singleimg" :src="'tiger/img/'+item" />
-                <el-divider></el-divider>
+              <el-col :span="11">
+                <img id="singleimg" :src="'tiger/img/'+evoluplots.split(',')[0]" />
+                </el-col>
+                <el-col :span="11" :offset="2">
+                <img id="singleimg" :src="'tiger/img/'+evoluplots.split(',')[1]" />
+                </el-col>
+                
               </el-row>
-            </el-col>
-            <el-col  :span="16" :offset="2" v-show="!evolushow" v-loading="loading">
+            <el-col  :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
             <div id="norult">No result</div>
             </el-col>
             
@@ -63,16 +65,10 @@ export default {
     cancer: {
       type: String,
     },
-    subClu: {
-      type: Array,
-    },
-    gloclu: {
+    celltype:{type: String,},
+    tabname: {
       type: String,
-    },
-    subClucoptions: Array,
-    clickGene: {
-      type: String,
-    },
+    }
   },
 
   data() {
@@ -113,6 +109,7 @@ export default {
       geneloading: true,
       //geneplots: "",
       evoluplots: "",
+      gloclu:""
     };
   },
 
@@ -124,12 +121,12 @@ export default {
       }
       return true;
     },
-    clickPlot() {
-      //this.genePlot(this.clickGene);
-      this.evoluPlot(this.clickGene);
-    },
+    // clickPlot() {
+    //   //this.genePlot(this.gene);
+    //   this.evoluPlot(this.gene);
+    // },
 
-    // genePlot(clickgene) {
+    // genePlot(gene) {
     //   if (this.checkInput()) {
     //     var that = this;
     //     that.geneloading = true;
@@ -138,7 +135,7 @@ export default {
     //       .get("/tiger/scimmudiffexpdetailgene.php", {
     //         params: {
     //           cancer: this.cancer,
-    //           gene: clickgene,
+    //           gene: gene,
     //           gloclu: this.gloclu,
     //           subclu: this.subClu.join(","),
     //         },
@@ -160,18 +157,19 @@ export default {
     //       });
     //   }
     // },
-
-    evoluPlot(clickgene) {
+  //scimmudiffexpdetailevlou.php
+    evoluPlot(gene,celltype) {
       if (this.checkInput()) {
         var that = this;
         that.evoluloading = true;
         this.$http
-          .get("/tiger/scimmudiffexpdetailevlou.php", {
+          .get("/tiger/scimmudiffexpdetailgene.php", {
             params: {
               cancer: this.cancer,
-              gloclu: this.gloclu,
-              subclu: this.subClu.join(","),
-              gene: clickgene,
+              celltype: celltype,
+              type: this.tabname,
+              gene: gene,
+              
             },
           })
           .then(function (res) {
@@ -182,6 +180,7 @@ export default {
               } else {
                 that.evolushow = true;
                 setTimeout((that.evoluplots = res.data.output[0]), 1000);
+                that.gloclu= res.data.gloclu
               }
               //that.evoluplots = res.data.output[0];
               that.evoluloading = false;
