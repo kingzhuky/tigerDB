@@ -7,6 +7,7 @@
           placeholder="Please Input Gene Symbol"
           :fetch-suggestions="querySearchAsync"
           @change="searchChange"
+          @keyup.enter.native="searchChange"
         ></el-autocomplete>
       </el-col>
     </el-row>

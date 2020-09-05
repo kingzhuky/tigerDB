@@ -162,6 +162,10 @@ export default {
     },
 
     getTableData(gene, conditi) {
+      var targetdiv = document.getElementById(this.conditi);
+      let myChart_mercor = window.echarts.init(targetdiv);
+      myChart_mercor.clear();
+      this.diffExpRespontableData=[]
       this.cardLoading=true
       this.$http
         .get("/tiger/homeresponse.php", {

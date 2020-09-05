@@ -9,12 +9,12 @@
               <span id="homespan">Select Cell</span>
             </el-row>
           </el-col>
-          <el-col :span="6" >
+          <el-col :span="6">
             <el-row>
               <span id="homespan">Select Clusters</span>
             </el-row>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="10">
             <el-row>
               <span id="homespan">Search Ligand or Receptor</span>
             </el-row>
@@ -22,38 +22,35 @@
         </el-row>
         <br />
         <el-row>
-             <el-col :span="6" :offset="1">
-              <el-select
-                v-model="gloclu"
-                placeholder="Select Cluster"
-              >
-                <el-option label="ALl Cells" value="ALl"></el-option>
-                <el-option label="T cells" value="Tcells"></el-option>
-                <el-option label="B cells" value="Bcells"></el-option>
-              </el-select>
-            </el-col>
+          <el-col :span="6" :offset="1">
+            <el-select v-model="gloclu" placeholder="Select Cluster">
+              <el-option label="ALl Cells" value="ALl"></el-option>
+              <el-option label="T cells" value="Tcells"></el-option>
+              <el-option label="B cells" value="Bcells"></el-option>
+            </el-select>
+          </el-col>
 
-            <el-col :span="6" :offset="0">
-              <el-select
-                v-model="crossClu"
-                multiple
-                placeholder="Select Cluster"
-                v-loading="crossCluloading"
-              >
-                <el-option v-for="item in crossClucoptions" :key="item" :label="item" :value="item"></el-option>
-              </el-select>
-            </el-col>
-            <el-col :span="6" id="homeInput">
-              <el-autocomplete
-                v-model="seargene"
-                :fetch-suggestions="querySearchAsync"
-                placeholder="Search Ligand or Receptor"
-                :trigger-on-focus="false"
-              ></el-autocomplete>
-            </el-col>
-            <el-col :span="4" >
-              <el-button id="scimmubt" @click="searchCro">Search</el-button>
-            </el-col>
+          <el-col :span="6" :offset="0">
+            <el-select
+              v-model="crossClu"
+              multiple
+              placeholder="Select Cluster"
+              v-loading="crossCluloading"
+            >
+              <el-option v-for="item in crossClucoptions" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="6" id="homeInput">
+            <el-autocomplete
+              v-model="seargene"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="Search Ligand or Receptor"
+              :trigger-on-focus="false"
+            ></el-autocomplete>
+          </el-col>
+          <el-col :span="2" :offset="2">
+            <el-button id="scimmubt" @click="searchCro">Search</el-button>
+          </el-col>
         </el-row>
 
         <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
@@ -100,7 +97,7 @@ export default {
 
   data() {
     return {
-      gloclu:"All",
+      gloclu: "All",
       crossCluloading: true,
       crossloading: false,
       plots: "",
@@ -165,10 +162,7 @@ export default {
         .then((res) => {
           cb(res.data.list);
         });
-      
     },
-
-   
 
     checkdataset() {
       if (

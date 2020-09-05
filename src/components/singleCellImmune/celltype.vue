@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-        <el-input v-model="searchinput" @change="searchChange" placeholder="Input Gene Symbol"></el-input>
+        <el-input v-model="searchinput" @change="searchChange" @keyup.enter.native="searchChange" placeholder="Input Gene Symbol"></el-input>
       </el-col>
     </el-row>
     <br />
@@ -249,6 +249,7 @@ export default {
         (this.oldcancer !== this.cancer) |
         (this.oldcancer === "") 
       ) {
+        this.reset()
         this.oldcancer = this.cancer;
         this.getTableData(1, "", "");
       }
@@ -296,6 +297,7 @@ export default {
 
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
+      this.loading=true
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {

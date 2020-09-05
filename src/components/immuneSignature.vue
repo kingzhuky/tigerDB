@@ -16,7 +16,7 @@
       <el-row>
         <el-col :span="10" :offset="3">
           <el-row>
-            <el-input v-model="gene" placeholder="SEMA3F"></el-input>
+            <el-input v-model="gene" @keyup.enter.native="signatureDiffPlot" placeholder="SEMA3F"></el-input>
           </el-row>
         </el-col>
 
@@ -26,6 +26,7 @@
               id="immusignatureplot"
               v-on:click="signatureDiffPlot"
               :disabled="isDisable"
+              
             >Submit</el-button>
           </el-row>
         </el-col>

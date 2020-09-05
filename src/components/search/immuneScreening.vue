@@ -40,7 +40,7 @@
               <el-table-column label="Cancer Type" prop="Cancer_type"></el-table-column>
               <el-table-column label="Model" prop="Model"></el-table-column>
               <el-table-column label="Log2FC" prop="Log2FoldChange"></el-table-column>
-              <el-table-column label="Relation to immunity" prop="Relation"></el-table-column>
+              <el-table-column label="Relation to immunity" prop="RelationToImmunity"></el-table-column>
             </el-table>
 
             <!-- <el-table :data="articleData" style="width: 100%" >

@@ -84,10 +84,10 @@
             ></component>
           </el-tab-pane>
           <el-tab-pane label="Co-expression Analysis" name="coexp">
-            <component ref="coexpRef" :cancer="cancer" :gloclu="gloClu" :is="coexpVue"></component>
+            <component ref="coexpRef" :CancerType="cancer"  :is="coexpVue"></component>
           </el-tab-pane>
           <el-tab-pane label="Evolution Analysis" name="evolution">
-            <component ref="evolutionRef" :cancer="cancer" :gloclu="gloClu" :is="evolutionVue"></component>
+            <component ref="evolutionRef" :cancer="cancer"  :gloCluoptions="gloCluoptions" :is="evolutionVue"></component>
           </el-tab-pane>
           <el-tab-pane label="Cross Talk" name="crosstalk">
           <component 
@@ -294,6 +294,10 @@ export default {
       //this.subClucoptions = [];
       this.getgloClu();
       this.activeName = "overview";
+      this.$refs.overviewRef.clickPlot();
+      this.$refs.coexpRef.CancerTypeSelectChange();
+      
+
     },
     gloCluChange() {
       //this.$refs.coexpRef.reset()
@@ -364,10 +368,12 @@ export default {
           break;
         case "celltype":
           this.celltypeVue = wercelltype;
+          //this.$refs.celltypeRef.reset();
           this.$refs.celltypeRef.plot();
           break;
         case "scdiffexp":
           this.diffexpVue = werdiffexp;
+          //this.$refs.diffexpRef.reset();
           this.$refs.diffexpRef.plot();
           break;
         case "coexp":

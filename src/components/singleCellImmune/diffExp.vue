@@ -10,6 +10,7 @@
           placeholder="Please Input Gene Symbol"
           :fetch-suggestions="querySearchAsync"
           @change="searchChange"
+          @keyup.enter.native="searchChange"
         ></el-autocomplete>
       </el-col>
     </el-row>
@@ -54,8 +55,8 @@
       ref="detailPlot"
       v-show="isShow"
       :gene="clickGene"
+      :celltype="celltype"
       :cancer="cancer"
-      :gloclu="gloclu"
     ></v-expdetail>
   </div>
 </template>
@@ -81,6 +82,7 @@ export default {
     return {
       cancer: "",
       clickGene: "",
+      celltype:"",
       wercorcancer_data: [
         {
           value: "ACC",
@@ -253,6 +255,7 @@ export default {
   },
 
   methods: {
+
     getgloClu() {
       this.vstype=''
       this.$http
@@ -286,6 +289,7 @@ export default {
         (this.oldgloclu !== this.gloclu) |
         (this.oldgloclu === "")
       ) {
+        this.reset()
         this.oldcancer = this.cancer;
         this.oldgloclu = this.gloclu;
         this.getTableData(1, "", "");
@@ -336,6 +340,7 @@ export default {
 
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
+      this.loading=true
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
@@ -395,7 +400,8 @@ export default {
         this.subClu = this.subClucoptions;
         this.isShow = true;
         this.clickGene = row["gene"];
-        this.$refs.detailPlot.genePlot(row["gene"]);
+        this.celltype=column["label"]
+        this.$refs.detailPlot.genePlot(row["gene"],column["label"]);
         //this.$refs.detailPlot.evoluPlot(row["gene"]);
         //this.$refs.detailPlot.tableDetail("expression", 1, "");
         toTarget(820);

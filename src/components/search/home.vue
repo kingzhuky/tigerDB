@@ -16,10 +16,11 @@
               style="min-width:100px"
               placeholder="Input Gene Symbol"
               :fetch-suggestions="querySearchAsync"
+              @keyup.enter.native="submsearch"
             ></el-autocomplete>
           </el-col>
           <el-col :span="4">
-            <el-button id="homebt" @click="submsearch" :disabled="isDisable">Search</el-button>
+            <el-button id="homebt" @click="submsearch"  :disabled="isDisable">Search</el-button>
           </el-col>
         </el-row>
       </el-card>

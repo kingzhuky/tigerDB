@@ -145,8 +145,7 @@ export default {
     // },
 
     clickPlot() {
-      this.gloclures=[],
-      this.plotsres={}
+      this.reset()
       //let subClu2 = this.subClu.join(",");
       for (let gloclu of  this.gloCluoptions){
         console.log(this.gloCluoptions)

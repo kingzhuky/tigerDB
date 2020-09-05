@@ -32,10 +32,11 @@
                 v-model="seargene"
                 placeholder="Please Input Gene Symbol"
                 :fetch-suggestions="querySearchAsync"
+                @keyup.enter.native="submsearch"
               ></el-autocomplete>
             </el-col>
             <el-col :span="6">
-              <el-button id="homebt" @click="submsearch">Search</el-button>
+              <el-button id="homebt" @click="submsearch" >Search</el-button>
             </el-col>
           </div>
         </el-col>
