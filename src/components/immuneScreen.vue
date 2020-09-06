@@ -51,11 +51,10 @@
     </el-table>
 
     <div class="colorbar">
-      <span>Receptivity</span>
+      <span>Sensitivity</span>
       <span class="heatMapTable--colorbar"></span>
       <span>Resistance</span>
     </div>
-    <div id="Log2FC">Log2FC</div>
     </el-card>
     
 

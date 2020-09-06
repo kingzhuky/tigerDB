@@ -13,7 +13,7 @@
         <el-card>
           <el-row v-loading="geneloading">
             <el-row class="detailimg">
-              <p class="card-title">Different Expression</p>
+              <p class="card-title">Differential Expression</p>
               <el-col :span="20" :offset="2">
                 <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[1]" />
               </el-col>

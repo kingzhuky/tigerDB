@@ -63,7 +63,7 @@ export default {
       searchinput: "CXCL13",
       gloCluoptions: [],
       oldcancer:"",
-      CellType:"CAF",
+      CellType:"",
       GlobalCluster:"All"
     };
   },

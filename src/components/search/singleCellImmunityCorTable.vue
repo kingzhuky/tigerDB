@@ -75,7 +75,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
-      this.clickPlot();
+      //this.clickPlot();
     });
   },
 
@@ -142,7 +142,7 @@ export default {
     plot() {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
         this.oldseargene = this.seargene;
-        this.clickPlot(this.seargene);
+        this.clickPlot();
         this.getScaData(
           this.seargene,
           "home_scdiffexp_tn",

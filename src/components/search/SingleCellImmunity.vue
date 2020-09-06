@@ -115,7 +115,7 @@
       <div class="textitem" v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
         <p class="card-title">Differential expression between tumor and normal per cell type</p>
         <div class="geneExp">
-          <div id="singleCellImmuTumor" class="scaterPlot" style="width: 600px;height:400px;"></div>
+          <div id="singleCellImmuTumor" class="scaterPlot" style="width: 1000px;height:400px;"></div>
           <div v-show="singleCellImmuTumorImgshow" v-loading="singleCellImmuTumorImgloading">
             <img id="singleimg" :src="imgpathBar2" />
           </div>
@@ -126,11 +126,11 @@
               max-height="800"
               style="width: 100%"
             >
-               <el-table-column label="CancerType" prop="CancerType"></el-table-column>
-              <el-table-column prop="GlobalCluster" label="GlobalCluster"></el-table-column>
-              <el-table-column prop="CellType" label="CellType"></el-table-column>
-              <el-table-column prop="Log2FoldChange" label="Log2FoldChange" width="180"></el-table-column>
-              <el-table-column prop="P_Value" label="P-Value" width="180"></el-table-column>
+               <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
+              <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
+              <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
+              <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable ></el-table-column>
+              <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
            </el-table>
 
 
@@ -145,7 +145,7 @@
           class="card-title"
         >Differential expression between response and non-response per cell type</p>
         <div class="geneExp">
-          <div id="singleCellImmuResponse" class="scaterPlot" style="width: 600px;height:400px;"></div>
+          <div id="singleCellImmuResponse" class="scaterPlot" style="width: 1000px;height:400px;"></div>
 
           <div v-show="singleCellImmuResponseImgshow" v-loading="singleCellImmuResponseImgloading">
             <img id="singleimg" :src="imgpathBar3" />
@@ -156,11 +156,11 @@
               max-height="800"
               style="width: 100%"
             >
-              <el-table-column label="CancerType" prop="CancerType"></el-table-column>
-              <el-table-column prop="GlobalCluster" label="GlobalCluster"></el-table-column>
-              <el-table-column prop="CellType" label="CellType"></el-table-column>
-              <el-table-column prop="Log2FoldChange" label="Log2FoldChange" width="180"></el-table-column>
-              <el-table-column prop="P_Value" label="P-Value" width="180"></el-table-column>
+              <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
+              <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
+              <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
+              <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
+              <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
        
             </el-table>
       </div>
@@ -170,7 +170,7 @@
 
 <script>
 import echarts from "echarts";
-
+import singleCellImmunityCorTable from "./singleCellImmunityCorTable.vue"
 
 export default {
   props: {
@@ -222,7 +222,7 @@ export default {
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
-
+      this.searchTable()
       this.getScaData(
         this.seargene,
         "home_scdiffexp_tn",
@@ -241,7 +241,7 @@ export default {
     });
   },
  components: {
-    "v-singleCellImmunityCorTable": () => import("./singleCellImmunityCorTable.vue"),
+    "v-singleCellImmunityCorTable": singleCellImmunityCorTable
   },
 
 
@@ -771,8 +771,9 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
 
       let option = {
-        xAxis: { name: "Log2FC" },
-        yAxis: { name: "P Value" },
+        xAxis: { name: "Log2FC"},
+        yAxis: { name: "–log10(P-Value+1)" ,axisLine: {show:false},
+axisTick: {show:false},},
         tooltip: {
           formatter: "{c}",
         },

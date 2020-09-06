@@ -54,17 +54,15 @@
         </el-row>
 
         <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
-          <el-row class="detailimg">
-            <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[0]+'.png'" />
-            <el-divider></el-divider>
-          </el-row>
-
           <el-row class="detailimg" v-if="crossplots.split(',').length>1">
-            <el-col :span="12">
-              <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[1]+'.png'" />
+            <el-col :span="8">
+              <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[0]+'.png'" />
             </el-col>
-            <el-col :span="12">
-              <img id="singleimg" :src="'tiger/img/'+crossplots.split(',')[2]+'.png'" />
+              <el-col :span="8">
+              <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[1]+'.png'" />
+            </el-col>
+            <el-col :span="8">
+              <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[2]+'.png'" />
             </el-col>
           </el-row>
         </div>
@@ -222,6 +220,9 @@ export default {
 </script>
 
 <style>
+.singleimg2{
+  width:400px
+}
 </style>
 
 

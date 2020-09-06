@@ -378,7 +378,7 @@ export default {
           break;
         case "coexp":
           this.coexpVue = wercoexp;
-          this.$refs.coexpRef.plot();
+          //this.$refs.coexpRef.plot();
           break;
         case "crosstalk":
           this.crosstalkVue = wercrosstalk;

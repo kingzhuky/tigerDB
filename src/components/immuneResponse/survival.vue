@@ -68,7 +68,7 @@ import {
   scrollRow,
   scrollCol,
   toTarget,
-  gStyle2,
+  gStyle,
   move,
   stop,
 } from "../../../static/js/utils.js";
@@ -404,7 +404,7 @@ export default {
           background: "white",
         };
       }
-      var mycolr = gStyle2(parseFloat(row[column["label"]]), 2.25);
+      var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
         color: mycolr["color"],

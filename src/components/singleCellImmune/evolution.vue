@@ -21,11 +21,11 @@
         <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg">
-            <el-col :span="20" :offset="2">
-              <div v-for="item in plotsres[gloclu]" :key="item">
-                <img id="singleimg" :src="'tiger/img/'+item" />
-                <el-divider></el-divider>
-              </div>
+            <el-col :span="10" :offset="1">
+                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]" />
+            </el-col>
+            <el-col :span="10" :offset="1">
+                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]" />
             </el-col>
           </el-row>
         </el-card>
@@ -70,7 +70,9 @@ export default {
       return true;
     },
     evoluPlot(cancer,gloclu,gene) {
+
       if (this.checkInput()) {
+        
         var that = this;
         that.evoluloading = true;
         this.$http
@@ -114,6 +116,7 @@ export default {
         });
     },
     searchClick() {
+      this.reset()
       this.isShow=true
       for (let gloclu of  this.gloCluoptions){
         this.evoluPlot(this.cancer, gloclu["glo"],this.searchinput);

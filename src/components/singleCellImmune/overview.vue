@@ -6,10 +6,13 @@
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg">
             <el-col :span="20" :offset="2">
-              <div v-for="item in plotsres[gloclu]" :key="item">
-                <img id="singleimg" :src="'tiger/img/'+item+'.png'" />
+              <p class="card-title">tSNE</p>
+                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" />
                 <el-divider></el-divider>
-              </div>
+                <p class="card-title">Differential cell fraction </p>
+                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" />
+                <el-divider></el-divider>
+                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" />
             </el-col>
           </el-row>
         </el-card>
