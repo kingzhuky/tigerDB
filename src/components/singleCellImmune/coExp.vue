@@ -43,6 +43,7 @@
     <br />
 
     <v-singleCellImmunityCorTable
+    v-show="singleCellImmunityCorTableShow"
       ref="coExpRef"
       :seargene="searchinput"
       :CancerType="CancerType"
@@ -59,6 +60,7 @@ export default {
   },
   data() {
     return {
+      singleCellImmunityCorTableShow:false,
       tableShow: false,
       searchinput: "CXCL13",
       gloCluoptions: [],
@@ -79,6 +81,7 @@ export default {
 
   methods: {
     searchTable() {
+      this.singleCellImmunityCorTableShow=true
       this.$refs.coExpRef.getDiagramData(this.searchinput, "singleCellCorTumor", 1, 10);
     },
     cancerSelectChange() {
