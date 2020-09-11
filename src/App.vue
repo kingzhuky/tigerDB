@@ -4,14 +4,16 @@
       <div class="searchBar">
         <div>
           <el-row>
-              <span id="title"><img id="home" src="./assets/home.jpg"></span>
-              <span id="subtitle">
-                <span class="sub">T</span>umor
-                <span class="sub">I</span>mmuno-therapy
-                <span class="sub">G</span>ene
-                <span class="sub">E</span>xpression
-                <span class="sub">R</span>esource
-              </span>
+            <span id="title">
+              <img id="home" src="./assets/home.jpg" />
+            </span>
+            <span id="subtitle">
+              <span class="sub">T</span>umor
+              <span class="sub">I</span>mmuno-therapy
+              <span class="sub">G</span>ene
+              <span class="sub">E</span>xpression
+              <span class="sub">R</span>esource
+            </span>
           </el-row>
         </div>
 
@@ -39,13 +41,13 @@
           <el-menu-item index="/immuneScreen">
             <div class="header-nav">Immune Screening</div>
           </el-menu-item>
-           <el-menu-item index="/search">
+          <el-menu-item index="/search">
             <div class="header-nav">Search</div>
           </el-menu-item>
-           <el-menu-item index="/help">
+          <el-menu-item index="/help">
             <div class="header-nav">Help</div>
           </el-menu-item>
-         <el-menu-item index="/download">
+          <el-menu-item index="/download">
             <div class="header-nav">Download</div>
           </el-menu-item>
           <el-menu-item index="/contact">
@@ -58,19 +60,24 @@
           <router-view />
         </keep-alive>
       </div>
-       <div id="snackbar" v-show="showSnackbar">
-      Modern browsers (e.g.,<a target="_blank" href="https://www.google.com/chrome/">Chrome</a>, <a target="_blank" href="https://www.mozilla.org/">Firefox</a>, <a  target="_blank" href="https://support.microsoft.com/en-us/help/4501095/download-the-new-microsoft-edge-based-on-chromium">Edge</a>, <a target="_blank" href="https://www.apple.com/safari/">Safari</a>) are strongly recommended for a better experience!
-      <el-button type="primary" @click="myFunction">Got it</el-button>
-    </div>
+      <div id="snackbar" v-show="showSnackbar">
+        Modern browsers (e.g.,
+        <a target="_blank" href="https://www.google.com/chrome/">Chrome</a>,
+        <a target="_blank" href="https://www.mozilla.org/">Firefox</a>,
+        <a
+          target="_blank"
+          href="https://support.microsoft.com/en-us/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
+        >Edge</a>,
+        <a target="_blank" href="https://www.apple.com/safari/">Safari</a>) are strongly recommended for a better experience!
+        <el-button type="primary" @click="myFunction">Got it</el-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import footer from "./components/public/footer";
-
 //cdn 引入加
-Vue.use(VueLazyload)
+Vue.use(VueLazyload);
 
 export default {
   name: "app",
@@ -78,31 +85,28 @@ export default {
     return {
       activeIndex: "1",
       isCollapse: false,
-      showSnackbar:false
+      showSnackbar: false,
     };
   },
-  methods:{
-      isIE(){
-        //ie?
-        if (!!window.ActiveXObject || "ActiveXObject" in window) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      myFunction() {
-        this.showSnackbar = false;
+  methods: {
+    isIE() {
+      //ie?
+      if (!!window.ActiveXObject || "ActiveXObject" in window) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    myFunction() {
+      this.showSnackbar = false;
     },
   },
-   mounted() {
+  mounted() {
     if (this.isIE()) {
       this.showSnackbar = true;
       this.isActive = false;
     }
   },
-  // components: {
-  //   "v-footer": footer
-  // }
 };
 </script>
 
@@ -123,10 +127,6 @@ export default {
   animation: copacity 3s;
   -webkit-animation: copacity 3s;
 }
-/* #nprogress .bar {
-    background: #17CC10 !important; 
-    height: 4px !important;
-  } */
 
 .el-menu-item {
   padding: 0 9px !important;
@@ -137,7 +137,6 @@ export default {
   background: rgb(255, 255, 255);
   width: 1398px;
 }
-
 
 .el-menu-demo {
   z-index: 100;
@@ -151,31 +150,10 @@ export default {
 }
 
 i.el-icon-setting {
-    padding-left: 10px;
-    font-size: 25px;
-    color: rgb(20, 146, 140);
+  padding-left: 10px;
+  font-size: 25px;
+  color: rgb(20, 146, 140);
 }
-/* .content {
-  width: 1158px;
-} */
-
-/* .el-menu-demo {
-  width: 1158px;
-} */
-
-/* @media screen and (min-width: 768px) {
-  .content {
-    width: 1158px;
-  }
-
-  .el-menu-demo {
-    width: 1158px;
-  }
-} */
-
-/* @media (min-width: 1600px) { */
-
-/* } */
 
 .routercontent {
   padding-top: 140px;
@@ -198,8 +176,6 @@ i.el-icon-setting {
   z-index: 10000;
 }
 
-
-
 html,
 body {
   font-family: Arial !important;
@@ -212,10 +188,10 @@ body {
   margin: 8px 0 15px 0 !important;
 }
 img#home {
-    width: 180px;
-    margin-bottom: -8px;
-    padding-right: 20px;
-    padding-left: 10px;
+  width: 180px;
+  margin-bottom: -8px;
+  padding-right: 20px;
+  padding-left: 10px;
 }
 #title {
   color: rgb(20, 146, 140) !important;
@@ -230,29 +206,7 @@ span.sub {
   color: rgb(20, 146, 140) !important;
 }
 
-
 .box-card-return {
-    background-color: rgb(154 202 200)!important;
+  background-color: rgb(154 202 200) !important;
 }
-/* .el-tabs__item .is-top {
-  background: #b1b1b1 !important;
-}
-
-.el-tabs__item {
-  font-size: 20px;
-  height: 55px;
-  padding: 10px;
-  font-weight: bold !important;
-  color: white !important;
-  background-color: #b1b1b1 !important;
-}
-
-.el-tabs__item:hover {
-  color: #6e6e6e !important;
-}
-
-.el-tabs__item.is-active {
-  color: #6e6e6e !important;
-  background-color: white !important;
-} */
 </style>

@@ -4,7 +4,9 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}} -- {{ celltype }} -- {{gloclu}} -- {{ gene }} </h1>
+            <h1
+              style="font-weight: bold;font-size:25px;text-align:center"
+            >{{cancer}} -- {{ celltype }} -- {{gloclu}} -- {{ gene }}</h1>
           </div>
         </el-card>
       </div>
@@ -62,7 +64,7 @@ export default {
   data() {
     return {
       overviewimg: "",
-      gloclu:"",
+      gloclu: "",
       geneshow: true,
       geneshow2: true,
       tableLoading: "",
@@ -116,7 +118,7 @@ export default {
       //this.evoluPlot(this.clickGene);
     },
 
-    genePlot(clickgene,celltype) {
+    genePlot(clickgene, celltype) {
       if (this.checkInput()) {
         var that = this;
         that.geneloading = true;
@@ -137,7 +139,7 @@ export default {
               } else {
                 that.geneshow = true;
                 that.gloclu = res.data.gloclu;
-                that.geneplots = res.data.output[0]
+                that.geneplots = res.data.output[0];
               }
               //that.geneplots = res.data.output[0];
               that.geneloading = false;
@@ -145,12 +147,10 @@ export default {
             if (res.data.status2 == 0) {
               if (res.data.output2[0] === "0") {
                 that.geneshow2 = false;
-                //alert("no gene file");
               } else {
                 that.geneshow2 = true;
                 setTimeout((that.overviewimg = res.data.output2[0]), 1000);
               }
-              //that.evoluplots = res.data.output[0];
             }
           })
           .catch(function (res) {
@@ -158,38 +158,6 @@ export default {
           });
       }
     },
-
-    //   evoluPlot(clickgene) {
-    //     if (this.checkInput()) {
-    //       var that = this;
-    //       that.evoluloading = true;
-    //       this.$http
-    //         .get("/tiger/scimmudiffexpdetailevlou.php", {
-    //           params: {
-    //             cancer: this.cancer,
-    //             gloclu: this.gloclu,
-    //             subclu: this.subClu.join(","),
-    //             gene: clickgene,
-    //           },
-    //         })
-    //         .then(function (res) {
-    //           if (res.data.status == 0) {
-    //             if (res.data.output[0] === "0") {
-    //               that.evolushow = false;
-    //               //alert("no gene file");
-    //             } else {
-    //               that.evolushow = true;
-    //               setTimeout((that.evoluplots = res.data.output[0]), 1000);
-    //             }
-    //             //that.evoluplots = res.data.output[0];
-    //             that.evoluloading = false;
-    //           }
-    //         })
-    //         .catch(function (res) {
-    //           console.log(res);
-    //         });
-    //     }
-    //   },
   },
 
   computed: {

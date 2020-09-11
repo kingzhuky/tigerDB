@@ -66,8 +66,6 @@
 <script>
 import goTop from "./public/goTop";
 
-//import { downloadFile } from "../../../static/js/utils.js";
-
 export default {
   props: {
     gene: {
@@ -123,18 +121,13 @@ export default {
           },
         })
         .then(function (res) {
-          // if (res.data.status == 0) {
-          //console.log(res.data.matchedTerms[0]["interactions"]);
           if (res.data.matchedTerms[0]["interactions"]) {
             that.drugshow = true;
             that.tableData = res.data.matchedTerms[0]["interactions"];
-            //that.imgpath = res.data.output[2];
             that.loading = false;
           } else {
             that.drugshow = false;
           }
-
-          //}
         })
         .catch(function (res) {
           console.log(res);
@@ -153,12 +146,8 @@ export default {
           },
         })
         .then(function (res) {
-          // if (res.data.status == 0) {
-          //console.log(res.data.matchedTerms[0]["interactions"]);
           that.articleData = res.data.list;
-          //that.imgpath = res.data.output[2];
           that.artloading = false;
-          //}
         })
         .catch(function (res) {
           console.log(res);

@@ -37,7 +37,6 @@
         <div id="logFC">correlation</div>
       </el-card>
     </div>
-    <!-- <button @click="scrollCol">scrollCol</button> -->
 
     <!-- 详细页显示与否 -->
     <v-immuneSigdetail
@@ -54,9 +53,7 @@
 
 <script>
 import {
-  scrollRow,
   scrollCol,
-  getTableData,
   toTarget,
   gStyle,
   move,
@@ -64,8 +61,8 @@ import {
 } from "../../static/js/utils.js";
 
 export default {
-  props:{
-    gene:""
+  props: {
+    gene: { type: String },
   },
   data() {
     return {
@@ -112,10 +109,6 @@ export default {
     },
   },
 
-  // mounted() {
-  //   this.getColumn("tablecolumn", "tcga");
-  // },
-
   methods: {
     getColumn(tabl, mycolumn) {
       this.$http
@@ -127,7 +120,6 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            //console.log(res.data.list);
             this.tableDataheader = res.data.list;
           }
         })
@@ -136,8 +128,8 @@ export default {
         });
     },
     //获取表格数据
-    getTableData(type, page) {
-      this.isShow=false;
+    getTableData() {
+      this.isShow = false;
       this.loading = true;
       this.immuneTabShow = true;
       this.$http
@@ -178,7 +170,7 @@ export default {
     },
 
     //点击单个格子
-    heandleclick(row, column, cell, event) {
+    heandleclick(row, column) {
       this.datatype = "expression";
       if (column["label"] !== "") {
         this.isShow = true;
@@ -196,7 +188,7 @@ export default {
     },
 
     //渲染每个格子的颜色
-    tableCellStyle({ row, column, rowIndex, columnIndex }) {
+    tableCellStyle({ row, column }) {
       if (row[column["label"]] === null) {
         return {
           background: "white",

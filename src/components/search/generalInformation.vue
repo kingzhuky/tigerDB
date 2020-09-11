@@ -1,40 +1,11 @@
 <template>
   <div>
     <el-card v-loading="detailload" class="decard" v-if="wershow">
-      <!-- <p class="card-title">{{this.seargene}} Information</p>
-      <div class="textitem">
-        <div class="tablewidth">
-          <el-table
-            :show-header="false"
-            ref="singleTable"
-            :data="werdetailgene"
-            stripe
-            style="width: 100%"
-          >
-            <el-table-column property="title" label width="300" align="right">
-              <template scope="scope">
-                <span class="resAndSug">{{scope.row.title}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column label>
-              <template slot-scope="scope">
-                <a v-html="scope.row.name"></a>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div> -->
-
-
-         <p class="card-title">{{this.seargene}} Infomations</p>
-          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
-            <el-table-column prop="title" label width="180"></el-table-column>
-            <el-table-column prop="value" label></el-table-column>
-          </el-table>
-
-
-
+      <p class="card-title">{{this.seargene}} Infomations</p>
+      <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+        <el-table-column prop="title" label width="180"></el-table-column>
+        <el-table-column prop="value" label></el-table-column>
+      </el-table>
     </el-card>
 
     <br />
@@ -44,16 +15,14 @@
           <p class="card-title">Reactome Pathway</p>
           <el-row v-loading="ReactomeLoading" class="detailimg">
             <el-table :data="ReactomeTableData" style="width: 100%">
-              <el-table-column prop="ensembl" label="Ensembl" width="180">
-              </el-table-column>
+              <el-table-column prop="ensembl" label="Ensembl" width="180"></el-table-column>
               <el-table-column prop="reactomeid" label="Reactome ID" width="180"></el-table-column>
               <el-table-column label="reactome URL">
-                  <template slot-scope="scope">
-                <a :href="scope.row.reactomeurl" target="_blank">{{scope.row.reactomeurl}}</a>
-              </template>
+                <template slot-scope="scope">
+                  <a :href="scope.row.reactomeurl" target="_blank">{{scope.row.reactomeurl}}</a>
+                </template>
               </el-table-column>
-              <el-table-column prop="description" label="Description">
-              </el-table-column>
+              <el-table-column prop="description" label="Description"></el-table-column>
               <el-table-column prop="source" label="Source"></el-table-column>
             </el-table>
           </el-row>
@@ -124,19 +93,18 @@ export default {
       targetshow: false,
       wershow: true,
       tableData: [],
-      ReactomeTableData:[],
-      ReactomeLoading:false,
-      ReactomeShow:true,
+      ReactomeTableData: [],
+      ReactomeLoading: false,
+      ReactomeShow: true,
       drugshow: false,
-      Drugloading:false
+      Drugloading: false,
     };
   },
 
-
-  mounted: function() {
-     this.getdatagene()
-     this.tableDetail()
-     this.getdataReactome()
+  mounted: function () {
+    this.getdatagene();
+    this.tableDetail();
+    this.getdataReactome();
   },
   methods: {
     getdatagene() {
@@ -147,21 +115,21 @@ export default {
           params: {
             tabl: "home_geneinfo",
             colu: "Symbol",
-            coluvalue: this.seargene
-          }
+            coluvalue: this.seargene,
+          },
         })
-        .then(function(res) {
+        .then(function (res) {
           that.articleData = res.data.list;
           that.detailload = false;
           //}
         })
-        .catch(function(res) {
+        .catch(function (res) {
           console.log(res);
         });
     },
 
     getdataReactome() {
-      this.ReactomeShow=true
+      this.ReactomeShow = true;
       this.ReactomeLoading = true;
       this.$http
         .get("/tiger/searchReactome.php", {
@@ -174,8 +142,8 @@ export default {
             (this.ReactomeLoading = false);
           if (res.data.list.length != 0) {
             this.ReactomeShow = true;
-          }else{
-            this.ReactomeShow = false
+          } else {
+            this.ReactomeShow = false;
           }
         });
     },
@@ -190,7 +158,7 @@ export default {
           },
         })
         .then(function (res) {
-          if (res.data.matchedTerms[0]["interactions"].length!==0) {
+          if (res.data.matchedTerms[0]["interactions"].length !== 0) {
             that.drugshow = true;
             that.drugloading = false;
             that.tableData = res.data.matchedTerms[0]["interactions"];

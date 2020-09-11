@@ -26,28 +26,17 @@
               id="immusignatureplot"
               v-on:click="signatureDiffPlot"
               :disabled="isDisable"
-              
             >Submit</el-button>
           </el-row>
         </el-col>
       </el-row>
     </el-card>
 
-    <v-immuneSigTable ref="immuSignatureRef" :gene="gene" ></v-immuneSigTable>
+    <v-immuneSigTable ref="immuSignatureRef" :gene="gene"></v-immuneSigTable>
   </div>
 </template>
 
 <script>
-import {
-  scrollRow,
-  scrollCol,
-  getTableData,
-  toTarget,
-  gStyle,
-  move,
-  stop,
-} from "../../static/js/utils.js";
-
 export default {
   data() {
     return {
@@ -69,19 +58,11 @@ export default {
     };
   },
 
- 
-
-  // mounted() {
-  //   this.getColumn("tablecolumn", "tcga");
-  // },
-
   methods: {
-        //搜索
+    //搜索
     signatureDiffPlot() {
-      this.$refs.immuSignatureRef.getTableData("expresponse",1);
+      this.$refs.immuSignatureRef.getTableData("expresponse", 1);
     },
-
-   
   },
   components: {
     "v-immuneSigTable": () => import("./immuneSignatureTable.vue"),

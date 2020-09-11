@@ -2,7 +2,12 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-        <el-input v-model="searchinput" @change="searchChange" @keyup.enter.native="searchChange" placeholder="Input Gene Symbol"></el-input>
+        <el-input
+          v-model="searchinput"
+          @change="searchChange"
+          @keyup.enter.native="searchChange"
+          placeholder="Input Gene Symbol"
+        ></el-input>
       </el-col>
     </el-row>
     <br />
@@ -38,10 +43,6 @@
       <span class="heatMapTable--colorbar"></span>
       <span>High logFC&gt;0</span>
     </div>
-
-    <!-- <button @click="scrollCol">scrollCol</button> -->
-
-    <!-- 详细页显示与否 -->
     <v-celltypedetail
       ref="detailPlot"
       v-show="isShow"
@@ -56,7 +57,6 @@
 <script>
 import {
   scrollRow,
-  scrollCol,
   toTarget,
   gStyle,
   move,
@@ -66,150 +66,12 @@ import {
 export default {
   props: {
     cancer: String,
-    //gloclu: String,
     subClu: Array,
     subClucoptions: Array,
   },
   data() {
     return {
-      cancer: "",
       clickGene: "",
-      wercorcancer_data: [
-        {
-          value: "ACC",
-          label: "ACC",
-        },
-        {
-          value: "BLCA",
-          label: "BLCA",
-        },
-        {
-          value: "BRCA",
-          label: "BRCA",
-        },
-        {
-          value: "CESC",
-          label: "CESC",
-        },
-        {
-          value: "CHOL",
-          label: "CHOL",
-        },
-        {
-          value: "COAD",
-          label: "COAD",
-        },
-        {
-          value: "DLBC",
-          label: "DLBC",
-        },
-        {
-          value: "ESCA",
-          label: "ESCA",
-        },
-        {
-          value: "GBM",
-          label: "GBM",
-        },
-        {
-          value: "HNSC",
-          label: "HNSC",
-        },
-        {
-          value: "KICH",
-          label: "KICH",
-        },
-        {
-          value: "KIRC",
-          label: "KIRC",
-        },
-        {
-          value: "KIRP",
-          label: "KIRP",
-        },
-        {
-          value: "LIHC",
-          label: "LIHC",
-        },
-        {
-          value: "LAML",
-          label: "LAML",
-        },
-        {
-          value: "LGG",
-          label: "LGG",
-        },
-        {
-          value: "LUAD",
-          label: "LUAD",
-        },
-        {
-          value: "LUSC",
-          label: "LUSC",
-        },
-        {
-          value: "MESO",
-          label: "MESO",
-        },
-        {
-          value: "OV",
-          label: "OV",
-        },
-        {
-          value: "PAAD",
-          label: "PAAD",
-        },
-        {
-          value: "PCPG",
-          label: "PCPG",
-        },
-        {
-          value: "READ",
-          label: "READ",
-        },
-        {
-          value: "SKCM",
-          label: "SKCM",
-        },
-        {
-          value: "SARC",
-          label: "SARC",
-        },
-        {
-          value: "STAD",
-          label: "STAD",
-        },
-        {
-          value: "TGCT",
-          label: "TGCT",
-        },
-        {
-          value: "THCA",
-          label: "THCA",
-        },
-        {
-          value: "THYM",
-          label: "THYM",
-        },
-        {
-          value: "TNBC",
-          label: "TNBC",
-        },
-        {
-          value: "UCEC",
-          label: "UCEC",
-        },
-        {
-          value: "UCS",
-          label: "UCS",
-        },
-      ],
-      m6aMsg: {
-        type: String,
-      },
-      cancerMsg: {
-        type: String,
-      },
       loading: true,
       isShow: false,
       loadpage: 1,
@@ -219,14 +81,13 @@ export default {
       sortCol: "",
       sortOrder: "",
       tableDataheader: [],
-      oldcancer:"",
-      celltype:""
+      oldcancer: "",
+      celltype: "",
     };
   },
 
   mounted: function () {
     this.oldcancer = this.cancer;
-        //this.oldgloclu = this.gloclu;
     this.getTableData(1, "", "");
   },
 
@@ -245,16 +106,13 @@ export default {
 
   methods: {
     plot() {
-      if (
-        (this.oldcancer !== this.cancer) |
-        (this.oldcancer === "") 
-      ) {
-        this.reset()
+      if ((this.oldcancer !== this.cancer) | (this.oldcancer === "")) {
+        this.reset();
         this.oldcancer = this.cancer;
         this.getTableData(1, "", "");
       }
     },
-    sortChangeClick(column, prop, order) {
+    sortChangeClick(column) {
       console.log(column.prop, column.order);
       this.loadDir = "";
       this.sortCol = column.prop;
@@ -297,7 +155,7 @@ export default {
 
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
-      this.loading=true
+      this.loading = true;
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
@@ -356,10 +214,8 @@ export default {
         this.subClu = this.subClucoptions;
         this.isShow = true;
         this.clickGene = row["gene"];
-        this.celltype=column["label"]
-        //this.$refs.detailPlot.genePlot(row["gene"]);
-        this.$refs.detailPlot.evoluPlot(row["gene"],column["label"]);
-        //this.$refs.detailPlot.tableDetail("expression", 1, "");
+        this.celltype = column["label"];
+        this.$refs.detailPlot.evoluPlot(row["gene"], column["label"]);
         toTarget(820);
       }
     },
@@ -375,7 +231,6 @@ export default {
       return {
         background: mycolr["background"],
         color: mycolr["color"],
-        //cursor:mycolr["cursor"]
       };
     },
   },

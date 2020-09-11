@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="selectrow">
-      <br>
+      <br />
       <el-col :span="6" :offset="2">
         <span class="demonstration">Global Cluster:</span>
         <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
@@ -43,7 +43,7 @@
     <br />
 
     <v-singleCellImmunityCorTable
-    v-show="singleCellImmunityCorTableShow"
+      v-show="singleCellImmunityCorTableShow"
       ref="coExpRef"
       :seargene="searchinput"
       :CancerType="CancerType"
@@ -56,17 +56,17 @@
 <script>
 export default {
   props: {
-    CancerType: String
+    CancerType: String,
   },
   data() {
     return {
-      singleCellImmunityCorTableShow:false,
+      singleCellImmunityCorTableShow: false,
       tableShow: false,
       searchinput: "CXCL13",
       gloCluoptions: [],
-      oldcancer:"",
-      CellType:"",
-      GlobalCluster:"All"
+      oldcancer: "",
+      CellType: "",
+      GlobalCluster: "All",
     };
   },
 
@@ -74,15 +74,19 @@ export default {
     this.$nextTick(() => {
       this.oldcancer = this.CancerType;
       this.getgloClu();
-      this.getCellType()
-    })
-  
+      this.getCellType();
+    });
   },
 
   methods: {
     searchTable() {
-      this.singleCellImmunityCorTableShow=true
-      this.$refs.coExpRef.getDiagramData(this.searchinput, "singleCellCorTumor", 1, 10);
+      this.singleCellImmunityCorTableShow = true;
+      this.$refs.coExpRef.getDiagramData(
+        this.searchinput,
+        "singleCellCorTumor",
+        1,
+        10
+      );
     },
     cancerSelectChange() {
       this.getgloClu();
@@ -95,9 +99,6 @@ export default {
     GlobalClusterChange() {
       this.getCellType();
     },
-    // subClusterChange() {
-    //   this.searchTable();
-    // },
     getCellType() {
       this.CellTypeLoading = true;
       this.$http
@@ -112,7 +113,6 @@ export default {
             this.CellTypeLoading = false;
             this.CellTypeCluoptions = res.data.list;
             this.CellType = res.data.list[0].CellType;
-            //this.searchTable();
           }
         });
     },
@@ -135,7 +135,7 @@ export default {
           params: {
             gene: this.search,
             species: "Human",
-          },
+          }
         })
         .then((res) => {
           cb(res.data.datasetinfo);

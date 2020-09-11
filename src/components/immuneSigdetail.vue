@@ -63,25 +63,23 @@
 <script>
 import goTop from "./public/goTop";
 
-//import { downloadFile } from "../../../static/js/utils.js";
-
 export default {
   props: {
     gene: {
-      type: String
+      type: String,
     },
     cancer: {
-      type: String
+      type: String,
     },
     datatype: {
-      type: String
+      type: String,
     },
     sign: {
-      type: String
+      type: String,
     },
     path: {
-      type: String
-    }
+      type: String,
+    },
   },
 
   data() {
@@ -99,10 +97,7 @@ export default {
     };
   },
 
-
-
   methods: {
-    
     checkInput() {
       if (this.normalMed !== "None" && this.normalGene.length == 0) {
         alert("please input Normalized gene or Cell fration");
@@ -123,15 +118,14 @@ export default {
           params: {
             tabl: "siginfo",
             colu: "SignatureID",
-            coluvalue: sample
-          }
+            coluvalue: sample,
+          },
         })
-        .then(function(res) {
+        .then(function (res) {
           that.articleData = res.data.list;
           that.artloading = false;
-          //}
         })
-        .catch(function(res) {
+        .catch(function (res) {
           console.log(res);
         });
     },
@@ -150,10 +144,10 @@ export default {
               normalMed: this.normalMed,
               normalGene: this.normalMed == "None" ? "None" : this.normalGene,
               corMed: this.corMed,
-              datatype: "png"
-            }
+              datatype: "png",
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
               setTimeout((that.imgpath = res.data.output[0]), 1000);
 
@@ -162,22 +156,22 @@ export default {
               that.resultShow = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
-    }
+    },
   },
 
   computed: {
-    imgUrlWgcna: function() {
+    imgUrlWgcna: function () {
       return "tiger/img/" + this.imgpath + ".png";
-    }
+    },
   },
 
   components: {
-    "v-goTop": goTop
-  }
+    "v-goTop": goTop,
+  },
 };
 </script>
 

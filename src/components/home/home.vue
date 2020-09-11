@@ -36,7 +36,7 @@
               ></el-autocomplete>
             </el-col>
             <el-col :span="6">
-              <el-button id="homebt" @click="submsearch" >Search</el-button>
+              <el-button id="homebt" @click="submsearch">Search</el-button>
             </el-col>
           </div>
         </el-col>
@@ -116,10 +116,6 @@ export default {
   justify-content: center !important;
   align-items: center !important;
 }
-
-/* .section {
-  padding-top: 10px;
-} */
 
 .hometitle {
   color: rgb(20, 146, 140) !important;

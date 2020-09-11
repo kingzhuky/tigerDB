@@ -46,7 +46,7 @@ const gStyle2 = function (val, max) {
     const v = val > max ? 0.86 : (1 - (val / max) * 0.14).toFixed(2)
     return {
       background: hsv2rgb(0, p, v),
-      color: 'rgb(230,230,230)' 
+      color: 'rgb(230,230,230)'
     }
   } else if (val < 1) {
     const p = val > max ? 0.56 : ((val / max) * 0.56).toFixed(2)
@@ -56,7 +56,7 @@ const gStyle2 = function (val, max) {
     }
   }
   return {
-    
+
     background: "",
     color: ""
   }
@@ -64,12 +64,10 @@ const gStyle2 = function (val, max) {
 }
 
 const gStyle = function (val, max) {
-  //var max=2.55;
-
   if (val === 0) {
     return {
       background: 'rgb(241,241,241)',
-      cursor:'not-allowed'
+      cursor: 'not-allowed'
     }
   } else if (val > 0) {
     const p = val > max ? 1 : (val / max).toFixed(2)

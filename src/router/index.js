@@ -15,57 +15,48 @@ const contact = () => import('@/components/contact')
 const search = () => import('@/components/search/home')
 
 export default new VueRouter({
-  //mode: 'history',
-  //base:'/m6a2target',
   routes: [{
-      path: '/',
-      component: home,
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: home
-    }, {
-      path: '/immuneResponse',
-      name: 'immuneResponse',
-      component: immuneResponse
-    }, {
-      path: '/immuneSignature',
-      name: 'immuneSignature',
-      component: immuneSignature
-    }, {
-      path: '/singleCellImmune',
-      name: 'singleCellImmune',
-      component: singleCellImmune
-    }, {
-      path: '/immuneScreen',
-      name: 'immuneScreen',
-      component: immuneScreen
-    },{
-      path: '/search/:gene?',
-      name: 'search',
-      component: search
-    }, {
-      path: '/download',
-      name: 'download',
-      component: download
-    },
-    {
-      path: '/help',
-      component: help
-    },
-    {
-      path: '/contact',
-      component: contact
-    }
+    path: '/',
+    component: home,
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: home
+  }, {
+    path: '/immuneResponse',
+    name: 'immuneResponse',
+    component: immuneResponse
+  }, {
+    path: '/immuneSignature',
+    name: 'immuneSignature',
+    component: immuneSignature
+  }, {
+    path: '/singleCellImmune',
+    name: 'singleCellImmune',
+    component: singleCellImmune
+  }, {
+    path: '/immuneScreen',
+    name: 'immuneScreen',
+    component: immuneScreen
+  }, {
+    path: '/search/:gene?',
+    name: 'search',
+    component: search
+  }, {
+    path: '/download',
+    name: 'download',
+    component: download
+  },
+  {
+    path: '/help',
+    component: help
+  },
+  {
+    path: '/contact',
+    component: contact
+  }
 
-  ],
-  // srcollBehavior(to,from,savedPosition){
-  //   if(to.hash){
-  //     return {
-  //       selector:to.hash
-  //     }
-  //   }
-  // } 
+  ]
 
 })

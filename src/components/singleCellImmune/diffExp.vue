@@ -48,8 +48,6 @@
       <span>High logFC&gt;0</span>
     </div>
 
-    <!-- <button @click="scrollCol">scrollCol</button> -->
-
     <!-- 详细页显示与否 -->
     <v-expdetail
       ref="detailPlot"
@@ -64,7 +62,6 @@
 <script>
 import {
   scrollRow,
-  scrollCol,
   toTarget,
   gStyle,
   move,
@@ -80,7 +77,6 @@ export default {
   },
   data() {
     return {
-      cancer: "",
       clickGene: "",
       celltype:"",
       wercorcancer_data: [
@@ -297,7 +293,7 @@ export default {
       }
     },
 
-    sortChangeClick(column, prop, order) {
+    sortChangeClick(column) {
       console.log(column.prop, column.order);
       this.loadDir = "";
       this.sortCol = column.prop;
@@ -402,8 +398,6 @@ export default {
         this.clickGene = row["gene"];
         this.celltype=column["label"]
         this.$refs.detailPlot.genePlot(row["gene"],column["label"]);
-        //this.$refs.detailPlot.evoluPlot(row["gene"]);
-        //this.$refs.detailPlot.tableDetail("expression", 1, "");
         toTarget(820);
       }
     },

@@ -107,7 +107,7 @@ export default {
   },
 
   methods: {
-    handleClick(tab, event) {
+    handleClick(tab) {
       this.checkVue(tab.name);
     },
 

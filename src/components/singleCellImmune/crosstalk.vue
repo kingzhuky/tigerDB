@@ -58,7 +58,7 @@
             <el-col :span="8">
               <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[0]+'.png'" />
             </el-col>
-              <el-col :span="8">
+            <el-col :span="8">
               <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[1]+'.png'" />
             </el-col>
             <el-col :span="8">
@@ -84,10 +84,6 @@ export default {
     cancer: {
       type: String,
     },
-    // subClu: {
-    //   type: Array,
-    // },
-    //subClucoptions: Array,
     clickGene: {
       type: String,
     },
@@ -104,7 +100,6 @@ export default {
       restaurants: [],
       crossClucoptions: [],
       crossClu: [],
-      seargene: "HLA-A_CD3G",
       scimmuShowNoRes: false,
     };
   },
@@ -123,7 +118,6 @@ export default {
     },
     clickPlot() {
       this.genePlot(this.clickGene);
-      //this.evoluPlot(this.clickGene);
     },
 
     getcrossClu(cancer) {
@@ -145,11 +139,6 @@ export default {
       };
     },
     querySearchAsync(queryString, cb) {
-      // var restaurants = this.restaurants;
-      // var results = queryString
-      //   ? restaurants.filter(this.createStateFilter(queryString))
-      //   : restaurants;
-      // console.log(results)
       this.$http
         .get("/tiger/genesug.php", {
           params: {
@@ -197,7 +186,6 @@ export default {
           .then(function (res) {
             if (res.data.status == 0) {
               setTimeout((that.crossplots = res.data.output[0]), 1000);
-              //that.crossplots = res.data.output[0];
             } else {
               that.scimmuShow = false;
               that.scimmuShowNoRes = true;
@@ -220,8 +208,8 @@ export default {
 </script>
 
 <style>
-.singleimg2{
-  width:400px
+.singleimg2 {
+  width: 400px;
 }
 </style>
 

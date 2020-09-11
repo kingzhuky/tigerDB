@@ -13,8 +13,8 @@
 
       <div class="infor">
         <el-card>
-          <el-row  v-loading="evoluloading">
-            <el-row v-show="evolushow"  class="detailimg">
+          <el-row v-loading="evoluloading">
+            <el-row v-show="evolushow" class="detailimg">
               <p class="card-title">tSNE</p>
               <el-col :span="11" v-show="evolushow2">
                 <img id="singleimg" :src="'tiger/img/'+overviewimg.split(',')[0]+'.png'" />
@@ -166,7 +166,7 @@ export default {
                 //alert("no gene file");
               } else {
                 that.evolushow = true;
-                that.evoluplots = res.data.output[0]
+                that.evoluplots = res.data.output[0];
                 that.gloclu = res.data.gloclu;
               }
               //that.evoluplots = res.data.output[0];

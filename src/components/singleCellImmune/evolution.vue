@@ -5,62 +5,56 @@
       <br />
       <el-col :span="8" :offset="6">
         <el-autocomplete
-        v-model="searchinput"
-        placeholder="Please Input Gene Symbol"
-        :fetch-suggestions="querySearchAsyncA"
-        @keyup.enter.native="searchClick"
-      ></el-autocomplete>
+          v-model="searchinput"
+          placeholder="Please Input Gene Symbol"
+          :fetch-suggestions="querySearchAsyncA"
+          @keyup.enter.native="searchClick"
+        ></el-autocomplete>
       </el-col>
       <el-col :span="4">
         <el-button id="homebt" @click="searchClick" icon="el-icon-search"></el-button>
       </el-col>
     </el-row>
     <br />
-        <div class="detail-card">
-      <div class="infor" v-loading="evoluloading" >
+    <div class="detail-card">
+      <div class="infor" v-loading="evoluloading">
         <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg">
             <el-col :span="10" :offset="1">
-                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]" />
+              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]" />
             </el-col>
             <el-col :span="10" :offset="1">
-                <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]" />
+              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]" />
             </el-col>
           </el-row>
         </el-card>
-        
       </div>
 
       <v-goTop></v-goTop>
     </div>
-   
-   
   </div>
 </template>
 
 <script>
-import goTop from "../public/goTop";
-
 export default {
   props: {
     cancer: String,
-    gloCluoptions: Array
+    gloCluoptions: Array,
   },
   data() {
     return {
       tableShow: false,
       searchinput: "CXCL13",
-      isShow:false,
-      gloclures:[],
-      plotsres:{}
+      isShow: false,
+      gloclures: [],
+      plotsres: {},
     };
   },
 
   methods: {
-    reset(){
-      this.gloclures=[],
-      this.plotsres={}
+    reset() {
+      (this.gloclures = []), (this.plotsres = {});
     },
     checkInput() {
       if (this.searchinput.trim() === "") {
@@ -69,10 +63,8 @@ export default {
       }
       return true;
     },
-    evoluPlot(cancer,gloclu,gene) {
-
+    evoluPlot(cancer, gloclu, gene) {
       if (this.checkInput()) {
-        
         var that = this;
         that.evoluloading = true;
         this.$http
@@ -80,8 +72,8 @@ export default {
             params: {
               type: "evolution",
               cancer: cancer,
-              gloclu:gloclu,
-              gene: gene
+              gloclu: gloclu,
+              gene: gene,
             },
           })
           .then(function (res) {
@@ -91,8 +83,8 @@ export default {
                 //alert("no gene file");
               } else {
                 that.evolushow = true;
-                that.gloclures.push(gloclu)
-                that.plotsres[gloclu]=res.data.output[0].split(',')
+                that.gloclures.push(gloclu);
+                that.plotsres[gloclu] = res.data.output[0].split(",");
               }
               //that.evoluplots = res.data.output[0];
               that.evoluloading = false;
@@ -116,14 +108,13 @@ export default {
         });
     },
     searchClick() {
-      this.reset()
-      this.isShow=true
-      for (let gloclu of  this.gloCluoptions){
-        this.evoluPlot(this.cancer, gloclu["glo"],this.searchinput);
+      this.reset();
+      this.isShow = true;
+      for (let gloclu of this.gloCluoptions) {
+        this.evoluPlot(this.cancer, gloclu["glo"], this.searchinput);
       }
     },
-   
-  }
+  },
 };
 </script>
 
@@ -134,7 +125,7 @@ export default {
 }
 
 #coExpInput .el-autocomplete {
-    width: 100%;
+  width: 100%;
 }
 
 #scCoExpTable th {

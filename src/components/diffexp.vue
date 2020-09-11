@@ -83,79 +83,67 @@ export default {
       responseGroupOption: [
         {
           value: "CR",
-          label: "CR"
+          label: "CR",
         },
         {
           value: "PR",
-          label: "PR"
-        }
+          label: "PR",
+        },
       ],
       noresponseGroupOption: [
         {
           value: "PD",
-          label: "PD"
+          label: "PD",
         },
         {
           value: "SD",
-          label: "SD"
-        }
+          label: "SD",
+        },
       ],
       imgpath: "",
       loading: true,
-      datatype: "png"
+      datatype: "png",
     };
   },
-  // watch: {
-  //   '$route'(to) {
-  //       if(to.name=='responseResult'){
-  //         this.plot() //保证每次重新进入详情页面都请求
-  //       }
-  //   }
-  // },
-
   methods: {
     clickPubmed(pubmed) {
       window.open("https://www.ncbi.nlm.nih.gov/pubmed/" + pubmed, "_blank");
     },
 
     Plot() {
-      console.log(this.gene);
-      //  if (this.checkInput()){
-      if (true) {
-        var that = this;
-        that.loading = true;
-        this.$http
-          .get("/tiger/responseDiff.php", {
-            params: {
-              cancer: this.cancer.join("_"),
-              gene: this.gene,
-              responder: this.responder.join(","),
-              noresponder: this.noresponder.join(","),
-              normalMed: this.normalMed,
-              normalGene: this.normalMed == "None" ? "None" : this.normalGene,
-              logScale: this.logScale,
-              mergedatasets: this.mergedatasets.join(","),
-              datatype: this.datatype
-            }
-          })
-          .then(function(res) {
-            if (res.data.status == 0) {
-              that.imgpath = res.data.output[2];
-              that.loading = false;
-            }
-          })
-          .catch(function(res) {
-            console.log(res);
-          });
-      }
-    }
+      var that = this;
+      that.loading = true;
+      this.$http
+        .get("/tiger/responseDiff.php", {
+          params: {
+            cancer: this.cancer.join("_"),
+            gene: this.gene,
+            responder: this.responder.join(","),
+            noresponder: this.noresponder.join(","),
+            normalMed: this.normalMed,
+            normalGene: this.normalMed == "None" ? "None" : this.normalGene,
+            logScale: this.logScale,
+            mergedatasets: this.mergedatasets.join(","),
+            datatype: this.datatype,
+          },
+        })
+        .then(function (res) {
+          if (res.data.status == 0) {
+            that.imgpath = res.data.output[2];
+            that.loading = false;
+          }
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+    },
   },
   computed: {
-    imgUrlWgcna: function() {
+    imgUrlWgcna: function () {
       return "tiger/img/" + this.imgpath + ".png";
-    }
+    },
   },
-  components: {}
+  components: {},
 };
 </script>
 

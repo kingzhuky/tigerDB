@@ -6,7 +6,6 @@
           <p class="card-title">{{title}}</p>
           <el-row v-loading="diffExpResponloading">
             <div :id="conditi" class="scaterPlot" style="width: 600px;height:400px;"></div>
-
             <el-table
               max-height="800"
               :data="diffExpRespontableData"
@@ -17,23 +16,17 @@
             >
               <el-table-column type="expand">
                 <template slot-scope="props">
-                  <div class="detailimg" v-loading="loading" >
-                    <img width="450px" :src="imgUrlBox" v-show="detailimgShow"/>
+                  <div class="detailimg" v-loading="loading">
+                    <img width="450px" :src="imgUrlBox" v-show="detailimgShow" />
                     <div v-show="!detailimgShow">no result</div>
                   </div>
                 </template>
               </el-table-column>
-
               <el-table-column prop="DatasetID" label="Dataset"></el-table-column>
               <el-table-column prop="CancerType" label="Cancer Type"></el-table-column>
               <el-table-column prop="Therapy" label="Therapy"></el-table-column>
               <el-table-column prop="ResponseSampleCount" label="Responder Number(PR,CR)"></el-table-column>
               <el-table-column prop="NonresponseSampleCount" label="Non-responder Number(PD, SD)"></el-table-column>
-              <!-- <el-table-column fixed="right" label="Click">
-                <template slot-scope="scope">
-                  <el-button @click="diffExpResponClick(scope.row)" type="text" size="small">View</el-button>
-                </template>
-              </el-table-column>-->
             </el-table>
           </el-row>
         </el-card>
@@ -45,32 +38,29 @@
 <script>
 export default {
   props: {
-    conditi: "",
-    title: "",
-    seargene:""
+    conditi: {type: String},
+    title: {type: String},
+    seargene: {type: String}
   },
 
   data() {
     return {
       expands: [],
       diffExpResponShow: true,
-      cardLoading:true,
+      cardLoading: true,
       diffExpResponloading: false,
       diffExpRespontableData: [],
       loading: false,
       imgpathBox: "",
       getPlotUrl: "",
-      detailimgShow:true
+      detailimgShow: true,
     };
   },
 
   computed: {
     imgUrlBox: function () {
       return "tiger/img/" + this.imgpathBox + ".png";
-    },
-    // imgUrlBar: function() {
-    //   return "tiger/img/" + this.imgpathBar + ".png";
-    // }
+    }
   },
 
   mounted() {
@@ -135,7 +125,7 @@ export default {
       }
 
       var that = this;
-      this.detailimgShow=true
+      this.detailimgShow = true;
 
       that.loading = true;
 
@@ -145,15 +135,16 @@ export default {
         })
         .then(function (res) {
           if (res.data.status == 0) {
-            if(that.conditi==="Survival"){
-              var imgpath = res.data.output[2].split(",");
-            }else{
-              var imgpath = res.data.output[0].split(",");
+            var imgpath = ""
+            if (that.conditi === "Survival") {
+              imgpath = res.data.output[2].split(",");
+            } else {
+              imgpath = res.data.output[0].split(",");
             }
             setTimeout((that.imgpathBox = imgpath[0]), 1000);
             that.loading = false;
-          }else{
-            this.detailimgShow=false
+          } else {
+            this.detailimgShow = false;
           }
         })
         .catch(function (res) {
@@ -165,8 +156,8 @@ export default {
       var targetdiv = document.getElementById(this.conditi);
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
-      this.diffExpRespontableData=[]
-      this.cardLoading=true
+      this.diffExpRespontableData = [];
+      this.cardLoading = true;
       this.$http
         .get("/tiger/homeresponse.php", {
           params: {
@@ -176,10 +167,9 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            this.cardLoading=false
+            this.cardLoading = false;
             this.diffExpRespontableData = res.data.datatable;
             this.draw_chart(res.data.list);
-            
           }
         })
         .catch((error) => {
@@ -193,19 +183,19 @@ export default {
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
-      var xAxis=""
-      if (this.conditi==="Survival"){
-        xAxis="ZScore"
-      }else{
-        xAxis="LogFC"
+      var xAxis = "";
+      if (this.conditi === "Survival") {
+        xAxis = "ZScore";
+      } else {
+        xAxis = "LogFC";
       }
 
       let option = {
-        xAxis:{
-          name:xAxis,
-          offset:0
-        } ,
-        yAxis: {name:"–log10(pvalue)"},
+        xAxis: {
+          name: xAxis,
+          offset: 0,
+        },
+        yAxis: { name: "–log10(pvalue)" },
         tooltip: {
           formatter: "{c}",
         },

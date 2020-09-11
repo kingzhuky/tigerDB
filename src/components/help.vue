@@ -14,33 +14,6 @@
         </el-row>
       </div>
 
-      <!-- <div class="main_con" id="2" ref="userinfo2">
-        <h1 class="subtitle">Data sources</h1>
-        <el-divider></el-divider>
-        <p>
-          At present, m6A2Target absorbs WERs knockdown or overexpression experiment conclusion from all published literature, and WERs related high-throughput sequence data and mass spectrometry in GEO database. Differential expression analysis, differential methylation analysis, differential translation analysis, CLIP data analysis, RIP data analysis and the like were all integrated to explore the WERs target genes.
-          Multiple data and statistical diagrams are embedded in the web server for users to obtain the target gene information.
-        </p>
-
-        <h2 class="sub">1) Data sources</h2>
-        <div class="htable">
-          <el-table :data="tableData" stripe border style="width: 100%">
-            <el-table-column prop="name" label="Name"></el-table-column>
-            <el-table-column label="Description">
-              <template slot-scope="scope">
-                <a v-html="scope.row.source"></a>
-              </template>
-            </el-table-column>
-
-            <el-table-column label="URL">
-              <template slot-scope="scope">
-                <a v-html="scope.row.url"></a>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </div> -->
-
       <div class="main_con" id="4" ref="userinfo4">
         <h1 class="subtitle">Usage of TIGER</h1>
         <el-divider></el-divider>

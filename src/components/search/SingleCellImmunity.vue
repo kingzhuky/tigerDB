@@ -53,7 +53,7 @@
     </div>
 
     <div class="textitem">
-      <el-card >
+      <el-card>
         <p
           class="card-title"
         >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
@@ -106,7 +106,13 @@
             </el-col>
           </el-row>
           <br />
-          <v-singleCellImmunityCorTable ref="singleCellImmunityCorTableRef" :seargene="seargene" :CancerType="CancerType" :GlobalCluster="GlobalCluster" :CellType="CellType"></v-singleCellImmunityCorTable>
+          <v-singleCellImmunityCorTable
+            ref="singleCellImmunityCorTableRef"
+            :seargene="seargene"
+            :CancerType="CancerType"
+            :GlobalCluster="GlobalCluster"
+            :CellType="CellType"
+          ></v-singleCellImmunityCorTable>
         </div>
       </el-card>
     </div>
@@ -121,19 +127,13 @@
           </div>
         </div>
 
-        <el-table
-            :data="DiffExpTumorTableData"
-              max-height="800"
-              style="width: 100%"
-            >
-               <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
-              <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
-              <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
-              <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable ></el-table-column>
-              <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
-           </el-table>
-
-
+        <el-table :data="DiffExpTumorTableData" max-height="800" style="width: 100%">
+          <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
+          <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
+          <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
+          <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
+          <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
+        </el-table>
       </div>
 
       <div
@@ -151,26 +151,20 @@
             <img id="singleimg" :src="imgpathBar3" />
           </div>
         </div>
-          <el-table
-            :data="DiffExpResponseableData"
-              max-height="800"
-              style="width: 100%"
-            >
-              <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
-              <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
-              <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
-              <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
-              <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
-       
-            </el-table>
+        <el-table :data="DiffExpResponseableData" max-height="800" style="width: 100%">
+          <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
+          <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
+          <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
+          <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
+          <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
+        </el-table>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-import echarts from "echarts";
-import singleCellImmunityCorTable from "./singleCellImmunityCorTable.vue"
+import singleCellImmunityCorTable from "./singleCellImmunityCorTable.vue";
 
 export default {
   props: {
@@ -214,15 +208,14 @@ export default {
       imgpathBar3: "",
       picScattername: "",
       picScatterloading: true,
-      DiffExpTumorTableData:[],
-      DiffExpTumorTableData:[]
+      DiffExpTumorTableData: []
     };
   },
   mounted() {
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
-      this.searchTable()
+      this.searchTable();
       this.getScaData(
         this.seargene,
         "home_scdiffexp_tn",
@@ -236,17 +229,14 @@ export default {
 
       this.getcancer();
       this.getgloClu();
-      this.getCellType()
-      //this.getDiagramData(this.seargene, "singleCellCorTumor", 1, 10);
+      this.getCellType();
     });
   },
- components: {
-    "v-singleCellImmunityCorTable": singleCellImmunityCorTable
+  components: {
+    "v-singleCellImmunityCorTable": singleCellImmunityCorTable,
   },
 
-
   computed: {
-
     imgUrlBox: function () {
       return this.imgpathBox;
     },
@@ -256,20 +246,18 @@ export default {
   },
 
   methods: {
-    reset(){
-      this.DiffExpTumorTableData=[]
-      this.DiffExpTumorTableData=[]
-      this.imgpathBox=""
-      this.imgpathBar=""
+    reset() {
+      this.DiffExpTumorTableData = [];
+      this.DiffExpTumorTableData = [];
+      this.imgpathBox = "";
+      this.imgpathBar = "";
     },
-  
+
     plot() {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
-        this.reset()
+        this.reset();
         this.$refs.singleCellImmunityCorTableRef.reset();
-
         this.oldseargene = this.seargene;
-        //this.clickPlot(this.seargene);
         this.getTableData(this.seargene);
 
         this.getScaData(
@@ -284,111 +272,6 @@ export default {
         );
       }
     },
-    // clickPlot() {
-    //   this.getDiagramData(
-    //     this.seargene,
-    //     "singleCellCorTumor",
-    //     this.currentPage,
-    //     this.pageSize
-    //   );
-
-    //   this.genePlot(this.seargene);
-    // },
-
-    // getRowKeys: function (row) {
-    //   return row.geneb;
-    // },
-    // diffExpRespontableExpand: function (row, expandedRows) {
-      
-    //   var that = this;
-    //   if (expandedRows.length) {
-    //     that.expands = [];
-    //     if (row) {
-    //       that.expands.push(row.geneb);
-    //       console.log(that.expands)
-    //     }
-    //   } else {
-    //     that.expands = [];
-    //     console.log(that.expands)
-    //   }
-     
-    //   this.picScatterPlot(
-    //     row.datasetid,
-    //     row.GlobalCluster,
-    //     row.genea,
-    //     row.geneb,
-    //     row.CellType
-    //   );
-    // },
-
-    // picScatterPlot(datasetid, GlobalCluster, genea, geneb, CellType) {
-    //    console.log(
-    //     datasetid,
-    //     GlobalCluster,
-    //     genea,
-    //     geneb,
-    //     CellType
-    //   )
-    //   var that = this;
-    //   that.detailimgShow = true;
-
-    //   that.picScatterloading = true;
-    //   var params = {
-    //        cancer: datasetid,
-    //       gloclu: GlobalCluster,
-    //       gene: genea,
-    //       clickgene: geneb,
-    //       cluster: CellType,
-    //       method: "pearson",
-    //     };
-    //   this.$http
-    //     .get("/tiger/scimmucoexpdetail.php", {
-    //       params: params,
-    //     })
-    //     .then(function (res) {
-    //       if (res.data.status == 0) {
-    //         that.picScattername = res.data.output[0];
-    //         that.picScatterloading = false;
-    //       } else {
-    //         that.detailimgShow = false;
-    //       }
-    //     })
-    //     .catch(function (res) {
-    //       console.log(res);
-    //     });
-    // },
-
-    // genePlot(clickgene) {
-    //   var that = this;
-    //   that.geneloading = true;
-    //   that.geneshow = true;
-    //   this.$http
-    //     .get("/tiger/scimmudiffexpdetailgene.php", {
-    //       params: {
-    //         cancer: this.cancer,
-    //         gene: clickgene,
-    //         gloclu: this.gloClu,
-    //         subclu: this.subClu.join(","),
-    //       },
-    //     })
-    //     .then(function (res) {
-    //       if (res.data.status == 0) {
-    //         if (res.data.output[0] === "0") {
-    //           that.geneshow = false;
-    //         } else {
-    //           that.imgpathBox =
-    //             "/tiger/img/" + res.data.output[0].split(",")[0];
-    //           that.imgpathBar =
-    //             "/tiger/img/" + res.data.output[0].split(",")[1];
-    //           that.geneshow = true;
-    //         }
-    //         that.geneloading = false;
-    //       }
-    //     })
-    //     .catch(function (res) {
-    //       console.log(res);
-    //     });
-    // },
 
     getcancer() {
       this.$http.get("/tiger/singlecelldataset.json").then((res) => {
@@ -406,8 +289,8 @@ export default {
     GlobalClusterChange() {
       this.getCellType();
     },
-    subClusterChange(){
-      this.searchTable()
+    subClusterChange() {
+      this.searchTable();
     },
     getCellType() {
       this.CellTypeLoading = true;
@@ -419,18 +302,21 @@ export default {
           },
         })
         .then((res) => {
-          if(res.data.status===200){
+          if (res.data.status === 200) {
             this.CellTypeLoading = false;
             this.CellTypeCluoptions = res.data.list;
             this.CellType = res.data.list[0].CellType;
-            this.searchTable()
+            this.searchTable();
           }
-         
-          
         });
     },
     searchTable() {
-      this.$refs.singleCellImmunityCorTableRef.getDiagramData(this.seargene, "singleCellCorTumor", 1, 10);
+      this.$refs.singleCellImmunityCorTableRef.getDiagramData(
+        this.seargene,
+        "singleCellCorTumor",
+        1,
+        10
+      );
     },
 
     getgloClu() {
@@ -470,7 +356,6 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
       var hours = cancer;
       var days = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
-      var data = data;
       var option2 = {
         title: {
           text: "Cell Type Marker ( |Log2FC| )",
@@ -597,9 +482,9 @@ export default {
               this.draw_chart_sca(res.data.list, id);
               if (id === "singleCellImmuTumor") {
                 this.singleCellImmuTumorloading = false;
-                this.DiffExpTumorTableData=res.data.infosTable
+                this.DiffExpTumorTableData = res.data.infosTable;
               } else {
-                this.DiffExpResponseableData=res.data.infosTable
+                this.DiffExpResponseableData = res.data.infosTable;
                 this.singleCellImmuResponseloading = false;
               }
             }
@@ -615,32 +500,6 @@ export default {
           console.log(error);
         });
     },
-
-    // getDiagramData(gene, id, currentPage, pageSize) {
-    //   this.ReactomeTableData = [];
-    //   this.singleCellCorloading = true;
-    //   this.$http
-    //     .get("/tiger/searchcoeaTable.php", {
-    //       params: {
-    //         gene: gene,
-    //         currentPage: currentPage,
-    //         pageSize: pageSize,
-    //         GlobalCluster: this.GlobalCluster,
-    //         CellType: this.CellType,
-    //         CancerType: this.CancerType,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       if (res.data.status === 200) {
-    //         this.ReactomeTableData = res.data.list;
-    //         this.total = res.data.total[0];
-    //         this.singleCellCorloading = false;
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
 
     differentialExpressionPlot(cancer, gloclu, subClu, id) {
       var that = this;
@@ -771,9 +630,12 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
 
       let option = {
-        xAxis: { name: "Log2FC"},
-        yAxis: { name: "–log10(P-Value+1)" ,axisLine: {show:false},
-axisTick: {show:false},},
+        xAxis: { name: "Log2FC" },
+        yAxis: {
+          name: "–log10(P-Value+1)",
+          axisLine: { show: false },
+          axisTick: { show: false },
+        },
         tooltip: {
           formatter: "{c}",
         },
@@ -822,6 +684,6 @@ div#scaterid {
   justify-content: center;
 }
 .detailimg {
-    text-align: center;
+  text-align: center;
 }
 </style>
