@@ -2,12 +2,11 @@
 header("Content-Type:application/json;charset=UTF8");
 $cancer=$_GET['cancer']; 
 $gloclu=$_GET['gloclu'];
-$subclu=$_GET['subclu'];
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript overview.R $cancer $gloclu $subclu";
+  $zhiling="sudo Rscript overview.R $cancer $gloclu";
   }else{
-  $zhiling="Rscript overview.R $cancer  $gloclu $subclu";
+  $zhiling="Rscript overview.R $cancer  $gloclu";
 }
 
 

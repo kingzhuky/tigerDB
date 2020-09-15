@@ -1,9 +1,9 @@
 <?php
 header("Content-type: text/html;charset=utf-8");
 if(PATH_SEPARATOR==':'){
-  $conn=mysqli_connect("localhost:3306","root","sysucc20");
+  $conn=mysqli_connect("localhost:3306","read_only_user","dfdl651ZLYY.");
 }else{
-  $conn=mysqli_connect("localhost:3307","root","sysucc20");
+  $conn=mysqli_connect("localhost:3307","read_only_user","dfdl651ZLYY.");
 }
 if(!$conn){
     die("连接失败".mysqli_error($conn));
@@ -25,7 +25,7 @@ $type=$_GET['type'];
   $dataResult = mysqli_query($conn,$sql);
 
   while ($row = mysqli_fetch_assoc($dataResult)) {
-      array_push($infos,$row);
+      array_push($infos,$row["sub"]);
   }
 
   echo json_encode(array(
@@ -34,7 +34,7 @@ $type=$_GET['type'];
       "list" =>$infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
 
-
+mysql_close($conn);
     
   
 ?>

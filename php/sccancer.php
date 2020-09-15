@@ -1,9 +1,9 @@
 <?php
 header("Content-type: text/html;charset=utf-8");
 if(PATH_SEPARATOR==':'){
-  $conn=mysqli_connect("localhost:3306","root","sysucc20");
+  $conn=mysqli_connect("localhost:3306","read_only_user","dfdl651ZLYY.");
 }else{
-  $conn=mysqli_connect("localhost:3307","root","sysucc20");
+  $conn=mysqli_connect("localhost:3307","read_only_user","dfdl651ZLYY.");
 }
 if(!$conn){
     die("连接失败".mysqli_error($conn));
@@ -17,14 +17,24 @@ $cancer = $_GET['cancer'];
 $type=$_GET['type'];
 
   // query data
-  $sql = "SELECT distinct  cancer FROM singlecellcluster";
+  $sql = "SELECT datasetid,datasetname,cancertype,patientnum,cellnum cancer FROM scrnaseqinfo";
   $infos = array();
   // 拼接最终SQL
   
   $dataResult = mysqli_query($conn,$sql);
+  $allcancertype=array();
 
   while ($row = mysqli_fetch_assoc($dataResult)) {
-      array_push($infos,$row);
+
+    $tempcancertype=$row["cancertype"];
+    if (in_array($tempcancertype,$allcancertype)){
+      
+    }else{
+
+    }
+
+
+    array_push($infos,$row);
   }
 
   echo json_encode(array(
@@ -33,7 +43,7 @@ $type=$_GET['type'];
       "list" =>$infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
 
-
+      mysql_close($conn);
     
   
 ?>

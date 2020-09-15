@@ -1,9 +1,9 @@
 <?php
 header("Content-type: text/html;charset=utf-8");
 if(PATH_SEPARATOR==':'){
-  $conn=mysqli_connect("localhost:3306","root","sysucc20");
+  $conn=mysqli_connect("localhost:3306","read_only_user","dfdl651ZLYY.");
 }else{
-  $conn=mysqli_connect("localhost:3307","root","sysucc20");
+  $conn=mysqli_connect("localhost:3307","read_only_user","dfdl651ZLYY.");
 }
 if(!$conn){
     die("连接失败".mysqli_error($conn));
@@ -35,7 +35,7 @@ $tabl=$_GET['tabl'];
       "list" =>$infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
 
-
+mysql_close($conn);
     
   
 ?>

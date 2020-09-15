@@ -13,12 +13,11 @@ mysqli_query($conn , "set names utf8");
 
 mysqli_select_db( $conn, 'tiger' );
 
-$cancer = $_GET['cancer'];
-$gloclu= $_GET['gloclu'];
-$type=$_GET['type'];
+$CancerType = $_GET['CancerType'];
+$GlobalCluster= $_GET['GlobalCluster'];
 
   // query data
-  $sql = "SELECT distinct glo FROM ".$type." WHERE cancer = '".$cancer."'";
+  $sql = "SELECT distinct CellType FROM homescinfo WHERE datasetid = '".$CancerType."' AND GlobalCluster='".$GlobalCluster."'";
   $infos = array();
   // 拼接最终SQL
   

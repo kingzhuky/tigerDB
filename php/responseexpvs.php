@@ -1,9 +1,9 @@
 <?php
 header("Content-type: text/html;charset=utf-8");
 if(PATH_SEPARATOR==':'){
-  $conn=mysqli_connect("localhost:3306","root","sysucc20");
+  $conn=mysqli_connect("localhost:3306","read_only_user","dfdl651ZLYY.");
 }else{
-  $conn=mysqli_connect("localhost:3307","root","sysucc20");
+  $conn=mysqli_connect("localhost:3307","read_only_user","dfdl651ZLYY.");
 }
 if(!$conn){
     die("连接失败".mysqli_error($conn));
@@ -28,7 +28,7 @@ if(strcmp($order_dir,"ascending")==0){
 //拼接排序sql
 $orderSql = "";
 if((!empty($order_column))&&(!strcmp($order_dir,"None")==0)){
-    $orderSql = " order by `".$order_column."` ".$order_dir;
+    $orderSql = " order by ISNULL(`".$order_column."`),`".$order_column."` ".$order_dir;
 }
 
 
@@ -54,7 +54,6 @@ if ($start<0){
   }
 
   $type=$_GET['type'];
-
   //定义查询数据总记录数sql
   $sumSql = "SELECT count(gene) as sum FROM ".$type;
 
@@ -114,8 +113,8 @@ if ($start<0){
       "recordsFiltered" =>$recordsFiltered, // necessary
       "list" =>$infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
-
-
-    
   }
+
+  mysql_close($conn);
+
 ?>

@@ -14,7 +14,7 @@ if(nchar(maintitle) > 200) {
                      "TCGA",sep="-")
 }
 
-if(!file.exists(paste0(result.path,maintitle,".json")| nchar(maintitle) > 200)){
+if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200 ){
   load(paste0(loading.data.path,"TCGA.data.table.RData"))
   tablecortest <- function(x,y){
     test.res <- cor.test(x,y)
@@ -40,7 +40,7 @@ if(!file.exists(paste0(result.path,maintitle,".json")| nchar(maintitle) > 200)){
   Sig.score.matrix <- CalCustomSig(gene.arr,SIG.score.table,loading.data.path)
   SIG.cor.matrix <- Sig.score.matrix[,lapply(.SD,function(x){tablecortest(x,CustomSig)}), .SDcols=-c("CustomSig","sample_id"),by = cancer_type]
   sort.index <- mixedsort(colnames(SIG.cor.matrix))
-  SIG.cor.matrix <- SIG.cor.matrix[,..]
+  SIG.cor.matrix <- SIG.cor.matrix[,..sort.index]
   SIG.cor.matrix.json <- data.frame(row.names = SIG.cor.matrix[,cancer_type],SIG.cor.matrix[,-c("cancer_type")]) %>% 
     t() %>% data.table(Signature = rownames(.),.) %>%
     toJSON(pretty=TRUE,.)

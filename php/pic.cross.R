@@ -9,8 +9,12 @@ mytheme <- theme_bw() +
         panel.grid.minor=element_line(color="white"),
         panel.border=element_rect(color="black",size=1),
         axis.line=element_line(color="black",size=0.5))
-colors=c("#cc4a5399",'#00ADDB99','#7142AC99',"#42B54099",'#00008099','#07702b99',"#7FFF0099","#AD002A","#ED000099",'#ABD20599','#F0BE7E','#4D221399',"#FDAF9199",'#85E1D099','#C979CD99','#F26A1299',"#ADB6B699",'#4B79AB99',"#0099B499",'#FF149399','#00800099',"#1B191999")
-
+colors=c('#E5D2DD', '#53A85F', '#F1BB72', '#F3B1A0', '#D6E7A3', '#57C3F3', '#476D87',
+         '#E95C59', '#E59CC4', '#AB3282', '#23452F', '#BD956A', '#8C549C', '#585658',
+         '#9FA3A8', '#E0D4CA', '#5F3D69', '#C5DEBA', '#58A4C3', '#E4C755', '#F7F398',
+         '#AA9A59', '#E63863', '#E39A35', '#C1E6F3', '#6778AE', '#91D0BE', '#B53E2B',
+         '#712820', '#DCC1DD', '#CCE0F5',  '#CCC9E6', '#625D9E', '#68A180', '#3A6963',
+         '#968175')
 if(Sys.info()[1]=="Windows"){
   Path='E:/hongwan/'
   resPath="D:/javascript/tigetData/"
@@ -20,15 +24,16 @@ if(Sys.info()[1]=="Windows"){
 }
 
 Args <- commandArgs(T)
-# Args <- c("BCC","CAF,Tumor,pDC,NK",'HLA-A','CD3G')
+#Args <- c("BCC","CAF,Tumor,pDC,NK",'HLA-A','CD3G')
 # Args <- c("HCC","T-cell,B-cell,CAF,TAM",'HLA-A','CD3G')
 # Args <- c("NSCLC","Plasma,Myeloid,Malignant,T-cell",'HLA-A','CD3D')
 
 
 cancer_type=Args[1]
-sub.cluster <- unlist(strsplit(Args[2]%>% str_replace_all('-',' '),split=',')) #T cell_B cell_pDC_NK
-ligand = Args[3]
-receptor=Args[4]
+global.cluster <- Args[2]
+sub.cluster <- unlist(strsplit(Args[3]%>% str_replace_all('-',' '),split=',')) #T cell_B cell_pDC_NK
+ligand = Args[4]
+receptor = Args[5]
 
 
 maintitle <- paste('Cross-',paste(cancer_type,collapse = "_"),
@@ -79,7 +84,7 @@ pic.cross=function(sub.cluster,ligand,receptor){
     data.new[data.new$receptor==receptor,'link_col']='#e0146b'
     
     maintitles=c(maintitles,paste(maintitle,i,sep='-'))
-    png(file=paste0(resPath,paste(maintitle,i,sep='-'),".png"),  width = 600, height = 600)
+    png(file=paste0(resPath,paste(maintitle,i,sep='-'),".png"),  width = 500, height = 500)
     chordDiagram(as.data.frame(cbind(paste(data.new$cell_from, data.new$ligand),paste(data.new$cell_to, data.new$receptor))), order = paste(names(genes),genes), grid.col = grid.col, transparency = transparency, 
                  directional = 1, link.arr.lwd = data.new$arr_width, direction.type = "arrows",
                  link.arr.lty = link.arr.lty, link.arr.type = link.arr.type, 

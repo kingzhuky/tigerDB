@@ -3,7 +3,7 @@
 
 //cdn 引入减
 //Vue.use(VueRouter)
-//import VueRouter from 'vue-router'
+import VueRouter from 'vue-router'
 const home = () => import('@/components/home/home')
 const immuneResponse = () => import('@/components/immuneResponse/home')
 const immuneSignature = () => import('@/components/immuneSignature')

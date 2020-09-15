@@ -13,29 +13,30 @@ mysqli_query($conn , "set names utf8");
 
 mysqli_select_db( $conn, 'tiger' );
 
-$gene = $_GET['gene'];
+$tabl = $_GET['tabl'];
+$colu = $_GET['colu'];
+$coluvalue = $_GET['coluvalue'];
 
 
   // query data
-  //$sql = "SELECT * FROM ".$tabl." WHERE ".$colu."='".$coluvalue."' LIMIT 1";
-  $sql = "SELECT  * from  homescreen as a,immunescreenartle as b ,homescreen as c WHERE a.GENE_SYMBOL='".$gene."' and a.dataset_id=b.dataset_id and c.GENE_SYMBOL='".$gene."' and c.dataset_id=a.dataset_id;";
-  //$infos2 = array();
+  $sql = "SELECT * FROM ".$tabl." WHERE ".$colu."='".$coluvalue."' LIMIT 1";
+  $infos2 = array();
   $infos = array();
   // 拼接最终SQL
   
 $dataResult = mysqli_query($conn,$sql);
 
 while ($row = mysqli_fetch_assoc($dataResult)) {
-    array_push($infos,$row);
+    array_push($infos2,$row);
 }
 
 
-// foreach($infos2[0] as $key => $value){
-//     $temp= array();
-//     $temp["title"]=$key;
-//     $temp["value"]=$value;
-//     array_push($infos,$temp);
-// }
+foreach($infos2[0] as $key => $value){
+    $temp= array();
+    $temp["title"]=$key;
+    $temp["value"]=$value;
+    array_push($infos,$temp);
+}
 
 
 

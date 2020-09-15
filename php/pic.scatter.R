@@ -11,11 +11,11 @@ mytheme <- theme_bw() +
         axis.line=element_line(color="black",size=0.5))
 
 if(Sys.info()[1]=="Windows"){
-  Path='E:/hongwan/'
-  resPath="D:/javascript/tigetData/"
+  Path='D:/tiger/'
+  resPath="D:/tiger/img/"
 }else{
   Path='/bakup/tiger/'
-  resPath="/bakup/tiger/"
+  resPath="/bakup/tiger/img/"
 }
 
 Args <- commandArgs(T)
@@ -37,21 +37,19 @@ pic.scatter=function(its.gene,click.gene,click.cluster,method){
   names.gene=c(its.gene=its.gene,click.gene=click.gene)
   its.gene=readRDS(paste0(Path,cancer_type,'/',cancer_type,'.gene/',global.cluster,'/',its.gene,'.rds'))
   click.gene=readRDS(paste0(Path,cancer_type,'/',cancer_type,'.gene/',global.cluster,'/',click.gene,'.rds'))
-  now.data=data.frame(cluster=its.gene$data$recluster,its.gene=its.gene$data$gene,click.gene=click.gene$data$gene)
+  now.data=data.frame(cluster=its.gene$recluster,its.gene=its.gene$gene,click.gene=click.gene$gene)
   now.data=now.data[now.data$cluster %in% click.cluster,]
   sta=c(pvalue=cor.test(now.data$its.gene,now.data$click.gene,method = method)[['p.value']] %>% round(4),
         r=cor.test(now.data$its.gene,now.data$click.gene,method = method)[['estimate']]%>% round(4))
   
-  p=ggplot(now.data,aes(x=its.gene,y=click.gene))+geom_point(alpha=0.05)+mytheme+stat_smooth(method = lm,level=0.95)+
+  p=ggplot(now.data,aes(x=its.gene,y=click.gene))+geom_point(alpha=0.05)+mytheme+stat_smooth(method = lm,level=0.95,size=0.5,color='#1b79f5')+
     geom_rug(size=0.2,length = unit(0.02, "npc"))+annotate('text',x=-Inf,y=Inf,label=paste0('r=',sta[2],'\np=',sta[1]),hjust=-0.3,vjust=2)+
     labs(x=names.gene['its.gene'],y=names.gene['click.gene'])
-  ggsave(paste0(resPath,'/img/',maintitle,'.png'),p,dpi = 100)
+  ggsave(paste0(resPath,maintitle,'.png'),p,dpi = 100,width = 5,height = 5)
   
 }
 
 
 pic.scatter(its.gene,click.gene,click.cluster,method)
-
-
 cat(maintitle)
 

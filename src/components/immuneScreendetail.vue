@@ -153,35 +153,6 @@ export default {
           console.log(res);
         });
     },
-
-    Plot(gene, mergedatasets) {
-      if (this.checkInput()) {
-        var that = this;
-        that.loading = true;
-        this.$http
-          .get("/tiger/responseDiff.php", {
-            params: {
-              gene: gene,
-              mergedatasets: mergedatasets,
-              responder: "CR,PR",
-              noresponder: "PD,SD",
-              normalMed: this.normalMed,
-              normalGene: this.normalMed == "None" ? "None" : this.normalGene,
-              logScale: this.logScale,
-              datatype: "png",
-            },
-          })
-          .then(function (res) {
-            if (res.data.status == 0) {
-              that.imgpath = res.data.output[2];
-              that.loading = false;
-            }
-          })
-          .catch(function (res) {
-            console.log(res);
-          });
-      }
-    },
   },
 
   computed: {

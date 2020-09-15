@@ -1,0 +1,16 @@
+[{
+    "label": "Basal cell carcinoma (BCC)",
+    "options": [{
+    "value": "BCC",
+    "label": "Yost KE, et al. Nat Med. 2019 Aug;    Number of cells:50335; NumNumber of Patient:11"
+    }]
+}, {
+    "label": "Non-small-cell lung carcinoma (NSCLC)",
+    "options": [{
+        "label": "Lambrechts D, et al. Nat Med.2018 Aug;   Number of cells:50767; NumNumber of Patient:5",
+        "value": "NSCLC"
+    }, {
+        "label": "Wu TD, et al. Nature. 2020 Mar;   Number of cells:91680; NumNumber of Patient:6",
+        "value": "NSCLC1"
+    }]
+}]
