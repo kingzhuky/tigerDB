@@ -37,7 +37,7 @@
         :key="index"
         :property="item"
         :label="item"
-        sortable
+        sortable="custom"
         align="center"
         width="80"
       ></el-table-column>
@@ -273,7 +273,12 @@ export default {
       this.sortOrder = column.order;
       this.loadpage = 1;
       this.tableData = [];
-      this.getTableData("survival", this.loadpage, column.prop, column.order);
+      this.getTableData(
+        "survival", 
+        this.loadpage, 
+        column.prop, 
+        column.order
+        );
     },
     headerStyle({ row, column, rowIndex, columnIndex }) {
       let cancer = column.label.split("_")[0];

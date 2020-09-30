@@ -19,3 +19,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+sqltools_20200922161644_3696.log
+php/update_data.sql

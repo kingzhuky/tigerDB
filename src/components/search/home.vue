@@ -147,8 +147,6 @@ export default {
       }
     },
 
-  
-
      querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {

@@ -15,8 +15,8 @@
     <v-resultcard
       :conditi="'Survival'"
       :seargene="seargene"
-      ref="immuResponseVueRefSurvival"
       :title="'Survival analysis'"
+      ref="immuResponseVueRefSurvival"
     ></v-resultcard>
   </div>
 </template>
