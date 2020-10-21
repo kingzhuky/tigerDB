@@ -44,6 +44,7 @@ export default {
   },
   data() {
     return {
+      sestate: false,
       tableShow: false,
       searchinput: "CXCL13",
       isShow: false,
@@ -108,11 +109,17 @@ export default {
         });
     },
     searchClick() {
+      // if(this.sestate){
+      //   return false
+      // }
+      // this.sestate = false;
       this.reset();
       this.isShow = true;
       for (let gloclu of this.gloCluoptions) {
         this.evoluPlot(this.cancer, gloclu["glo"], this.searchinput);
       }
+      // this.sestate = true;
+      // return this.sestate
     },
   },
 };

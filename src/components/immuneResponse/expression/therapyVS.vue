@@ -52,7 +52,6 @@
       <span class="heatMapTable--colorbar"></span>
       <span>Post-Therapy</span>
     </div>
-    <div id="logFC">logFC</div>
 
     <!-- 详细页显示与否 -->
     <v-therapydetail
@@ -353,8 +352,6 @@ export default {
       this.getTableData("exptherapy", this.loadpage,"","");
 
     },
-
-   
 
     //点击单个格子
     heandleclick(row, column) {

@@ -31,7 +31,7 @@ Args <- commandArgs(T)
 
 cancer_type=Args[1]
 global.cluster <- Args[2]
-sub.cluster <- unlist(strsplit(Args[3]%>% str_replace_all('-',' '),split=',')) #T cell_B cell_pDC_NK
+sub.cluster <- unlist(strsplit(Args[3]%>% str_replace_all('-',' '),split=',')) #T cell,B cell,pDC,NK
 ligand = Args[4]
 receptor = Args[5]
 

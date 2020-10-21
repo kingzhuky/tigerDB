@@ -5,7 +5,7 @@ $gloclu=trim($_GET['gloclu']);
 $gene=trim($_GET['gene']); 
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo  Rscript pic.COEA.R $cancer $gloclu $gene";
+  $zhiling="sudo Rscript pic.COEA.R $cancer $gloclu $gene";
 }else{
   $zhiling="Rscript pic.COEA.R $cancer $gloclu $gene";
 }
@@ -18,5 +18,3 @@ echo json_encode(array(
    "output" => $output,
    "status"=>$status
     ),JSON_UNESCAPED_UNICODE); 
-
-?>

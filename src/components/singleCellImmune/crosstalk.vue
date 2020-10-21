@@ -24,7 +24,7 @@
         <el-row>
           <el-col :span="6" :offset="1">
             <el-select v-model="gloclu" placeholder="Select Cluster">
-              <el-option label="ALl Cells" value="ALl"></el-option>
+              <el-option label="All Cells" value="All"></el-option>
               <el-option label="T cells" value="Tcells"></el-option>
               <el-option label="B cells" value="Bcells"></el-option>
             </el-select>

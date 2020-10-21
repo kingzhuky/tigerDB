@@ -2,17 +2,23 @@
   <transition name="move3">
     <div class="detail-card">
       <div class="infor" v-loading="loading">
-        <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
+        <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg">
-            <el-col :span="20" :offset="2">
-              <p class="card-title">tSNE</p>
-              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" />
-              <el-divider></el-divider>
-              <p class="card-title">Differential cell fraction</p>
-              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" />
-              <el-divider></el-divider>
-              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" />
+            <el-col :span="8" :offset="0">
+              <!-- <p class="card-title">tSNE</p> -->
+              <el-image 
+                id="singleimg" 
+                :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" 
+                :preview-src-list="['tiger/img/'+plotsres[gloclu][0]+'.png']">
+              </el-image>
+            </el-col>
+              <!-- <el-divider></el-divider> -->
+            <el-col :span="8" :offset="0">
+              <img id="singleimg" width="450px" :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" />
+            </el-col>
+            <el-col :span="8" :offset="0">
+              <img id="singleimg" width="350px" :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" />
             </el-col>
           </el-row>
         </el-card>

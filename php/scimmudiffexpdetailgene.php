@@ -15,7 +15,7 @@ mysqli_select_db( $conn, 'tiger' );
 
 $cancer=trim($_GET['cancer']); 
 $celltype=trim($_GET['celltype']); 
-$type=$_GET['type'];
+$type=$_GET['type'];  // 用于区分三种情景
 $gene=trim($_GET['gene']); 
 $gloclu=trim($_GET['gloclu']); 
 

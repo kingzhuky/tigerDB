@@ -51,7 +51,9 @@ export default {
     cancer: {
       type: String,
     },
-    celltype: { type: String },
+    celltype: { 
+      type: String 
+    },
     tabname: {
       type: String,
     },

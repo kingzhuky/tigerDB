@@ -106,12 +106,12 @@ if ($start<0){
 
 
   echo json_encode(array(
-      "status"=>200,
+      "status" => 200,
       "draw" => $draw,
-      "sql"=>$sql,
-      "recordsTotal" =>$recordsTotal,  // necessary
-      "recordsFiltered" =>$recordsFiltered, // necessary
-      "list" =>$infos // necessary
+      "sql" => $sql,
+      "recordsTotal" => $recordsTotal,  // necessary
+      "recordsFiltered" => $recordsFiltered, // necessary
+      "list" => $infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
   }
 

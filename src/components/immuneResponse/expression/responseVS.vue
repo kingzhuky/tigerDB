@@ -49,7 +49,6 @@
       <span class="heatMapTable--colorbar"></span>
       <span>Response</span>
     </div>
-    <div id="logFC">logFC</div>
 
     <!-- <button @click="scrollCol">scrollCol</button> -->
 
@@ -296,22 +295,18 @@ export default {
       switch (cancer) {
         case "Melanoma":
           return "melanoma";
-          break;
         case "GBM":
           return "gbm";
-          break;
         case "ccRCC":
           return "ccRCC";
-          break;
         case "Renal":
           return "Renal";
-          break;
         default:
           return "defalutColor";
       }
     },
 
-    //顶部加载更多
+    //顶部加载更多                                                                                                                               
     tableloadlast() {
       this.loadDir = "up";
       if (this.loading == false && this.loadpage > 1) {
