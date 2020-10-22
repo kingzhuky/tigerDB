@@ -152,27 +152,27 @@ div#logFC {
 }
 
 .defalutColor{
-  background-color: rgb(233, 30, 99);
+  background-color: rgb(28, 224, 250);
   border-top-style: solid;
   border-top-width: 5px;
 }
 
-.glo-all{
+.scglo-all{
   border-top-color: rgb(224, 28, 28);
   border-top-style: solid;
   border-top-width: 5px;
 }
-.glo-g1{
+.scglo-g1{
   border-top-color: rgb(181, 224, 28);
   border-top-style: solid;
   border-top-width: 5px;
 }
-.glo-g2{
+.scglo-g2{
   border-top-color: rgb(236, 164, 29);
   border-top-style: solid;
   border-top-width: 5px;
 }
-.glo-g3{
+.scglo-g3{
   border-top-color: rgb(103, 236, 41);
   border-top-style: solid;
   border-top-width: 5px;

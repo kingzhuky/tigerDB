@@ -30,8 +30,9 @@
       <el-table-column
         v-for="(item,index) in tableDataheader"
         :key="index"
-        :property="item"
-        :label="item"
+        :property="item.key"
+        :label="item.name"
+        :type="item.type"
         sortable
         align="center"
         width="80"
@@ -121,33 +122,21 @@ export default {
       this.tableData = [];
       this.getTableData(this.loadpage, column.prop, column.order);
     },
-    // headerStyle({ column,columnIndex }) {
-    //   let cancer = column.label.split("_")[0];
-    //   if (columnIndex <= 5) {
-    //     console.log(cancer);
-    //     return "glo-all";
-    //   }else if (columnIndex <= 10) {
-    //     console.log(cancer);
-    //     return "glo-g1";
-    //   }else if (columnIndex <= 15){
-    //     return "glo-g2";
-    //   }else{
-    //     return "glo-g3";
-    //   }
-    // },
     headerStyle({ column }) {
-      let cancer = column.label.split("_")[0];
+      let cancer = column.type
       switch (cancer) {
         case "All":
-          return "glo-all";
+          return "scglo-all";
         case "Tcell":
-          return "glo-g1";
+          return "scglo-g1";
         case "Myeloid":
-          return "glo-g2";
+          return "scglo-g2";
         case "Bcell":
-          return "glo-g3";
+          return "scglo-g3";
+        case "gene":
+          return "";
         default:
-          return "glo-g3";
+          return "defalutColor";
       }
     },
     //顶部加载更多
@@ -221,28 +210,27 @@ export default {
               });
               this.tableDataheader = Object.keys(res.data.list[0]);
             }
-            var new_rows = []   // data in array .替换为_
-              for (const row of this.tableData) {
-                var new_row = {}
-                for (const key in row) {
-                  let new_key = key.split('.').pop()
-                  // while (new_key.indexOf('.') !== -1) { new_key = new_key.replace('.', '_') }
-                  new_row[new_key] = row[key]
-                }
-                new_rows.push(new_row)
+            var new_rows = [];// matrix key .替换为_
+            for (const row of this.tableData) {
+              var new_row = {}
+              for (const key in row) {
+                let new_key = key.replace(".","_")
+                new_row[new_key] = row[key]
               }
-              this.tableData = new_rows  // data in array .替换为_
-              var new_columns = [] // header .替换为_
-              for (const column of this.tableDataheader) {
-                console.log(column)
-                let new_column = column.split('.').pop()
-                console.log(new_column)
-                // while (new_column.indexOf('.') !== -1) { new_column = new_column.replace('.', '_') }
-                new_columns.push(new_column)
-              }
-              this.tableDataheader = new_columns
-            // console.log(this.tableData)
-            // console.log(this.tableDataheader)
+              new_rows.push(new_row)
+            }
+            this.tableData = new_rows  // matrix key .替换为_
+            var new_columns = [] // generate header
+            for (const column of this.tableDataheader) {
+              var col_obj = {};
+              col_obj.name = column.split('.').pop()
+              col_obj.key = column.replace(".","_")
+              col_obj.type = column.split('.')[0]
+              // console.log(col_obj)
+              new_columns.push(col_obj)
+            }
+            this.tableDataheader = new_columns
+            // console.log(Array.isArray(new_columns))
           }
         })
         .catch((error) => {
@@ -272,12 +260,12 @@ export default {
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["label"]] === null) {
+      if (row[column["property"]] === null) {
         return {
           background: "white",
         };
       }
-      var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
+      var mycolr = gStyle(parseFloat(row[column["property"]]), 2.25);
       return {
         background: mycolr["background"],
         color: mycolr["color"],

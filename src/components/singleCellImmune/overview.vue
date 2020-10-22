@@ -8,14 +8,20 @@
             <el-col :span="8" :offset="0">
               <!-- <p class="card-title">tSNE</p> -->
               <el-image 
-                id="singleimg" 
+                id="singleimg"
+                fit="fill"
                 :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" 
-                :preview-src-list="['tiger/img/'+plotsres[gloclu][0]+'.png']">
+                :preview-src-list="['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png']">
               </el-image>
             </el-col>
               <!-- <el-divider></el-divider> -->
             <el-col :span="8" :offset="0">
-              <img id="singleimg" width="450px" :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" />
+              <el-image 
+                id="singleimg"
+                fit="fill"
+                :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" 
+                :preview-src-list="['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png']">
+              </el-image>
             </el-col>
             <el-col :span="8" :offset="0">
               <img id="singleimg" width="350px" :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" />

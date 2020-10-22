@@ -24,6 +24,7 @@
       :data="tableData"
       @cell-click="heandleclick"
       :cell-style="tableCellStyle"
+      :header-cell-class-name="headerStyle"
       v-loadmore="tabelloadmore"
       v-loadlast="tableloadlast"
       v-loading="loading"
@@ -33,8 +34,9 @@
       <el-table-column
         v-for="(item,index) in tableDataheader"
         :key="index"
-        :property="item"
-        :label="item"
+        :property="item.key"
+        :label="item.name"
+        :type="item.type"
         sortable
         align="center"
         width="80"
@@ -277,7 +279,23 @@ export default {
           cb(res.data.datasetinfo);
         });
     },
-
+    headerStyle({ column }) {
+      let cancer = column.type
+      switch (cancer) {
+        case "All":
+          return "scglo-all";
+        case "Tcell":
+          return "scglo-g1";
+        case "Myeloid":
+          return "scglo-g2";
+        case "Bcell":
+          return "scglo-g3";
+        case "gene":
+          return "";
+        default:
+          return "defalutColor";
+      }
+    },
     plot() {
       if (
         (this.oldcancer !== this.cancer) |
@@ -374,6 +392,27 @@ export default {
               });
               this.tableDataheader = Object.keys(res.data.list[0]);
             }
+            var new_rows = [];// matrix key .替换为_
+            for (const row of this.tableData) {
+              var new_row = {}
+              for (const key in row) {
+                let new_key = key.replace(".","_")
+                new_row[new_key] = row[key]
+              }
+              new_rows.push(new_row)
+            }
+            this.tableData = new_rows  // matrix key .替换为_
+            var new_columns = [] // generate header
+            for (const column of this.tableDataheader) {
+              var col_obj = {};
+              col_obj.name = column.split('.').pop()
+              col_obj.key = column.replace(".","_")
+              col_obj.type = column.split('.')[0]
+              // console.log(col_obj)
+              new_columns.push(col_obj)
+            }
+            this.tableDataheader = new_columns
+            // console.log(Array.isArray(new_columns))
           }
         })
         .catch((error) => {
@@ -404,12 +443,12 @@ export default {
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["label"]] === null) {
+      if (row[column["property"]] === null) {
         return {
           background: "white",
         };
       }
-      var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
+      var mycolr = gStyle(parseFloat(row[column["property"]]), 2.25);
       return {
         background: mycolr["background"],
         color: mycolr["color"],
