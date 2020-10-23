@@ -51,8 +51,10 @@ Vue.prototype.$http = axios
 import App from './App.vue'
 import router from './router'
 Vue.config.productionTip = false
-import '../static/css/theme/index.css';
 
+import '../static/css/theme/index.css'
+import hevueImgPreview from 'hevue-img-preview'
+Vue.use(hevueImgPreview)
 
 Vue.directive('loadmore', {
   bind(el, binding) {

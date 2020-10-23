@@ -7,24 +7,29 @@
           <el-row class="detailimg">
             <el-col :span="8" :offset="0">
               <!-- <p class="card-title">tSNE</p> -->
-              <el-image 
+              <img
                 id="singleimg"
                 fit="fill"
+                width="350px"
                 :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" 
-                :preview-src-list="['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png']">
-              </el-image>
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png'])">
             </el-col>
-              <!-- <el-divider></el-divider> -->
             <el-col :span="8" :offset="0">
-              <el-image 
+              <img
                 id="singleimg"
                 fit="fill"
+                style="position:relative;right:20px;top:40px;"
+                width="450px"
                 :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" 
-                :preview-src-list="['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png']">
-              </el-image>
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png'])">
             </el-col>
             <el-col :span="8" :offset="0">
-              <img id="singleimg" width="350px" :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" />
+              <img
+                id="singleimg"
+                fit="fill"
+                width="350px"
+                :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" 
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png'])">
             </el-col>
           </el-row>
         </el-card>
@@ -127,6 +132,16 @@ export default {
           console.log(res);
         });
     },
+
+    previewImg(urlList){
+      this.$hevueImgPreview({
+        multiple: true, // 开启多图预览模式
+        keyboard: true,
+        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        imgList: urlList, // 需要预览的多图数组
+        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+      })
+    }
   },
 
   components: {
