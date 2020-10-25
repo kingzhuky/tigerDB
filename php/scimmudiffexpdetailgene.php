@@ -23,17 +23,7 @@ $gloclu=trim($_GET['gloclu']);
 
 
 if ($type=="celltype"){
-    // query data
-    $sql = "SELECT GlobalCluster FROM homescinfo WHERE datasetid = '".$cancer."' AND CellType='".$celltype."'";
-    $infos = array();
-    // 拼接最终SQL
-    
-    $dataResult = mysqli_query($conn,$sql);
-    
-    while ($row = mysqli_fetch_assoc($dataResult)) {
-      $gloclu=$row["GlobalCluster"];
-    }
-    
+    // query data 
   
   if(PATH_SEPARATOR==':'){
     $zhiling="sudo  Rscript pic.gene.R $cancer $gloclu $gene";

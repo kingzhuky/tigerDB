@@ -17,7 +17,7 @@
             <el-row class="detailimg">
               <p class="card-title">Differential Expression</p>
               <el-col :span="20" :offset="2">
-                <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[1]" />
+                <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[0]" />
               </el-col>
             </el-row>
             <el-row>
@@ -27,7 +27,7 @@
                   <img id="singleimg" :src="'tiger/img/'+overviewimg.split(',')[0]+'.png'" />
                 </el-col>
                 <el-col :span="11" :offset="2">
-                  <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[0]" />
+                  <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[1]" />
                 </el-col>
               </el-row>
 
@@ -55,7 +55,9 @@ export default {
       type: String,
     },
     celltype: { type: String },
-    //subClucoptions: Array,
+    gloclu: { 
+      type: String 
+    },
     clickGene: {
       type: String,
     },
@@ -64,7 +66,6 @@ export default {
   data() {
     return {
       overviewimg: "",
-      gloclu: "",
       geneshow: true,
       geneshow2: true,
       tableLoading: "",
@@ -118,7 +119,7 @@ export default {
       //this.evoluPlot(this.clickGene);
     },
 
-    genePlot(clickgene, celltype) {
+    genePlot(clickgene, celltype, gloclu) {
       if (this.checkInput()) {
         var that = this;
         that.geneloading = true;
@@ -130,6 +131,7 @@ export default {
               gene: clickgene,
               type: "exp",
               celltype: celltype,
+              gloclu: gloclu
             },
           })
           .then(function (res) {

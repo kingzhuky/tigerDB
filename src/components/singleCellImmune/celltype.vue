@@ -15,7 +15,7 @@
       class="wertable"
       id="scDiffExpTable"
       ref="singleTable"
-      border=false
+      border
       max-height="750"
       :data="tableData"
       @cell-click="heandleclick"
@@ -33,7 +33,7 @@
         :property="item.key"
         :label="item.name"
         :type="item.type"
-        sortable
+        sortable="custom"
         align="center"
         width="80"
       ></el-table-column>
@@ -51,6 +51,7 @@
       :gene="clickGene"
       :cancer="cancer"
       :celltype="celltype"
+      :gloclu="gloclu"
     ></v-celltypedetail>
   </div>
 </template>
@@ -84,6 +85,7 @@ export default {
       tableDataheader: [],
       oldcancer: "",
       celltype: "",
+      gloclu: "",
     };
   },
 
@@ -173,6 +175,7 @@ export default {
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
       this.loading = true;
+      let tmp_sortCol = sortCol.replace(",",".")
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
@@ -181,7 +184,7 @@ export default {
             search: this.searchinput.trim(),
             start: (page - 1) * 20,
             length: 20,
-            sortcol: sortCol,
+            sortcol: tmp_sortCol,
             sortorder: sortOrder === null ? "None" : sortOrder,
           },
         })
@@ -214,7 +217,7 @@ export default {
             for (const row of this.tableData) {
               var new_row = {}
               for (const key in row) {
-                let new_key = key.replace(".","_")
+                let new_key = key.replace(".",",")
                 new_row[new_key] = row[key]
               }
               new_rows.push(new_row)
@@ -224,13 +227,13 @@ export default {
             for (const column of this.tableDataheader) {
               var col_obj = {};
               col_obj.name = column.split('.').pop()
-              col_obj.key = column.replace(".","_")
+              col_obj.key = column.replace(".",",")
               col_obj.type = column.split('.')[0]
               // console.log(col_obj)
               new_columns.push(col_obj)
             }
             this.tableDataheader = new_columns
-            // console.log(Array.isArray(new_columns))
+            // console.log(new_rows)
           }
         })
         .catch((error) => {
@@ -253,7 +256,8 @@ export default {
         this.isShow = true;
         this.clickGene = row["gene"];
         this.celltype = column["label"];
-        this.$refs.detailPlot.evoluPlot(row["gene"], column["label"]);
+        this.gloclu = column["type"];
+        this.$refs.detailPlot.evoluPlot(row["gene"], column["label"], column["type"]);
         toTarget(820);
       }
     },

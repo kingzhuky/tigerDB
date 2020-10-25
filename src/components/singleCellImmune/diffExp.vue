@@ -19,7 +19,7 @@
       class="wertable"
       id="scDiffExpTable"
       ref="singleTable"
-      border
+      border=false
       max-height="750"
       :data="tableData"
       @cell-click="heandleclick"
@@ -37,7 +37,7 @@
         :property="item.key"
         :label="item.name"
         :type="item.type"
-        sortable
+        sortable="custom"
         align="center"
         width="80"
       ></el-table-column>
@@ -57,6 +57,7 @@
       :gene="clickGene"
       :celltype="celltype"
       :cancer="cancer"
+      :gloclu="gloclu"
     ></v-expdetail>
   </div>
 </template>
@@ -73,7 +74,6 @@ import {
 export default {
   props: {
     cancer: String,
-    gloclu: String,
     subClu: Array,
     subClucoptions: Array,
   },
@@ -228,7 +228,8 @@ export default {
       oldcancer: "",
       oldgloclu: "",
       tableDataheader: [],
-      vstype:''
+      vstype:'',
+      gloclu:"",
     };
   },
 
@@ -236,7 +237,6 @@ export default {
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     this.getTableData(1, "", "");
-    this.getgloClu()
   },
 
   watch: {
@@ -253,20 +253,6 @@ export default {
   },
 
   methods: {
-
-    getgloClu() {
-      this.vstype=''
-      this.$http
-        .get("/tiger/scglocluster.php", {
-          params: {
-            cancer: this.cancer,
-            type: "singlecelldiffvs"
-          }
-        })
-        .then(res => {
-          this.vstype = res.data.list[0].glo;          
-        });
-    },
     querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {
@@ -307,7 +293,6 @@ export default {
         this.oldcancer = this.cancer;
         this.oldgloclu = this.gloclu;
         this.getTableData(1, "", "");
-        this.getgloClu()
       }
     },
 
@@ -355,6 +340,7 @@ export default {
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
       this.loading=true
+      let tmp_sortCol = sortCol.replace(",",".")
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
@@ -363,7 +349,7 @@ export default {
             search: this.searchinput.trim(),
             start: (page - 1) * 20,
             length: 20,
-            sortcol: sortCol,
+            sortcol: tmp_sortCol,
             sortorder: sortOrder === null ? "None" : sortOrder,
           },
         })
@@ -392,11 +378,13 @@ export default {
               });
               this.tableDataheader = Object.keys(res.data.list[0]);
             }
-            var new_rows = [];// matrix key .替换为_
+            // console.log(Array.isArray(new_columns))
+          }
+          var new_rows = [];// matrix key .替换为_
             for (const row of this.tableData) {
               var new_row = {}
               for (const key in row) {
-                let new_key = key.replace(".","_")
+                let new_key = key.replace(".",",")
                 new_row[new_key] = row[key]
               }
               new_rows.push(new_row)
@@ -406,14 +394,13 @@ export default {
             for (const column of this.tableDataheader) {
               var col_obj = {};
               col_obj.name = column.split('.').pop()
-              col_obj.key = column.replace(".","_")
+              col_obj.key = column.replace(".",",")
               col_obj.type = column.split('.')[0]
               // console.log(col_obj)
               new_columns.push(col_obj)
             }
             this.tableDataheader = new_columns
-            // console.log(Array.isArray(new_columns))
-          }
+            // console.log(new_rows)
         })
         .catch((error) => {
           console.log(error);
@@ -436,7 +423,8 @@ export default {
         this.isShow = true;
         this.clickGene = row["gene"];
         this.celltype=column["label"]
-        this.$refs.detailPlot.genePlot(row["gene"],column["label"]);
+        this.gloclu = column["type"];
+        this.$refs.detailPlot.genePlot(row["gene"], column["label"], column["type"]);
         toTarget(820);
       }
     },

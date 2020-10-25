@@ -40,13 +40,28 @@
             ></component>
           </el-tab-pane>
           <el-tab-pane label="Cell Type Marker" name="celltype">
-            <component :cancer="cancer" :gloclu="gloClu" ref="celltypeRef" :is="celltypeVue"></component>
+            <component 
+              :cancer="cancer" 
+              :gloclu="gloClu" 
+              ref="celltypeRef" 
+              :is="celltypeVue"
+            ></component>
           </el-tab-pane>
           <el-tab-pane label="Differential Expression Analysis" name="scdiffexp">
-            <component :cancer="cancer" :gloclu="gloClu" ref="diffexpRef" :is="diffexpVue"></component>
+            <component 
+              :cancer="cancer"
+              :gloclu="gloClu" 
+              ref="diffexpRef" 
+              :is="diffexpVue"
+            ></component>
           </el-tab-pane>
           <el-tab-pane label="Co-expression Analysis" name="coexp">
-            <component ref="coexpRef" :CancerType="cancer" :is="coexpVue"></component>
+            <component 
+              ref="coexpRef" 
+              :CancerType="cancer"
+              :gloCluoptions="gloCluoptions"
+              :is="coexpVue"
+            ></component>
           </el-tab-pane>
           <el-tab-pane label="Evolution Analysis" name="evolution">
             <component
@@ -57,7 +72,11 @@
             ></component>
           </el-tab-pane>
           <el-tab-pane label="Cross Talk" name="crosstalk">
-            <component :is="crosstalkVue" :cancer="cancer" :gloclu="gloClu" ref="crosstalkRef"></component>
+            <component 
+            :is="crosstalkVue" 
+            :cancer="cancer"
+            :gloCluoptions="gloCluoptions"
+            ref="crosstalkRef"></component>
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -235,11 +254,12 @@ export default {
   },
 
   created() {
-    this.overviewVue = weroverview;
+    
   },
   mounted() {
     this.getcancer();
     this.getgloClu();
+    this.overviewVue = weroverview;
   },
 
   methods: {
@@ -251,9 +271,7 @@ export default {
 
     cancerSelectChange() {
       this.getgloClu();
-      this.activeName = "overview";
-      this.$refs.overviewRef.clickPlot();
-      this.$refs.coexpRef.CancerTypeSelectChange();
+
     },
     gloCluChange() {
       this.activeName = "overview";
@@ -264,18 +282,20 @@ export default {
         .get("/tiger/scglocluster.php", {
           params: {
             cancer: this.cancer,
-            type: "singlecellcluster",
+            type: "homescinfo",
           },
         })
         .then((res) => {
           this.gloCluoptions = res.data.list;
+          this.activeName = "overview";
+          this.$refs.overviewRef.clickPlot();
+          this.$refs.coexpRef.CancerTypeSelectChange();
         });
     },
 
     analysis() {
       this.carouselShow = false;
       this.activeName = "overview";
-
       this.$refs.overviewRef.Plot(this.cancer, this.gloClu);
       this.$refs.diffexpRef.reset();
       this.$refs.celltypeRef.reset();

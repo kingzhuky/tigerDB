@@ -54,6 +54,9 @@ export default {
     celltype: { 
       type: String 
     },
+    gloclu: { 
+      type: String 
+    },
     tabname: {
       type: String,
     },
@@ -99,7 +102,6 @@ export default {
       geneloading: true,
       //geneplots: "",
       evoluplots: "",
-      gloclu: "",
     };
   },
 
@@ -148,7 +150,7 @@ export default {
     //   }
     // },
     //scimmudiffexpdetailevlou.php
-    evoluPlot(gene, celltype) {
+    evoluPlot(gene, celltype, gloclu) {
       if (this.checkInput()) {
         var that = this;
         that.evoluloading = true;
@@ -159,6 +161,7 @@ export default {
               celltype: celltype,
               type: this.tabname,
               gene: gene,
+              gloclu: gloclu
             },
           })
           .then(function (res) {

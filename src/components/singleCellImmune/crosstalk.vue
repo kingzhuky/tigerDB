@@ -6,12 +6,12 @@
         <el-row>
           <el-col :span="6" :offset="1">
             <el-row>
-              <span id="homespan">Select Cell</span>
+              <span id="homespan">Select Cluster</span>
             </el-row>
           </el-col>
           <el-col :span="6">
             <el-row>
-              <span id="homespan">Select Clusters</span>
+              <span id="homespan">Select CellTypes</span>
             </el-row>
           </el-col>
           <el-col :span="10">
@@ -24,9 +24,12 @@
         <el-row>
           <el-col :span="6" :offset="1">
             <el-select v-model="gloclu" placeholder="Select Cluster">
-              <el-option label="All Cells" value="All"></el-option>
-              <el-option label="T cells" value="Tcells"></el-option>
-              <el-option label="B cells" value="Bcells"></el-option>
+              <el-option
+                v-for="item in gloCluoptions"
+                :key="item.GlobalCluster"
+                :label="item.GlobalCluster"
+                :value="item.GlobalCluster"
+              ></el-option>
             </el-select>
           </el-col>
 
@@ -34,10 +37,15 @@
             <el-select
               v-model="crossClu"
               multiple
-              placeholder="Select Cluster"
+              placeholder="Select CellType"
               v-loading="crossCluloading"
             >
-              <el-option v-for="item in crossClucoptions" :key="item" :label="item" :value="item"></el-option>
+            <el-option 
+              v-for="item in crossClucoptions" 
+              :key="item.CellType" 
+              :label="item.CellType" 
+              :value="item.CellType"
+            ></el-option>
             </el-select>
           </el-col>
           <el-col :span="6" id="homeInput">
@@ -87,11 +95,12 @@ export default {
     clickGene: {
       type: String,
     },
+    gloCluoptions: Array,
   },
 
   data() {
     return {
-      gloclu: "All",
+      gloclu: this.gloCluoptions[0].GlobalCluster,
       crossCluloading: true,
       crossloading: false,
       plots: "",
@@ -123,11 +132,18 @@ export default {
     getcrossClu(cancer) {
       this.crossCluloading = true;
       this.$http
-        .get("/tiger/" + cancer + "/" + cancer + "/crosstalk.class.txt")
+        .get("/tiger/scCelltype.php", {
+          params: {
+            CancerType: cancer,
+            GlobalCluster: this.gloclu,
+          },
+        })
         .then((res) => {
-          this.crossClucoptions = res.data.replace(/"/g, "").split("\n");
-          this.crossClu = [this.crossClucoptions[0]];
-          this.crossCluloading = false;
+          if (res.data.status === 200) {
+            this.crossClucoptions = res.data.list;
+            this.crossClu = [res.data.list[0].CellType];
+            this.crossCluloading = false;
+          }
         });
     },
     createStateFilter(queryString) {

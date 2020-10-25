@@ -7,9 +7,9 @@
         <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
           <el-option
             v-for="item in gloCluoptions"
-            :key="item.glo"
-            :label="item.glo"
-            :value="item.glo"
+            :key="item.GlobalCluster"
+            :label="item.GlobalCluster"
+            :value="item.GlobalCluster"
           ></el-option>
         </el-select>
       </el-col>
@@ -57,16 +57,16 @@
 export default {
   props: {
     CancerType: String,
+    gloCluoptions: Array,
   },
   data() {
     return {
       singleCellImmunityCorTableShow: false,
       tableShow: false,
       searchinput: "CXCL13",
-      gloCluoptions: [],
       oldcancer: "",
       CellType: "",
-      GlobalCluster: "All",
+      GlobalCluster: this.gloCluoptions[0].GlobalCluster,
     };
   },
 
@@ -93,7 +93,7 @@ export default {
     },
 
     CancerTypeSelectChange() {
-      this.GlobalCluster = "All";
+      this.GlobalCluster = this.gloCluoptions[0].GlobalCluster;
       this.getCellType();
     },
     GlobalClusterChange() {
@@ -121,7 +121,7 @@ export default {
         .get("/tiger/scglocluster.php", {
           params: {
             cancer: this.CancerType,
-            type: "singlecellcluster",
+            type: "homescinfo",
           },
         })
         .then((res) => {

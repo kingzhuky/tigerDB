@@ -116,7 +116,7 @@ export default {
       this.reset();
       this.isShow = true;
       for (let gloclu of this.gloCluoptions) {
-        this.evoluPlot(this.cancer, gloclu["glo"], this.searchinput);
+        this.evoluPlot(this.cancer, gloclu["GlobalCluster"], this.searchinput);
       }
       // this.sestate = true;
       // return this.sestate

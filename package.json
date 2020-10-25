@@ -14,7 +14,6 @@
     "core-js": "^3.3.2",
     "element-ui": "^2.13.2",
     "hevue-img-preview": "^2.5.2",
-    "image-preview-full": "^1.0.2",
     "vue": "^2.6.10",
     "vue-lazyload": "^1.3.3"
   },

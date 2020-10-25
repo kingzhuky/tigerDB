@@ -18,7 +18,7 @@ $gloclu= $_GET['gloclu'];
 $type=$_GET['type'];
 
   // query data
-  $sql = "SELECT distinct glo FROM ".$type." WHERE cancer = '".$cancer."'";
+  $sql = "SELECT distinct GlobalCluster FROM ".$type." WHERE datasetid = '".$cancer."'";
   $infos = array();
   // 拼接最终SQL
   

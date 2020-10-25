@@ -106,7 +106,7 @@ export default {
       for (let gloclu of this.gloCluoptions) {
         console.log(this.gloCluoptions);
         console.log(gloclu);
-        this.Plot(this.cancer, gloclu["glo"]);
+        this.Plot(this.cancer, gloclu["GlobalCluster"]);
       }
     },
 
