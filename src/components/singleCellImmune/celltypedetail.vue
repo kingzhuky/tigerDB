@@ -159,7 +159,7 @@ export default {
             params: {
               cancer: this.cancer,
               celltype: celltype,
-              type: this.tabname,
+              type: "celltype",
               gene: gene,
               gloclu: gloclu
             },
@@ -172,7 +172,6 @@ export default {
               } else {
                 that.evolushow = true;
                 that.evoluplots = res.data.output[0];
-                that.gloclu = res.data.gloclu;
               }
               //that.evoluplots = res.data.output[0];
               that.evoluloading = false;

@@ -19,14 +19,14 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column prop="datasetid" label="DatasetID"></el-table-column>
+            <el-table-column prop="GlobalCluster" label="Global Cluster"></el-table-column>
+            <el-table-column prop="CellType" label="Cell Type"></el-table-column>
             <el-table-column prop="genea" label="Search Gene" width="180"></el-table-column>
-            <el-table-column prop="geneb" label="Gene" width="180"></el-table-column>
+            <el-table-column prop="geneb" label="Correlated Gene" width="180"></el-table-column>
             <el-table-column label="COR" prop="r"></el-table-column>
-            <el-table-column prop="COEAID" label="COEAID"></el-table-column>
-            <el-table-column prop="GlobalCluster" label="GlobalCluster"></el-table-column>
-            <el-table-column prop="CellType" label="CellType"></el-table-column>
-            <el-table-column prop="datasetid" label="DataSetID"></el-table-column>
-            <el-table-column prop="SCID" label="SCID"></el-table-column>
+            <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
+            <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
           </el-table>
         </el-row>
         <br />

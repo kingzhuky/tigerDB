@@ -27,7 +27,6 @@
         </el-row>
       </el-row>
     </el-card>
-
     <div>
       <el-card class="box-card-heatmap">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
@@ -85,7 +84,8 @@
 </template>
 
 <script>
-const weroverview = (resolve) => require(["./overview.vue"], resolve);
+import weroverview from './overview.vue'
+// const weroverview = (resolve) => require(["./overview.vue"], resolve);
 const wercoexp = (resolve) => require(["./coExp.vue"], resolve);
 const werdiffexp = (resolve) => require(["./diffExp.vue"], resolve);
 const wercelltype = (resolve) => require(["./celltype.vue"], resolve);
@@ -108,158 +108,21 @@ export default {
       expcutoff: 0.25,
       expcutoff2: 0.75,
       colany: "Spearman",
-      dataList: [],
-      dataListOption: ["TCGA", "TCAG", "ABCD"],
       gene: "ERBB2",
       genelist: "",
       cancer: "BCC",
-      gloClu: "All",
-      canceroptions: [
-        {
-          value: "ACC",
-          label: "ACC",
-        },
-        {
-          value: "BCC",
-          label: "BCC",
-        },
-        {
-          value: "BLCA",
-          label: "BLCA",
-        },
-        {
-          value: "BRCA",
-          label: "BRCA",
-        },
-        {
-          value: "CESC",
-          label: "CESC",
-        },
-        {
-          value: "CHOL",
-          label: "CHOL",
-        },
-        {
-          value: "COAD",
-          label: "COAD",
-        },
-        {
-          value: "DLBC",
-          label: "DLBC",
-        },
-        {
-          value: "ESCA",
-          label: "ESCA",
-        },
-        {
-          value: "GBM",
-          label: "GBM",
-        },
-        {
-          value: "HNSC",
-          label: "HNSC",
-        },
-        {
-          value: "KICH",
-          label: "KICH",
-        },
-        {
-          value: "KIRC",
-          label: "KIRC",
-        },
-        {
-          value: "KIRP",
-          label: "KIRP",
-        },
-        {
-          value: "LIHC",
-          label: "LIHC",
-        },
-        {
-          value: "LAML",
-          label: "LAML",
-        },
-        {
-          value: "LGG",
-          label: "LGG",
-        },
-        {
-          value: "LUAD",
-          label: "LUAD",
-        },
-        {
-          value: "LUSC",
-          label: "LUSC",
-        },
-        {
-          value: "MESO",
-          label: "MESO",
-        },
-        {
-          value: "OV",
-          label: "OV",
-        },
-        {
-          value: "PAAD",
-          label: "PAAD",
-        },
-        {
-          value: "PCPG",
-          label: "PCPG",
-        },
-        {
-          value: "READ",
-          label: "READ",
-        },
-        {
-          value: "SKCM",
-          label: "SKCM",
-        },
-        {
-          value: "SARC",
-          label: "SARC",
-        },
-        {
-          value: "STAD",
-          label: "STAD",
-        },
-        {
-          value: "TGCT",
-          label: "TGCT",
-        },
-        {
-          value: "THCA",
-          label: "THCA",
-        },
-        {
-          value: "THYM",
-          label: "THYM",
-        },
-        {
-          value: "TNBC",
-          label: "TNBC",
-        },
-        {
-          value: "UCEC",
-          label: "UCEC",
-        },
-        {
-          value: "UCS",
-          label: "UCS",
-        },
-      ],
-      gloCluoptions: [{ glo: "All" }, { glo: "Tcell" }, { glo: "Bcell" }],
+      gloClu: "",
+      canceroptions: [],
+      gloCluoptions: [],
       Signatures: "",
     };
   },
 
   created() {
-    
+    this.getcancer();
   },
   mounted() {
-    this.getcancer();
     this.getgloClu();
-    this.overviewVue = weroverview;
   },
 
   methods: {
@@ -268,13 +131,10 @@ export default {
         this.canceroptions = res.data;
       });
     },
-
-    cancerSelectChange() {
+    cancerSelectChange(cancer) {
+      this.cancer = cancer
       this.getgloClu();
-
-    },
-    gloCluChange() {
-      this.activeName = "overview";
+      this.$refs.overviewRef.clickPlot();
     },
 
     getgloClu() {
@@ -287,18 +147,9 @@ export default {
         })
         .then((res) => {
           this.gloCluoptions = res.data.list;
-          this.activeName = "overview";
-          this.$refs.overviewRef.clickPlot();
-          this.$refs.coexpRef.CancerTypeSelectChange();
+          this.overviewVue = weroverview;
+          // this.$refs.coexpRef.CancerTypeSelectChange();
         });
-    },
-
-    analysis() {
-      this.carouselShow = false;
-      this.activeName = "overview";
-      this.$refs.overviewRef.Plot(this.cancer, this.gloClu);
-      this.$refs.diffexpRef.reset();
-      this.$refs.celltypeRef.reset();
     },
     handleClick(tab) {
       this.checkVue(tab.name);

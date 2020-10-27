@@ -184,10 +184,13 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       var xAxis = "";
+      var yAxis = "";
       if (this.conditi === "Survival") {
-        xAxis = "ZScore";
+        xAxis = "–log10(pvalue)";
+        yAxis = "HR";
       } else {
         xAxis = "LogFC";
+        yAxis = "–log10(pvalue)";
       }
 
       let option = {
@@ -195,7 +198,7 @@ export default {
           name: xAxis,
           offset: 0,
         },
-        yAxis: { name: "–log10(pvalue)" },
+        yAxis: { name: yAxis },
         tooltip: {
           formatter: "{c}",
         },

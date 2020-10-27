@@ -20,9 +20,9 @@
                 <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[0]" />
               </el-col>
             </el-row>
-            <el-row>
+            <el-row></el-row>
               <el-row v-show="geneshow" class="detailimg">
-                <p class="card-title">tSNE</p>
+              <p class="card-title">tSNE</p>
                 <el-col :span="11" v-show="geneshow2">
                   <img id="singleimg" :src="'tiger/img/'+overviewimg.split(',')[0]+'.png'" />
                 </el-col>
@@ -30,7 +30,6 @@
                   <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[1]" />
                 </el-col>
               </el-row>
-
               <el-col :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
                 <div id="norult">No result</div>
               </el-col>
@@ -140,7 +139,6 @@ export default {
                 that.geneshow = false;
               } else {
                 that.geneshow = true;
-                that.gloclu = res.data.gloclu;
                 that.geneplots = res.data.output[0];
               }
               //that.geneplots = res.data.output[0];
@@ -151,7 +149,8 @@ export default {
                 that.geneshow2 = false;
               } else {
                 that.geneshow2 = true;
-                setTimeout((that.overviewimg = res.data.output2[0]), 1000);
+                // setTimeout((that.overviewimg = res.data.output2[0]), 1000);
+                that.overviewimg = res.data.output2[0]
               }
             }
           })
