@@ -27,9 +27,9 @@
               <el-select v-model="gloClu" @change="gloCluChange">
                 <el-option
                   v-for="item in gloCluoptions"
-                  :key="item.glo"
-                  :label="item.glo"
-                  :value="item.glo"
+                  :key="item.GlobalCluster"
+                  :label="item.GlobalCluster"
+                  :value="item.GlobalCluster"
                 ></el-option>
               </el-select>
             </el-row>
@@ -74,7 +74,7 @@
                   <el-option
                     v-for="item in group.options"
                     :key="item.value"
-                    :label="item.label"
+                    :label="item.value"
                     :value="item.value"
                   ></el-option>
                 </el-option-group>
@@ -86,9 +86,9 @@
               <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
                 <el-option
                   v-for="item in gloCluoptions"
-                  :key="item.glo"
-                  :label="item.glo"
-                  :value="item.glo"
+                  :key="item.GlobalCluster"
+                  :label="item.GlobalCluster"
+                  :value="item.GlobalCluster"
                 ></el-option>
               </el-select>
             </el-col>
@@ -121,9 +121,16 @@
       <div class="textitem" v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
         <p class="card-title">Differential expression between tumor and normal per cell type</p>
         <div class="geneExp">
-          <div id="singleCellImmuTumor" class="scaterPlot" style="width: 1000px;height:400px;"></div>
+          <div id="singleCellImmuTumor" class="scaterPlot" style="width: 800px;height:400px;"></div>
           <div v-show="singleCellImmuTumorImgshow" v-loading="singleCellImmuTumorImgloading">
-            <img id="singleimg" :src="imgpathBar2" />
+            <!-- <img id="singleimg" :src="imgpathBar2" /> -->
+            <img
+                id="singleimg"
+                fit="fill"
+                height="350px"
+                style.margin="50px 10px 20px 30px"
+                :src="imgpathBar2" 
+                @click="previewImg(imgpathBar2)"/>
           </div>
         </div>
 
@@ -283,7 +290,7 @@ export default {
     },
 
     CancerTypeSelectChange() {
-      this.GlobalCluster = "All";
+      this.getgloClu();
       this.getCellType();
     },
     GlobalClusterChange() {
@@ -291,6 +298,21 @@ export default {
     },
     subClusterChange() {
       this.searchTable();
+    },
+    getgloClu() {
+      this.$http
+        .get("/tiger/scglocluster.php", {
+          params: {
+            cancer: this.cancer,
+            type: "homescinfo",
+          },
+        })
+        .then((res) => {
+          this.gloCluoptions = res.data.list;
+          this.GlobalCluster = res.data.list[0].GlobalCluster;
+          this.gloClu = res.data.list[0].GlobalCluster;
+          this.getcrossClu();
+        });
     },
     getCellType() {
       this.CellTypeLoading = true;
@@ -319,21 +341,6 @@ export default {
       );
     },
 
-    getgloClu() {
-      this.$http
-        .get("/tiger/scglocluster.php", {
-          params: {
-            cancer: this.cancer,
-            type: "singlecellcluster",
-          },
-        })
-        .then((res) => {
-          this.gloCluoptions = res.data.list;
-          this.gloClu = res.data.list[0].glo;
-          this.getcrossClu();
-        });
-    },
-
     getcrossClu() {
       this.$http
         .get("/tiger/sccluster.php", {
@@ -355,7 +362,7 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       var hours = cancer;
-      var days = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+      var days = [0, 1, 2, 3, 4, 5];
       var option2 = {
         title: {
           text: "Cell Type Marker ( |Log2FC| )",
@@ -378,7 +385,7 @@ export default {
             },
           },
           axisLine: {
-            show: false,
+            show: true,
           },
         },
         radiusAxis: {
@@ -441,6 +448,11 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
+            console.log(Object.values(res.data.cancer))
+            console.log("data.list:")
+            console.log(res.data.list)
+            console.log("data.table:")
+            console.log(res.data.tabledata)
             this.draw_chart(Object.values(res.data.cancer), res.data.list);
             this.loading = false;
           }
@@ -555,72 +567,72 @@ export default {
         });
     },
 
-    draw_chart_Diagram(data, id) {
-      var targetdiv = document.getElementById(id);
-      //let myChart_mercor = this.$echarts.init(targetdiv);
-      //cdn替换为
-      let myChart_mercor = window.echarts.init(targetdiv);
+    // draw_chart_Diagram(data, id) {
+    //   var targetdiv = document.getElementById(id);
+    //   //let myChart_mercor = this.$echarts.init(targetdiv);
+    //   //cdn替换为
+    //   let myChart_mercor = window.echarts.init(targetdiv);
 
-      let option = {
-        title: {
-          text: "Sankey Diagram",
-        },
-        tooltip: {
-          trigger: "item",
-          triggerOn: "mousemove",
-        },
+    //   let option = {
+    //     title: {
+    //       text: "Sankey Diagram",
+    //     },
+    //     tooltip: {
+    //       trigger: "item",
+    //       triggerOn: "mousemove",
+    //     },
 
-        series: [
-          {
-            type: "sankey",
-            data: data.nodes,
-            links: data.links,
-            focusNodeAdjacency: true,
-            levels: [
-              {
-                depth: 0,
-                itemStyle: {
-                  color: "#fbb4ae",
-                },
-                lineStyle: {
-                  color: "source",
-                  opacity: 0.6,
-                },
-              },
-              {
-                depth: 1,
-                itemStyle: {
-                  color: "#b3cde3",
-                },
-                lineStyle: {
-                  color: "source",
-                  opacity: 0.6,
-                },
-              },
-              {
-                depth: 2,
-                itemStyle: {
-                  color: "#ccebc5",
-                },
-                lineStyle: {
-                  color: "source",
-                  opacity: 0.6,
-                },
-              },
-            ],
-            lineStyle: {
-              curveness: 0.5,
-            },
-          },
-        ],
-      };
+    //     series: [
+    //       {
+    //         type: "sankey",
+    //         data: data.nodes,
+    //         links: data.links,
+    //         focusNodeAdjacency: true,
+    //         levels: [
+    //           {
+    //             depth: 0,
+    //             itemStyle: {
+    //               color: "#fbb4ae",
+    //             },
+    //             lineStyle: {
+    //               color: "source",
+    //               opacity: 0.6,
+    //             },
+    //           },
+    //           {
+    //             depth: 1,
+    //             itemStyle: {
+    //               color: "#b3cde3",
+    //             },
+    //             lineStyle: {
+    //               color: "source",
+    //               opacity: 0.6,
+    //             },
+    //           },
+    //           {
+    //             depth: 2,
+    //             itemStyle: {
+    //               color: "#ccebc5",
+    //             },
+    //             lineStyle: {
+    //               color: "source",
+    //               opacity: 0.6,
+    //             },
+    //           },
+    //         ],
+    //         lineStyle: {
+    //           curveness: 0.5,
+    //         },
+    //       },
+    //     ],
+    //   };
 
-      myChart_mercor.clear();
-      myChart_mercor.setOption(option);
-      window.onresize = function () {
-        myChart_mercor.resize();
-      };
-    },
+    //   myChart_mercor.clear();
+    //   myChart_mercor.setOption(option);
+    //   window.onresize = function () {
+    //     myChart_mercor.resize();
+    //   };
+    // },
 
     draw_chart_sca(data, id) {
       var that = this;
@@ -632,7 +644,7 @@ export default {
       let option = {
         xAxis: { name: "Log2FC" },
         yAxis: {
-          name: "–log10(P-Value+1)",
+          name: "–log10(P-Value)",
           axisLine: { show: false },
           axisTick: { show: false },
         },
@@ -666,6 +678,15 @@ export default {
       window.onresize = function () {
         myChart_mercor.resize();
       };
+    },
+    previewImg(url){
+    this.$hevueImgPreview({
+      url: url,
+      multiple: false, // 开启多图预览模式
+      keyboard: true,
+      nowImgIndex: 0, // 多图预览，默认展示第二张图片
+      mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+    })
     },
   },
 };

@@ -79,7 +79,7 @@ export default {
       isActive: true,
       restaurants: [],
       showSnackbar: false,
-      seargene: "A1BG",
+      seargene: "TP53",
       activeName: "generalInformation",
       singleCellImmunityVue: "",
       immuneScreeningVue: "",
@@ -143,7 +143,6 @@ export default {
         this.$refs.generalInformationVueRef.getdatagene();
         this.$refs.generalInformationVueRef.tableDetail(this.seargene);
         this.$refs.generalInformationVueRef.getdataReactome();
-        
       }
     },
 

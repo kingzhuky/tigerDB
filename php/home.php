@@ -27,8 +27,8 @@ $gene = $_GET['gene'];
   $dataResult = mysqli_query($conn,$sql);
 
   while ($row = mysqli_fetch_assoc($dataResult)) {
-  	  array_push($tabledata,$row);
-      array_push($infos,array_values($row));
+    array_push($tabledata,$row);
+    array_push($infos,array_values($row));
 	  array_push($cancer,$row["CancerType"]);
   }
 
