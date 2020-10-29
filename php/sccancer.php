@@ -17,7 +17,7 @@ $cancer = $_GET['cancer'];
 $type=$_GET['type'];
 
   // query data
-  $sql = "SELECT datasetid,datasetname,cancertype,patientnum,cellnum cancer FROM scrnaseqinfo";
+  $sql = "SELECT distinct glo FROM ".$type." WHERE datasetid = '".$cancer."'";
   $infos = array();
   // 拼接最终SQL
   
@@ -25,15 +25,6 @@ $type=$_GET['type'];
   $allcancertype=array();
 
   while ($row = mysqli_fetch_assoc($dataResult)) {
-
-    $tempcancertype=$row["cancertype"];
-    if (in_array($tempcancertype,$allcancertype)){
-      
-    }else{
-
-    }
-
-
     array_push($infos,$row);
   }
 

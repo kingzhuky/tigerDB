@@ -49,7 +49,8 @@
           <el-tab-pane label="Differential Expression Analysis" name="scdiffexp">
             <component 
               :cancer="cancer"
-              :gloclu="gloClu" 
+              :gloclu="gloClu"
+              :vsType="vsType"
               ref="diffexpRef" 
               :is="diffexpVue"
             ></component>
@@ -115,6 +116,7 @@ export default {
       canceroptions: [],
       gloCluoptions: [],
       Signatures: "",
+      vsType: "Response vs Non-response"
     };
   },
 
@@ -166,6 +168,7 @@ export default {
         case "scdiffexp":
           this.diffexpVue = werdiffexp;
           this.$refs.diffexpRef.plot();
+          this.vsType = this.$refs.diffexpRef.getvsType();
           break;
         case "coexp":
           this.coexpVue = wercoexp;

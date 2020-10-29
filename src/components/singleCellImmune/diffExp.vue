@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="10" :offset="2">
-     <div id="singleCellTitle"> {{this.vstype}}</div>
+      <div id="singleCellTitle"> {{this.vsType}}</div>
       </el-col>
       <el-col :span="4" :offset="8">
         <el-autocomplete
@@ -76,141 +76,12 @@ export default {
     cancer: String,
     subClu: Array,
     subClucoptions: Array,
+    vsType: String,
   },
   data() {
     return {
       clickGene: "",
       celltype:"",
-      wercorcancer_data: [
-        {
-          value: "ACC",
-          label: "ACC",
-        },
-        {
-          value: "BLCA",
-          label: "BLCA",
-        },
-        {
-          value: "BRCA",
-          label: "BRCA",
-        },
-        {
-          value: "CESC",
-          label: "CESC",
-        },
-        {
-          value: "CHOL",
-          label: "CHOL",
-        },
-        {
-          value: "COAD",
-          label: "COAD",
-        },
-        {
-          value: "DLBC",
-          label: "DLBC",
-        },
-        {
-          value: "ESCA",
-          label: "ESCA",
-        },
-        {
-          value: "GBM",
-          label: "GBM",
-        },
-        {
-          value: "HNSC",
-          label: "HNSC",
-        },
-        {
-          value: "KICH",
-          label: "KICH",
-        },
-        {
-          value: "KIRC",
-          label: "KIRC",
-        },
-        {
-          value: "KIRP",
-          label: "KIRP",
-        },
-        {
-          value: "LIHC",
-          label: "LIHC",
-        },
-        {
-          value: "LAML",
-          label: "LAML",
-        },
-        {
-          value: "LGG",
-          label: "LGG",
-        },
-        {
-          value: "LUAD",
-          label: "LUAD",
-        },
-        {
-          value: "LUSC",
-          label: "LUSC",
-        },
-        {
-          value: "MESO",
-          label: "MESO",
-        },
-        {
-          value: "OV",
-          label: "OV",
-        },
-        {
-          value: "PAAD",
-          label: "PAAD",
-        },
-        {
-          value: "PCPG",
-          label: "PCPG",
-        },
-        {
-          value: "READ",
-          label: "READ",
-        },
-        {
-          value: "SKCM",
-          label: "SKCM",
-        },
-        {
-          value: "SARC",
-          label: "SARC",
-        },
-        {
-          value: "STAD",
-          label: "STAD",
-        },
-        {
-          value: "TGCT",
-          label: "TGCT",
-        },
-        {
-          value: "THCA",
-          label: "THCA",
-        },
-        {
-          value: "THYM",
-          label: "THYM",
-        },
-        {
-          value: "TNBC",
-          label: "TNBC",
-        },
-        {
-          value: "UCEC",
-          label: "UCEC",
-        },
-        {
-          value: "UCS",
-          label: "UCS",
-        },
-      ],
       m6aMsg: {
         type: String,
       },
@@ -228,7 +99,6 @@ export default {
       oldcancer: "",
       oldgloclu: "",
       tableDataheader: [],
-      vstype:'',
       gloclu:"",
     };
   },
@@ -255,17 +125,18 @@ export default {
 
   methods: {
     getvsType() {
-      this.vstype=''
+      this.vsType=''
       this.$http
-        .get("/tiger/scglocluster.php", {
+        .get("/tiger/sccancer.php", {
           params: {
             cancer: this.cancer,
-            type: "singlecelldiffvs"
+            type: "scrnaseqinfo"
           }
         })
         .then(res => {
-          this.vstype = res.data.list[0].glo;          
+          this.vsType = res.data.list[0].glo;          
         });
+      return this.vsType
     },
     querySearchAsync(queryString, cb) {
       this.$http
