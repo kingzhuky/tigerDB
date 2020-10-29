@@ -128,7 +128,7 @@
                 id="singleimg"
                 fit="fill"
                 height="350px"
-                style.margin="50px 10px 20px 30px"
+                style="position:relative;top:40px;"
                 :src="imgpathBar2" 
                 @click="previewImg(imgpathBar2)"/>
           </div>
@@ -152,10 +152,15 @@
           class="card-title"
         >Differential expression between response and non-response per cell type</p>
         <div class="geneExp">
-          <div id="singleCellImmuResponse" class="scaterPlot" style="width: 1000px;height:400px;"></div>
-
+          <div id="singleCellImmuResponse" class="scaterPlot" style="width: 800px;height:400px;"></div>
           <div v-show="singleCellImmuResponseImgshow" v-loading="singleCellImmuResponseImgloading">
-            <img id="singleimg" :src="imgpathBar3" />
+            <img
+                id="singleimg"
+                fit="fill"
+                height="350px"
+                style="position:relative;top:40px;"
+                :src="imgpathBar3" 
+                @click="previewImg(imgpathBar3)"/>
           </div>
         </div>
         <el-table :data="DiffExpResponseableData" max-height="800" style="width: 100%">
@@ -546,12 +551,12 @@ export default {
                 that.singleCellImmuTumorImgshow = true;
                 that.singleCellImmuTumorImgloading = false;
                 that.imgpathBar2 =
-                  "/tiger/img/" + res.data.output[0].split(",")[2];
+                  "/tiger/img/" + res.data.output[0].split(",")[0];
               } else {
                 that.singleCellImmuResponseImgshow = true;
                 that.singleCellImmuResponseImgloading = false;
                 that.imgpathBar3 =
-                  "/tiger/img/" + res.data.output[0].split(",")[2];
+                  "/tiger/img/" + res.data.output[0].split(",")[0];
               }
             }
           } else {

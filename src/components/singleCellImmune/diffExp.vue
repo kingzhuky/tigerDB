@@ -237,6 +237,7 @@ export default {
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     this.getTableData(1, "", "");
+    this.getvsType();
   },
 
   watch: {
@@ -253,6 +254,19 @@ export default {
   },
 
   methods: {
+    getvsType() {
+      this.vstype=''
+      this.$http
+        .get("/tiger/scglocluster.php", {
+          params: {
+            cancer: this.cancer,
+            type: "singlecelldiffvs"
+          }
+        })
+        .then(res => {
+          this.vstype = res.data.list[0].glo;          
+        });
+    },
     querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {

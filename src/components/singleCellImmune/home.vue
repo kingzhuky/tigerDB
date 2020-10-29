@@ -131,10 +131,8 @@ export default {
         this.canceroptions = res.data;
       });
     },
-    cancerSelectChange(cancer) {
-      this.cancer = cancer
+    cancerSelectChange() {
       this.getgloClu();
-      this.$refs.overviewRef.clickPlot();
     },
 
     getgloClu() {
@@ -148,6 +146,8 @@ export default {
         .then((res) => {
           this.gloCluoptions = res.data.list;
           this.overviewVue = weroverview;
+          this.activeName = "overview";
+          this.$refs.overviewRef.clickPlot(); 
           // this.$refs.coexpRef.CancerTypeSelectChange();
         });
     },

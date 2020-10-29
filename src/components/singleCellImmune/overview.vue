@@ -6,7 +6,6 @@
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg">
             <el-col :span="8" :offset="0">
-              <!-- <p class="card-title">tSNE</p> -->
               <img
                 id="singleimg"
                 fit="fill"
@@ -62,13 +61,14 @@ export default {
       crossClu: [],
       gloclures: [],
       plotsres: {},
+      test:[],
     };
   },
 
   mounted() {
+    this.test = this.gloCluoptions
     this.clickPlot();
   },
-
   methods: {
     querySearchAsync(queryString, cb) {
       var restaurants = this.restaurants;
@@ -100,14 +100,25 @@ export default {
       }
       return false;
     },
-
     clickPlot() {
       this.reset();
-      for (let gloclu of this.gloCluoptions) {
-        console.log(this.gloCluoptions);
-        console.log(gloclu);
-        this.Plot(this.cancer, gloclu["GlobalCluster"]);
-      }
+      console.log(this.cancer)
+      this.$http
+        .get("/tiger/scglocluster.php", {
+          params: {
+            cancer: this.cancer,
+            type: "homescinfo",
+          },
+        })
+        .then((res) => {
+          this.gloCluoptions = res.data.list;
+          let count = 0;
+          for (let gloclu of this.gloCluoptions) {
+            console.log("son:"+ count++)
+            console.log(gloclu["GlobalCluster"])
+            this.Plot(this.cancer, gloclu["GlobalCluster"]);
+          }
+        });
     },
 
     Plot(cancer, gloclu) {
