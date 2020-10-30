@@ -285,16 +285,12 @@ export default {
       switch (cancer) {
         case "Melanoma":
           return "melanoma";
-          break;
         case "GBM":
           return "gbm";
-          break;
         case "ccRCC":
           return "ccRCC";
-          break;
         case "Renal":
           return "Renal";
-          break;
         default:
           return "defalutColor";
       }
@@ -389,7 +385,7 @@ export default {
     },
 
     //点击单个格子
-    heandleclick(row, column, cell, event) {
+    heandleclick(row, column, cell) {
       this.datatype = "survival";
       if (column["label"] !== "") {
         this.isShow = true;
@@ -403,7 +399,7 @@ export default {
     },
 
     //渲染每个格子的颜色
-    tableCellStyle({ row, column, rowIndex, columnIndex }) {
+    tableCellStyle({ row, column }) {
       if (row[column["label"]] === null) {
         return {
           background: "white",

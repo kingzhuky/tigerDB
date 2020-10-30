@@ -257,7 +257,7 @@ export default {
         this.clickGene = row["gene"];
         this.celltype = column["label"];
         this.gloclu = column["type"];
-        this.$refs.detailPlot.evoluPlot(row["gene"], column["label"], column["type"]);
+        this.$refs.detailPlot.markerPlot(row["gene"], column["label"], column["type"]);
         toTarget(820);
       }
     },

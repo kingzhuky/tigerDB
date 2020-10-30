@@ -75,7 +75,7 @@ if (file.exists(genefile)){
     # p=ggplot(now.now.data,aes(x=tSNE_1,y=tSNE_2,color=gene))+geom_point(size=0.5)+scale_color_gradientn(colors = c('#cacaca30','#ffbf8750','red'))+mytheme
     # maintitle2=paste0(maintitle,'.p2.png')
     # ggsave(paste0(resPath,'',maintitle2),p,width = 5.5,dpi=100,height = 5)
-    #maintitle5=paste(maintitle1,maintitle2,sep=",")
+    # maintitle5=paste(maintitle1,maintitle2,sep=",")
     
     if(length(unique(now.meta$Response))>1){
       now.now.data=data.frame(now.meta,gene=my.data$gene)
@@ -101,11 +101,6 @@ if (file.exists(genefile)){
       ggsave(paste0(resPath,'',maintitle7),p,width = 150,height =110, unit = "mm", dpi=100)
       maintitle5=paste(maintitle5,maintitle7,sep=",")
       
-      
-      
-      
-      
-      
 
     }
     if(length(unique(now.meta$Tissue))>1){
@@ -116,7 +111,7 @@ if (file.exists(genefile)){
         stat_compare_means(aes(group=Tissue,label = ..p.signif..),method ='wilcox',label.y =3.8)+theme(axis.title = element_blank(),axis.text.x = element_text(angle=30,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"))
       maintitle4=paste0(maintitle,'.p3.png')
       ggsave(paste0(resPath,'',maintitle4),p,width = 150,height =110, unit = "mm", dpi=100)
-      maintitle5=paste(maintitle,maintitle4,sep=",")
+      maintitle5=paste(maintitle4,sep=",")
       
       
       now.now.data=data.frame(now.meta[,c('tSNE_1','tSNE_2','recluster','Tissue')],gene=my.data$gene)

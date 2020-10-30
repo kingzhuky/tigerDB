@@ -13,12 +13,18 @@
             <br />
             <el-row>
               <el-select v-model="cancer" @change="cancerSelectChange" placeholder="Cancer">
-                <el-option
-                  v-for="item in canceroptions"
-                  :key="item.cancer"
-                  :label="item.cancer"
-                  :value="item.cancer"
-                ></el-option>
+                <el-option-group
+                  v-for="group in canceroptions"
+                  :key="group.label"
+                  :label="group.label"
+                >
+                  <el-option
+                    v-for="item in group.options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-option-group>
               </el-select>
             </el-row>
             <br />
@@ -45,7 +51,6 @@
           <p class="card-title">Gene Expression in cell type selected</p>
           <div class="geneExp">
             <img id="singleimg" :src="imgUrlBox" />
-
             <img id="singleimg" :src="imgUrlBar" />
           </div>
         </div>
@@ -67,14 +72,14 @@
                 placeholder="DataSet"
               >
                 <el-option-group
-                  v-for="group in canceroptionsTable"
+                  v-for="group in canceroptions"
                   :key="group.label"
                   :label="group.label"
                 >
                   <el-option
                     v-for="item in group.options"
                     :key="item.value"
-                    :label="item.value"
+                    :label="item.label"
                     :value="item.value"
                   ></el-option>
                 </el-option-group>
@@ -207,7 +212,6 @@ export default {
       gloClu: "All",
       cancer: "BCC",
       canceroptions: [],
-      canceroptionsTable: [],
       subClu: [],
       geneplots: [],
       ReactomeTableData: [],
@@ -287,7 +291,7 @@ export default {
 
     getcancer() {
       this.$http.get("/tiger/singlecelldataset.json").then((res) => {
-        this.canceroptionsTable = res.data;
+        this.canceroptions = res.data;
       });
     },
     cancerSelectChange() {
@@ -368,16 +372,36 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
       var hours = cancer;
       var days = [0, 1, 2, 3, 4, 5];
+      console.log("data:")
+      console.log(data)
+      console.log("cancer:")
+      console.log(cancer)
       var option2 = {
         title: {
-          text: "Cell Type Marker ( |Log2FC| )",
-          link: "https://github.com/pissang/echarts-next/graphs/punch-card",
+          text: "Cell Type Marker\n ( |Log2FC| )\n",
+          textStyle: {
+            color: '#333',
+            lineHeight: 120,
+            height: 30,
+            fontFamily: 'Arial',
+          }
+          // link: "https://github.com/pissang/echarts-next/graphs/punch-card",
         },
         legend: {
           data: ["Punch Card"],
           left: "right",
         },
         polar: {},
+        radiusAxis: {
+          type: "value",
+          data: days,
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            rotate: 45,
+          },
+        },
         angleAxis: {
           type: "category",
           data: hours,
@@ -393,22 +417,14 @@ export default {
             show: true,
           },
         },
-        radiusAxis: {
-          type: "value",
-          data: days,
-          axisLine: {
-            show: false,
-          },
-          axisLabel: {
-            rotate: 45,
-          },
-        },
         series: [
           {
             name: "Cell Type Marker",
             type: "scatter",
             coordinateSystem: "polar",
-            symbolSize: 20,
+            large: true,
+            data: data,
+            symbolSize: 15,
             emphasis: {
               label: {
                 borderWidth: 1.5,
@@ -431,7 +447,6 @@ export default {
                   "CancerType: {@[1]}\nCellType: {@[2]}\nLog2FC: {@[3]}",
               },
             },
-            data: data,
           },
         ],
       };

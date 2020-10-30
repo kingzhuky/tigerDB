@@ -115,7 +115,7 @@ export default {
     },
     // clickPlot() {
     //   //this.genePlot(this.gene);
-    //   this.evoluPlot(this.gene);
+    //   this.markerPlot(this.gene);
     // },
 
     // genePlot(gene) {
@@ -150,7 +150,7 @@ export default {
     //   }
     // },
     //scimmudiffexpdetailevlou.php
-    evoluPlot(gene, celltype, gloclu) {
+    markerPlot(gene, celltype, gloclu) {
       if (this.checkInput()) {
         var that = this;
         that.evoluloading = true;
@@ -208,7 +208,6 @@ export default {
       return "tiger/img/" + this.imgpathEvo + ".png";
     },
   },
-
   components: {
     "v-goTop": goTop,
   },

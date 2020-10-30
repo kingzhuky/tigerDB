@@ -112,10 +112,10 @@ export default {
         })
         .then((res) => {
           this.gloCluoptions = res.data.list;
-          let count = 0;
+          // let count = 0;
           for (let gloclu of this.gloCluoptions) {
-            console.log("son:"+ count++)
-            console.log(gloclu["GlobalCluster"])
+            // console.log("son:"+ count++)
+            // console.log(gloclu["GlobalCluster"])
             this.Plot(this.cancer, gloclu["GlobalCluster"]);
           }
         });
