@@ -67,8 +67,8 @@
             <el-col :span="8">
               <span class="demonstration">DataSet:</span>
               <el-select
-                v-model="CancerType"
-                @change="CancerTypeSelectChange"
+                v-model="cancer"
+                @change="cancerSelectChange"
                 placeholder="DataSet"
               >
                 <el-option-group

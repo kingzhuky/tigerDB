@@ -79,7 +79,7 @@ export default {
       isActive: true,
       restaurants: [],
       showSnackbar: false,
-      seargene: "TP53",
+      seargene: "CXCL13",
       activeName: "generalInformation",
       singleCellImmunityVue: "",
       immuneScreeningVue: "",
