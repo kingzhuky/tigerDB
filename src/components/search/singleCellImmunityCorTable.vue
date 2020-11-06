@@ -113,7 +113,7 @@ export default {
         gene: genea,
         clickgene: geneb,
         cluster: CellType,
-        method: "pearson",
+        method: "spearman",
       };
       this.$http
         .get("/tiger/scimmucoexpdetail.php", {

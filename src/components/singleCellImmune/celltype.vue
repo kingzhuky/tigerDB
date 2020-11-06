@@ -37,7 +37,7 @@
         align="center"
         width="80"
       ></el-table-column>
-      <!-- <el-table-column property=" " label=" " align="center" width="120"></el-table-column> -->
+      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
     </el-table>
 
     <div class="colorbar">

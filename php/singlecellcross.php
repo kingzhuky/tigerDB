@@ -7,9 +7,9 @@ $ligand=$_GET['ligand'];
 $recepto=$_GET['recepto'];
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript pic.cross.R $cancer $gloclu $subclu $ligand $recepto";
+  $zhiling="sudo Rscript pic.cross.R $cancer $gloclu \"$subclu\" $ligand $recepto";
   }else{
-  $zhiling="Rscript pic.cross.R $cancer $gloclu $subclu $ligand $recepto";
+  $zhiling="Rscript pic.cross.R $cancer $gloclu \"$subclu\" $ligand $recepto";
 }
 
 

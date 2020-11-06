@@ -8,9 +8,9 @@ $gene=trim($_GET['gene']);
 
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript pic.evlou.R $cancer $gloclu  $subclu $gene";
+  $zhiling="sudo Rscript pic.evlou.R $cancer $gloclu \"$subclu\" $gene";
 }else{
-  $zhiling="Rscript pic.evlou.R $cancer $gloclu $subclu $gene";
+  $zhiling="Rscript pic.evlou.R $cancer $gloclu \"$subclu\" $gene";
 }
 
 exec($zhiling,$output,$status);

@@ -62,7 +62,7 @@ export default {
     return {
       tableLoading: "",
       normalMed: "None",
-      corMed: "pearson",
+      corMed: "spearman",
       imgpath: "",
       loading: true,
       clickgene: "",

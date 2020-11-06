@@ -94,14 +94,11 @@ if (file.exists(genefile)){
       # now.now.data[now.now.data$gene>3,'gene']=3
       # now.now.data[now.now.data$gene< -3,'gene']= -3
       # p=ggplot(now.now.data,aes(x=tSNE_1,y=tSNE_2,color=gene))+geom_point(size=0.5)+scale_color_gradientn(colors = c('#cacaca30','#ffbf8750','red'))+mytheme
-      
       now.now.data=data.frame(now.meta[,c('tSNE_1','tSNE_2','recluster','Response')],gene=my.data$gene)
       p=ggplot(now.now.data,aes(x=tSNE_1,y=tSNE_2,color=Response))+geom_point(size=0.5)+scale_color_manual(values = c('#016af3','#f34b01'))+mytheme
       maintitle7=paste0(maintitle,'.p7.png')
       ggsave(paste0(resPath,'',maintitle7),p,width = 150,height =110, unit = "mm", dpi=100)
       maintitle5=paste(maintitle5,maintitle7,sep=",")
-      
-
     }
     if(length(unique(now.meta$Tissue))>1){
       now.now.data=data.frame(now.meta,gene=my.data$gene)
@@ -113,14 +110,11 @@ if (file.exists(genefile)){
       ggsave(paste0(resPath,'',maintitle4),p,width = 150,height =110, unit = "mm", dpi=100)
       maintitle5=paste(maintitle4,sep=",")
       
-      
       now.now.data=data.frame(now.meta[,c('tSNE_1','tSNE_2','recluster','Tissue')],gene=my.data$gene)
       p=ggplot(now.now.data,aes(x=tSNE_1,y=tSNE_2,color=Tissue))+geom_point(size=0.5)+scale_color_manual(values = c('#016af3','#f34b01','#f5e31b'))+mytheme
       maintitle6=paste0(maintitle,'.p4.png')
       ggsave(paste0(resPath,'',maintitle6),p,width = 150,height =110, unit = "mm", dpi=100)
       maintitle5=paste(maintitle5,maintitle6,sep=",")
-      
- 
     }  
     return(maintitle5)
   }

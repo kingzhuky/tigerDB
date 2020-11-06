@@ -13,7 +13,6 @@
           ></el-option>
         </el-select>
       </el-col>
-
       <el-col :span="6">
         <span class="demonstration">Cell Type:</span>
         <el-select v-model="CellType" v-loading="CellTypeLoading" @change="subClusterChange">
@@ -38,10 +37,8 @@
         <el-button @click="searchTable">Search</el-button>
       </el-col>
     </el-row>
-
     <br />
     <br />
-
     <v-singleCellImmunityCorTable
       v-show="singleCellImmunityCorTableShow"
       ref="coExpRef"

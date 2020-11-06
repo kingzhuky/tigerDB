@@ -9,9 +9,9 @@ $cluster=$_GET['cluster'];
 $method=$_GET['method']; 
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript pic.scatter.R $cancer $gloclu $gene $clickgene $cluster $method";
+  $zhiling="sudo Rscript pic.scatter.R $cancer $gloclu $gene $clickgene \"$cluster\" $method";
 }else{
-  $zhiling="Rscript pic.scatter.R $cancer $gloclu $gene $clickgene $cluster $method";
+  $zhiling="Rscript pic.scatter.R $cancer $gloclu $gene $clickgene \"$cluster\" $method";
 }
 
 exec($zhiling,$output,$status);

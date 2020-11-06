@@ -23,7 +23,7 @@
         <br />
         <el-row>
           <el-col :span="6" :offset="1">
-            <el-select v-model="gloclu" placeholder="Select Cluster">
+            <el-select v-model="gloclu" placeholder="Select Cluster" @change="GlobalClusterChange">
               <el-option
                 v-for="item in gloCluoptions"
                 :key="item.GlobalCluster"
@@ -114,7 +114,7 @@ export default {
   },
 
   mounted() {
-    this.getcrossClu(this.cancer);
+    this.getCellType();
   },
 
   methods: {
@@ -128,13 +128,12 @@ export default {
     clickPlot() {
       this.genePlot(this.clickGene);
     },
-
-    getcrossClu(cancer) {
+    getCellType() {
       this.crossCluloading = true;
       this.$http
         .get("/tiger/scCelltype.php", {
           params: {
-            CancerType: cancer,
+            CancerType: this.cancer,
             GlobalCluster: this.gloclu,
           },
         })
@@ -145,6 +144,9 @@ export default {
             this.crossCluloading = false;
           }
         });
+    },
+    GlobalClusterChange() {
+      this.getCellType();
     },
     createStateFilter(queryString) {
       return (restaurant) => {
