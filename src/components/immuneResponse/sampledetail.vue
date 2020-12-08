@@ -6,7 +6,7 @@
     <div >
     <el-table :data="tableData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>
-            <el-table-column  label><template slot-scope="scope">
+            <el-table-column label><template slot-scope="scope">
                 <a v-html="scope.row.value"></a>
               </template></el-table-column>
     </el-table>

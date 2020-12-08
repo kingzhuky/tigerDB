@@ -44,7 +44,7 @@ maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_
   }
   plot.data$group <- plot.data$Treatment
   plot.data$group[plot.data$group != "PRE"] <- "POST"
-  if(unique(plot.data$group) > 1){
+  if(length(unique(plot.data$group)) > 1){
     if (Log.scale == "TRUE") {
       plot.data$gene.exp <- log2(plot.data$gene.exp + 1)
       ylab <- paste("log2( FPKM + 1 )")
@@ -52,7 +52,7 @@ maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_
       ylab <- "FPKM"
     }
     response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
-                      geom_violin()+
+                      geom_jitter(color="black", size=0.7, alpha=.9) +
                       geom_boxplot(width = .4)+
                       theme_bw() + labs(x= element_blank(),y = ylab) +
                       ggtitle(paste(title.plot,"BoxPlot",sep="-")) +

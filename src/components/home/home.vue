@@ -2,26 +2,84 @@
   <div class="outside">
     <div class="section">
       <el-row>
-        <el-col :span="14">
+        <el-col :span="20" :offset="2">
           <el-row id="homeinbt">
-            <el-col :span="22" :offset="2">
-              <p class="hometitle">About TIGER</p>
-              <p class="homedesrc">
-                Immunotherapy is a promising cancer treatment method that helps the immune system defense against cancer. Benefitting from immunotherapy, patients with melanoma and other cancers may survive for a long time, but still only a small fraction of cancer patients respond to immunotherapy. Therefore, although considerable progress has been achieved, much effort is still needed to understand the mechanisms of immunotherapy response and to discover effective biomarkers of response and resistance. Recent high-throughput transcriptome profiling data available in tumor immunology studies provides valuable resources in this regard. Particularly, recent single cell transcriptome studies provide us a deeper insight into the tumor immunology. However, a well-organized online repository of these tumor immunology related high-throughput gene expression data is still not available.
-                <br />
-                <br />Here, we present TIGER (http://tiger.canceromics.org/), a web-accessible and comprehensive open resource for providing the gene expression landscape of tumor immunology. Currently, TIGER contains bulk transcriptome data for 1022 samples with immunotherapy clinical outcome and 11,060 samples from TCGA, and single cell transcriptome data for 66,366 immune cells of 43 samples with immunotherapy clinical outcome and 485,168 immune cells of 151 samples without immunotherapy clinical outcome. Besides, we also collected eight CRISPR and two shRNA screening data from studies identifying genes responsible of anticancer immune response. Moreover, we collected 63 gene signatures that could be potentially used to predict the immunotherapy response from public literature.
-              </p>
+              <p class="hometitle"><center>Welcome to TIGER</center></p>
+              <p class="homesubtitle"><center>A Web Portal of Tumor Immunotherapy Gene Expression Resource</center></p>
+            <el-col :span="8" :offset="6" id="homeInput">
+              <el-autocomplete
+                v-model="seargene"
+                placeholder="Please Input Gene Symbol"
+                :fetch-suggestions="querySearchAsync"
+                @keyup.enter.native="submsearch"
+              ></el-autocomplete>
             </el-col>
-            <br />
-            <br />
-            <br />
-            <br />
+            <el-col :span="4">
+              <el-button id="homebt" @click="submsearch">Search</el-button>
+            </el-col>
+          </el-row>
+          <el-row>
+            <p class="homedesrc">
+              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for xxx tumor samples with immunotherapy clinical outcome and xxx tumor/normal samples from TCGA, and single cell transcriptome data for xxx immune cells of xxx samples, among which xxx immune cells of xxx samples have immunotherapy clinical data. 
+            </p>
           </el-row>
         </el-col>
-        <el-col :span="9" :offset="1">
+        <el-col :offset="1">
+          <el-row>
+            <p class="homesubtitle">
+              TIGER provides the following four modules to access the resource
+            </p>
+          </el-row>
+          <el-row>
+            <el-col :span="5">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="homedesrc"><center>Immune Response</center></span>
+                  <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                </div>
+                <div>
+                  <img src="../../assets/logo.png" />
+                </div>
+              </el-card>
+            </el-col>
+            <el-col :span="5" >
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="homedesrc"><center>Immune Signature</center></span>
+                  <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                </div>
+                <div>
+                  <img src="../../assets/logo.png" />
+                </div>
+              </el-card>
+            </el-col>
+            <el-col :span="5">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="homedesrc"><center>Single Cell Immunity</center></span>
+                  <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                </div>
+                <div>
+                  <img src="../../assets/logo.png" />
+                </div>
+              </el-card>
+            </el-col>
+            <el-col :span="5">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span class="homedesrc"><center>Immune Screening</center></span>
+                  <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+                </div>
+                <div>
+                  <img src="../../assets/logo.png" />
+                </div>
+              </el-card>
+            </el-col>
+          </el-row>
+        </el-col>
+        <!-- <el-col :span="9" :offset="1">
           <div id="homepic">
             <img src="../../assets/home1.png" />
-
             <el-row>
               <el-col :span="12">
                 <p class="hometitle">Quick Search</p>
@@ -39,7 +97,7 @@
               <el-button id="homebt" @click="submsearch">Search</el-button>
             </el-col>
           </div>
-        </el-col>
+        </el-col> -->
       </el-row>
     </div>
   </div>
@@ -98,11 +156,15 @@ export default {
 </script>
 
 <style>
+.time {
+  font-size: 13px;
+  color: #999;
+}
 #homeInput .el-autocomplete {
   width: 100%;
 }
 #homebt {
-  background-color: rgb(20, 146, 140) !important;
+  background-color: rgb(20, 141, 135) !important;
   font-weight: bold;
   color: white !important;
   width: 100%;
@@ -110,7 +172,10 @@ export default {
 #homeinbt .el-autocomplete {
   width: 100% !important;
 }
-
+.box-card {
+  width: 300px;
+  margin: auto;
+}
 .homeboxrow {
   display: flex !important;
   justify-content: center !important;
@@ -120,6 +185,12 @@ export default {
 .hometitle {
   color: rgb(20, 146, 140) !important;
   font-size: 30px;
+  font-weight: bolder;
+}
+.homesubtitle {
+  color: rgb(0, 0, 0) !important;
+  font-size: 24px;
+  font-weight: bolder;
 }
 .homedesrc {
   font-size: 20px;

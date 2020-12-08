@@ -8,7 +8,6 @@
           </div>
         </el-card>
       </div>
-
       <div class="infor">
         <el-card>
           <el-col :span="8" :offset="1">
@@ -21,12 +20,11 @@
             <br />
             <el-row>
               <el-input v-model="normalGene"></el-input>
-            </el-row>
+             </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
             <br />
             <el-row>
-              <el-radio v-model="logScale" label="TRUE">Yes</el-radio>
               <el-radio v-model="logScale" label="FALSE">No</el-radio>
             </el-row>
             <br />
@@ -35,14 +33,13 @@
             </el-row>
           </el-col>
           <el-col v-show="resultShow" :span="10" :offset="3" v-loading="loading">
-            <img width="500px" :src="imgUrlBox" />
+            <img style="position:relative;top:0px;right:0px;" width="420px" :src="imgUrlBox" />
           </el-col>
           <el-col  :span="15" v-show="!resultShow" v-loading="loading">
             <div id="norult">No result</div>
           </el-col>
         </el-card>
-                        <v-sampleDetail ref="sampleDetail"></v-sampleDetail>
-
+       <v-sampleDetail ref="sampleDetail"></v-sampleDetail>
       </div>
       <v-goTop></v-goTop>
     </div>

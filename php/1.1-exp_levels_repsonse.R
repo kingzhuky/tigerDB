@@ -75,7 +75,8 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
   }
   plot.data$group <- plot.data$response
   
-  if(length(response.group) == 2) response.group <- c(response.group,"CRPR")
+  # if(length(response.group) == 2) 
+  response.group <- c(response.group,"CRPR")
   plot.data$group[plot.data$response %in% c("R",response.group)] <- "R"
   plot.data$group[plot.data$response %in% c("N","NR","Resistance","NE",nonresponse.group)] <- "NR"
   plot.data <- plot.data[plot.data$group %in% c("NR","R"),]
@@ -86,15 +87,16 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
   }else{
     ylab <- "FPKM"
   }
-  response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
-                    geom_violin()+
-                    geom_boxplot(width = .4)+
-                    theme_bw() + labs(x= element_blank(),y = ylab) +
-                    ggtitle(paste(title.plot,"BoxPlot",sep="-")) +
-                    theme(plot.title= element_text(size = 20, hjust=0.5),
-                          axis.title.y = element_text(size = 15, face = "plain", colour = "black"),
-                          axis.text = element_text(size = 15, face = "plain", colour = "black")) +
-                    stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 6,label.sep = "\n")
+response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
+                  geom_boxplot(width = .4) +
+                  geom_jitter(color="black", size=0.7, alpha=.9) +
+                  theme_bw() + labs(x= element_blank(),y = ylab) +
+                  ggtitle(paste(title.plot,"BoxPlot",sep="-")) +
+                  theme(legend.position="none",
+                        plot.title= element_text(size = 20, hjust=0.5),
+                        axis.title.y = element_text(size = 15, face = "plain", colour = "black"),
+                        axis.text = element_text(size = 15, face = "plain", colour = "black")) +
+                  stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 6,label.sep = "\n")
   
   if(whether.in.auc.list){
     auc.score <- auc(roc(factor(plot.data[,group],levels = c("R","NR")),plot.data[,gene.exp],levels=c("R","NR")))[1]

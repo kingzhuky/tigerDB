@@ -72,7 +72,7 @@
           </el-col>
           <el-col :span="8" :offset="1" v-show="resultShow">
             <div class="detailimg" v-loading="loading">
-              <img width="450px" :src="imgUrlBox" />
+              <img style="position:relative;top:10px;right:0px;" width="420px" :src="imgUrlBox" />
             </div>
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
@@ -80,7 +80,7 @@
               <el-table
                 ref="singleTable"
                 border
-                max-height="540"
+                max-height="420"
                 :data="tableData"
                 v-loading="loading"
                 :row-style="tableCellStyle"
@@ -89,7 +89,6 @@
                 <el-table-column prop="signature_id" label="Signature Id" ></el-table-column>
                 <el-table-column prop="Signature_Cite" label="Signature Cite" ></el-table-column>
                 <el-table-column prop="AUC" label="AUC"></el-table-column>
-
               </el-table>
             </div>
           </el-col>
