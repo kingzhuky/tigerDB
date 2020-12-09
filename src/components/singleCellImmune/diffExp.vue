@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="10" :offset="2">
-      <div id="singleCellTitle"> {{this.vsType}}</div>
+      <div id="singleCellTitle">{{this.vsType}}</div>
       </el-col>
       <el-col :span="4" :offset="8">
         <el-autocomplete

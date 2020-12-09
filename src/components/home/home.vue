@@ -4,8 +4,8 @@
       <el-row>
         <el-col :span="20" :offset="2">
           <el-row id="homeinbt">
-              <p class="hometitle"><center>Welcome to TIGER</center></p>
-              <p class="homesubtitle"><center>A Web Portal of Tumor Immunotherapy Gene Expression Resource</center></p>
+              <p class="hometitle" style="text-align:center;">Welcome to TIGER</p>
+              <p class="homesubtitle" style="text-align:center;">A Web Portal of Tumor Immunotherapy Gene Expression Resource</p>
             <el-col :span="8" :offset="6" id="homeInput">
               <el-autocomplete
                 v-model="seargene"
@@ -33,44 +33,44 @@
           <el-row>
             <el-col :span="5">
               <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span class="homedesrc"><center>Immune Response</center></span>
+                <div slot="header" class="clearfix" style="text-align:center;">
+                  <span class="homedesrc">Immune Response</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
-                <div>
+                <div style="text-align:center;">
                   <img src="../../assets/logo.png" />
                 </div>
               </el-card>
             </el-col>
             <el-col :span="5" >
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span class="homedesrc"><center>Immune Signature</center></span>
+              <el-card class="box-card" style="position:relative;left:30px;">
+                <div slot="header" class="clearfix" style="text-align:center;">
+                  <span class="homedesrc">Immune Signature</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
-                <div>
+                <div style="text-align:center;">
                   <img src="../../assets/logo.png" />
                 </div>
               </el-card>
             </el-col>
             <el-col :span="5">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span class="homedesrc"><center>Single Cell Immunity</center></span>
+              <el-card class="box-card" style="position:relative;left:60px;">
+                <div slot="header" class="clearfix" style="text-align:center;">
+                  <span class="homedesrc">Single Cell Immunity</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
-                <div>
+                <div style="text-align:center;">
                   <img src="../../assets/logo.png" />
                 </div>
               </el-card>
             </el-col>
             <el-col :span="5">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span class="homedesrc"><center>Immune Screening</center></span>
+              <el-card class="box-card" style="position:relative;left:90px;">
+                <div slot="header" class="clearfix" style="text-align:center;">
+                  <span class="homedesrc">Immune Screening</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
-                <div>
+                <div style="text-align:center;">
                   <img src="../../assets/logo.png" />
                 </div>
               </el-card>
@@ -173,8 +173,9 @@ export default {
   width: 100% !important;
 }
 .box-card {
-  width: 300px;
-  margin: auto;
+  width: auto;
+  /* margin-left: 100px; */
+  /* margin: auto; */
 }
 .homeboxrow {
   display: flex !important;
