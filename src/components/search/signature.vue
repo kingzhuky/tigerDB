@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import wersignature from "../immuneSignatureTable";
+import wersignature from "../immuneSignature/immuneSignatureTable";
 
 export default {
   props: {

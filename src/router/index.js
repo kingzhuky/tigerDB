@@ -6,7 +6,7 @@
 import VueRouter from 'vue-router'
 const home = () => import('@/components/home/home')
 const immuneResponse = () => import('@/components/immuneResponse/home')
-const immuneSignature = () => import('@/components/immuneSignature')
+const immuneSignature = () => import('@/components/immuneSignature/immuneSignature')
 const immuneScreen = () => import('@/components/immuneScreen')
 const singleCellImmune = () => import('@/components/singleCellImmune/home')
 const download = () => import('@/components/download')

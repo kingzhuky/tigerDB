@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import goTop from "./public/goTop";
+import goTop from "../public/goTop";
 
 export default {
   props: {

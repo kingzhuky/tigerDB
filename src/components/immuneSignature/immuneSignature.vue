@@ -1,6 +1,16 @@
 <template>
   <div>
-    <el-row id="readme">Readme:</el-row>
+    <el-card class="box-card-heatmap">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
+        <el-tab-pane label="Overview" name="diffexp">
+          <component :is="sigTabDetail"></component>
+        </el-tab-pane>
+        <el-tab-pane label="Signature Detail" name="survival">
+          <!-- <component :is="survivalVue"></component> -->
+        </el-tab-pane>
+        <el-tab-pane label="Signature Correlation Matrix" name="signature">
+          <!-- <component :is="signatureVue"></component> -->
+              <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
       1. Input genes to analyze the immune signature of pan-cancer species.
       <br />2. Correlation heat map shows the correlation between user-defined genes between pan-cancer species and immune signatures.
@@ -9,7 +19,7 @@
     <el-card class="anaCard" id="inputCard">
       <el-row>
         <el-col :span="10" :offset="3">
-          <span class="label" id="immuinput">Input Gene/Geneset (eg. CD274 OR CD274,CD3D)</span>
+          <span class="label" id="immuinput">Input Gene/Geneset (eg.CD274 OR CD274,CD3D)</span>
         </el-col>
       </el-row>
       <br />
@@ -31,12 +41,16 @@
         </el-col>
       </el-row>
     </el-card>
-
     <v-immuneSigTable ref="immuSignatureRef" :gene="gene"></v-immuneSigTable>
+        </el-tab-pane> 
+      </el-tabs>
+    </el-card>
   </div>
 </template>
 
 <script>
+import sigTabDetail from "./SignatureTableDetail";
+
 export default {
   data() {
     return {
@@ -72,7 +86,7 @@ export default {
 
 
 <style>
-@import "./immuneResponse/style.css";
+@import "../immuneResponse/style.css";
 
 #immuneSigTable th {
   left: 35px !important;

@@ -58,7 +58,7 @@ import {
   gStyle,
   move,
   stop,
-} from "../../static/js/utils.js";
+} from "../../../static/js/utils.js";
 
 export default {
   props: {
@@ -216,7 +216,7 @@ export default {
 
 
 <style>
-@import "./immuneResponse/style.css";
+@import "../immuneResponse/style.css";
 
 #immuneSigTable th {
   left: 35px !important;
