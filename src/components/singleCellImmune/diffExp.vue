@@ -1,68 +1,123 @@
 <template>
   <div>
     <el-row>
-      <el-tabs v-model="weractiveName"  @tab-click="handleClick2"  >
-        <el-tab-pane label="Response VS Non-Response" name="response" >
-          <el-col :span="4" :offset="20"> 
-          <el-autocomplete
-            v-model="searchinput"
-            placeholder="Please Input Gene Symbol"
-            :fetch-suggestions="querySearchAsync"
-            @change="searchChange"
-            @keyup.enter.native="searchChange"
-          ></el-autocomplete>
-          </el-col>
-          <br />
-          <br />
-          <br />
-          <el-table
-            class="wertable"
-            id="scDiffExpTable"
-            ref="singleTable"
-            border=false
-            max-height="750"
-            :data="tableData"
-            @cell-click="heandleclick"
-            :cell-style="tableCellStyle"
-            :header-cell-class-name="headerStyle"
-            v-loadmore="tabelloadmore"
-            v-loadlast="tableloadlast"
-            v-loading="loading"
-            @sort-change="sortChangeClick"
-            style="100%"
-          >
-            <el-table-column
-              v-for="(item,index) in tableDataheader"
-              :key="index"
-              :property="item.key"
-              :label="item.name"
-              :type="item.type"
-              sortable="custom"
-              align="center"
-              width="80"
-            ></el-table-column>
-            <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-          </el-table>
+      <el-tabs v-model="tabactiveName">
+        <el-tab-pane :disabled="whethrnr" label="Response VS Non-Response" name="response" >
+            <el-col :span="4" :offset="20"> 
+              <el-autocomplete
+                v-model="searchinput"
+                placeholder="Please Input Gene Symbol"
+                :fetch-suggestions="querySearchAsync"
+                @change="searchChange"
+                @keyup.enter.native="searchChange"
+              ></el-autocomplete>
+            </el-col>
+            <br />
+            <br />
+            <br />
+            <el-table
+              class="wertable"
+              id="scDiffExpTable"
+              ref="singleTable"
+              border=false
+              max-height="750"
+              :data="tableData"
+              @cell-click="heandleclick"
+              :cell-style="tableCellStyle"
+              :header-cell-class-name="headerStyle"
+              v-loadmore="tabelloadmore"
+              v-loadlast="tableloadlast"
+              v-loading="loading"
+              @sort-change="sortChangeClick"
+              style="100%"
+            >
+              <el-table-column
+                v-for="(item,index) in tableDataheader"
+                :key="index"
+                :property="item.key"
+                :label="item.name"
+                :type="item.type"
+                sortable="custom"
+                align="center"
+                width="80"
+              ></el-table-column>
+              <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+            </el-table>
 
-          <div class="colorbar">
-            <span>Low logFC&lt;0</span>
-            <span class="heatMapTable--colorbar"></span>
-            <span>High logFC&gt;0</span>
-          </div>
-
-          <!-- 详细页显示与否 -->
-          <v-expdetail
-            ref="detailPlot"
-            v-show="isShow"
-            :gene="clickGene"
-            :celltype="celltype"
-            :cancer="cancer"
-            :gloclu="gloclu"
-          ></v-expdetail>
+            <div class="colorbar">
+              <span>Low logFC&lt;0</span>
+              <span class="heatMapTable--colorbar"></span>
+              <span>High logFC&gt;0</span>
+              
+            </div>
+            <!-- 详细页显示与否 -->
+            <v-expdetail
+              ref="detailPlot"
+              v-show="isShow"
+              :gene="clickGene"
+              :celltype="celltype"
+              :cancer="cancer"
+              :gloclu="gloclu"
+            ></v-expdetail>
         </el-tab-pane>
 
-        <el-tab-pane label="Pre-Therapy VS Post-Therapy" name="therapy">
+        <el-tab-pane :disabled="whethtn" label="Tumor VS Normal" name="tn">
+            <el-col :span="4" :offset="20"> 
+              <el-autocomplete
+                v-model="searchinput"
+                placeholder="Please Input Gene Symbol"
+                :fetch-suggestions="querySearchAsync"
+                @change="searchChange"
+                @keyup.enter.native="searchChange"
+              ></el-autocomplete>
+            </el-col>
+            <br />
+            <br />
+            <br />
+            <el-table
+              class="wertable"
+              id="scDiffExpTable"
+              ref="singleTable"
+              border=false
+              max-height="750"
+              :data="tableData"
+              @cell-click="heandleclick"
+              :cell-style="tableCellStyle"
+              :header-cell-class-name="headerStyle"
+              v-loadmore="tabelloadmore"
+              v-loadlast="tableloadlast"
+              v-loading="loading"
+              @sort-change="sortChangeClick"
+              style="100%"
+            >
+              <el-table-column
+                v-for="(item,index) in tableDataheader"
+                :key="index"
+                :property="item.key"
+                :label="item.name"
+                :type="item.type"
+                sortable="custom"
+                align="center"
+                width="80"
+              ></el-table-column>
+              <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+            </el-table>
 
+            <div class="colorbar">
+              <span>Low logFC&lt;0</span>
+              <span class="heatMapTable--colorbar"></span>
+              <span>High logFC&gt;0</span>
+              
+            </div>
+            <!-- 详细页显示与否 -->
+            <v-expdetail
+              ref="detailPlot"
+              v-show="isShow"
+              :gene="clickGene"
+              :celltype="celltype"
+              :cancer="cancer"
+              :gloclu="gloclu"
+            ></v-expdetail>
         </el-tab-pane>
       </el-tabs>
       <!-- <el-col :span="10" :offset="2">
@@ -112,6 +167,9 @@ export default {
       oldgloclu: "",
       tableDataheader: [],
       gloclu:"",
+      whethrnr:true,
+      whethtn:true,
+      tabactiveName:'response',
     };
   },
 
@@ -146,7 +204,18 @@ export default {
           }
         })
         .then(res => {
-          this.vsType = res.data.list[0].glo;          
+          this.vsType = res.data.list[0].glo;
+          console.log(this.vsType);
+          if(this.vsType === "Response vs Non-response"){
+            this.whethrnr = false;
+            this.whethtn = true;
+            this.tabactiveName = "response"
+          }else{
+            this.whethrnr = true;
+            this.whethtn = false;
+            this.tabactiveName = "tn"
+          }
+          console.log(this.whethtn)
         });
       return this.vsType
     },

@@ -87,10 +87,10 @@ export default {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
         this.oldseargene = this.seargene;
         //this.getTableData(this.seargene, "Responder");
-        this.artivcleDetail();
+        this.articleDetail();
       }
     },
-    artivcleDetail() {
+    articleDetail() {
       var that = this;
       that.cardLoading = true;
       this.$http

@@ -196,6 +196,9 @@ export default {
       ],
     };
   },
+  created(){
+    console.log(this.validationData)
+  },
   methods: {
     handleEdit(index, file) {
       console.log(index)

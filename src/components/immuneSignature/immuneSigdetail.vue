@@ -8,7 +8,6 @@
           </div>
         </el-card>
       </div>
-
       <div class="infor">
         <el-card>
           <div class="wergeneinfo">
@@ -43,12 +42,10 @@
             </div>
           </div>
           <p class="card-title">Correlation between Custom Signature and Selected Signature</p>
-
           <el-row v-show="resultShow" v-loading="loading" class="detailimg">
             <img :src="imgUrlWgcna" />
           </el-row>
-
-          <p class="card-title">Signature Infomations</p>
+          <p class="card-title">Signature Informations</p>
           <el-table :data="articleData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>
             <el-table-column prop="value" label></el-table-column>
@@ -114,7 +111,7 @@ export default {
       var that = this;
       that.artloading = true;
       this.$http
-        .get("/tiger/immunescreendetail.php", {
+        .get("/tiger/immunescreendetail2.php", {
           params: {
             tabl: "siginfo",
             colu: "SignatureID",

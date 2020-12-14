@@ -1,17 +1,15 @@
 <template>
-  <div id="wertab">
+  <div id='sigpage'>
     <el-card class="box-card-heatmap">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
-        <el-tab-pane label="Differential Expression Analysis" name="diffexp">
-          <component :is="diffexpVue"></component>
+        <el-tab-pane label="Overview" name="sigtable">
+          <component ref="sigtableRef" :is="sigtableVue"></component>
         </el-tab-pane>
-
-        <el-tab-pane label="Survival Analysis" name="survival">
-          <component :is="survivalVue"></component>
+        <el-tab-pane label="Custom Analysis" name="customsig">
+          <component :is="customsigVue"></component>
         </el-tab-pane>
-
-        <el-tab-pane label="Signature Analysis" name="signature">
-          <component :is="signatureVue"></component>
+        <el-tab-pane label="Signature Correlation Matrix" name="sigcorrmat">
+          <component :is="sigmatVue"></component>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -19,46 +17,50 @@
 </template>
 
 <script>
-
+import sigtablepage from "./immuneSigTable.vue";
+import sigcorrmat from "./immuneSignature.vue";
+import sigcustompage from "./immuneSigCustom.vue";
 
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
 
 export default {
   data() {
     return {
-      activeName: "diffexp",
-      diffexpVue: "",
-      survivalVue: "",
-      signatureVue: ""
+      activeName: "sigtable",
+      sigtableVue: "",
+      customsigVue: "",
+      sigmatVue: "",
     };
   },
   created() {
-    this.diffexpVue = werdiffexp;
+    this.sigtableVue = sigtablepage;
   },
-
+  mounted(){
+    // this.getsigtable()
+  },
   methods: {
     handleClick(tab, event) {
       this.checkVue(tab.name);
     },
     checkVue(name) {
       switch (name) {
-        case "diffexp":
-          this.diffexpVue = werdiffexp;
+        case "sigtable":
+          this.sigtableVue = sigtablepage;
           break;
-        case "survival":
-          this.survivalVue = wersurvival;
+        case "customsig":
+          this.customsigVue = sigcustompage;
           break;
-        case "signature":
-          this.signatureVue = wersignature;
+        case "sigcorrmat":
+          this.sigmatVue = sigcorrmat;
           break;
       }
-    }
+    },
   }
 };
 </script>
 
 <style>
-div#wertab {
+div#sigpage {
   margin-bottom: 20px;
 }
 
@@ -84,6 +86,6 @@ div#wertab {
   height: 270px !important;
 }
 
-@import "./style.css";
+@import "../immuneResponse/style.css";
 
 </style>

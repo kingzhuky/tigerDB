@@ -194,7 +194,7 @@ img#home {
   padding-left: 10px;
 }
 #title {
-  color: rgb(20, 146, 140) !important;
+  color: #14928c !important;
   font-size: 40px;
   font-weight: 700;
 }

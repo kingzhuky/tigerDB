@@ -1,16 +1,16 @@
 <template>
   <div class="infor">
-
     <el-card v-loading="loading">
     <p class="card-title">Sample Detail Information</p>
-    <div >
+    <div>
     <el-table :data="tableData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>
-            <el-table-column label><template slot-scope="scope">
+            <el-table-column label>
+              <template slot-scope="scope">
                 <a v-html="scope.row.value"></a>
-              </template></el-table-column>
+              </template>
+            </el-table-column>
     </el-table>
-     
     </div>
     </el-card>
     </div>
