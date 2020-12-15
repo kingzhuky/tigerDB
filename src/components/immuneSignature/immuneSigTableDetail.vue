@@ -5,16 +5,25 @@
             <el-col push="1" span="22">
                 <p class="card-title">Signature Informations</p>
                 <el-table :data="articleData" style="width: 100%" v-loading="artloading">
-                    <el-table-column prop="title" label width="180"></el-table-column>
-                        <!-- <template slot-scope="scope">
-                            {{scope.row.title}}
-                            <el-tag v-if="scope.row.title == 'PMID'">haha</el-tag>
-                            <el-tag v-else-if="scope.row.title == 2">待发货</el-tag>
-                            <el-tag v-else-if="scope.row.title == 3">已发货</el-tag>
-                            <el-tag v-else-if="scope.row.title == 4">订单关闭</el-tag>
-                            <el-tag v-else-if="scope.row.title == 5">订单完成</el-tag>
-                        </template> -->
-                    <el-table-column prop="value" label></el-table-column>
+                    <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
+                    <el-table-column prop="title" label width="250">
+                        <template slot-scope="{row: {title}}">
+                        <span v-if="title === 'SignatureID'">Signature ID</span>
+                        <span v-else-if="title === 'SignatureName'">Signature Name</span>
+                        <span v-else-if="title === 'SignatureCite'">Signature Cite</span>
+                        <span v-else>{{title}}</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label>
+                        <template slot-scope="scope">
+                        <span v-if="scope.row.title === 'PMID'">
+                            <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.value"
+                            target="_blank"
+                            class="buttonText">{{scope.row.value}}</a>
+                            </span>
+                        <span v-else><a v-html="scope.row.value"></a></span>
+                        </template>
+                    </el-table-column>
                 </el-table>
                 <p class="card-title">Signature Component</p>
                 <p class="card-title">AUC Table</p>

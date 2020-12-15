@@ -107,7 +107,7 @@
 </template>
 
 <script>
-//import { toTarget } from "../../../static/js/utils.js";
+import { toTarget } from "../../../static/js/utils.js";
 
 export default {
   name: "home",
@@ -123,6 +123,7 @@ export default {
       this.$router.push({
         name: pagename,
       });
+      toTarget(20)
     },
     querySearchAsync(queryString, cb) {
       this.$http

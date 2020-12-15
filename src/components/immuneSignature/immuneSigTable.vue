@@ -40,6 +40,13 @@
 // import sigtablepage from "./SignatureTable.vue";
 
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
+import {
+  scrollRow,
+  toTarget,
+  gStyle,
+  move,
+  stop,
+} from "../../../static/js/utils.js";
 
 export default {
   data() {
@@ -67,6 +74,7 @@ export default {
       // console.log(sigID)
       this.sigID = sigID
       this.$refs.immuneSigDetail.articleDetail(this.sigID)
+      toTarget(720)
       // console.log(this.sigID)
     }
   },
