@@ -4,7 +4,7 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{ gene }} -- {{cancer}}</h1>
+            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}}<br>Gene:{{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -51,9 +51,25 @@
               <img id="surplot" :src="imgUrlBox" />
             </div>
           </el-col>
-          <el-col :span="7" :offset="1" v-show="resultShow">
-            <div class="detailimg" v-loading="loading">
-             <img :src="imgUrlBar" />
+          <el-col :span="9" :push="1" v-show="resultShow">
+            <div class="detailimg">
+              <el-table
+                ref="singleTable"
+                border
+                max-height="420"
+                :data="tableData"
+                v-loading="loading"
+                :row-style="tableCellStyle"
+                header-row-class-name="tableHead"
+                @row-click="openDetails(row,event)"
+                style="100%"
+              >
+                <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
+                <el-table-column prop="Signature_Cite" label="Description" width="130%" ></el-table-column>
+                <el-table-column prop="HR" label="HR" width="80%"></el-table-column>
+                <el-table-column prop="CI95" label="95% CI" width="90%"></el-table-column>
+                <el-table-column prop="PValue" label="P Value" width="90%"></el-table-column>
+              </el-table>
             </div>
           </el-col>
           <el-col  :span="14" v-show="!resultShow" v-loading="loading">
@@ -72,7 +88,9 @@
 <script>
 import goTop from "../public/goTop";
 import sampleDetail from "./sampledetail";
-
+import {
+  gStyle
+} from "../../../static/js/utils.js";
 //import { downloadFile } from "../../../static/js/utils.js";
 
 export default {
@@ -115,7 +133,8 @@ export default {
       imgpath: "",
       imgpathBox: "",
       imgpathBar: "",
-      loading: true
+      loading: true,
+      tableData: [],
     };
   },
 
@@ -131,6 +150,30 @@ export default {
   methods: {
     getSampleDetail(sample){
       this.$refs.sampleDetail.getTableData(sample)
+    },
+    gettableData(jsonUrl) {
+      var that = this;
+      this.$http
+        .get("/tiger/img/" + jsonUrl + ".json")
+        .then(function(res) {
+          that.tableData = res.data;
+        })
+        .catch(function(res) {
+          // console.log(res);
+        });
+    },
+    tableCellStyle({row}) {
+      console.log(row["PValue"])
+      var mycolr = ""
+      if(parseFloat(row["PValue"]) < 0.1){
+        mycolr = "#f0b6b6"
+      }else{
+        mycolr = "rgb(255,255,255)"
+      }
+      console.log(mycolr)
+      return {
+        background: mycolr
+      };
     },
     checkInput() {
       // if (this.normalMed!=='None' && this.normalGene.length==0){
@@ -173,7 +216,7 @@ export default {
               
               let imgpath = res.data.output[2].split(",");
               setTimeout(that.imgpathBox = imgpath[0],1000);
-              setTimeout(that.imgpathBar = imgpath[1],1000);
+              that.gettableData(imgpath[1]);
               that.loading = false;
             }else{
               that.resultShow=false

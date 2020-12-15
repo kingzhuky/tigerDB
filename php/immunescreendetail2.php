@@ -19,7 +19,7 @@ $coluvalue = $_GET['coluvalue'];
 
 
   // query data
-  $sql = "SELECT * FROM ".$tabl." WHERE ".$colu."='".$coluvalue."' LIMIT 1";
+  $sql = "SELECT * FROM ".$tabl." WHERE `".$colu."`='".$coluvalue."' LIMIT 1";
   $infos2 = array();
   $infos = array();
   // 拼接最终SQL

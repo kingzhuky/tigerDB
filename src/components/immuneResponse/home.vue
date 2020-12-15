@@ -6,11 +6,15 @@
           <component :is="diffexpVue"></component>
         </el-tab-pane>
 
+        <el-tab-pane label="Pathway Enrichment Analysis" name="pathway">
+          <component :is="pathwayVue"></component>
+        </el-tab-pane>
+
         <el-tab-pane label="Survival Analysis" name="survival">
           <component :is="survivalVue"></component>
         </el-tab-pane>
 
-        <el-tab-pane label="Signature Analysis" name="signature">
+        <el-tab-pane label="Gene Set Query" name="signature">
           <component :is="signatureVue"></component>
         </el-tab-pane>
       </el-tabs>
@@ -22,7 +26,7 @@
 const wersurvival = resolve => require(["./survival.vue"], resolve);
 const werdiffexp = resolve => require(["./expression/home.vue"], resolve);
 const wersignature = resolve => require(["./signature.vue"], resolve);
-
+const diffpathway = resolve => require(["./pathway.vue"], resolve);
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
 
 export default {
@@ -31,7 +35,8 @@ export default {
       activeName: "diffexp",
       diffexpVue: "",
       survivalVue: "",
-      signatureVue: ""
+      signatureVue: "",
+      pathwayVue: "",
     };
   },
   created() {
@@ -47,6 +52,8 @@ export default {
         case "diffexp":
           this.diffexpVue = werdiffexp;
           break;
+        case "pathway":
+          this.pathwayVue = diffpathway;
         case "survival":
           this.survivalVue = wersurvival;
           break;
@@ -65,6 +72,7 @@ div#wertab {
 }
 
 #tab-diffexp,
+#tab-pathway,
 #tab-survival,
 #tab-signature {
   font-size: 20px;

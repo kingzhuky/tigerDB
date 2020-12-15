@@ -6,6 +6,14 @@
                 <p class="card-title">Signature Informations</p>
                 <el-table :data="articleData" style="width: 100%" v-loading="artloading">
                     <el-table-column prop="title" label width="180"></el-table-column>
+                        <!-- <template slot-scope="scope">
+                            {{scope.row.title}}
+                            <el-tag v-if="scope.row.title == 'PMID'">haha</el-tag>
+                            <el-tag v-else-if="scope.row.title == 2">待发货</el-tag>
+                            <el-tag v-else-if="scope.row.title == 3">已发货</el-tag>
+                            <el-tag v-else-if="scope.row.title == 4">订单关闭</el-tag>
+                            <el-tag v-else-if="scope.row.title == 5">订单完成</el-tag>
+                        </template> -->
                     <el-table-column prop="value" label></el-table-column>
                 </el-table>
                 <p class="card-title">Signature Component</p>
@@ -49,7 +57,7 @@ export default {
             },
             })
             .then(function (res) {
-                console.log( res.data.list)
+                console.log(res.data.list)
             that.articleData = res.data.list;
             that.artloading = false;
             })

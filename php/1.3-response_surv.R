@@ -3,12 +3,12 @@ library(ggplot2)
 library(survival)
 library(survminer)
 library(data.table)
-library(forestplot)
+library(jsonlite)
 
 Args <- commandArgs(T)
 #Args <- c("TP53_CD274","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","gene","CD3D","0.5","pdf")
 #Args <- c("TP53","ccRCC_Braun_2020_EVEROLIMUS","None","None","0.5","png")
-#Args <- c("5S_rRNA","ccRCC_Braun_2020_anti-PD-1_Male","None","None","0.2","png")
+#Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL","None","None","0.2","png")
 gene <- unlist(strsplit(Args[1],split=','))
 mergedatasets <- unlist(strsplit(Args[2],split=','))
 normalMed <- Args[3]
@@ -28,8 +28,8 @@ maintitle1 <- paste(paste(gene,collapse = "_"),
                     datatype,sep="-")
 maintitle2 <- paste(paste(gene,collapse = "_"),
                     paste(mergedatasets,collapse = "_"),normalMed,normalGene,
-                    exp.cutoff,"forest",
-                    datatype,sep="-")
+                    exp.cutoff,"survival",
+                    sep="-")
 if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
   maintitle1 <- paste("longSig",
                       paste(mergedatasets,collapse = "_"),normalMed,normalGene,
@@ -37,20 +37,20 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
                       datatype,sep="-")
   maintitle2 <- paste("longSig",paste(mergedatasets,collapse = "_"),
                       paste(mergedatasets,collapse = "_"),normalMed,normalGene,
-                      exp.cutoff,"forest",
-                      datatype,sep="-")
+                      exp.cutoff,"survival",
+                      sep="-")
 }
 
 # whether.res.exist <- file.exists(paste0(result.path,maintitle2,".png"),paste0(result.path,maintitle1,".png"))
 # if( sum(whether.res.exist) == 0| nchar(maintitle1) > 200 | nchar(maintitle2) > 200){
   ## setting title
-  title.gene <- ifelse(length(gene) > 1, ifelse(length(gene) <= 3, paste0(gene,collapse = ","), "Custom_Geneset"), gene)
+  title.gene <- ifelse(length(gene) > 1, ifelse(length(gene) <= 1, paste0(gene,collapse = ","), "Geneset Score"), gene)
   exp.mergearray <- NULL
   for (sl.dataset in mergedatasets){
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(normalGene,gene)]
     exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
     exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
-    exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
+    exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")], check.names = FALSE)
     exp.mergearray <- rbind(exp.mergearray,t(exp.array))
   }
   exp.mergearray <- data.table(sample_id = rownames(exp.mergearray), exp.mergearray)
@@ -82,7 +82,8 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
     response.surv.plot <- ggsurvplot(sfit, conf.int = TRUE, pval = TRUE, risk.table = TRUE,
                                      legend.labs = c("High", "Low"), legend.title = title.gene,
-                                     title = ggtitle(paste(title.plot,"SurvivalPlot",sep="-")),
+                                     title = ggtitle("Survival Analysis"),
+                                     xlab = "Time (Days)",
                                      palette = c("dodgerblue2", "orchid2"),
                                      risk.table.height = 0.3,
                                      ggtheme = theme_bw() + 
@@ -99,8 +100,6 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     dataset <- as.data.frame(dataset)
     covariates <- rownames(dataset)
     forest.plot.data <- sapply(covariates, function(x){
-      # x <- covariates[1]
-      # x <- "gene.exp"
       surv.data <-  data.table(sample_id = colnames(dataset), t(dataset[x,]))[surv.sample.info[,c(1,9,10)], on = c("sample_id"), nomatch = F][,-c("sample_id")]
       order.index <-  order(surv.data[,1],decreasing = T)
       up.index <- order.index[seq(1,round(nrow(surv.data)*exp.cutoff))]
@@ -133,60 +132,22 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
       return(res)
     })
     colnames(forest.plot.data)[1] <- title.gene
-    forest.plot.data.table <- data.table(Factor = colnames(forest.plot.data),t(forest.plot.data))[order(p.value)]
-    cochrane_from_rmeta <- 
-      structure(list(
-        mean  = c(as.numeric(forest.plot.data.table$mean)), 
-        lower = c(as.numeric(forest.plot.data.table$lower)),
-        upper = c(as.numeric(forest.plot.data.table$upper))),
-        .Names = c("mean", "lower", "upper"),
-        row.names = c(NA,-(nrow(forest.plot.data.table))),
-        class = "data.frame")
-    # cochrane_from_rmeta <- rbind(as.data.frame(forest.plot.data.table[,c(5,6,7)]))
-    forest.col <- c(NA,"HR","P.Value")
-    forest.plot.data.table$p.value[ forest.plot.data.table$p.value < 0.001 ] <- "***"
-    forest.plot.data.table$p.value[ forest.plot.data.table$p.value < 0.01 ] <- "**"
-    forest.plot.data.table$p.value[ forest.plot.data.table$p.value < 0.05 ] <- "*"
-    forest.plot.data.table$p.value[ !forest.plot.data.table$p.value %in% c( "**","*","***") ] <- "n.s."
-    tabletext <- rbind(as.matrix(forest.plot.data.table)[,c(1,4)])
+    forest.plot.data.table <- data.table(SignatureID = colnames(forest.plot.data),t(forest.plot.data))
+    forest.plot.data.table[,`:=`(beta = NULL, mean = NULL, CI95 = paste0(lower,"-",upper),lower = NULL, upper = NULL)]
+    forest.plot.data.table <- SIG.info[,c("SignatureID","SignatureCite")][forest.plot.data.table, on = c("SignatureID"),nomatch = NA]
+    setnames(forest.plot.data.table,c("SignatureID","SignatureCite","p.value"),c("signature_id","Signature_Cite","PValue"))
+    forest.plot.data.table[1,"Signature_Cite"] <- title.gene
+    forest.plot.data.table.json <- toJSON(pretty=TRUE, forest.plot.data.table)
+    cat(forest.plot.data.table.json, file = (con <- file(paste0(result.path,maintitle2,".json"), "w", encoding = "UTF-8")))
+    close(con)
     
     if(datatype == "png"){
       png(file=paste0(result.path,maintitle1,".png"))
       print(response.surv.plot)
       dev.off()
-      png(file=paste0(result.path,maintitle2,".png"),height = 800)
-      whether_plot <- tryCatch({
-        forestplot(tabletext, 
-                   cochrane_from_rmeta,
-                   new_page = T,
-                   is.summary=c(rep(FALSE,nrow(forest.plot.data.table)),TRUE),
-                   xlog=T,title = paste(title.plot,"ForestPlot",sep = "-"),
-                   col=fpColors(box="royalblue",line="darkblue", summary="royalblue"),
-                   txt_gp = fpTxtGp(ticks = gpar(cex = 0.5),
-                                    xlab  = gpar(cex = 1.5)),
-                   xlab = "Hazard Ratio")
-        TRUE
-      }, error = function(err) {FALSE})
-      maintitle2 <- ifelse(whether_plot[1],maintitle2,0)
-      dev.off()
     }else{
       pdf(file=paste0(result.path,maintitle1,".pdf"))
       print(response.surv.plot)
-      dev.off()
-      pdf(file=paste0(result.path,maintitle2,".pdf"),height = 10)
-      whether_plot <- tryCatch({
-        forestplot(tabletext, 
-                   cochrane_from_rmeta,
-                   new_page = T,
-                   is.summary=c(rep(FALSE,nrow(forest.plot.data.table)),TRUE),
-                   xlog=T,title = paste(title.plot,"ForestPlot",sep = "-"),
-                   col=fpColors(box="royalblue",line="darkblue", summary="royalblue"),
-                   txt_gp = fpTxtGp(ticks = gpar(cex = 0.5),
-                                    xlab  = gpar(cex = 1.5)),
-                   xlab = "Hazard Ratio")
-        TRUE
-      }, error = function(err) {FALSE})
-      maintitle2 <- ifelse(whether_plot,maintitle2,0)
       dev.off()
     }
   }

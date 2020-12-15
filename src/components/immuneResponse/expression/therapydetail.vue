@@ -4,7 +4,7 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{ gene }} -- {{cancer}}</h1>
+            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}}<br>Gene:{{gene}}</h1>
           </div>
         </el-card>
       </div>

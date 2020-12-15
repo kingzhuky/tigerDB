@@ -20,7 +20,7 @@ $infosTable = array();
 
 if ($conditi=="Responder"){
   $sql = "SELECT Log2FC,PValue,DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='R-NR'";
-  $sqltable = "SELECT * FROM datesetinfo WHERE DatasetID in (SELECT DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='R-NR')";
+  $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='R-NR')";
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {
     $temp= array();
@@ -38,7 +38,7 @@ if ($conditi=="Responder"){
 
 }else if ($conditi=="Therapy"){
   $sql = "SELECT Log2FC,PValue,DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Post-Pre'";
-  $sqltable = "SELECT * FROM datesetinfo WHERE DatasetID in (SELECT DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Post-Pre')";
+  $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Post-Pre')";
   
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {
@@ -57,7 +57,7 @@ if ($conditi=="Responder"){
 
 }else if($conditi=="Survival"){
   $sql = "SELECT ZScore,PValue,DatasetID FROM homesurvtable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Survival'";
-  $sqltable = "SELECT * FROM datesetinfo WHERE DatasetID in (SELECT DatasetID FROM homesurvtable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Survival')";
+  $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID FROM homesurvtable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Survival')";
  
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {

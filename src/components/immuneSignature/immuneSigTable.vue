@@ -1,14 +1,20 @@
 <template>
   <div id='sigtablepage'>
     <el-row>
-        <el-col :push="2" :span="20">
+        <el-col :push="1" :span="22">
         <el-table :data="sigtable" max-height="620" stripe border style="width: 100%">
             <el-table-column property="Signature_ID" label="Signature ID" align="center" ></el-table-column>
             <el-table-column property="Signature_Name" label="Signature Name" align="center" ></el-table-column>
-            <el-table-column property="PMID" label="PMID" align="center"></el-table-column>
-            <el-table-column prop="Immune_Response_Correlation" label="Immune Response Correlation" align="center">
+            <el-table-column property="PMID" label="PMID" align="center">
                 <template slot-scope="scope">
-                    {{scope.row.Immune_Response_Correlation}}
+                  <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.PMID"
+                    target="_blank"
+                    class="buttonText">{{scope.row.PMID}}</a>
+                </template>
+              </el-table-column>
+            <el-table-column prop="Immune_Response_Correlation" label="Immune Response Correlation" align="center"></el-table-column>
+              <el-table-column label="Detail" align="center">
+                <template slot-scope="scope">
                     <el-button
                     type="success"
                     plain

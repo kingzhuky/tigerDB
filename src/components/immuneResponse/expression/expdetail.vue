@@ -4,7 +4,7 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{ gene }} -- {{cancer}}</h1>
+            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}}<br>Gene:{{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -84,11 +84,18 @@
                 :data="tableData"
                 v-loading="loading"
                 :row-style="tableCellStyle"
+                header-row-class-name="tableHead"
+                @row-click="openDetails(row,event)"
                 style="100%"
               >
-                <el-table-column prop="signature_id" label="Signature Id" ></el-table-column>
-                <el-table-column prop="Signature_Cite" label="Signature Cite" ></el-table-column>
-                <el-table-column prop="AUC" label="AUC"></el-table-column>
+                <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
+                <el-table-column prop="Signature_Cite" label="Description" width="180%" ></el-table-column>
+                <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" > 
+                  <template slot-scope="scope">
+                    <span class="skucost-pruice">{{scope.row.AUC}}</span>
+                  </template>
+                </el-table-column>
+                <!-- <el-table-column prop="AUC" label="AUC" width="80%"></el-table-column> -->
               </el-table>
             </div>
           </el-col>
@@ -161,6 +168,14 @@ export default {
   },
 
   methods: {
+    renderHeader(h){
+       return h('span', {}, [
+        h('span', {}, 'AUC'),
+        h('el-popover', { props: { placement: 'top-start', width: '200', trigger: 'hover', content: 'AUC means the immune signature is more related to immunotherapy response' }}, [
+           h('i', { slot: 'reference', class:'el-icon-question'}, '')
+          ])
+       ])
+    },
     checkInput() {
       if (this.normalMed !== "None" && this.normalGene.length == 0) {
         alert("please input Normalized gene or Cell fration");
@@ -189,20 +204,20 @@ export default {
           that.tableData = res.data;
         })
         .catch(function(res) {
-          console.log(res);
+          // console.log(res);
         });
     },
 
         //渲染每个格子的颜色
     tableCellStyle({ row}) {
-      console.log(row["AUC"])
+      // console.log(row["AUC"])
       var mycolr = gStyle(parseFloat(row["AUC"]===undefined?"":row["AUC"]), 2.25);
       return {
         background: mycolr["background"],
         color: mycolr["color"]
       };
     },
-     getSampleDetail(sample){
+    getSampleDetail(sample){
       this.$refs.sampleDetail.getTableData(sample)
     },
     getPlot(gene, mergedatasets) {
@@ -239,6 +254,15 @@ export default {
             console.log(res);
           });
       }
+    },
+    openDetails(row,event){
+      console.log(row);
+      // this.$router.push({
+      //   name: "immuneSignature",
+      //   params: {
+      //     sigid: row,
+      //   },
+      // });
     }
   },
 
@@ -259,6 +283,11 @@ export default {
 </script>
 
 <style>
+.tableHead{
+  font-size: 18px;
+  color: #000000;
+  font-weight:bold;
+}
 </style>
 
 

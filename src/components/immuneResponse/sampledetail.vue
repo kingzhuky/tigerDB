@@ -1,7 +1,7 @@
 <template>
   <div class="infor">
     <el-card v-loading="loading">
-    <p class="card-title">Sample Detail Information</p>
+    <p class="card-title">Dataset Information</p>
     <div>
     <el-table :data="tableData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>

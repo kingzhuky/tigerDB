@@ -5,7 +5,7 @@ library(ggsci)
 library(ggpubr)
 
 Args <- commandArgs(T)
-#Args <- c("TP53","Melanoma_GSE115821_ALL","None","None","TRUE","pdf")
+#Args <- c("7SK","Melanoma_Nathanson_2017_anti-CTLA-4_Female","None","None","FALSE","png")
 gene <- unlist(strsplit(Args[1],split=','))
 mergedatasets <- unlist(strsplit(Args[2],split=','))
 normalMed <- Args[3]
@@ -29,7 +29,7 @@ maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(normalGene,gene)]
     exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
     exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
-    exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
+    exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")], check.names = FALSE)
     exp.mergearray <- rbind(exp.mergearray,t(exp.array))
   }
   exp.mergearray <- data.table(sample_id = rownames(exp.mergearray), exp.mergearray)
@@ -47,15 +47,17 @@ maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_
   if(length(unique(plot.data$group)) > 1){
     if (Log.scale == "TRUE") {
       plot.data$gene.exp <- log2(plot.data$gene.exp + 1)
-      ylab <- paste("log2( FPKM + 1 )")
+      ylab <- paste("Average Expression of Geneset (log2(FPKM + 1))")
     }else{
-      ylab <- "FPKM"
+      ylab <- "Average Expression of Geneset (FPKM)"
     }
+    plot.data$group[plot.data$group == "PRE"] <- "Pre-Therapy"
+    plot.data$group[plot.data$group == "POST"] <- "Post-Therapy"
     response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
-                      geom_jitter(color="black", size=0.7, alpha=.9) +
+                      geom_violin()+
                       geom_boxplot(width = .4)+
                       theme_bw() + labs(x= element_blank(),y = ylab) +
-                      ggtitle(paste(title.plot,"BoxPlot",sep="-")) +
+                      ggtitle("Differential Expression between Pre-Therapy and Post-Therapy") +
                       theme(plot.title=element_text(size = 20, hjust=0.5),
                             axis.title.y = element_text(size = 15, face = "plain", color = "black"),
                             axis.text = element_text(size = 15, face = "plain", color = "black")) +

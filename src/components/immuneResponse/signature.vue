@@ -29,7 +29,7 @@
             </el-col>
           </el-row>
           <br />
-          <el-row>
+          <!-- <el-row>
             <el-col :span="8">
               <span id="genesetLabel" class="label">Or Select A GeneSet:</span>
               <br />
@@ -45,12 +45,12 @@
             <el-col :span="8">
               <el-button id="resetbt" @click="resetClick">Reset</el-button>
             </el-col>
-          </el-row>
+          </el-row> -->
         </el-col>
 
         <el-col :span="5" :offset="1">
           <el-row class="sigInput">
-            <span class="label">Select A Signature Type</span>
+            <span class="label">Select A Immune Response Dataset</span>
           </el-row>
 
           <el-row>
@@ -136,10 +136,14 @@
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
             <div v-loading="loadingDiff" class="detailimg">
-              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="540" :data="tableData" style="100%">
-                <el-table-column prop="signature_id" label="Signature Id"></el-table-column>
-                <el-table-column prop="Signature_Cite" label="Signature Cite"></el-table-column>
-                <el-table-column prop="AUC" label="AUC"></el-table-column>
+              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="450" header-row-class-name="tableHead" :data="tableData" style="100%">
+                <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
+                <el-table-column prop="Signature_Cite" label="Description" width="180%" ></el-table-column>
+                <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" > 
+                  <template slot-scope="scope">
+                    <span class="skucost-pruice">{{scope.row.AUC}}</span>
+                  </template>
+                </el-table-column>
               </el-table>
             </div>
           </el-col>
@@ -190,8 +194,24 @@
             </div>
           </el-col>
           <el-col :span="8" :offset="1" v-show="surresultShow">
-            <div v-loading="loadingSur" class="detailimg">
-              <img width="450px" :src="imgUrlSignSur" />
+            <div class="detailimg">
+              <el-table
+                ref="singleTable"
+                border
+                max-height="420"
+                :data="tableDataSur"
+                v-loading="loading"
+                :row-style="tableCellStyleSur"
+                header-row-class-name="tableHead"
+                @row-click="openDetails(row,event)"
+                style="100%"
+              >
+                <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
+                <el-table-column prop="Signature_Cite" label="Description" width="130%" ></el-table-column>
+                <el-table-column prop="HR" label="HR" width="80%"></el-table-column>
+                <el-table-column prop="CI95" label="95% CI" width="90%"></el-table-column>
+                <el-table-column prop="PValue" label="P Value" width="90%"></el-table-column>
+              </el-table>
             </div>
           </el-col>
           <el-col :span="18" v-show="!surresultShow" v-loading="loadingSur">
@@ -223,132 +243,6 @@ export default {
       logScale: "FALSE",
       responder: ["CR", "PR"],
       noresponder: ["PD", "SD"],
-      wercorcancer_data: [
-        {
-          value: "ACC",
-          label: "ACC"
-        },
-        {
-          value: "BLCA",
-          label: "BLCA"
-        },
-        {
-          value: "BRCA",
-          label: "BRCA"
-        },
-        {
-          value: "CESC",
-          label: "CESC"
-        },
-        {
-          value: "CHOL",
-          label: "CHOL"
-        },
-        {
-          value: "COAD",
-          label: "COAD"
-        },
-        {
-          value: "DLBC",
-          label: "DLBC"
-        },
-        {
-          value: "ESCA",
-          label: "ESCA"
-        },
-        {
-          value: "GBM",
-          label: "GBM"
-        },
-        {
-          value: "HNSC",
-          label: "HNSC"
-        },
-        {
-          value: "KICH",
-          label: "KICH"
-        },
-        {
-          value: "KIRC",
-          label: "KIRC"
-        },
-        {
-          value: "KIRP",
-          label: "KIRP"
-        },
-        {
-          value: "LIHC",
-          label: "LIHC"
-        },
-        {
-          value: "LAML",
-          label: "LAML"
-        },
-        {
-          value: "LGG",
-          label: "LGG"
-        },
-        {
-          value: "LUAD",
-          label: "LUAD"
-        },
-        {
-          value: "LUSC",
-          label: "LUSC"
-        },
-        {
-          value: "MESO",
-          label: "MESO"
-        },
-        {
-          value: "OV",
-          label: "OV"
-        },
-        {
-          value: "PAAD",
-          label: "PAAD"
-        },
-        {
-          value: "PCPG",
-          label: "PCPG"
-        },
-        {
-          value: "READ",
-          label: "READ"
-        },
-        {
-          value: "SKCM",
-          label: "SKCM"
-        },
-        {
-          value: "SARC",
-          label: "SARC"
-        },
-        {
-          value: "STAD",
-          label: "STAD"
-        },
-        {
-          value: "TGCT",
-          label: "TGCT"
-        },
-        {
-          value: "THCA",
-          label: "THCA"
-        },
-        {
-          value: "THYM",
-          label: "THYM"
-        },
-        {
-          value: "UCEC",
-          label: "UCEC"
-        },
-        {
-          value: "UCS",
-          label: "UCS"
-        }
-      ],
       tableData: [],
       wercordataset: "",
       wercorgene_data: [
@@ -411,7 +305,8 @@ export default {
       imgpathSur: "",
       imgpathBox: "",
       imgpathBar: "",
-      allresultshow: false
+      allresultshow: false,
+      tableDataSur: [],
     };
   },
 
@@ -445,6 +340,38 @@ export default {
   },
 
   methods: {
+    renderHeader(h){
+       return h('span', {}, [
+        h('span', {}, 'AUC'),
+        h('el-popover', { props: { placement: 'top-start', width: '200', trigger: 'hover', content: 'AUC means the immune signature is more related to immunotherapy response' }}, [
+           h('i', { slot: 'reference', class:'el-icon-question'}, '')
+          ])
+       ])
+    },
+    gettableDataSur(jsonUrl) {
+      var that = this;
+      this.$http
+        .get("/tiger/img/" + jsonUrl + ".json")
+        .then(function(res) {
+          that.tableDataSur = res.data;
+        })
+        .catch(function(res) {
+          // console.log(res);
+        });
+    },
+    tableCellStyleSur({row}) {
+      console.log(row["PValue"])
+      var mycolr = ""
+      if(parseFloat(row["PValue"]) < 0.1){
+        mycolr = "#f0b6b6"
+      }else{
+        mycolr = "rgb(255,255,255)"
+      }
+      console.log(mycolr)
+      return {
+        background: mycolr
+      };
+    },
     getgeneset(tabl, mycolumn) {
       this.$http
         .get("/tiger/tablecolumn.php", {
@@ -607,7 +534,7 @@ export default {
             if (res.data.status == 0) {
               let imgpath2 = res.data.output[2].split(",");
               setTimeout((that.imgpath = imgpath2[0]), 1000);
-              setTimeout((that.imgpathSur = imgpath2[1]), 1000);
+              that.gettableDataSur(imgpath2[1]);
               // that.imgpath = imgpath2[0];
               // that.imgpathSur = imgpath2[1];
               that.loadingSur = false;
@@ -680,5 +607,10 @@ button#resetbt {
 
 #responseplot {
   width: 480px;
+}
+.tableHead{
+  font-size: 18px;
+  color: #000000;
+  font-weight:bold;
 }
 </style>

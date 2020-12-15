@@ -28,7 +28,7 @@ export default new VueRouter({
     name: 'immuneResponse',
     component: immuneResponse
   }, {
-    path: '/immuneSignature',
+    path: '/immuneSignature/:sigid?',
     name: 'immuneSignature',
     component: immuneSignature
   }, {

@@ -9,7 +9,7 @@
             <el-col :span="8" :offset="6" id="homeInput">
               <el-autocomplete
                 v-model="seargene"
-                placeholder="Please Input Gene Symbol"
+                placeholder="Please Input A Gene Symbol"
                 :fetch-suggestions="querySearchAsync"
                 @keyup.enter.native="submsearch"
               ></el-autocomplete>
@@ -110,7 +110,7 @@ export default {
   name: "home",
   data: function () {
     return {
-      seargene: "PDCD1",
+      seargene: "",
       restaurants: [],
     };
   },
