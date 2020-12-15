@@ -6,9 +6,9 @@
           <component :is="diffexpVue"></component>
         </el-tab-pane>
 
-        <el-tab-pane label="Pathway Enrichment Analysis" name="pathway">
+        <!-- <el-tab-pane label="Pathway Enrichment Analysis" name="pathway">
           <component :is="pathwayVue"></component>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="Survival Analysis" name="survival">
           <component :is="survivalVue"></component>
@@ -17,6 +17,11 @@
         <el-tab-pane label="Gene Set Query" name="signature">
           <component :is="signatureVue"></component>
         </el-tab-pane>
+
+        <el-tab-pane label="Dataset Overview" name="overview">
+          <component :is="dataOverviewVue"></component>
+        </el-tab-pane>
+
       </el-tabs>
     </el-card>
   </div>
@@ -27,6 +32,7 @@ const wersurvival = resolve => require(["./survival.vue"], resolve);
 const werdiffexp = resolve => require(["./expression/home.vue"], resolve);
 const wersignature = resolve => require(["./signature.vue"], resolve);
 const diffpathway = resolve => require(["./pathway.vue"], resolve);
+const dataoverview = resolve => require(["./datasetoverview.vue"], resolve);
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
 
 export default {
@@ -37,6 +43,7 @@ export default {
       survivalVue: "",
       signatureVue: "",
       pathwayVue: "",
+      dataOverviewVue: "",
     };
   },
   created() {
@@ -60,6 +67,9 @@ export default {
         case "signature":
           this.signatureVue = wersignature;
           break;
+        case "overview":
+          this.dataOverviewVue = dataoverview;
+          break;
       }
     }
   }
@@ -74,6 +84,7 @@ div#wertab {
 #tab-diffexp,
 #tab-pathway,
 #tab-survival,
+#tab-overview,
 #tab-signature {
   font-size: 20px;
   height: 55px;

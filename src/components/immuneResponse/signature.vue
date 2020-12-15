@@ -200,7 +200,7 @@
                 border
                 max-height="420"
                 :data="tableDataSur"
-                v-loading="loading"
+                v-loading="loadingSur"
                 :row-style="tableCellStyleSur"
                 header-row-class-name="tableHead"
                 @row-click="openDetails(row,event)"

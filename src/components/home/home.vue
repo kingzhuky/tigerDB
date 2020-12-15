@@ -9,7 +9,7 @@
             <el-col :span="8" :offset="6" id="homeInput">
               <el-autocomplete
                 v-model="seargene"
-                placeholder="Please Input A Gene Symbol"
+                placeholder="Please Input A Gene Symbol (e.g. PDCD1 or CXCL13)"
                 :fetch-suggestions="querySearchAsync"
                 @keyup.enter.native="submsearch"
               ></el-autocomplete>
@@ -18,6 +18,9 @@
               <el-button id="homebt" @click="submsearch">Search</el-button>
             </el-col>
           </el-row>
+          <!-- <el-row class="homedesrc" style="text-align:center;margin: 10px 0 -10px 0 ">
+            <el-col :span="8" :offset="6">Example: PDCD1, CXCL13</el-col>
+          </el-row> -->
           <el-row>
             <p class="homedesrc">
               TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for xxx tumor samples with immunotherapy clinical outcome and xxx tumor/normal samples from TCGA, and single cell transcriptome data for xxx immune cells of xxx samples, among which xxx immune cells of xxx samples have immunotherapy clinical data. 

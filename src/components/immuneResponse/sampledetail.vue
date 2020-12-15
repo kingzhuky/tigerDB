@@ -4,7 +4,19 @@
     <p class="card-title">Dataset Information</p>
     <div>
     <el-table :data="tableData" style="width: 100%" v-loading="artloading">
-            <el-table-column prop="title" label width="180"></el-table-column>
+            <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
+            <el-table-column prop="title" label width="200">
+              <template slot-scope="{row: {title}}">
+                <span v-if="title === 'DatasetID'">Dataset ID</span>
+                <span v-else-if="title === 'DatasetName'">Dataset Name</span>
+                <span v-else-if="title === 'CancerType'">Cancer Type</span>
+                <span v-else-if="title === 'ResponseSampleCount'">Response Sample Count</span>
+                <span v-else-if="title === 'NonresponseSampleCount'">Non-Response Sample Count</span>
+                <span v-else-if="title === 'PretherapySampleCount'">Pretherapy Sample Count</span>
+                <span v-else-if="title === 'PosttherapySampleCount'">Posttherapy Sample Count</span>
+                <span v-else>{{title}}</span>
+              </template>
+            </el-table-column>
             <el-table-column label>
               <template slot-scope="scope">
                 <a v-html="scope.row.value"></a>
@@ -35,7 +47,7 @@ export default {
       this.$http
         .get("/tiger/immunescreendetail2.php", {
           params: {
-            colu:"DatasetID",
+            colu: "DatasetID",
             coluvalue: sample,
             tabl: "datesetinfo"
           }
