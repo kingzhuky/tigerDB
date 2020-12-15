@@ -72,6 +72,7 @@
         <el-button type="primary" @click="myFunction">Got it</el-button>
       </div>
     </div>
+    <v-footer></v-footer>
   </div>
 </template>
 
@@ -87,6 +88,9 @@ export default {
       isCollapse: false,
       showSnackbar: false,
     };
+  },
+  components:{
+    "v-footer": () => import("./components/public/footer.vue"),
   },
   methods: {
     isIE() {
@@ -182,6 +186,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  margin-bottom: 60px;
 }
 
 .el-divider--horizontal {

@@ -8,11 +8,11 @@ export default {};
 
 <style>
 .box-card-footer {
-  position: absolute;
+  position: fixed ;
 
   background-color: #efeded;
   text-align: center;
-  height: 50px;
+  height: 60px;
   width: 100%;
   color: #77777e;
   line-height: 50px;
