@@ -19,7 +19,12 @@
             </el-table-column>
             <el-table-column label>
               <template slot-scope="scope">
-                <a v-html="scope.row.value"></a>
+                <span v-if="scope.row.title === 'PMID'">
+                  <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.value"
+                    target="_blank"
+                    class="buttonText">{{scope.row.value}}</a>
+                  </span>
+                <span v-else><a v-html="scope.row.value"></a></span>
               </template>
             </el-table-column>
     </el-table>
