@@ -5,7 +5,7 @@
     <div>
     <el-table :data="tableData" style="width: 100%" v-loading="artloading">
             <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
-            <el-table-column prop="title" label width="200">
+            <el-table-column prop="title" label width="250">
               <template slot-scope="{row: {title}}">
                 <span v-if="title === 'DatasetID'">Dataset ID</span>
                 <span v-else-if="title === 'DatasetName'">Dataset Name</span>

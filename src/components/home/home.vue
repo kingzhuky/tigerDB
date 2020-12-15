@@ -35,7 +35,7 @@
           </el-row>
           <el-row>
             <el-col :span="5">
-              <el-card class="box-card">
+              <el-card class="box-card" @click.native="openpage('immuneResponse')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Immune Response</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -46,7 +46,7 @@
               </el-card>
             </el-col>
             <el-col :span="5" >
-              <el-card class="box-card" style="position:relative;left:30px;">
+              <el-card class="box-card" style="position:relative;left:30px;" @click.native="openpage('immuneSignature')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Immune Signature</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -57,7 +57,7 @@
               </el-card>
             </el-col>
             <el-col :span="5">
-              <el-card class="box-card" style="position:relative;left:60px;">
+              <el-card class="box-card" style="position:relative;left:60px;" @click.native="openpage('singleCellImmune')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Single Cell Immunity</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -68,7 +68,7 @@
               </el-card>
             </el-col>
             <el-col :span="5">
-              <el-card class="box-card" style="position:relative;left:90px;">
+              <el-card class="box-card" style="position:relative;left:90px;" @click.native="openpage('immuneScreen')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Immune Screening</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -119,6 +119,11 @@ export default {
   },
 
   methods: {
+    openpage(pagename){
+      this.$router.push({
+        name: pagename,
+      });
+    },
     querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {

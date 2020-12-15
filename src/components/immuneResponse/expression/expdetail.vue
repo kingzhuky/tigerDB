@@ -85,7 +85,7 @@
                 v-loading="loading"
                 :row-style="tableCellStyle"
                 header-row-class-name="tableHead"
-                @row-click="openDetails(row,event)"
+                @row-click="openDetails"
                 style="100%"
               >
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
@@ -209,7 +209,7 @@ export default {
     },
 
         //渲染每个格子的颜色
-    tableCellStyle({ row}) {
+    tableCellStyle({row}) {
       // console.log(row["AUC"])
       var mycolr = gStyle(parseFloat(row["AUC"]===undefined?"":row["AUC"]), 2.25);
       return {
@@ -255,14 +255,14 @@ export default {
           });
       }
     },
-    openDetails(row,event){
-      console.log(row);
-      // this.$router.push({
-      //   name: "immuneSignature",
-      //   params: {
-      //     sigid: row,
-      //   },
-      // });
+    openDetails(row){
+      console.log(row.signature_id);
+      this.$router.push({
+        name: "immuneSignature",
+        params: {
+          sigid: row.signature_id,
+        },
+      });
     }
   },
 

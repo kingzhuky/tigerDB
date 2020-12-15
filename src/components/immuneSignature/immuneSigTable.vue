@@ -12,7 +12,7 @@
                     class="buttonText">{{scope.row.PMID}}</a>
                 </template>
               </el-table-column>
-            <el-table-column prop="Immune_Response_Correlation" label="Immune Response Correlation" align="center"></el-table-column>
+            <el-table-column prop="Immune_Response_Correlation" label="AUC" align="center"></el-table-column>
               <el-table-column label="Detail" align="center">
                 <template slot-scope="scope">
                     <el-button

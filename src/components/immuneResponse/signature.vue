@@ -136,7 +136,7 @@
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
             <div v-loading="loadingDiff" class="detailimg">
-              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="450" header-row-class-name="tableHead" :data="tableData" style="100%">
+              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="450" header-row-class-name="tableHead" :data="tableData" @row-click="openDetails" style="100%">
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
                 <el-table-column prop="Signature_Cite" label="Description" width="180%" ></el-table-column>
                 <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" > 
@@ -203,7 +203,7 @@
                 v-loading="loadingSur"
                 :row-style="tableCellStyleSur"
                 header-row-class-name="tableHead"
-                @row-click="openDetails(row,event)"
+                @row-click="openDetails"
                 style="100%"
               >
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
@@ -371,6 +371,15 @@ export default {
       return {
         background: mycolr
       };
+    },
+    openDetails(row){
+      console.log(row.signature_id);
+      this.$router.push({
+        name: "immuneSignature",
+        params: {
+          sigid: row.signature_id,
+        },
+      });
     },
     getgeneset(tabl, mycolumn) {
       this.$http

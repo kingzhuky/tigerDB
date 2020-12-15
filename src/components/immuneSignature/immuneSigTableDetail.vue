@@ -50,21 +50,21 @@ export default {
             that.artloading = true;
             this.$http
             .get("/tiger/immunescreendetail2.php", {
-            params: {
-                tabl: "siginfo",
-                colu: "SignatureID",
-                coluvalue: sigID,
-            },
+                params: {
+                    tabl: "siginfo",
+                    colu: "SignatureID",
+                    coluvalue: sigID,
+                },
             })
             .then(function (res) {
-                console.log(res.data.list)
-            that.articleData = res.data.list;
-            that.artloading = false;
+                // console.log(res.data.list)
+                that.articleData = res.data.list;
+                that.artloading = false;
             })
             .catch(function (res) {
-            console.log(res);
+                console.log(res);  
             });
-            console.log(this.articleData)
+            // console.log(this.articleData)
         },
     }
 }

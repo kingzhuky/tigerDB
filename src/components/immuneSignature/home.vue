@@ -35,24 +35,23 @@ export default {
   },
   created() {
     this.sigtableVue = sigtablepage;
-    this.$ref.sigtableRef.showDetail(this.sigid)
+    this.$ref.sigtableRef.showDetail("SIG3")
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (to.params.sigid !== undefined && to.params.sigid.length !== 0) {
-        vm.sigid = to.params.sigid;
-        vm.$ref.sigtableRef.showDetail(vm.sigid);
-      }
-    });
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   next((vm) => {
+  //     if (to.params.sigid !== undefined && to.params.sigid.length !== 0) {
+  //       vm.sigid = to.params.sigid;
+  //       vm.$ref.sigtableRef.showDetail(vm.sigid);
+  //     }
+  //   });
+  // },
   mounted() {
     if (this.$route.params.sigid !== undefined) {
       this.sigid = this.$route.params.sigid;
       this.$ref.sigtableRef.showDetail(this.sigid);
     }
-  },
-  mounted(){
-    // this.getsigtable()
+    this.$ref.sigtableRef.showDetail("SIG3")
+    this.sigtableVue = sigtablepage;
   },
   methods: {
     handleClick(tab, event) {

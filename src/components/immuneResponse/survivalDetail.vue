@@ -61,7 +61,7 @@
                 v-loading="loading"
                 :row-style="tableCellStyle"
                 header-row-class-name="tableHead"
-                @row-click="openDetails(row,event)"
+                @row-click="openDetails"
                 style="100%"
               >
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
@@ -174,6 +174,15 @@ export default {
       return {
         background: mycolr
       };
+    },
+    openDetails(row){
+      console.log(row.signature_id);
+      this.$router.push({
+        name: "immuneSignature",
+        params: {
+          sigid: row.signature_id,
+        },
+      });
     },
     checkInput() {
       // if (this.normalMed!=='None' && this.normalGene.length==0){
