@@ -32,7 +32,7 @@
               <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
             </el-row>
           </el-col>
-          <el-col v-show="resultShow" :span="10" :offset="3" v-loading="loading">
+          <el-col v-show="resultShow" :span="10" :offset="4" v-loading="loading">
             <img style="position:relative;top:0px;right:0px;" width="420px" :src="imgUrlBox" />
           </el-col>
           <el-col  :span="15" v-show="!resultShow" v-loading="loading">

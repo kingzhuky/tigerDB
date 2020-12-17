@@ -213,4 +213,15 @@ div#scImmuInput {
 div#scimmucard {
   margin-bottom: 10px;
 }
+#tab-overview, 
+#tab-celltype,
+#tab-scdiffexp, 
+#tab-coexp,
+#tab-crosstalk,
+#tab-evolution{
+    font-size: 18px;
+    height: 55px;
+    padding: 10px;
+    font-weight: bold !important;
+}
 </style>

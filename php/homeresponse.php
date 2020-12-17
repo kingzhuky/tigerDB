@@ -62,8 +62,8 @@ if ($conditi=="Responder"){
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {
     $temp= array();
-    array_push($temp,$row["PValue"]);
     array_push($temp,$row["ZScore"]);
+    array_push($temp,$row["PValue"]);
     array_push($temp,$row["DatasetID"]);
     array_push($infos,array_values($temp));
   }

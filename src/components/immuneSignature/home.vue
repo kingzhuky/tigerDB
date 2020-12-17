@@ -35,7 +35,7 @@ export default {
   },
   created() {
     this.sigtableVue = sigtablepage;
-    this.$ref.sigtableRef.showDetail("SIG3")
+    // this.$ref.sigtableRef.showDetail("SIG3")
   },
   // beforeRouteEnter(to, from, next) {
   //   next((vm) => {
@@ -46,11 +46,11 @@ export default {
   //   });
   // },
   mounted() {
-    if (this.$route.params.sigid !== undefined) {
-      this.sigid = this.$route.params.sigid;
-      this.$ref.sigtableRef.showDetail(this.sigid);
-    }
-    this.$ref.sigtableRef.showDetail("SIG3")
+    // if (this.$route.params.sigid !== undefined) {
+    //   this.sigid = this.$route.params.sigid;
+    //   this.$ref.sigtableRef.showDetail(this.sigid);
+    // }
+    // this.$ref.sigtableRef.showDetail("SIG3")
     this.sigtableVue = sigtablepage;
   },
   methods: {

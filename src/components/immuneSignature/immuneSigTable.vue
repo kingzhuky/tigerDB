@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       sigtable:[],
-      sigID:"SIG1",
+      sigID:"SIG6",
       isShow: true,
     };
   },

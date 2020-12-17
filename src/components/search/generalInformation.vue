@@ -1,9 +1,20 @@
 <template>
   <div>
     <el-card v-loading="detailload" class="decard" v-if="wershow">
-      <p class="card-title">{{this.seargene}} Infomations</p>
+      <p class="card-title">General Information</p>
       <el-table :data="articleData" style="width: 100%" v-loading="artloading">
-        <el-table-column prop="title" label width="180"></el-table-column>
+        <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
+        <el-table-column prop="title" label style="font-weight:700;" width="250">
+          <template slot-scope="{row: {title}}" class="csstitle">
+            <span class="csstitle" v-if="title === 'Symbol'">Gene Symbol</span>
+            <span class="csstitle" v-else-if="title === 'description'">Description</span>
+            <span class="csstitle" v-else-if="title === 'type_of_gene'">Gene Type</span>
+            <span class="csstitle" v-else-if="title === 'Synonyms'">Aliases</span>
+            <span class="csstitle" v-else-if="title === 'Other_designations'">Summary</span>
+            <span class="csstitle" v-else-if="title === 'GeneID'">Entrez Gene</span>
+            <span class="csstitle" v-else>{{title}}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="value" label></el-table-column>
       </el-table>
     </el-card>
@@ -181,5 +192,8 @@ export default {
   background-color: rgb(20, 146, 140) !important;
   font-weight: 700 !important;
   font-size: 25px !important;
+}
+span.csstitle{
+  font-weight: 700 !important;
 }
 </style>

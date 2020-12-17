@@ -27,8 +27,11 @@
                 </el-table>
                 <p class="card-title">Signature Component</p>
                 <p class="card-title">AUC Table</p>
+
                 <p class="card-title">Signature Score in Different Cancer Type (Response vs Non-Response)</p>
+                    <img height="400px" :src="imgUrlRNRBox" />
                 <p class="card-title">Signature Score in Different Cancer Type (Tumor vs Normal)</p>
+                    <img height="400px" :src="imgUrlTNBox" />
             </el-col>
         </el-row>
     </div>
@@ -44,6 +47,8 @@ export default {
         return{
             articleData: [],
             artloading: true,
+            imgpathRNRBox: "",
+            imgpathTNBox: "",
         }
     },
     created(){
@@ -51,6 +56,14 @@ export default {
     },
     mounted(){
         this.articleDetail(this.sigID)
+    },
+    computed: {
+        imgUrlRNRBox: function() {
+        return "tiger/img/" + this.imgpathRNRBox + ".png";
+        },
+        imgUrlTNBox: function() {
+        return "tiger/img/" + this.imgpathTNBox + ".png";
+        },
     },
     methods:{
         articleDetail(sigID) {
@@ -68,6 +81,9 @@ export default {
             .then(function (res) {
                 // console.log(res.data.list)
                 that.articleData = res.data.list;
+                that.imgpathRNRBox = "ImmuneSig-Detial-RNR-boxplot-" + sigID
+                that.imgpathTNBox = "ImmuneSig-Detial-pancancer-boxplot-" + sigID
+                console.log(that.imgpathTNBox)
                 that.artloading = false;
             })
             .catch(function (res) {

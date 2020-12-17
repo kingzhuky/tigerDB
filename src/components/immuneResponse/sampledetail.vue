@@ -7,14 +7,15 @@
             <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
             <el-table-column prop="title" label width="250">
               <template slot-scope="{row: {title}}">
-                <span v-if="title === 'DatasetID'">Dataset ID</span>
-                <span v-else-if="title === 'DatasetName'">Dataset Name</span>
-                <span v-else-if="title === 'CancerType'">Cancer Type</span>
-                <span v-else-if="title === 'ResponseSampleCount'">Responder Number</span>
-                <span v-else-if="title === 'NonresponseSampleCount'">Non-Responder Number</span>
-                <span v-else-if="title === 'PretherapySampleCount'">Pre-therapy Sample Number</span>
-                <span v-else-if="title === 'PosttherapySampleCount'">Post-therapy Sample Number</span>
-                <span v-else>{{title}}</span>
+                <span class="csstitle" v-if="title === 'DatasetID'">Dataset ID</span>
+                <span class="csstitle" v-else-if="title === 'DatasetName'">Dataset Name</span>
+                <span class="csstitle" v-else-if="title === 'CancerType'">Cancer Type</span>
+                <span class="csstitle" v-else-if="title === 'SampleSize'">Dataset Size</span>
+                <span class="csstitle" v-else-if="title === 'ResponseSampleCount'">Responder Number</span>
+                <span class="csstitle" v-else-if="title === 'NonresponseSampleCount'">Non-Responder Number</span>
+                <span class="csstitle" v-else-if="title === 'PretherapySampleCount'">Pre-therapy Sample Number</span>
+                <span class="csstitle" v-else-if="title === 'PosttherapySampleCount'">Post-therapy Sample Number</span>
+                <span class="csstitle" v-else>{{title}}</span>
               </template>
             </el-table-column>
             <el-table-column label>
@@ -75,5 +76,7 @@ export default {
 </script>
 
 <style>
-
+span.csstitle{
+  font-weight: 700 !important;
+}
 </style>

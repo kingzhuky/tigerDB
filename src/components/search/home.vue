@@ -31,7 +31,7 @@
       <el-card v-show="homeShow">
         <div>
           <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
-            <el-tab-pane label="General Information" name="generalInformation">
+            <el-tab-pane label="Gene Information" name="generalInformation">
               <component
                 :is="generalInformationVue"
                 ref="generalInformationVueRef"

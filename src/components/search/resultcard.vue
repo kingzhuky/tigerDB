@@ -5,28 +5,38 @@
         <el-card v-show="diffExpResponShow">
           <p class="card-title">{{title}}</p>
           <el-row v-loading="diffExpResponloading">
-            <div :id="conditi" class="scaterPlot" style="width: 600px;height:400px;"></div>
+            <div :id="conditi" class="scaterPlot" style="width: 1000px;height:400px;"></div>
             <el-table
-              max-height="800"
+              max-height="520"
               :data="diffExpRespontableData"
               :row-key="getRowKeys"
               :expand-row-keys="expands"
               @expand-change="diffExpRespontableExpand"
               style="width: 100%"
             >
-              <el-table-column type="expand">
-                <template slot-scope="props">
+              <el-table-column type="expand" >
+                <template slot-scope="scope">
                   <div class="detailimg" v-loading="loading">
                     <img width="450px" :src="imgUrlBox" v-show="detailimgShow" />
                     <div v-show="!detailimgShow">no result</div>
                   </div>
                 </template>
               </el-table-column>
+              <el-table-column prop="CancerType" label="Cancer Type" width="120%"></el-table-column>
+              <el-table-column prop="Therapy" label="Immunotherapy Type" ></el-table-column>
+              <el-table-column label="Gene Symbol">{{seargene}}</el-table-column>
               <el-table-column prop="DatasetID" label="Dataset"></el-table-column>
-              <el-table-column prop="CancerType" label="Cancer Type"></el-table-column>
-              <el-table-column prop="Therapy" label="Therapy"></el-table-column>
-              <el-table-column prop="ResponseSampleCount" label="Responder Number(PR,CR)"></el-table-column>
-              <el-table-column prop="NonresponseSampleCount" label="Non-responder Number(PD, SD)"></el-table-column>
+              <el-table-column prop="PMID" label="PMID" width="100%">
+                <template slot-scope="scope">
+                  <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.PMID"
+                    target="_blank"
+                    class="buttonText">{{scope.row.PMID}}</a>
+                </template>
+              </el-table-column>
+              <el-table-column v-if="conditi === 'Responder'" prop="ResponseSampleCount" label="Responder Number"></el-table-column>
+              <el-table-column v-if="conditi === 'Responder'" prop="NonresponseSampleCount" label="Non-responder Number"></el-table-column>
+              <el-table-column v-if="conditi === 'Therapy'" prop="PretherapySampleCount" label="Pre-therapy Sample Number"></el-table-column>
+              <el-table-column v-if="conditi === 'Therapy'" prop="PosttherapySampleCount" label="Post-therapy Sample Number"></el-table-column>
             </el-table>
           </el-row>
         </el-card>
@@ -168,6 +178,7 @@ export default {
         .then((res) => {
           if (res.data.status === 200) {
             this.cardLoading = false;
+            console.log( res.data.datatable)
             this.diffExpRespontableData = res.data.datatable;
             this.draw_chart(res.data.list);
           }
@@ -185,22 +196,44 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
       var xAxis = "";
       var yAxis = "";
+      var xlabname = ""
       if (this.conditi === "Survival") {
-        xAxis = "–log10(pvalue)";
-        yAxis = "HR";
+        xAxis = "Hazard Ratio";
+        yAxis = "–log10(P Value)";
+        xlabname = "HR: "
       } else {
-        xAxis = "LogFC";
-        yAxis = "–log10(pvalue)";
+        xAxis = "Log2 (Fold Change)";
+        yAxis = "–log10(P Value)";
+        xlabname = "Fold Change: "
       }
 
       let option = {
         xAxis: {
           name: xAxis,
+          // show: false,
+          position: "bottom",
+          nameLocation: "center",
+          nameGap: 25,
           offset: 0,
+          nameTextStyle:{
+            fontSize: 18,
+            fontWeight: 'bold',
+          },
         },
-        yAxis: { name: yAxis },
+        yAxis: { 
+          name: yAxis,
+          position: "left",
+          nameLocation: "center",
+          nameGap: 25,
+          nameTextStyle:{
+            fontSize: 18,
+            fontWeight: 'bold',
+          },
+        },
         tooltip: {
-          formatter: "{c}",
+          formatter: function (params) {
+              return xlabname + params.data[0] + "<br />P: " + params.data[1] + "<br />Dataset: " + params.data[2]
+          }
         },
         series: [
           {
@@ -223,4 +256,10 @@ export default {
 
 
 <style>
+
+.el-table__expand-icon:after{
+  content: "View";
+  color: #09e1c0;
+  cursor: pointer;
+}
 </style>
