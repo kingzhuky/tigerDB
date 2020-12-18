@@ -13,11 +13,10 @@
                 </template>
               </el-table-column>
             <el-table-column prop="Immune_Response_Correlation" label="AUC" align="center"></el-table-column>
-              <el-table-column label="Detail" align="center">
+              <el-table-column label="Detail" align="center" width="120%">
                 <template slot-scope="scope">
                     <el-button
-                    type="success"
-                    plain
+                    id="immusignatureplot"
                     icon="el-icon-s-marketing"
                     @click="showDetail(scope.row.Signature_ID)"
                     >Detail</el-button>
@@ -73,7 +72,7 @@ export default {
     showDetail(sigID){
       // console.log(sigID)
       this.sigID = sigID
-      this.$refs.immuneSigDetail.articleDetail(this.sigID)
+      this.$refs.immuneSigDetail.renewDetail(this.sigID)
       toTarget(720)
       // console.log(this.sigID)
     }
@@ -88,7 +87,12 @@ export default {
 /* div#sigtablepage {
   margin-bottom: 20px;
 } */
-
+#immusignatureplot {
+  width: 100%;
+  background-color: rgb(20, 146, 140) !important;
+  color: white;
+  font-weight: bold;
+}
 #tab-diffexp,
 #tab-survival,
 #tab-signature {
@@ -114,7 +118,7 @@ export default {
 @import "../immuneResponse/style.css";
 .el-button--primary {
   color: #24b143;
-  background-color: #2fc45c;
+  background-color: #2b5c3a;
   border-color: #2fc45c;
 }
 </style>

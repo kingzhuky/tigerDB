@@ -4,7 +4,7 @@ library(data.table)
 library(dplyr)
 Args <- commandArgs(T)
 
-#Args <- c("TP53_CD274","BRCA","SIG1","none","none","pearson","pdf")
+#Args <- c("TP53,CD274","BRCA","SIG1","none","none","pearson","pdf")
 gene <- unlist(strsplit(Args[1],split=','))
 cancer<- unlist(strsplit(Args[2],split=','))
 signature<-Args[3]
@@ -14,7 +14,7 @@ corMed<-Args[6] #pearson spearman kendall
 datatype<-Args[7]
 Log.scale <- T
 
-loading.data.path <- "/bakup/tiger/TCGA_data/"
+loading.data.path <- "TCGA_data/"
 result.path <- "./img/"
 
 maintitle <- paste(paste(gene,collapse = "_"),cancer,signature,

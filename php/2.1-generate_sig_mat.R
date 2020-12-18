@@ -3,11 +3,11 @@ library(data.table)
 library(dplyr)
 library(gtools)
 Args <- commandArgs(T)
-#Args <- c("TP53,CD274")
+#Args <- c("PDCD1")
 gene.arr <- unlist(strsplit(Args[1],split=','))
 maintitle <- paste(paste(gene.arr,collapse = "_"),
                    "TCGA",sep="-")
-loading.data.path <- "/bakup/tiger/TCGA_data/"
+loading.data.path <- "TCGA_data/"
 result.path <- "./img/"
 if(nchar(maintitle) > 200) {
   maintitle <- paste("longSig",

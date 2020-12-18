@@ -25,9 +25,45 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <p class="card-title">Signature Component</p>
+                <!-- <p class="card-title">Signature Component</p> -->
                 <p class="card-title">AUC Table</p>
-
+                    <el-row v-loading="aucTableloading">
+                    <el-table
+                        :data="aucTableData"
+                        max-height="520"
+                        style="width: 100%"
+                        :row-key="getRowKeys"
+                        :expand-row-keys="expands"
+                        @expand-change="diffExpRespontableExpand"
+                    >
+                        <!-- <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <div class="detailimg" v-loading="picScatterloading">
+                            <img width="450px" :src="picScatter" v-show="detailimgShow" />
+                            <div v-show="!detailimgShow">no result</div>
+                            </div>
+                        </template>
+                        </el-table-column> -->
+                        <el-table-column prop="dataset_id" label="Dataset ID"></el-table-column> 
+                        <el-table-column prop="Dataset" label="Dataset" sortable></el-table-column>
+                        <el-table-column property="PMID" label="PMID" align="center">
+                            <template slot-scope="scope">
+                            <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.PMID"
+                                target="_blank"
+                                class="buttonText">{{scope.row.PMID}}</a>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="SampleSize" label="Sample Size" sortable></el-table-column>
+                        <el-table-column prop="Therapy" label="Therapy"></el-table-column>
+                        <el-table-column 
+                            :prop="sigID" 
+                            label="AUC"
+                            sortable
+                        ></el-table-column>
+                        <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
+                        <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
+                    </el-table>
+                    </el-row>
                 <p class="card-title">Signature Score in Different Cancer Type (Response vs Non-Response)</p>
                     <img height="400px" :src="imgUrlRNRBox" />
                 <p class="card-title">Signature Score in Different Cancer Type (Tumor vs Normal)</p>
@@ -49,13 +85,15 @@ export default {
             artloading: true,
             imgpathRNRBox: "",
             imgpathTNBox: "",
+            aucTableloading: false,
+            aucTableData: [],
         }
     },
     created(){
-        this.articleDetail(this.sigID)
+        this.renewDetail(this.sigID)
     },
     mounted(){
-        this.articleDetail(this.sigID)
+        this.renewDetail(this.sigID)
     },
     computed: {
         imgUrlRNRBox: function() {
@@ -66,6 +104,10 @@ export default {
         },
     },
     methods:{
+        renewDetail(sigID){
+            this.articleDetail(sigID)
+            this.getDiagramData(sigID)
+        },
         articleDetail(sigID) {
             console.log(sigID)
             var that = this;
@@ -86,10 +128,53 @@ export default {
                 console.log(that.imgpathTNBox)
                 that.artloading = false;
             })
-            .catch(function (res) {
-                console.log(res);  
+            .catch(function (error) {
+                console.log(error);  
             });
             // console.log(this.articleData)
+        },
+        getDiagramData(sigID) {
+            this.aucTableData = [];
+            this.aucTableloading = true;
+            this.$http
+            .get("/tiger/searchAucTable.php", {
+                params: {
+                    sigid: sigID,
+                },
+            })
+            .then((res) => {
+                if (res.data.status === 200) {
+                    this.aucTableData = res.data.list;
+                    this.total = res.data.total[0];
+                    this.aucTableloading = false;
+                    console.log(aucTableData)
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        },
+        getRowKeys: function (row) {
+            return row.geneb;
+        },
+        diffExpRespontableExpand: function (row, expandedRows) {
+            var that = this;
+            if (expandedRows.length) {
+                that.expands = [];
+                if (row) {
+                that.expands.push(row.geneb);
+                }
+            } else {
+                that.expands = [];
+            }
+
+            this.picScatterPlot(
+                row.datasetid,
+                row.GlobalCluster,
+                row.genea,
+                row.geneb,
+                row.CellType
+            );
         },
     }
 }

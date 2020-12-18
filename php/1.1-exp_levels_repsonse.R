@@ -81,9 +81,9 @@ plot.data <- plot.data[plot.data$group %in% c("Non-Responder (NR)","Responder (R
 
 if (Log.scale == "TRUE") {
   plot.data$gene.exp <- log2(plot.data$gene.exp + 1)
-  ylab <- paste("Average Expression of Geneset (log2(FPKM + 1))")
+  ylab <- ifelse(length(gene) > 1,paste("Average Expression of Geneset (log2(FPKM + 1))"), paste("Gene Expression (log2(FPKM + 1))") )
 }else{
-  ylab <- "Average Expression of Geneset (FPKM)"
+  ylab <- ifelse(length(gene) > 1,paste("Average Expression of Geneset (FPKM)"), paste("Gene Expression (FPKM)") )
 }
 response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
   geom_boxplot(width = .4) +
