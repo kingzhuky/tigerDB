@@ -2,7 +2,7 @@
   <div id='sigtablepage'>
     <el-row>
         <el-col :push="1" :span="22">
-        <el-table :data="sigtable" max-height="620" stripe border style="width: 100%">
+        <el-table v-loading="loading" :data="sigtable" max-height="620" stripe border style="width: 100%">
             <el-table-column property="Signature_ID" label="Signature ID" align="center" ></el-table-column>
             <el-table-column property="Signature_Name" label="Signature Name" align="center" ></el-table-column>
             <el-table-column property="PMID" label="PMID" align="center">
@@ -53,6 +53,7 @@ export default {
       sigtable:[],
       sigID:"SIG6",
       isShow: true,
+      loading: true, 
     };
   },
   created() {
@@ -65,6 +66,7 @@ export default {
     getsigtable() {
       this.$http.get("/tiger/immuneSigView.json").then((res) => {
         this.sigtable = res.data;
+        this.loading = false;
         // console.log(this.sigtable)
       });
       // console.log(this.sigtable)

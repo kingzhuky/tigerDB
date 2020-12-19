@@ -18,6 +18,6 @@ echo json_encode(array(
    "command" => $command,
    "output" => $output,
    "status" => $status
-    ),JSON_UNESCAPED_UNICODE); 
+    ),JSON_UNESCAPED_SLASHES); 
 
 ?>

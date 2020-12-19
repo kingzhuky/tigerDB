@@ -36,14 +36,6 @@
                         :expand-row-keys="expands"
                         @expand-change="diffExpRespontableExpand"
                     >
-                        <!-- <el-table-column type="expand">
-                        <template slot-scope="props">
-                            <div class="detailimg" v-loading="picScatterloading">
-                            <img width="450px" :src="picScatter" v-show="detailimgShow" />
-                            <div v-show="!detailimgShow">no result</div>
-                            </div>
-                        </template>
-                        </el-table-column> -->
                         <el-table-column prop="dataset_id" label="Dataset ID"></el-table-column> 
                         <el-table-column prop="Dataset" label="Dataset" sortable></el-table-column>
                         <el-table-column property="PMID" label="PMID" align="center">
@@ -60,8 +52,6 @@
                             label="AUC"
                             sortable
                         ></el-table-column>
-                        <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
-                        <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
                     </el-table>
                     </el-row>
                 <p class="card-title">Signature Score in Different Cancer Type (Response vs Non-Response)</p>
@@ -85,7 +75,7 @@ export default {
             artloading: true,
             imgpathRNRBox: "",
             imgpathTNBox: "",
-            aucTableloading: false,
+            aucTableloading: true,
             aucTableData: [],
         }
     },

@@ -101,9 +101,5 @@ my.data=metadata
   SIG.cor.matrix.json <-  now.matrix%>%toJSON(pretty=TRUE,.)
   cat(SIG.cor.matrix.json, file = (con <- file(paste0(resPath,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)
-  
-  
-  
-
 
   cat(maintitle5)

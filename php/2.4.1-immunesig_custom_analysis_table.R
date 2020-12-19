@@ -3,16 +3,33 @@ library(reshape2)
 library(rlist)
 library(jsonlite)
 Args <- commandArgs(TRUE)
-#Args <- c("Download/customSig_example.exp.tsv","Download/customSig_example.anno.tsv","png")
+#Args <- c("Download/customSig_example.exp.tsv.zip","Download/customSig_example.anno.tsv","asdasda")
 #Args <- c("Download/customSig_example.exp.tsv","none","png")
 exp.matrix.file <- Args[1]
-sample.anno.file <- ifelse(Args[2] == "none", NULL, Args[2])
+sample.anno.file <- ifelse(Args[2] == "none", NA, Args[2])
 keyID <- ifelse(is.na(Args[3]), gsub("[-: ]","_",Sys.time()), Args[3])
-
+if(gregexpr("[.]zip$", exp.matrix.file)[[1]][1] != -1){
+  tmp_dir = tempdir()
+  outf = unzip(exp.matrix.file, list = TRUE)$Name
+  unzip(exp.matrix.file, outf, exdir = tmp_dir)
+  exp.matrix.table <- fread(file.path(tmp_dir, outf))
+}else{
+  exp.matrix.table <- fread(exp.matrix.file)
+}
+if(is.na(sample.anno.file)){
+  
+}else if(gregexpr("[.]zip$", sample.anno.file)[[1]][1] != -1){
+  tmp_dir = tempdir()
+  outf = unzip(sample.anno.file, list = TRUE)$Name
+  unzip(sample.anno.file, outf, exdir = tmp_dir)
+  sample.anno.table <- fread(file.path(tmp_dir, outf))
+}else if(!is.na(sample.anno.file)){
+  sample.anno.table <- fread(sample.anno.file)
+}
 loading.data.path <- "Signature_data/"
 result.path <- "./img/"
 
-exp.matrix.table <- fread(exp.matrix.file)
+
 sig.mat <- readRDS(paste0(loading.data.path,"SIG.mat.RDS"))
 
 maintitle1 <- paste("ImmuneSig-Custom","SigScore","table",keyID,sep="-")
@@ -29,8 +46,7 @@ SIG.score.seplist <- GenerateSigScore(exp.matrix.table,sig.mat)
 # SIG.score.table <- data.table(sig_id = names(SIG.score.seplist), list.rbind(SIG.score.seplist))
 SIG.score.table <- list.rbind(SIG.score.seplist) %>% data.frame(row.names = names(SIG.score.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)
 ## Generate Group Score boxplot
-if(!is.null(sample.anno.file)){
-  sample.anno.table <- fread(sample.anno.file)
+if(!is.na(sample.anno.file)){
   unique(SIG.score.table$group)
   SIG.score.table <- merge(sample.anno.table, SIG.score.table,by = "sample_id", all.y = TRUE)
   SIG.score.group.table <-  SIG.score.table[!is.na(group),lapply(.SD,mean),by = c("group"), .SDcols=-c("sample_id")]

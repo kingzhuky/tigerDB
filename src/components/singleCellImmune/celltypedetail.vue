@@ -16,25 +16,25 @@
           <el-row v-loading="evoluloading">
             <el-row v-show="evolushow" class="detailimg">
               <!-- <p class="card-title">tSNE</p> -->
-            <el-col :span="6" v-show="evolushow2">
+            <el-col :span="6" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
               <p class="imgtitle">Cell Types</p>
               <img
                 id="singleimg"
                 fit="fill"
-                width="250px"
+                width="350px"
                 :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
                 @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
-            <el-col :span="6" v-show="evolushow2">
+            <el-col :span="6" v-show="evolushow2" style="position:relative;left:100px;top:0px;">
               <p class="imgtitle">UMAP Plot of {{gene}} Types</p>
               <img
                 id="singleimg"
                 fit="fill"
-                width="250px"
+                width="300px"
                 :src="'tiger/img/' + evoluplots.split(',')[1]"
                 @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
-            <el-col :span="12" v-show="evolushow2">
+            <el-col :span="12" v-show="evolushow2" style="position:relative;left:40px;top:0px;">
               <p class="imgtitle">Boxplot of {{gene}} Expression</p>
               <img
                 id="singleimg"
