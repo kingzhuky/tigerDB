@@ -177,6 +177,16 @@ div#logFC {
   border-top-style: solid;
   border-top-width: 5px;
 }
+.scglo-g4{
+  border-top-color: rgb(47, 133, 8);
+  border-top-style: solid;
+  border-top-width: 5px;
+}
+.scglo-g5{
+  border-top-color: rgb(50, 211, 197);
+  border-top-style: solid;
+  border-top-width: 5px;
+}
 
 
 th.el-table_1_column_1.is-center.is-leaf.defalutColor {

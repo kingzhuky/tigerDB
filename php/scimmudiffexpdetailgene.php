@@ -26,11 +26,11 @@ if ($type=="celltype"){
     // query data 
   
   if(PATH_SEPARATOR==':'){
-    $zhiling="sudo  Rscript pic.gene.R $cancer $gloclu $gene";
+    $zhiling="sudo Rscript pic.marker.gene.R $cancer $gloclu $gene";
     $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }else{
-    $zhiling="Rscript pic.gene.R $cancer $gloclu $gene";
-    $zhiling2="Rscript overview.R $cancer  $gloclu";
+    $zhiling="Rscript pic.marker.gene.R $cancer $gloclu $gene";
+    $zhiling2="Rscript overview.R $cancer $gloclu";
   }
 }else if($type=="evolution"){
   if(PATH_SEPARATOR==':'){
@@ -49,11 +49,11 @@ if ($type=="celltype"){
     $gloclu=$row["GlobalCluster"];
   }
   if(PATH_SEPARATOR==':'){
-    $zhiling="sudo  Rscript pic.TN.R $cancer $gloclu $gene";
-    $zhiling2="sudo Rscript overview.R $cancer $gloclu";
+    $zhiling="sudo  Rscript pic.TN.gene.R $cancer $gloclu $gene";
+    // $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }else{
-    $zhiling="Rscript pic.TN.R $cancer $gloclu $gene";
-    $zhiling2="Rscript overview.R $cancer  $gloclu";
+    $zhiling="Rscript pic.TN.gene.R $cancer $gloclu $gene";
+    // $zhiling2="Rscript overview.R $cancer  $gloclu";
   }
 }
 

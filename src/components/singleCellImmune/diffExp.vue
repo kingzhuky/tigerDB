@@ -9,7 +9,6 @@
                 placeholder="Please Input Gene Symbol"
                 :fetch-suggestions="querySearchAsync"
                 @change="searchChange"
-                @keyup.enter.native="searchChange"
               ></el-autocomplete>
             </el-col>
             <br />
@@ -242,6 +241,10 @@ export default {
           return "scglo-g2";
         case "Bcell":
           return "scglo-g3";
+        case "CD4":
+          return "scglo-g4";
+        case "CD8":
+          return "scglo-g5";
         case "gene":
           return "";
         default:
@@ -306,7 +309,6 @@ export default {
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
       this.loading=true
-      let tmp_sortCol = sortCol.replace(",",".")
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
@@ -315,7 +317,7 @@ export default {
             search: this.searchinput.trim(),
             start: (page - 1) * 20,
             length: 20,
-            sortcol: tmp_sortCol,
+            sortcol: sortCol,
             sortorder: sortOrder === null ? "None" : sortOrder,
           },
         })
@@ -346,22 +348,22 @@ export default {
             }
             // console.log(Array.isArray(new_columns))
           }
-          var new_rows = [];// matrix key .替换为_
-            for (const row of this.tableData) {
-              var new_row = {}
-              for (const key in row) {
-                let new_key = key.replace(".",",")
-                new_row[new_key] = row[key]
-              }
-              new_rows.push(new_row)
-            }
-            this.tableData = new_rows  // matrix key .替换为_
+          // var new_rows = [];// matrix key .替换为_
+          //   for (const row of this.tableData) {
+          //     var new_row = {}
+          //     for (const key in row) {
+          //       let new_key = key.replace(".","_")
+          //       new_row[new_key] = row[key]
+          //     }
+          //     new_rows.push(new_row)
+          //   }
+          //   this.tableData = new_rows  // matrix key .替换为_
             var new_columns = [] // generate header
             for (const column of this.tableDataheader) {
               var col_obj = {};
-              col_obj.name = column.split('.').pop()
-              col_obj.key = column.replace(".",",")
-              col_obj.type = column.split('.')[0]
+              col_obj.name = column.split(',').pop()
+              col_obj.key = column
+              col_obj.type = column.split(',')[0]
               // console.log(col_obj)
               new_columns.push(col_obj)
             }
@@ -397,7 +399,7 @@ export default {
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["property"]] === null) {
+      if (row[column["property"]] === null || column["property"] == 'gene') {
         return {
           background: "white",
         };

@@ -15,20 +15,20 @@
         <el-card>
           <el-row v-loading="evoluloading">
             <el-row v-show="evolushow" class="detailimg">
-              <p class="card-title">tSNE</p>
-              <el-col :span="11" v-show="evolushow2">
-                <img id="singleimg" :src="'tiger/img/'+overviewimg.split(',')[0]+'.png'" />
+              <!-- <p class="card-title">tSNE</p> -->
+              <el-col :span="6" v-show="evolushow2">
+                <img id="singleimg" :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'" />
               </el-col>
-              <el-col :span="11" :offset="2">
-                <img id="singleimg" :src="'tiger/img/'+evoluplots.split(',')[1]" />
+              <el-col :span="6" :offset="0">
+                <img id="singleimg" :src="'tiger/img/' + evoluplots.split(',')[1]" />
+              </el-col>
+              <el-col :span="12" :offset="0">
+                <img id="singleimg" :src="'tiger/img/' + evoluplots.split(',')[0]" />
               </el-col>
             </el-row>
-            <el-row class="detailimg">
+            <!-- <el-row class="detailimg">
               <p class="card-title">Gene Expression</p>
-              <el-col :span="20" :offset="2">
-                <img id="singleimg" :src="'tiger/img/'+evoluplots.split(',')[0]" />
-              </el-col>
-            </el-row>
+            </el-row> -->
             <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
               <div id="norult">No result</div>
             </el-col>

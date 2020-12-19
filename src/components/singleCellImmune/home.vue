@@ -3,12 +3,12 @@
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
         <el-row>
-          <el-col :span="16" :offset="4">
+          <el-col :span="20" :offset="2">
             <p class="scImmuTitle">Select A Dataset</p>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="16" :offset="4" id="homeInput">
+          <el-col :span="20" :offset="2" id="homeInput">
             <el-select v-model="cancer" @change="cancerSelectChange" placeholder="请选择">
               <el-option-group
                 v-for="group in canceroptions"
@@ -111,7 +111,7 @@ export default {
       colany: "Spearman",
       gene: "ERBB2",
       genelist: "",
-      cancer: "BCC",
+      cancer: "PDAC",
       gloClu: "",
       canceroptions: [],
       gloCluoptions: [],
@@ -130,6 +130,7 @@ export default {
   methods: {
     getcancer() {
       this.$http.get("/tiger/singlecelldataset.json").then((res) => {
+        console.log(res.data)
         this.canceroptions = res.data;
       });
     },

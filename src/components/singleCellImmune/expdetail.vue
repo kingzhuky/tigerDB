@@ -14,22 +14,22 @@
       <div class="infor">
         <el-card>
           <el-row v-loading="geneloading">
-            <el-row class="detailimg">
-              <p class="card-title">Differential Expression</p>
-              <el-col :span="20" :offset="2">
-                <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[0]" />
+            <el-row class="detailimg" v-show="geneshow">
+              <!-- <p class="card-title">Differential Expression</p> -->
+              <el-col :span="6" :offset="0">
+                <img id="singleimg" :src="'tiger/img/' + geneplots.split(',')[0] + '.png'" />
+              </el-col>
+              <el-col :span="6">
+                <img id="singleimg" :src="'tiger/img/' + geneplots.split(',')[1] + '.png'" />
+              </el-col>
+              <el-col :span="12" :offset="0">
+                <img id="singleimg" :src="'tiger/img/' + geneplots.split(',')[2] + '.png'" />
               </el-col>
             </el-row>
-            <el-row></el-row>
+            <!-- <el-row></el-row>
               <el-row v-show="geneshow" class="detailimg">
               <p class="card-title">tSNE</p>
-                <el-col :span="11" v-show="geneshow2">
-                  <img id="singleimg" :src="'tiger/img/'+overviewimg.split(',')[0]+'.png'" />
-                </el-col>
-                <el-col :span="11" :offset="2">
-                  <img id="singleimg" :src="'tiger/img/'+geneplots.split(',')[1]" />
-                </el-col>
-              </el-row>
+              </el-row> -->
               <el-col :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
                 <div id="norult">No result</div>
               </el-col>
@@ -64,7 +64,7 @@ export default {
 
   data() {
     return {
-      overviewimg: "",
+      // overviewimg: "",
       geneshow: true,
       geneshow2: true,
       tableLoading: "",
@@ -150,7 +150,7 @@ export default {
               } else {
                 that.geneshow2 = true;
                 // setTimeout((that.overviewimg = res.data.output2[0]), 1000);
-                that.overviewimg = res.data.output2[0]
+                // that.overviewimg = res.data.output2[0]
               }
             }
           })

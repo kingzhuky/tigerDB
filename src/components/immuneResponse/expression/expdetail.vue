@@ -240,7 +240,6 @@ export default {
           })
           .then(function(res) {
             if (res.data.status == 0) {
-              
               let imgpath = res.data.output[0].split(",");
               setTimeout(that.imgpathBox = imgpath[0],1000);
               

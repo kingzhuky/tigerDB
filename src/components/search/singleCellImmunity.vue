@@ -169,11 +169,11 @@
           </div>
         </div>
         <el-table :data="DiffExpResponseableData" max-height="800" style="width: 100%">
-          <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
-          <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
-          <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
-          <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
-          <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
+          <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
+          <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
+          <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
+          <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
+          <el-table-column prop="P_Value" label="P Value" sortable></el-table-column>
         </el-table>
       </div>
     </el-card>

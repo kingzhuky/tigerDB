@@ -20,7 +20,8 @@ $infosTable = array();
 
 if ($conditi=="Responder"){
   $sql = "SELECT Log2FC,PValue,DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='R-NR'";
-  $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='R-NR')";
+  // $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID,Log2FC,PValue FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='R-NR')";
+  $sqltable = "SELECT a.*,b.DatasetID,b.Log2FC,b.PValue FROM datesetinfo as a,homeresponsetable as b WHERE b.GENE_SYMBOL='".$gene."' AND a.DatasetID=b.DatasetID AND b.`Condition`='R-NR'";
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {
     $temp= array();
@@ -38,7 +39,8 @@ if ($conditi=="Responder"){
 
 }else if ($conditi=="Therapy"){
   $sql = "SELECT Log2FC,PValue,DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Post-Pre'";
-  $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Post-Pre')";
+  // $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID,Log2FC,PValue FROM homeresponsetable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Post-Pre')";
+  $sqltable = "SELECT a.*,b.DatasetID,b.Log2FC,b.PValue FROM datesetinfo as a,homeresponsetable as b WHERE b.GENE_SYMBOL='".$gene."' AND a.DatasetID=b.DatasetID  AND b.`Condition`='Post-Pre'";
   
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {
@@ -57,8 +59,8 @@ if ($conditi=="Responder"){
 
 }else if($conditi=="Survival"){
   $sql = "SELECT ZScore,PValue,DatasetID FROM homesurvtable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Survival'";
-  $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID FROM homesurvtable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Survival')";
- 
+  // $sqltable = "SELECT * FROM datesetinfo WHERE `DatasetID` in (SELECT DatasetID,ZScore,PValue FROM homesurvtable WHERE GENE_SYMBOL='".$gene."' AND `Condition`='Survival')";
+  $sqltable = "SELECT a.*,b.DatasetID,b.ZScore,b.PValue FROM datesetinfo as a,homesurvtable as b WHERE b.GENE_SYMBOL='".$gene."' AND a.DatasetID=b.DatasetID";
   $dataResult = mysqli_query($conn,$sql);
   while ($row = mysqli_fetch_assoc($dataResult)) {
     $temp= array();
