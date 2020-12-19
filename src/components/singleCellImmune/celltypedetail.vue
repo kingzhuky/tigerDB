@@ -16,19 +16,34 @@
           <el-row v-loading="evoluloading">
             <el-row v-show="evolushow" class="detailimg">
               <!-- <p class="card-title">tSNE</p> -->
-              <el-col :span="6" v-show="evolushow2">
-                <img id="singleimg" :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'" />
-              </el-col>
-              <el-col :span="6" :offset="0">
-                <img id="singleimg" :src="'tiger/img/' + evoluplots.split(',')[1]" />
-              </el-col>
-              <el-col :span="12" :offset="0">
-                <img id="singleimg" :src="'tiger/img/' + evoluplots.split(',')[0]" />
-              </el-col>
+            <el-col :span="6" v-show="evolushow2">
+              <p class="imgtitle">Cell Types</p>
+              <img
+                id="singleimg"
+                fit="fill"
+                width="250px"
+                :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
+                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+            </el-col>
+            <el-col :span="6" v-show="evolushow2">
+              <p class="imgtitle">UMAP Plot of {{gene}} Types</p>
+              <img
+                id="singleimg"
+                fit="fill"
+                width="250px"
+                :src="'tiger/img/' + evoluplots.split(',')[1]"
+                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+            </el-col>
+            <el-col :span="12" v-show="evolushow2">
+              <p class="imgtitle">Boxplot of {{gene}} Expression</p>
+              <img
+                id="singleimg"
+                fit="fill"
+                width="450px"
+                :src="'tiger/img/' + evoluplots.split(',')[0]"
+                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+            </el-col>
             </el-row>
-            <!-- <el-row class="detailimg">
-              <p class="card-title">Gene Expression</p>
-            </el-row> -->
             <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
               <div id="norult">No result</div>
             </el-col>

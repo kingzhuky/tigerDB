@@ -38,6 +38,18 @@ if ($type=="celltype"){
   }else{
     $zhiling="Rscript pic.evlou.R $cancer $gloclu $gene";
   }
+}else if($type=="pathway"){
+  if(PATH_SEPARATOR==':'){
+    $zhiling="sudo Rscript pic.marker.pathway.R $cancer $gloclu \"$gene\"";
+  }else{
+    $zhiling="Rscript pic.marker.pathway.R $cancer $gloclu \"$gene\"";
+  }
+}else if($type=="pathwaydiff"){
+  if(PATH_SEPARATOR==':'){
+    $zhiling="sudo Rscript pic.TN.pathway.R $cancer $gloclu $gene";
+  }else{
+    $zhiling="Rscript pic.TN.pathway.R $cancer $gloclu $gene";
+  }
 }else{
   $sql = "SELECT GlobalCluster FROM homescinfo WHERE datasetid = '".$cancer."' AND CellType='".$celltype."'";
   $infos = array();

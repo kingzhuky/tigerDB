@@ -21,8 +21,8 @@
                   id="singleimg"
                   fit="fill"
                   width="250px"
-                  :src="'tiger/img/' + geneplots.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                  :src="'tiger/img/' + pathwayplots.split(',')[0] + '.png'"
+                  @click="previewImg(['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
               </el-col>
               <el-col :span="6" v-show="evolushow2">
                 <p class="imgtitle">UMAP Plot of {{gene}} Expression</p>
@@ -30,8 +30,8 @@
                   id="singleimg"
                   fit="fill"
                   width="250px"
-                  :src="'tiger/img/' + geneplots.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                  :src="'tiger/img/' + pathwayplots.split(',')[1] + '.png'"
+                  @click="previewImg(['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
               </el-col>
               <el-col :span="12" v-show="evolushow2">
                 <p class="imgtitle">Boxplot of {{gene}} Expression</p>
@@ -39,8 +39,8 @@
                   id="singleimg"
                   fit="fill"
                   width="450px"
-                  :src="'tiger/img/' + geneplots.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                  :src="'tiger/img/' + pathwayplots.split(',')[2] + '.png'"
+                  @click="previewImg(['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
               </el-col>
             </el-row>
               <el-col :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
@@ -54,23 +54,26 @@
   </transition>
 </template>
 
+
 <script>
 import goTop from "../public/goTop";
 
 export default {
   props: {
-    gene: {
+    pathway: {
       type: String,
     },
     cancer: {
       type: String,
     },
-    celltype: { type: String },
+    celltype: { 
+      type: String 
+    },
     gloclu: { 
       type: String 
     },
-    clickGene: {
-      type: String,
+    tabtype: { 
+      type: String 
     },
   },
 
@@ -112,7 +115,7 @@ export default {
       imgpathEvo: "",
       evoluloading: true,
       geneloading: true,
-      geneplots: "",
+      pathwayplots: "",
       evoluplots: "",
     };
   },
@@ -126,21 +129,27 @@ export default {
       return true;
     },
     clickPlot() {
-      this.genePlot(this.clickGene);
+      this.pathwayPlot(this.pathway, this.celltype, this.gloclu, this.tabtype);
       //this.evoluPlot(this.clickGene);
     },
 
-    genePlot(clickgene, celltype, gloclu) {
+    pathwayPlot(clickname, celltype, gloclu, tabtype) {
       if (this.checkInput()) {
         var that = this;
         that.geneloading = true;
         that.geneshow = true;
+        var plottype = "";
+        if(that.tabtype === "cluster"){
+          plottype = "pathway"
+        }else{
+          plottype = "pathwaydiff"
+        }
         this.$http
           .get("/tiger/scimmudiffexpdetailgene.php", {
             params: {
               cancer: this.cancer,
-              gene: clickgene,
-              type: "exp",
+              gene: clickname,
+              type: plottype,
               celltype: celltype,
               gloclu: gloclu
             },
@@ -151,9 +160,8 @@ export default {
                 that.geneshow = false;
               } else {
                 that.geneshow = true;
-                that.geneplots = res.data.output[0];
+                that.pathwayplots = res.data.output[0];
               }
-              //that.geneplots = res.data.output[0];
               that.geneloading = false;
             }
             if (res.data.status2 == 0) {

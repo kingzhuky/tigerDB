@@ -29,7 +29,7 @@
     </el-card>
     <div>
       <el-card class="box-card-heatmap">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigTab">
           <el-tab-pane label="Overview" name="overview">
             <component
               ref="overviewRef"
@@ -39,20 +39,29 @@
             ></component>
           </el-tab-pane>
           <el-tab-pane label="Cell Type Marker" name="celltype">
-            <component 
+            <component
+              ref="celltypeRef"
               :cancer="cancer" 
               :gloclu="gloClu" 
-              ref="celltypeRef" 
               :is="celltypeVue"
             ></component>
           </el-tab-pane>
           <el-tab-pane label="Differential Expression Analysis" name="scdiffexp">
             <component 
+              ref="diffexpRef" 
+              :cancer="cancer"
+              :gloclu="gloClu"
+              tabactiveName="cluster"
+              :is="diffexpVue"
+            ></component>
+          </el-tab-pane>
+          <el-tab-pane label="Pathway Analysis" name="scpathway">
+            <component 
+              ref="scpathwayRef" 
               :cancer="cancer"
               :gloclu="gloClu"
               :vsType="vsType"
-              ref="diffexpRef" 
-              :is="diffexpVue"
+              :is="scpathwayVue"
             ></component>
           </el-tab-pane>
           <el-tab-pane label="Co-expression Analysis" name="coexp">
@@ -85,13 +94,13 @@
 </template>
 
 <script>
-import weroverview from './overview.vue'
-// const weroverview = (resolve) => require(["./overview.vue"], resolve);
-const wercoexp = (resolve) => require(["./coExp.vue"], resolve);
-const werdiffexp = (resolve) => require(["./diffExp.vue"], resolve);
-const wercelltype = (resolve) => require(["./celltype.vue"], resolve);
-const wercrosstalk = (resolve) => require(["./crosstalk.vue"], resolve);
-const werevolution = (resolve) => require(["./evolution.vue"], resolve);
+import tigoverview from './overview.vue'
+import tigcoexp from './coExp.vue'
+import tigdiffexp from './diffExp.vue'
+import tigcelltype from './celltype.vue'
+import tigcrosstalk from './crosstalk.vue'
+import tigevolution from './evolution.vue'
+import tigpathway from './scpathway.vue'
 
 export default {
   data() {
@@ -116,7 +125,8 @@ export default {
       canceroptions: [],
       gloCluoptions: [],
       Signatures: "",
-      vsType: "Response vs Non-response"
+      vsType: "Tumor vs Normal",
+      scpathwayVue: "",
     };
   },
 
@@ -148,7 +158,7 @@ export default {
         })
         .then((res) => {
           this.gloCluoptions = res.data.list;
-          this.overviewVue = weroverview;
+          this.overviewVue = tigoverview;
           this.activeName = "overview";
           this.$refs.overviewRef.clickPlot(); 
           // this.$refs.coexpRef.CancerTypeSelectChange();
@@ -160,26 +170,30 @@ export default {
     checkVue(name) {
       switch (name) {
         case "overview":
-          this.overviewVue = weroverview;
+          this.overviewVue = tigoverview;
           break;
         case "celltype":
-          this.celltypeVue = wercelltype;
+          this.celltypeVue = tigcelltype;
           this.$refs.celltypeRef.plot();
           break;
         case "scdiffexp":
-          this.diffexpVue = werdiffexp;
+          this.diffexpVue = tigdiffexp;
           this.$refs.diffexpRef.plot();
           this.vsType = this.$refs.diffexpRef.getvsType();
           break;
+        case "scpathway":
+          this.scpathwayVue = tigpathway;
+          this.$refs.scpathwayRef.plot();
+          break;
         case "coexp":
-          this.coexpVue = wercoexp;
+          this.coexpVue = tigcoexp;
           break;
         case "crosstalk":
-          this.crosstalkVue = wercrosstalk;
+          this.crosstalkVue = tigcrosstalk;
           this.$refs.crosstalkRef.reset();
           break;
         case "evolution":
-          this.evolutionVue = werevolution;
+          this.evolutionVue = tigevolution;
           break;
       }
     },
@@ -188,7 +202,7 @@ export default {
 </script>
 
 <style>
-@import "../immuneResponse/style.css";
+
 .scImmuTitle {
   color: rgb(20, 146, 140);
   font-size: 18px;
@@ -216,7 +230,8 @@ div#scimmucard {
 }
 #tab-overview, 
 #tab-celltype,
-#tab-scdiffexp, 
+#tab-scdiffexp,
+#tab-scpathway,
 #tab-coexp,
 #tab-crosstalk,
 #tab-evolution{

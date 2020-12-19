@@ -5,43 +5,43 @@
         <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg">
-            <el-col :span="6" :offset="0">
+            <el-col :span="6" :offset="0" style="position:relative;right:10px;top:20px;">
+              <p class="imgtitle">Cell Types</p>
               <img
                 id="singleimg"
                 fit="fill"
-                style="position:relative;right:10px;top:20px;"
                 width="250px"
                 :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png'])">
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png'])">
             </el-col>
-            <el-col :span="6" :offset="0">
+            <el-col :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
+              <p class="imgtitle">Cell Fraction</p>
               <img
                 id="singleimg"
                 fit="fill"
-                style="position:relative;right:40px;top:20px;"
                 width="300px"
                 :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png'])">
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png'])">
             </el-col>
           <!-- </el-row>
           <el-row class="detailimg"> -->
-            <el-col :span="6" :offset="0">
+            <el-col :span="6" :offset="0" style="position:relative;right:30px;top:20px;">
+              <p class="imgtitle">Group Difference of Each Cluster</p>
               <img
                 id="singleimg"
                 fit="fill"
-                style="position:relative;right:30px;top:40px;"
                 width="300px"
                 :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png'])">
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png'])">
             </el-col>
-            <el-col :span="6" :offset="0">
+            <el-col :span="6" :offset="0" style="position:relative;right:20px;top:20px;">
+              <p class="imgtitle">Classical Cell Markers</p>
               <img
                 id="singleimg"
                 fit="fill"
-                style="position:relative;right:20px;top:40px;"
                 width="350px"
                 :src="'tiger/img/'+plotsres[gloclu][3]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png'])">
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png'])">
             </el-col>
           </el-row>
         </el-card>
@@ -177,6 +177,7 @@ export default {
 .overiewcard {
   margin-top: 20px;
 }
+
 div#pane-overview {
   font-size: 16px;
 }
