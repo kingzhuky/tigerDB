@@ -53,6 +53,7 @@ import router from './router'
 Vue.config.productionTip = false
 
 import '../static/css/theme/index.css'
+import './style/main.css';
 import hevueImgPreview from 'hevue-img-preview'
 Vue.use(hevueImgPreview)
 

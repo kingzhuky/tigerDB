@@ -72,7 +72,6 @@ export default {
 
 
 <style>
-@import "../immuneResponse/style.css";
 
 #immuneSigTable th {
   left: 35px !important;

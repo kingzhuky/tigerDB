@@ -115,7 +115,6 @@ export default {
   height: 270px !important;
 }
 
-@import "../immuneResponse/style.css";
 .el-button--primary {
   color: #24b143;
   background-color: #2b5c3a;

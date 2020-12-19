@@ -15,7 +15,7 @@
             <br />
             <br />
             <el-table
-              class="wertable"
+              class="tigtablele"
               id="scDiffExpTable"
               ref="singleTable"
               border=false
@@ -67,14 +67,13 @@
                 placeholder="Please Input Gene Symbol"
                 :fetch-suggestions="querySearchAsync"
                 @change="searchChange"
-                @keyup.enter.native="searchChange"
               ></el-autocomplete>
             </el-col>
             <br />
             <br />
             <br />
             <el-table
-              class="wertable"
+              class="tigtablele"
               id="scDiffExpTable"
               ref="singleTable"
               border=false
@@ -377,7 +376,6 @@ export default {
 
     searchChange() {
       this.loading = true;
-
       this.loadDir = "";
       this.tableData = [];
       this.loadpage = 1;
@@ -428,5 +426,12 @@ div#singleCellTitle {
     font-size: 20px;
     font-weight: bold;
     padding-top: 10px;
+}
+#tab-response,
+#tab-tn {
+  font-size: 18px;
+  height: 40px;
+  padding: 0px 10px;
+  font-weight: bold !important;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <div id="wertab">
+  <div id="tigtable">
     <el-card class="box-card-heatmap">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigtable">
         <el-tab-pane label="Differential Expression Analysis" name="diffexp">
           <component :is="diffexpVue"></component>
         </el-tab-pane>
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style>
-div#wertab {
+div#tigtable {
   margin-bottom: 20px;
 }
 
@@ -105,6 +105,5 @@ div#wertab {
   height: 270px !important;
 }
 
-@import "./style.css";
 
 </style>

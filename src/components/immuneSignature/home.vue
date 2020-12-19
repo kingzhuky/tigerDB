@@ -1,7 +1,7 @@
 <template>
   <div id='sigpage'>
     <el-card class="box-card-heatmap">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="werTab">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigtable">
         <el-tab-pane label="Overview" name="sigtable">
           <component ref="sigtableRef" :is="sigtableVue"></component>
         </el-tab-pane>
@@ -101,6 +101,5 @@ div#sigpage {
   height: 270px !important;
 }
 
-@import "../immuneResponse/style.css";
 
 </style>

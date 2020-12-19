@@ -14,7 +14,7 @@
     <br />
 
     <el-table
-      class="wertable"
+      class="tigtablele"
       id="responseTable"
       ref="singleTable"
       border

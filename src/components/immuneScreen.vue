@@ -20,7 +20,7 @@
       <br />
 
       <el-table
-        class="wertable"
+        class="tigtablele"
         id="tableScreenTable"
         ref="singleTable"
         border
@@ -430,7 +430,7 @@ export default {
 
 
 <style>
-@import "./immuneResponse/style.css";
+
 #tableScreenTable th {
   left: 90px !important;
   height: 180px !important;

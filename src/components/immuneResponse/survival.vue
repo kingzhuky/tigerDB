@@ -15,7 +15,7 @@
     <br />
 <br />
     <el-table
-      class="wertable"
+      class="tigtablele"
       id="survivaltable"
       ref="singleTable"
       border

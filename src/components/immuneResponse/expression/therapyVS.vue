@@ -15,7 +15,7 @@
     <br />
 
     <el-table
-      class="wertable"
+      class="tigtablele"
       ref="singleTable"
       id="therapyTable"
       border

@@ -3,7 +3,7 @@
     <div v-show="immuneTabShow" v-loading="loading">
       <el-card>
         <el-table
-          class="wertable"
+          class="tigtablele"
           id="immuneSigTable"
           ref="singleTable"
           border
@@ -216,7 +216,6 @@ export default {
 
 
 <style>
-@import "../immuneResponse/style.css";
 
 #immuneSigTable th {
   left: 35px !important;

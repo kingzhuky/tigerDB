@@ -3,8 +3,6 @@
   width: 1300px;
 }
 
-
-
 .el-collapse-item__header {
   font-size: 18px;
 }
@@ -48,7 +46,7 @@ div#collapseCard {
   padding-bottom: 20px;
   text-align: center;
 }
-.wertable .el-table__body tr>td:hover {
+.tigtablele .el-table__body tr>td:hover {
   cursor: pointer;
   outline: 1px solid rgba(82, 168, 236, .8);
   outline-offset: -1px;
@@ -56,7 +54,7 @@ div#collapseCard {
   box-shadow: 0 0 8px rgba(82, 168, 236, .6);
 }
 
-.wertable .el-table__body tr>th:hover {
+.tigtablele .el-table__body tr>th:hover {
   background-color: black;
 }
 
@@ -70,7 +68,7 @@ div#collapseCard {
   box-shadow: none !important;
 }
 
-.wertable th {
+.tigtablele th {
   -ms-transform: skew(-45deg, 0deg) !important;
   -moz-transform: skew(-45deg, 0deg) !important;
   -webkit-transform: skew(-45deg, 0deg) !important;
@@ -80,7 +78,7 @@ div#collapseCard {
 }
 
 
-.wertable th>.cell {
+.tigtablele th>.cell {
   position: absolute!important;
   transform: skew(45deg, 0deg) rotate(315deg);
   font-size: 12px !important;
@@ -218,4 +216,10 @@ div#norult {
   font-size: 30px;
   text-align: center;
   padding-top: 50px; 
+}
+.imgtitle{
+  text-align: center;
+  color: rgb(19, 58, 56);
+  font-size: 1.5em;
+  margin-bottom: 15px;
 }

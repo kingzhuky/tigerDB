@@ -11,7 +11,7 @@
     </el-row>
     <br />
     <el-table
-      class="wertable"
+      class="tigtablele"
       id="scDiffExpTable"
       ref="singleTable"
       border
@@ -33,6 +33,7 @@
         :label="item.name"
         :type="item.type"
         sortable="custom"
+        :sort-orders="['ascending', 'descending', null]"
         align="center"
         width="80"
       ></el-table-column>
