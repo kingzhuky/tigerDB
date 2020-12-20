@@ -44,6 +44,7 @@ div#collapseCard {
 } 
 .detailimg {
   padding-bottom: 20px;
+  height: 200px;
   text-align: center;
 }
 .tigtablele .el-table__body tr>td:hover {

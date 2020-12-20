@@ -95,7 +95,7 @@ metadata[,'score']=gene.exp.list
           axis.text.x = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),plot.title = element_text(size=15),panel.grid.major=element_line(color="grey96"),
           panel.grid.minor=element_line(color="grey96")
-        )+labs(title = paste0('UMAP Plot of ',pathway,' score'))
+        )
       
       maintitle2=paste0(maintitle,'.umap.expr')
       ggsave(paste0(resPath,maintitle2,'.png'),width =110,height =80, unit = "mm", dpi=100,p)

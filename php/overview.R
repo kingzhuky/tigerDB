@@ -75,7 +75,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   pic.name2=paste('pie',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
   
   png(paste0(resPath,pic.name2,'.png'),width = 120, height =80, units = "mm",res = 100)
-  pie(table.pic$Freq,labels=paste0(table.pic$.,' (',round(table.pic$prop,3),'%)'),col= my36colors,main = 'Cell Fraction',cex=0.8)
+  pie(table.pic$Freq,labels=paste0(table.pic$.,' (',round(table.pic$prop,3),'%)'),col= my36colors,cex=0.8)
 
   dev.off()
   

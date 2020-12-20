@@ -23,7 +23,7 @@
           </el-row> -->
           <el-row>
             <p class="homedesrc">
-              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for xxx tumor samples with immunotherapy clinical outcome and xxx tumor/normal samples from TCGA, and single cell transcriptome data for xxx immune cells of xxx samples, among which xxx immune cells of xxx samples have immunotherapy clinical data. 
+              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1145 tumor samples with immunotherapy clinical outcome and 11057 tumor/normal samples from TCGA, and single cell transcriptome data for xxx immune cells of xxx samples, among which xxx immune cells of xxx samples have immunotherapy clinical data. 
             </p>
           </el-row>
         </el-col>
@@ -41,7 +41,7 @@
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
                 <div style="text-align:center;">
-                  <img src="../../assets/logo.png" />
+                  <img height="250px" src="../../assets/homeir.png" />
                 </div>
               </el-card>
             </el-col>
@@ -52,7 +52,7 @@
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
                 <div style="text-align:center;">
-                  <img src="../../assets/logo.png" />
+                  <img height="250px" src="../../assets/homesig.png" />
                 </div>
               </el-card>
             </el-col>
@@ -63,7 +63,7 @@
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
                 <div style="text-align:center;">
-                  <img src="../../assets/logo.png" />
+                  <img height="250px" src="../../assets/homesc.png" />
                 </div>
               </el-card>
             </el-col>
@@ -74,7 +74,7 @@
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
                 <div style="text-align:center;">
-                  <img src="../../assets/logo.png" />
+                  <img width="250px" src="../../assets/homeis.png" />
                 </div>
               </el-card>
             </el-col>
@@ -193,7 +193,7 @@ export default {
 }
 
 .hometitle {
-  color: rgb(20, 146, 140) !important;
+  color: #14928c !important;
   font-size: 30px;
   font-weight: bolder;
 }

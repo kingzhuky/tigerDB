@@ -6,7 +6,7 @@
           <div class="text item">
             <h1
               style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Global Cluster:{{gloclu}}</h1>
+            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu}}<br>Gene Symobl: {{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -39,7 +39,8 @@
               <img
                 id="singleimg"
                 fit="fill"
-                width="450px"
+                max-height="250px"
+                max-weigh="450px"
                 :src="'tiger/img/' + evoluplots.split(',')[0]"
                 @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>

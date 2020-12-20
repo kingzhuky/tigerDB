@@ -6,7 +6,7 @@
           <div class="text item">
             <h1
               style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Global Cluster:{{gloclu}}</h1>
+            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu}} Cells<br>Gene Symobl: {{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -14,13 +14,13 @@
       <div class="infor">
         <el-card>
           <el-row v-loading="geneloading">
-            <el-row class="detailimg" v-show="geneshow">
-              <el-col :span="6">
+            <el-row class="detailimg" v-show="geneshow" >
+              <el-col :span="6" >
                 <p class="imgtitle">Cell Types</p>
                 <img
                   id="singleimg"
                   fit="fill"
-                  width="250px"
+                  width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[0] + '.png'"
                   @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
               </el-col>
@@ -29,18 +29,20 @@
                 <img
                   id="singleimg"
                   fit="fill"
-                  width="250px"
+                  width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[1] + '.png'"
                   @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
               </el-col>
               <el-col :span="12">
+                <div class="imgspan"> 
                 <p class="imgtitle">Boxplot of {{gene}} Expression</p>
-                <img
+                  <img
                   id="singleimg"
                   fit="fill"
-                  width="450px"
+                  height="250px"
                   :src="'tiger/img/' + geneplots.split(',')[2] + '.png'"
                   @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                </div>
               </el-col>
             </el-row>
               <el-col :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
@@ -187,6 +189,7 @@ export default {
 </script>
 
 <style>
+
 </style>
 
 
