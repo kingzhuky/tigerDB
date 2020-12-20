@@ -72,7 +72,7 @@
               :is="coexpVue"
             ></component>
           </el-tab-pane>
-          <el-tab-pane label="Evolution Analysis" name="evolution">
+          <el-tab-pane label="Trajectory Analysis" name="evolution">
             <component
               ref="evolutionRef"
               :cancer="cancer"

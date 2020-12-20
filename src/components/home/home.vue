@@ -23,7 +23,7 @@
           </el-row> -->
           <el-row>
             <p class="homedesrc">
-              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1145 tumor samples with immunotherapy clinical outcome and 11057 tumor/normal samples from TCGA, and single cell transcriptome data for xxx immune cells of xxx samples, among which xxx immune cells of xxx samples have immunotherapy clinical data. 
+              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1145 tumor samples with immunotherapy clinical outcome and 11057 tumor/normal samples from TCGA, and single cell transcriptome data for ~720,000 immune cells of 225 samples, among which ~66,000 immune cells of 43 samples have immunotherapy clinical data. 
             </p>
           </el-row>
         </el-col>
@@ -35,7 +35,7 @@
           </el-row>
           <el-row>
             <el-col :span="5">
-              <el-card class="box-card" @click.native="openpage('immuneResponse')">
+              <el-card shadow="hover" class="box-card" @click.native="openpage('immuneResponse')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Immune Response</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -46,7 +46,7 @@
               </el-card>
             </el-col>
             <el-col :span="5" >
-              <el-card class="box-card" style="position:relative;left:30px;" @click.native="openpage('immuneSignature')">
+              <el-card shadow="hover" class="box-card" style="position:relative;left:30px;" @click.native="openpage('immuneSignature')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Immune Signature</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -57,7 +57,7 @@
               </el-card>
             </el-col>
             <el-col :span="5">
-              <el-card class="box-card" style="position:relative;left:60px;" @click.native="openpage('singleCellImmune')">
+              <el-card shadow="hover" class="box-card" style="position:relative;left:60px;" @click.native="openpage('singleCellImmune')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Single Cell Immunity</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -68,7 +68,7 @@
               </el-card>
             </el-col>
             <el-col :span="5">
-              <el-card class="box-card" style="position:relative;left:90px;" @click.native="openpage('immuneScreen')">
+              <el-card shadow="hover" class="box-card" style="position:relative;left:90px;" @click.native="openpage('immuneScreen')">
                 <div slot="header" class="clearfix" style="text-align:center;">
                   <span class="homedesrc">Immune Screening</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -183,9 +183,14 @@ export default {
 }
 .box-card {
   width: auto;
+  cursor: pointer;
+  transition: all .5s;
   /* margin-left: 100px; */
   /* margin: auto; */
 }
+/* .clearfix{
+  cursor: pointer;
+} */
 .homeboxrow {
   display: flex !important;
   justify-content: center !important;

@@ -17,7 +17,7 @@
               <el-table-column type="expand" >
                 <template slot-scope="scope">
                   <div class="detailimg" v-loading="loading">
-                    <img width="450px" :src="imgUrlBox" v-show="detailimgShow" />
+                    <img width="300px" :src="imgUrlBox" v-show="detailimgShow" />
                     <div v-show="!detailimgShow">no result</div>
                   </div>
                 </template>

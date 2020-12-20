@@ -28,7 +28,7 @@ its.gene=Args[3] #All\Tcell\Bcell
 click.gene = Args[4]
 click.cluster <-Args[5] #unlist(strsplit(Args[5]%>% str_replace_all('-',' '),split=',')) #T cell_B cell_pDC_NK
 method=Args[6]
-delete.zero= Args[7]
+delete.zero=as.numeric(Args[7])
 
 maintitle <- paste(paste(cancer_type,collapse = "_"),paste(global.cluster,collapse = "_"),
                    its.gene,click.gene,click.cluster,method,delete.zero,sep="-")

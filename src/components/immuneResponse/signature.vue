@@ -1,12 +1,12 @@
 <template>
   <div style="margin-bottom: 15px;">
-    <el-row id="readme">Readme:</el-row>
+    <!-- <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
       1. Input your intersecting signature. (Using comma to seprate genes. eg. PDCD1, CD274) or select known signature.
       <br />2. Use the average expression of a gene set as a user-defined signature.
       <br />3. View the results of different immunotherapy data through differentially expressed box plots and km survival curves.
       <br />4. 4. Use the AUC table and cox forest chart to find the signature more relevant to the prognosis of immunotherapy.
-    </el-card>
+    </el-card> -->
     <el-card class="anaCard">
       <el-row type="flex" justify="center">
         <el-col :span="12">

@@ -90,6 +90,7 @@ export default {
             clickgene: clickgene,
             cluster: cluster.replace(" ", "-"),
             method: this.corMed,
+            delzero: "0",
           },
         })
         .then(function (res) {

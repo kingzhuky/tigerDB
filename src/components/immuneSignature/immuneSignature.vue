@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-row id="readme">Readme:</el-row>
+    <!-- <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
       1. Input genes to analyze the immune signature of pan-cancer species.
       <br />2. Correlation heat map shows the correlation between user-defined genes between pan-cancer species and immune signatures.
       <br />3. Click the correlation heatmap to display the detailed correlation scatter plot.
-    </el-card>
+    </el-card> -->
     <el-card class="anaCard" id="inputCard">
       <el-row>
         <el-col :span="10" :offset="3">
@@ -17,7 +17,7 @@
         <el-col :span="10" :offset="3">
           <el-row>
             <el-input v-model="gene" @keyup.enter.native="signatureDiffPlot" placeholder="SEMA3F"></el-input>
-          </el-row>
+          </el-row> 
         </el-col>
 
         <el-col :span="6" :offset="1">

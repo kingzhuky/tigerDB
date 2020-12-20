@@ -14,14 +14,14 @@
       <div class="infor">
         <el-card>
           <el-row v-loading="evoluloading">
-            <el-row v-show="evolushow" class="detailimg">
+            <el-row v-show="evolushow" class="scdetailimg">
               <!-- <p class="card-title">tSNE</p> -->
             <el-col :span="6" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
               <p class="imgtitle">Cell Types</p>
               <img
                 id="singleimg"
                 fit="fill"
-                width="350px"
+                width="100%"
                 :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
                 @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
@@ -30,7 +30,7 @@
               <img
                 id="singleimg"
                 fit="fill"
-                width="300px"
+                width="100%"
                 :src="'tiger/img/' + evoluplots.split(',')[1]"
                 @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
@@ -39,8 +39,7 @@
               <img
                 id="singleimg"
                 fit="fill"
-                max-height="250px"
-                max-weigh="450px"
+                height="250px"
                 :src="'tiger/img/' + evoluplots.split(',')[0]"
                 @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
@@ -207,6 +206,15 @@ export default {
             console.log(res);
           });
       }
+    },
+    previewImg(url){
+    this.$hevueImgPreview({
+      url: url,
+      multiple: false, // 开启多图预览模式
+      keyboard: true,
+      nowImgIndex: 0, // 多图预览，默认展示第二张图片
+      mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+    })
     },
   },
 

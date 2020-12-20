@@ -1,11 +1,11 @@
 <template>
     <div>
-    <el-row id="readme">Readme:</el-row>
+    <!-- <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
     1. Input genes to analyze the immune signature of pan-cancer species.
     <br />2. Correlation heat map shows the correlation between user-defined genes between pan-cancer species and immune signatures.
     <br />3. Click the correlation heatmap to display the detailed correlation scatter plot.
-    </el-card>
+    </el-card> -->
     <el-row>
         <el-col push="2" span="10" align="center">
           <el-upload
@@ -112,8 +112,8 @@ export default {
       this.isShow = true
     },
     handleEdit(){
-      window.open("/tiger/Download/customSig_example.anno.tsv.zip")
       window.open("/tiger/Download/customSig_example.exp.tsv.zip")
+      window.open("/tiger/Download/customSig_example.anno.tsv.zip")
     }
   },
   components: {

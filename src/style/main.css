@@ -44,6 +44,10 @@ div#collapseCard {
 } 
 .detailimg {
   padding-bottom: 20px;
+  text-align: center;
+}
+.scdetailimg {
+  padding-bottom: 20px;
   height: 200px;
   text-align: center;
 }

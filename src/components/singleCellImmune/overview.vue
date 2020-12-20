@@ -125,12 +125,17 @@ export default {
         })
         .then((res) => {
           this.gloCluoptions = res.data.list;
+          console.log(this.gloCluoptions)
           // let count = 0;
           for (let gloclu of this.gloCluoptions) {
             // console.log("son:"+ count++)
             // console.log(gloclu["GlobalCluster"])
+            // console.log(gloclu["GlobalCluster"])
             this.Plot(this.cancer, gloclu["GlobalCluster"]);
           }
+            // console.log(this.gloclures)
+            // this.gloclures = this.gloclures.sort()
+            // console.log(this.gloclures)
         });
     },
 
@@ -147,6 +152,7 @@ export default {
         .then(function (res) {
           if (res.data.status == 0) {
             that.gloclures.push(gloclu);
+            // console.log(gloclu)
             that.plotsres[gloclu] = res.data.output[0].split(",");
             that.loading = false;
           }

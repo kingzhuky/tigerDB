@@ -137,6 +137,15 @@ export default {
           console.log(res);
         });
     },
+    previewImg(url){
+      this.$hevueImgPreview({
+        url: url,
+        multiple: false, // 开启多图预览模式
+        keyboard: true,
+        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+      })
+    },
   },
   components: {
     "v-goTop": goTop,

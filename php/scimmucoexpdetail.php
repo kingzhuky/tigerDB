@@ -6,12 +6,13 @@ $gloclu=trim($_GET['gloclu']);
 $gene=trim($_GET['gene']); 
 $clickgene=$_GET['clickgene']; 
 $cluster=$_GET['cluster']; 
-$method=$_GET['method']; 
+$method=$_GET['method'];
+$isdeletezero=$_GET['delzero'];
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript pic.scatter.R $cancer $gloclu $gene $clickgene \"$cluster\" $method";
+  $zhiling="sudo Rscript pic.scatter.R $cancer $gloclu $gene $clickgene \"$cluster\" $method $isdeletezero";
 }else{
-  $zhiling="Rscript pic.scatter.R $cancer $gloclu $gene $clickgene \"$cluster\" $method";
+  $zhiling="Rscript pic.scatter.R $cancer $gloclu $gene $clickgene \"$cluster\" $method $isdeletezero";
 }
 
 exec($zhiling,$output,$status);

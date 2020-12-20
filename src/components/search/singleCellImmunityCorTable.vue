@@ -114,6 +114,7 @@ export default {
         clickgene: geneb,
         cluster: CellType,
         method: "spearman",
+        delzero: "0",
       };
       this.$http
         .get("/tiger/scimmucoexpdetail.php", {
