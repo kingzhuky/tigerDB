@@ -57,7 +57,6 @@ maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_
                       geom_violin()+
                       geom_boxplot(width = .4)+
                       theme_bw() + labs(x= element_blank(),y = ylab) +
-                      ggtitle("Differential Expression between Pre-Therapy and Post-Therapy") +
                       theme(plot.title=element_text(size = 20, hjust=0.5),
                             axis.title.y = element_text(size = 15, face = "plain", color = "black"),
                             axis.text = element_text(size = 15, face = "plain", color = "black")) +

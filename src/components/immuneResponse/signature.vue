@@ -131,12 +131,13 @@
           </el-col>
           <el-col :span="8" :offset="1" v-show="resultShow">
             <div v-loading="loadingDiff" class="detailimg">
+              <p class="imgtitle">Differential Expression between R and NR</p>
               <img id="responseplot" :src="imgUrlBox" />
             </div>
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
             <div v-loading="loadingDiff" class="detailimg">
-              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="450" header-row-class-name="tableHead" :data="tableData" @row-click="openDetails" style="100%">
+              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="500" header-row-class-name="tableHead" :data="tableData" @row-click="openDetails" style="100%">
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
                 <el-table-column prop="Signature_Cite" label="Description" width="180%" ></el-table-column>
                 <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" > 
@@ -190,6 +191,7 @@
           </el-col>
           <el-col :span="8" :offset="1" v-show="surresultShow">
             <div v-loading="loadingSur" class="detailimg">
+              <p class="imgtitle">Survival Analysis</p>
               <img width="450px" :src="imgUrlSign" />
             </div>
           </el-col>
@@ -198,7 +200,7 @@
               <el-table
                 ref="singleTable"
                 border
-                max-height="420"
+                max-height="500"
                 :data="tableDataSur"
                 v-loading="loadingSur"
                 :row-style="tableCellStyleSur"
@@ -621,5 +623,8 @@ button#resetbt {
   font-size: 18px;
   color: #000000;
   font-weight:bold;
+}
+.el-table--enable-row-hover .el-table__body tr:hover{
+  cursor: pointer;
 }
 </style>

@@ -6,8 +6,19 @@
     <br />2. Correlation heat map shows the correlation between user-defined genes between pan-cancer species and immune signatures.
     <br />3. Click the correlation heatmap to display the detailed correlation scatter plot.
     </el-card> -->
+    <el-card id="scummuviewer">
+    <p class="card-title">Upload Matrix</p>
     <el-row>
-        <el-col push="2" span="10" align="center">
+
+      <!-- <el-col :span="10">
+        <el-row>
+          <span id="homespan">Search Ligand or Receptor</span>
+        </el-row>
+      </el-col> -->
+    </el-row>
+    <br />
+    <el-row>
+        <el-col span="6" push="2" align="center">
           <el-upload
             class="upload-demo"
             action="/tiger/upload.php"
@@ -18,35 +29,70 @@
             :limit="1"
             :on-exceed="handleExceed"
             :on-success="handleAvatarSuccess">
-            <el-button id="immusignatureplot">Upload Expression Matrix</el-button>
+              <el-button id="immusignatureplot">Upload Expression Matrix  
+                <el-tooltip class="item" effect="light" trigger='hover' content="A RPKM matrix of Bluk RNA-Seq with tab separated" placement="top-start">
+                    <i class="el-icon-info"></i>
+                  </el-tooltip>
+                </el-button>
+            <!-- <el-button id="immusignatureplot">Upload Expression Matrix</el-button> -->
           </el-upload>
         </el-col>
-        <el-col push="8" span="2">
-            <el-button id="immusignatureplot" @click="handleEdit">Example</el-button>
+        <el-col span="6" push="2" align="center">
+            <p class=downloadtext >
+              <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a>
+              the example expression matrix.</p>
         </el-col>
         
+        <!-- <el-col push="8" span="2">
+            
+        </el-col> -->
     </el-row>
-    <br />
+    <br/>
     <el-row>
-      <el-col push="2" span="10" align="center">
-          <el-upload
-            class="upload-demo"
-            action="/tiger/upload.php"
-            name="exptable"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
-            :limit="1"
-            :on-exceed="handleExceed"
-            :on-success="handleAvatarSuccess2">
-            <el-button id="immusignatureplot">Upload Group Anno File</el-button>
-          </el-upload>
+        <el-col span="6" push="2">
+            <div class="tiggeneinfo">
+              <div id="collapseCard">
+                <el-collapse>
+                  <el-collapse-item title="Optional" name="1">
+                    <template slot="title">
+                      Optional
+                      <i class="el-icon-setting"></i>
+                    </template>
+                  <el-upload
+                    class="upload-demo"
+                    action="/tiger/upload.php"
+                    name="exptable"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :before-remove="beforeRemove"
+                    :limit="1"
+                    :on-exceed="handleExceed"
+                    :on-success="handleAvatarSuccess2">
+                      <el-button id="immusignatureplot">Upload Group Anno Table  
+                        <el-tooltip class="item" effect="light" trigger='hover' content="Tab-delimited table consisting of two columns (sample_id group)" placement="top-start">
+                            <i class="el-icon-info"></i>
+                          </el-tooltip>
+                        </el-button>
+                  </el-upload>
+                  <p class=downloadtext>
+                    <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a>
+                    the example anno table.</p>
+                  </el-collapse-item>
+                </el-collapse>
+              </div>
+            </div>
         </el-col>
-      <el-col push="8" span="2">
+        <br/>
+       <el-col push="12" span="3">
         <el-button id="immusignatureplot" @click="submitAnalysis">Submit</el-button>
       </el-col>
     </el-row>
-    </br>
+    <br />
+
+     <el-row>
+
+    </el-row>
+    <br/>
     <el-row>
       <v-customdetail
         ref="immuneSigCustomDetail"
@@ -56,6 +102,7 @@
         :taskuid="taskuid"
       ></v-customdetail>
     </el-row>
+  </el-card>
     </div>
 </template>
 
@@ -131,6 +178,10 @@ export default {
   width: 100%;
   background-color: rgb(20, 146, 140) !important;
   color: white;
+  font-weight: bold;
+}
+.item{
+  font-size: 12px;
   font-weight: bold;
 }
 </style>

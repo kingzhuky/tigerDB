@@ -47,6 +47,7 @@
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
             <div class="detailimg" v-loading="loading">
+              <p class="imgtitle">Survival Analysis</p>
               <img id="surplot" :src="imgUrlBox" />
             </div>
           </el-col>
@@ -257,7 +258,9 @@ export default {
 img#surplot {
     width: 400px;
 }
-
+.el-table--enable-row-hover .el-table__body tr:hover{
+  cursor: pointer;
+}
 </style>
 
 

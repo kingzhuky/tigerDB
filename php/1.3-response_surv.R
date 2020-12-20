@@ -5,6 +5,7 @@ library(survminer)
 library(data.table)
 library(jsonlite)
 
+Args <- commandArgs(T)
 #Args <- c("TP53_CD274","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","gene","CD3D","0.5","pdf")
 #Args <- c("TP53","ccRCC_Braun_2020_EVEROLIMUS","None","None","0.5","png")
 #Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL","None","None","0.2","png")
@@ -81,7 +82,6 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
     response.surv.plot <- ggsurvplot(sfit, conf.int = TRUE, pval = TRUE, risk.table = TRUE,
                                      legend.labs = c("High", "Low"), legend.title = title.gene,
-                                     title = ggtitle("Survival Analysis"),
                                      xlab = "Time (Days)",
                                      palette = c("dodgerblue2", "orchid2"),
                                      risk.table.height = 0.3,

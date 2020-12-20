@@ -89,7 +89,6 @@ response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
   geom_boxplot(width = .4) +
   geom_jitter(color="black", size=0.7, alpha=.9) +
   theme_bw() + labs(x= element_blank(),y = ylab) +
-  ggtitle("Differential Expression between R and NR") +
   theme(legend.position="none",
         plot.title= element_text(size = 20, hjust=0.5),
         axis.title.y = element_text(size = 15, face = "plain", colour = "black"),

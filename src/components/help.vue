@@ -19,8 +19,8 @@
         <el-divider></el-divider>
         <p>TIGER is composed of four major modules, including Immune Response, Immune Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
       </div>
-      <h2>Quick start</h2>
-      <p>When users enter the webpage, they can see a quick search bar at the bottom of the page. Users can search for the gene symbol of interest to obtain results with significant differences in all data sets, such as the difference between tumor tissues and normal tissues in different cell types, the difference between immunotherapy response and non-response samples.</p>
+      <h2>Quick Search</h2>
+      <p>When users enter the website, they can see a quick search bar at the bottom of the page. Users can search for the gene symbol of interest to obtain results with significant differences in all data sets, such as the difference between tumor tissues and normal tissues in different cell types, the difference between immunotherapy response and non-response samples.</p>
       <div align="center">
         <img alt="help1" v-lazy="help1" />
       </div>
@@ -47,16 +47,26 @@
       <div align="center">
         <img alt="help3" v-lazy="help5" />
       </div>
-      <h3 class="sub">Signature Analysis of Immune Response</h3>
+      <h3 class="sub">Geneset Query</h3>
       <p>Users can customize the signature or choose whether the immune signature analysis in the article will affect the prognosis of immunotherapy. In this way, find the signature or gene that is potentially beneficial to the prognosis.</p>
 
       <h2 class="sub">Module of Immune Signature</h2>
+      <h3 class="sub">Overview</h3>
+      <!-- <p>By inputting a single gene or gene set as a signature, the user performs correlation analysis with known signatures in pan-cancer species. TIGER provides an interactive heat map of correlation coefficients. You can see more detailed correlation results with user-defined signatures by clicking on different immune signatures. Carry out pan-cancer association analysis in the TCGA data to find genes or gene sets that are more relevant to the immune Signature in different cancers, and combine them with the results of the Immune Response module to be able to identify more cancers Find genes or gene sets related to immunotherapy, and help research and analysis of immunotherapy prognosis</p> -->
+      <div align="center">
+        <!-- <img alt="help2" v-lazy="help6" /> -->
+      </div>
+      <h3 class="sub">Custom Analysis</h3>
+      <h3 class="sub">Signature Correlation Analysis</h3>
       <p>By inputting a single gene or gene set as a signature, the user performs correlation analysis with known signatures in pan-cancer species. TIGER provides an interactive heat map of correlation coefficients. You can see more detailed correlation results with user-defined signatures by clicking on different immune signatures. Carry out pan-cancer association analysis in the TCGA data to find genes or gene sets that are more relevant to the immune Signature in different cancers, and combine them with the results of the Immune Response module to be able to identify more cancers Find genes or gene sets related to immunotherapy, and help research and analysis of immunotherapy prognosis</p>
       <div align="center">
         <img alt="help2" v-lazy="help6" />
       </div>
-
       <h2 class="sub">Module of Single-cell Immunity</h2>
+      <h3 class="sub">Overview</h3>
+      <h3 class="sub">Cell Marker Analysis</h3>
+      <h3 class="sub">Differential Expression Analysis</h3>
+      <h3 class="sub">Differential Expression Analysis</h3>
       <p>Single-cell sequencing results in cancer show differences in different immune cell types. At the single-cell level, further analysis of genes analyzed in immunotherapy and immune signatures provides more details, including the distribution of genes in different immune cell types (tSNE), and differences in cell types between immunotherapy response and non-response (boxplot)</p>
       <div align="center">
         <img alt="help2" v-lazy="help7" />

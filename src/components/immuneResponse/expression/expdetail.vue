@@ -72,7 +72,8 @@
           </el-col>
           <el-col :span="8" :offset="1" v-show="resultShow">
             <div class="detailimg" v-loading="loading">
-              <img style="position:relative;top:10px;right:0px;" width="420px" :src="imgUrlBox" />
+              <p class="imgtitle">Differential Expression between R and NR</p>
+              <img style="position:relative;top:10px;right:0px;" width="350px" :src="imgUrlBox" />
             </div>
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
@@ -85,6 +86,7 @@
                 v-loading="loading"
                 :row-style="tableCellStyle"
                 header-row-class-name="tableHead"
+                cursor="pointer"
                 @row-click="openDetails"
                 style="100%"
               >
@@ -287,6 +289,10 @@ export default {
   color: #000000;
   font-weight:bold;
 }
+.el-table--enable-row-hover .el-table__body tr:hover{
+  cursor: pointer;
+}
+
 </style>
 
 

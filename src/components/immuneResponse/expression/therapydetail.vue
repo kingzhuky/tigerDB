@@ -25,6 +25,7 @@
             <el-row class="detail1">Log Scale</el-row>
             <br />
             <el-row>
+              <el-radio v-model="logScale" label="TRUE">Yes</el-radio>
               <el-radio v-model="logScale" label="FALSE">No</el-radio>
             </el-row>
             <br />
@@ -32,8 +33,9 @@
               <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
             </el-row>
           </el-col>
-          <el-col v-show="resultShow" :span="10" :offset="4" v-loading="loading">
-            <img style="position:relative;top:0px;right:0px;" width="420px" :src="imgUrlBox" />
+          <el-col v-show="resultShow" :span="8" :offset="5" v-loading="loading">
+            <p class="imgtitle">Differential Expression between Post-Therapy and Pre-Therapy</p>
+            <img style="position:relative;left:30px;right:0px;" width="400px" :src="imgUrlBox" />
           </el-col>
           <el-col  :span="15" v-show="!resultShow" v-loading="loading">
             <div id="norult">No result</div>
