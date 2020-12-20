@@ -55,8 +55,7 @@ if (file.exists(genefile)){
       stat_boxplot(geom = "errorbar",aes(ymax=..ymin..),width=0.2,color="black")+mytheme+
       theme(legend.position = 'none',axis.title.x = element_blank())+labs(y='Gene Expression')+
       theme(axis.ticks = element_blank(),axis.title=element_text(size=rel(1.2)))+
-      scale_fill_manual(values = colors)+theme(axis.text.x = element_text(angle=45,hjust=1, vjust=1,size = rel(1.2),color="black"),axis.text.y = element_text(size = rel(1.5),color="black"),plot.title = element_text(size=15))+
-    labs(title = paste0('Boxplot of ',gene,' Expression'))
+      scale_fill_manual(values = colors)+theme(axis.text.x = element_text(angle=45,hjust=1, vjust=1,size = rel(1.2),color="black"),axis.text.y = element_text(size = rel(1.5),color="black"),plot.title = element_text(size=15))
     
 
   length=now.data$recluster %>% unique() %>% length()

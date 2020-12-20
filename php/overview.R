@@ -54,7 +54,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   
   #----分群图-----
   p1=ggplot(meta,aes(x=UMAP_1,y=UMAP_2,color=recluster))+geom_point(size=0.3)+mytheme+scale_color_manual(values = my36colors)+
-    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = 'Cell Types')+ theme(
+    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
     panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
     axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
     axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
@@ -95,7 +95,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
       theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.5),color="black"),
             axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
             panel.grid.major=element_line(color="grey95"),
-            panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))+labs(title = 'Group Difference of each cluster')
+            panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
     
     pic.name3=paste('Boxplot-Response',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
     if(global.cluster=='Tcell'){
@@ -116,7 +116,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
       theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.2),color="black"),
             axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"),axis.title=element_text(size=rel(1.5)),
             panel.grid.major=element_line(color="grey95"),legend.text = element_text(size=15),legend.title =  element_text(size=15),
-            panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))+labs(title = 'Group Difference of each cluster')
+            panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
     pic.name4=paste('Boxplot-tissue',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
     
     if(global.cluster=='Tcell'){

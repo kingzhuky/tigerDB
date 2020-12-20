@@ -20,12 +20,32 @@
       <div class="infor" v-loading="evoluloading">
         <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
-          <el-row class="detailimg">
+          <!-- <el-row class="detailimg">
             <el-col :span="10" :offset="1">
               <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]" />
             </el-col>
             <el-col :span="10" :offset="1">
               <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]" />
+            </el-col>
+          </el-row> -->
+          <el-row class="detailimg">
+            <el-col :span="10" :offset="1">
+              <p class="imgtitle">Pseudo-time of cells</p>
+              <img
+                id="singleimg"
+                fit="fill"
+                width="450px"
+                :src="'tiger/img/'+plotsres[gloclu][0]"
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][0],'tiger/img/'+plotsres[gloclu][1]])">
+            </el-col>
+            <el-col :span="10" :offset="1">
+              <p class="imgtitle">Pseudo-time of cells with {{searchinput}} exopression</p>
+              <img
+                id="singleimg"
+                fit="fill"
+                width="450px"
+                :src="'tiger/img/'+plotsres[gloclu][1]"
+                @click="previewImg(['tiger/img/'+plotsres[gloclu][1],'tiger/img/'+plotsres[gloclu][0]])">
             </el-col>
           </el-row>
         </el-card>

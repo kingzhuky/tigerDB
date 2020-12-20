@@ -41,14 +41,16 @@ if ($type=="celltype"){
 }else if($type=="pathway"){
   if(PATH_SEPARATOR==':'){
     $zhiling="sudo Rscript pic.marker.pathway.R $cancer $gloclu \"$gene\"";
+    $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }else{
     $zhiling="Rscript pic.marker.pathway.R $cancer $gloclu \"$gene\"";
+    $zhiling2="Rscript overview.R $cancer $gloclu";
   }
 }else if($type=="pathwaydiff"){
   if(PATH_SEPARATOR==':'){
-    $zhiling="sudo Rscript pic.TN.pathway.R $cancer $gloclu $gene";
+    $zhiling="sudo Rscript pic.TN.pathway.R $cancer $gloclu \"$gene\"";
   }else{
-    $zhiling="Rscript pic.TN.pathway.R $cancer $gloclu $gene";
+    $zhiling="Rscript pic.TN.pathway.R $cancer $gloclu \"$gene\"";
   }
 }else{
   $sql = "SELECT GlobalCluster FROM homescinfo WHERE datasetid = '".$cancer."' AND CellType='".$celltype."'";
@@ -81,6 +83,7 @@ exec($zhiling2,$output2,$status2);
 //执行成功都是返回0
 echo json_encode(array(
    "zhiling" =>$zhiling,
+   "zhiling2" => $zhiling2,
    "output" => $output,
    "output2" => $output2,
    "sql"=>$sql,

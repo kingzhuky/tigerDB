@@ -47,14 +47,15 @@
             <span>High NES&gt;0</span>
           </div>
           <!-- 详细页显示与否 -->
-          <v-scpathwaydetail
-            ref="detailPlot"
+          <v-scpathwaydetail2
+            ref="pathwaydetailPlot"
             v-show="isShow"
             :pathway="clickGene"
             :celltype="celltype"
             :cancer="cancer"
             :gloclu="gloclu"
-          ></v-scpathwaydetail>
+            :tabtype="tabactiveName"
+          ></v-scpathwaydetail2>
         </el-tab-pane>
         <el-tab-pane label="Tumor VS Normal" name="diff">
             <el-col :span="4" :offset="20"> 
@@ -95,22 +96,22 @@
             ></el-table-column>
             <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
           </el-table>
-            <div class="colorbar">
-              <span>Low NES&lt;0</span>
-              <span class="heatMapTable--colorbar"></span>
-              <span>High NES&gt;0</span>
-              
-            </div>
-            <!-- 详细页显示与否 -->
-            <v-scpathwaydetail
-              ref="detailPlot"
-              v-show="isShow"
-              :pathway="clickGene"
-              :celltype="celltype"
-              :cancer="cancer"
-              :gloclu="gloclu"
-              :tabtype="tabactiveName"
-            ></v-scpathwaydetail>
+          <div class="colorbar">
+            <span>Low NES&lt;0</span>
+            <span class="heatMapTable--colorbar"></span>
+            <span>High NES&gt;0</span>
+            
+          </div>
+          <!-- 详细页显示与否 -->
+          <v-scpathwaydetail
+            ref="pathwaydetailPlot"
+            v-show="isShow"
+            :pathway="clickGene"
+            :celltype="celltype"
+            :cancer="cancer"
+            :gloclu="gloclu"
+            :tabtype="tabactiveName"
+          ></v-scpathwaydetail>
         </el-tab-pane>
       </el-tabs>
 
@@ -158,7 +159,7 @@ export default {
       gloclu:"",
       whetherrnr:true,
       whetherdiff:true,
-      tabactiveName: 'cluster',
+      tabactiveName: 'diff',
     };
   },
 
@@ -240,7 +241,9 @@ export default {
       this.sortOrder = column.order;
       this.loadpage = 1;
       this.tableData = [];
+
       this.getTableData(this.loadpage, column.prop, column.order);
+
     },
 
     //顶部加载更多
@@ -357,7 +360,7 @@ export default {
         this.clickGene = row["gene"];
         this.celltype=column["label"]
         this.gloclu = column["type"];
-        this.$refs.detailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
+        this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
         toTarget(820);
       }
     },
@@ -379,6 +382,7 @@ export default {
   },
   components: {
     "v-scpathwaydetail": () => import("./scpathwaydetail.vue"),
+    "v-scpathwaydetail2": () => import("./scpathwaydetail.vue"),
   },
 };
 </script>

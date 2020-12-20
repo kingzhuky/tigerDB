@@ -77,7 +77,7 @@ if (file.exists(genefile)){
       
       #------Umap-----------
       p1=ggplot(now.now.data,aes(x=UMAP_1,y=UMAP_2,color=Response))+geom_point(size=0.3)+mytheme+scale_color_manual(values = colors[c(6,9,8,2)])+
-        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = 'Cell Types')+ theme(
+        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
           panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
           axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
@@ -94,7 +94,7 @@ if (file.exists(genefile)){
           axis.text.x = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),plot.title = element_text(size=15),panel.grid.major=element_line(color="grey96"),
           panel.grid.minor=element_line(color="grey96")
-        )+labs(title = paste0('UMAP Plot of ',gene,' Expression'))
+        )
       
       maintitle2=paste0(maintitle,'.umap.expr.png')
       ggsave(paste0(resPath,maintitle2,'.png'),width =110,height =80, unit = "mm", dpi=100,p)
@@ -105,7 +105,7 @@ if (file.exists(genefile)){
         theme(axis.title = element_blank(),axis.text.x = element_text(angle=30,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"))+
         theme(axis.ticks = element_blank(),axis.title=element_text(size=rel(1.2)))+
         theme(axis.text.x = element_text(angle=45,hjust=1, vjust=1,size = rel(1.2),color="black"),axis.text.y = element_text(size = rel(1.5),color="black"),plot.title = element_text(size=15))+
-        theme(axis.title.x=element_blank())+labs(y='Gene Expression',title=paste0('Boxplot of ',gene,' Expression'))
+        theme(axis.title.x=element_blank())+labs(y='Gene Expression')
       
       
       length=now.now.data$recluster %>% unique() %>% length()
@@ -138,7 +138,7 @@ if (file.exists(genefile)){
       
       #------Umap-----------
       p1=ggplot(now.now.data,aes(x=UMAP_1,y=UMAP_2,color=Tissue))+geom_point(size=0.3)+mytheme+scale_color_manual(values = colors[c(6,9,8,2)])+
-        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = 'Cell Types')+ theme(
+        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
           panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
           axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
@@ -155,7 +155,7 @@ if (file.exists(genefile)){
           axis.text.x = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),plot.title = element_text(size=15),panel.grid.major=element_line(color="grey96"),
           panel.grid.minor=element_line(color="grey96")
-        )+labs(title = paste0('UMAP Plot of ',gene,' Expression'))
+        )
       
       maintitle2=paste0(maintitle,'.umap.expr')
       ggsave(paste0(resPath,maintitle2,'.png'),width =110,height =80, unit = "mm", dpi=100,p)
@@ -166,7 +166,7 @@ if (file.exists(genefile)){
         theme(axis.title = element_blank(),axis.text.x = element_text(angle=30,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"))+
         theme(axis.ticks = element_blank(),axis.title=element_text(size=rel(1.2)))+
         theme(axis.text.x = element_text(angle=45,hjust=1, vjust=1,size = rel(1.2),color="black"),axis.text.y = element_text(size = rel(1.5),color="black"),plot.title = element_text(size=15))+
-        theme(axis.title.x=element_blank())+labs(y='Gene Expression',title=paste0('Boxplot of ',gene,' Expression'))
+        theme(axis.title.x=element_blank())+labs(y='Gene Expression')
         
       
       length=now.now.data$recluster %>% unique() %>% length()

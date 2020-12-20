@@ -1,4 +1,4 @@
-library(stringr);library(plyr);library(ggplot2);library(data.table);library(magrittr);library(ggpubr);library(Hmisc);library(jsonlite)
+library(stringr);library(plyr);library(ggplot2);library(data.table);library(magrittr);library(ggpubr);library(Hmisc);library(jsonlite);library(msigdbr);
 colors=c('#D6E7A3',"orange1", 'lightblue','#7142AC',"darkcyan","royalblue1","red3",'#53A85F',"deeppink",
          "mediumvioletred","gold","darkorange2", "tan2","darkorange2","darkorchid","chocolate4","darkred","lightskyblue","gold1")
 mytheme <- theme_bw() + 
@@ -28,7 +28,7 @@ global.cluster=Args[2] #All\Tcell\Bcell
 #sub.cluster <- unlist(strsplit(Args[3]%>% str_replace_all('-',' '),split=',')) #T cell_B cell_pDC_NK
 pathway = Args[3]
 
-maintitle <- paste(paste(cancer_type,collapse = "_"),paste(global.cluster,collapse = "_"),pathway,sep="-")
+maintitle <- paste(paste(cancer_type,collapse = "_"),paste(global.cluster,collapse = "_"),gsub(" ","_",pathway),sep="-")
 
 m_df=msigdbr(species = 'Homo sapiens',category = 'H')
 hset=m_df %>% split(x=.$gene_symbol,f=.$gs_name)
@@ -80,12 +80,12 @@ metadata[,'score']=gene.exp.list
 
       #------Umap-----------
       p1=ggplot(metadata,aes(x=UMAP_1,y=UMAP_2,color=Response))+geom_point(size=0.3)+mytheme+scale_color_manual(values = colors[c(6,9,8,2)])+
-        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = 'Cell Types')+ theme(
+        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
           panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
           axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
         )
-      maintitle1=paste0(maintitle,'.umap.response.png')
+      maintitle1=paste0(maintitle,'.umap.response')
       ggsave(paste0(resPath,maintitle1,'.png'),width =110,height =80, unit = "mm", dpi=100,p1)
       
       #---Gene expression Umap--------
@@ -97,7 +97,7 @@ metadata[,'score']=gene.exp.list
           panel.grid.minor=element_line(color="grey96")
         )+labs(title = paste0('UMAP Plot of ',pathway,' score'))
       
-      maintitle2=paste0(maintitle,'.umap.expr.png')
+      maintitle2=paste0(maintitle,'.umap.expr')
       ggsave(paste0(resPath,maintitle2,'.png'),width =110,height =80, unit = "mm", dpi=100,p)
       
       #---Gene expression boxplot--------
@@ -106,13 +106,13 @@ metadata[,'score']=gene.exp.list
         theme(axis.title = element_blank(),axis.text.x = element_text(angle=30,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"))+
         theme(axis.ticks = element_blank(),axis.title=element_text(size=rel(1.2)))+
         theme(axis.text.x = element_text(angle=45,hjust=1, vjust=1,size = rel(1.2),color="black"),axis.text.y = element_text(size = rel(1.5),color="black"),plot.title = element_text(size=15))+
-        theme(axis.title.x=element_blank())+labs(y='Gene Expression',title=paste0('Boxplot of ',pathway,' score'))
+        theme(axis.title.x=element_blank())+labs(y='Gene Expression')
       
       
       length=metadata$recluster %>% unique() %>% length()
       
-      maintitle3=paste0(maintitle,'.boxplot.expr.res-nores.png')
-      ggsave(paste0(resPath,'',maintitle3),p,width = length*12+40,height =80, unit = "mm", dpi=100)
+      maintitle3=paste0(maintitle,'.boxplot.expr.res-nores')
+      ggsave(paste0(resPath,'',maintitle3,".png"),p,width = length*12+40,height =80, unit = "mm", dpi=100)
       maintitle4=paste(maintitle1,maintitle2,maintitle3,sep=",")
       
       
@@ -130,12 +130,12 @@ metadata[,'score']=gene.exp.list
 
       #------Umap-----------
       p1=ggplot(metadata,aes(x=UMAP_1,y=UMAP_2,color=Tissue))+geom_point(size=0.3)+mytheme+scale_color_manual(values = colors[c(6,9,8,2)])+
-        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = 'Cell Types')+ theme(
+        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
           panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
           axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
         )
-      maintitle1=paste0(maintitle,'.umap.tissue.png')
+      maintitle1=paste0(maintitle,'.umap.tissue')
       ggsave(paste0(resPath,maintitle1,'.png'),width =110,height =80, unit = "mm", dpi=100,p1)
       
       #---Gene expression Umap--------
@@ -145,9 +145,9 @@ metadata[,'score']=gene.exp.list
           axis.text.x = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),plot.title = element_text(size=15),panel.grid.major=element_line(color="grey96"),
           panel.grid.minor=element_line(color="grey96")
-        )+labs(title = paste0('UMAP Plot of ',pathway,' score'))
+        )
       
-      maintitle2=paste0(maintitle,'.umap.expr.png')
+      maintitle2=paste0(maintitle,'.umap.expr')
       ggsave(paste0(resPath,maintitle2,'.png'),width =110,height =80, unit = "mm", dpi=100,p)
       
       #---Gene expression boxplot--------
@@ -156,13 +156,13 @@ metadata[,'score']=gene.exp.list
         theme(axis.title = element_blank(),axis.text.x = element_text(angle=30,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"))+
         theme(axis.ticks = element_blank(),axis.title=element_text(size=rel(1.2)))+
         theme(axis.text.x = element_text(angle=45,hjust=1, vjust=1,size = rel(1.2),color="black"),axis.text.y = element_text(size = rel(1.5),color="black"),plot.title = element_text(size=15))+
-        theme(axis.title.x=element_blank())+labs(y='Gene Expression',title=paste0('Boxplot of ',pathway,' score'))
+        theme(axis.title.x=element_blank())+labs(y='Gene Expression')
         
       
       length=metadata$recluster %>% unique() %>% length()
       
-      maintitle3=paste0(maintitle,'.boxplot.expr.TN.png')
-      ggsave(paste0(resPath,'',maintitle3),p,width = length*12+40,height =80, unit = "mm", dpi=100)
+      maintitle3=paste0(maintitle,'.boxplot.expr.TN')
+      ggsave(paste0(resPath,'',maintitle3,'.png'),p,width = length*12+40,height =80, unit = "mm", dpi=100)
       maintitle4=paste(maintitle1,maintitle2,maintitle3,sep=",")
 
   cat(maintitle4)

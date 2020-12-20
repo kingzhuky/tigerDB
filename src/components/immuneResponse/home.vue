@@ -61,6 +61,7 @@ export default {
           break;
         case "pathway":
           this.pathwayVue = diffpathway;
+          break;
         case "survival":
           this.survivalVue = wersurvival;
           break;

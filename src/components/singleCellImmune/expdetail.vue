@@ -15,7 +15,7 @@
         <el-card>
           <el-row v-loading="geneloading">
             <el-row class="detailimg" v-show="geneshow">
-              <el-col :span="6" v-show="evolushow2">
+              <el-col :span="6">
                 <p class="imgtitle">Cell Types</p>
                 <img
                   id="singleimg"
@@ -24,7 +24,7 @@
                   :src="'tiger/img/' + geneplots.split(',')[0] + '.png'"
                   @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
               </el-col>
-              <el-col :span="6" v-show="evolushow2">
+              <el-col :span="6">
                 <p class="imgtitle">UMAP Plot of {{gene}} Expression</p>
                 <img
                   id="singleimg"
@@ -33,7 +33,7 @@
                   :src="'tiger/img/' + geneplots.split(',')[1] + '.png'"
                   @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
               </el-col>
-              <el-col :span="12" v-show="evolushow2">
+              <el-col :span="12">
                 <p class="imgtitle">Boxplot of {{gene}} Expression</p>
                 <img
                   id="singleimg"
@@ -78,7 +78,6 @@ export default {
     return {
       // overviewimg: "",
       geneshow: true,
-      geneshow2: true,
       tableLoading: "",
       normalMed: "None",
       normalGene: "",
@@ -154,16 +153,9 @@ export default {
                 that.geneplots = res.data.output[0];
               }
               //that.geneplots = res.data.output[0];
-              that.geneloading = false;
-            }
-            if (res.data.status2 == 0) {
-              if (res.data.output2[0] === "0") {
-                that.geneshow2 = false;
-              } else {
-                that.geneshow2 = true;
-                // setTimeout((that.overviewimg = res.data.output2[0]), 1000);
-                // that.overviewimg = res.data.output2[0]
-              }
+            console.log(that.geneloading)
+            that.geneloading = false;
+            console.log(that.geneloading)
             }
           })
           .catch(function (res) {

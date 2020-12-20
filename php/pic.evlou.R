@@ -52,7 +52,7 @@ if (file.exists(genefile)){
       axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15),        
       panel.grid.major=element_line(color="grey96"),
       panel.grid.minor=element_line(color="grey96")
-    )+labs(title = 'Pseudo-time of cells')
+    )
   
   
   ggsave(paste0(resPath,'',maintitle,'.p6.png'),width = 130,height =100, unit = "mm", dpi=100,p)
@@ -80,7 +80,7 @@ if (file.exists(genefile)){
         axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15),        
         panel.grid.major=element_line(color="grey96"),
         panel.grid.minor=element_line(color="grey96")
-      )+labs(title = paste0('Pseudo-time of cells with ',gene,' expression'))
+      )
     
     
     ggsave(paste0(resPath,'',maintitle,'.p7.png'),width = 120,height =100, unit = "mm", dpi=100,p)

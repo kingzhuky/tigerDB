@@ -29,7 +29,7 @@ pathway = Args[3]
 
 
 
-maintitle <- paste(paste(cancer_type,collapse = "_"),paste(global.cluster,collapse = "_"),pathway,sep="-")
+maintitle <- paste(paste(cancer_type,collapse = "_"),paste(global.cluster,collapse = "_"),gsub(" ","_",pathway),sep="-")
 
 
 m_df=msigdbr(species = 'Homo sapiens',category = 'H')
@@ -71,8 +71,8 @@ my.data=metadata
 
   length=metadata$recluster %>% unique() %>% length()
       
-  maintitle1=paste0(maintitle,'.boxplot.pathway,score.png')
-  ggsave(paste0(resPath,maintitle1),p,width = length*12+12,height =80, unit = "mm", dpi=100)
+  maintitle1=paste0(maintitle,'.boxplot.pathway.score')
+  ggsave(paste0(resPath,maintitle1,'.png'),p,width = length*12+12,height =80, unit = "mm", dpi=100)
     
     
     
@@ -87,9 +87,9 @@ my.data=metadata
       panel.grid.minor=element_line(color="grey96")
     )+labs(title = paste0('UMAP Plot of ',pathway,' score'))
   
-  maintitle2=paste0(maintitle,'.umap.pathway,score.png')
-  ggsave(paste0(resPath,'',maintitle2),p,width = 110,height =80, unit = "mm", dpi=100)
-  maintitle5=paste(maintitle1,maintitle2,sep=",")
+  maintitle2=paste0(maintitle,'.umap.pathway.score')
+  ggsave(paste0(resPath,'',maintitle2,'.png'),p,width = 110,height =80, unit = "mm", dpi=100)
+  maintitle5=paste(maintitle2,maintitle1,sep=",")
   
   
   new.meta=data.frame(recluster=metadata$recluster,gene.exp.list1)
