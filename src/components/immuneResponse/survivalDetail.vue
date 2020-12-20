@@ -9,8 +9,7 @@
         </el-card>
       </div>
 
-      <el-card class="infor">
-        
+      <el-card class="infor"> 
           <el-col :span="6">
             <el-row class="detail1">Normalized By</el-row>
             <br />

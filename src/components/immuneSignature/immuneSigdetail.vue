@@ -43,7 +43,7 @@
           </div>
           <p class="card-title">Correlation between Custom Signature and Selected Signature</p>
           <el-row v-show="resultShow" v-loading="loading" class="detailimg">
-            <img :src="imgUrlWgcna" />
+            <img width="400px" :src="imgUrlWgcna" />
           </el-row>
           <p class="card-title">Signature Informations</p>
           <el-table :data="articleData" style="width: 100%" v-loading="artloading">

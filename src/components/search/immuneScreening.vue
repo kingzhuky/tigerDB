@@ -4,12 +4,11 @@
       <div class="tablewidth" v-loading="cardLoading">
         <el-card v-show="diffExpResponShow">
           <el-row v-loading="diffExpResponloading">
-            <p class="card-title">Infomations</p>
+            <p class="card-title">Informations</p>
             <el-table :data="articleData" style="width: 100%">
               <el-table-column type="expand">
                 <template slot-scope="props">
                   <el-form label-position="left" inline class="demo-table-expand">
-                   
                     <el-form-item label="Ariticle">
                       <span>{{ props.row.ariticle_name }}</span>
                     </el-form-item>

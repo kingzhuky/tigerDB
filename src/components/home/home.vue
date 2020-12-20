@@ -23,7 +23,7 @@
           </el-row> -->
           <el-row>
             <p class="homedesrc">
-              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1145 tumor samples with immunotherapy clinical outcome and 11057 tumor/normal samples from TCGA, and single cell transcriptome data for ~720,000 immune cells of 225 samples, among which ~66,000 immune cells of 43 samples have immunotherapy clinical data. 
+              TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,145 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for ~720,000 immune cells of 225 samples, among which ~66,000 immune cells of 43 samples have immunotherapy clinical data. 
             </p>
           </el-row>
         </el-col>
