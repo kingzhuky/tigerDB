@@ -1,6 +1,7 @@
 <template>
   <div class="outside">
     <el-card class="serachpage" id="helppage">
+      <el-col span="22" push="1">
       <div class="main_con" id="1" ref="userinfo1">
         <h1 class="subtitle">Introduction to TIGER</h1>
         <el-divider></el-divider>
@@ -19,74 +20,71 @@
         <el-divider></el-divider>
         <p>TIGER is composed of four major modules, including Immune Response, Immune Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
       </div>
-      <h2>Quick Search</h2>
-      <p>When users enter the website, they can see a quick search bar at the bottom of the page. Users can search for the gene symbol of interest to obtain results with significant differences in all data sets, such as the difference between tumor tissues and normal tissues in different cell types, the difference between immunotherapy response and non-response samples.</p>
-      <div align="center">
-        <img alt="help1" v-lazy="help1" />
-      </div>
-
-      <h2 class="sub">Module of Immune Response</h2>
-      <p>Users can enter the Immune Response module to visually view the expression differences of all genes in the immunotherapy response and non-response groups, including different immunotherapy methods, and even be able to view the gender differences in immunotherapy response.</p>
-      <p>The module is divided into three sub-modules, which are Differential Expression Analysis, Survival Analysis, Signature analysis.</p>
-      <div align="center">
-        <img alt="help2" v-lazy="help2" />
-      </div>
-
-      <h3 class="sub">Differential Expression Analysis of Immune Response</h3>
-      <p>Users can directly switch between the results of differential expression analysis of immunotherapy Response and Non-response, Pre-Therapy and Post-Therapy. In additions, Users can visually view the differences in the expression of all genes in the Immune Response, including different immunotherapy methods, and even better, can view the gender differences in immunotherapy responses. The user can directly locate the corresponding gene through the search bar, and can jump to the data set of different cancer types through the drop-down bar on the left.</p>
-      <div align="center">
-        <img alt="help3" v-lazy="help3" />
-      </div>
-      <p>TIGER provides a user-friendly interactive heat map. By clicking on the differential gene, you can get a specific box plot and violin plot in the data set, and you can see the difference between this gene and other immune Signatures in predicting the response to immunotherapy.</p>
-      <div align="center">
-        <img alt="help4" v-lazy="help4" />
-      </div>
-
-      <h3 class="sub">Survival Analysis of Immune Response</h3>
-      <p>Users can directly see the relationship between all gene expressions in different data sets and survival through the heat map. In the data set, the sample will be subdivided according to the sample's treatment information and gender differences. In addition, red represents poor prognosis and blue represents good prognosis. By clicking on the color square, you can live the Km survival curve, and the forest map of cox single factor regression.</p>
-      <div align="center">
-        <img alt="help3" v-lazy="help5" />
-      </div>
-      <h3 class="sub">Geneset Query</h3>
-      <p>Users can customize the signature or choose whether the immune signature analysis in the article will affect the prognosis of immunotherapy. In this way, find the signature or gene that is potentially beneficial to the prognosis.</p>
-
-      <h2 class="sub">Module of Immune Signature</h2>
-      <h3 class="sub">Overview</h3>
-      <!-- <p>By inputting a single gene or gene set as a signature, the user performs correlation analysis with known signatures in pan-cancer species. TIGER provides an interactive heat map of correlation coefficients. You can see more detailed correlation results with user-defined signatures by clicking on different immune signatures. Carry out pan-cancer association analysis in the TCGA data to find genes or gene sets that are more relevant to the immune Signature in different cancers, and combine them with the results of the Immune Response module to be able to identify more cancers Find genes or gene sets related to immunotherapy, and help research and analysis of immunotherapy prognosis</p> -->
-      <div align="center">
-        <!-- <img alt="help2" v-lazy="help6" /> -->
-      </div>
-      <h3 class="sub">Custom Analysis</h3>
-      <h3 class="sub">Signature Correlation Analysis</h3>
-      <p>By inputting a single gene or gene set as a signature, the user performs correlation analysis with known signatures in pan-cancer species. TIGER provides an interactive heat map of correlation coefficients. You can see more detailed correlation results with user-defined signatures by clicking on different immune signatures. Carry out pan-cancer association analysis in the TCGA data to find genes or gene sets that are more relevant to the immune Signature in different cancers, and combine them with the results of the Immune Response module to be able to identify more cancers Find genes or gene sets related to immunotherapy, and help research and analysis of immunotherapy prognosis</p>
-      <div align="center">
-        <img alt="help2" v-lazy="help6" />
-      </div>
-      <h2 class="sub">Module of Single-cell Immunity</h2>
-      <h3 class="sub">Overview</h3>
-      <h3 class="sub">Cell Marker Analysis</h3>
-      <h3 class="sub">Differential Expression Analysis</h3>
-      <h3 class="sub">Differential Expression Analysis</h3>
-      <p>Single-cell sequencing results in cancer show differences in different immune cell types. At the single-cell level, further analysis of genes analyzed in immunotherapy and immune signatures provides more details, including the distribution of genes in different immune cell types (tSNE), and differences in cell types between immunotherapy response and non-response (boxplot)</p>
-      <div align="center">
-        <img alt="help2" v-lazy="help7" />
-      </div>
-
-      <p>Interactive heat map similar to bulk RNA-seq, you can get detailed information by clicking, including differential expression of genes, distribution of genes in evolution map, etc.</p>
-      <div align="center">
-        <img alt="help2" v-lazy="help8" />
-      </div>
-      <p>By entering a gene, TIGER will perform gene co-expression analysis at the single cell level in the selected cancer species and cell subsets. Through the correlation between gene expressions, find the co-expression relationship between different cell types, so as to find out the co-expression relationship of the gene of interest between cells</p>
-      <div align="center">
-        <img alt="help2" v-lazy="help9" />
-      </div>
-
-      <h2 class="sub">Module of Immune Screening</h2>
-      <p>TIGER integrates immune-related CRISPR Screen and shRNA screen data, provides interactive heat maps, analyzes immunity at the experimental level, and finds genes related to immunity in the immune-related screen data. Click to get the corresponding screen data information and gene-related drug information</p>
-      <div align="center">
-        <img alt="help2" v-lazy="help10" />
-      </div>
+      <el-row>
+         <el-col :span="4" :push="0" >
+          <el-card shadow="hover" class="box-card" @click.native="handleEdit('search')">
+            <div slot="header" class="clearfix" style="text-align:center;">
+              <span class="homedesrc">Quick<br/>Search</span>
+              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+            </div>
+            <div style="text-align:center;">
+              <img height="150px" src="../assets/homesearch.png" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="4" :push="1" >
+          <el-card shadow="hover" class="box-card" @click.native="handleEdit('response')">
+            <div slot="header" class="clearfix" style="text-align:center;">
+              <span class="homedesrc">Immune Response</span>
+              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+            </div>
+            <div style="text-align:center;">
+              <img height="150px" src="../assets/homeir.png" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="4" :push="2">
+          <el-card shadow="hover" class="box-card" @click.native="handleEdit('signature')">
+            <div slot="header" class="clearfix" style="text-align:center;">
+              <span class="homedesrc">Immune Signature</span>
+              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+            </div>
+            <div style="text-align:center;">
+              <img height="150px" src="../assets/homesig.png" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="4" :push="3">
+          <el-card shadow="hover" class="box-card" @click.native="handleEdit('singcell')">
+            <div slot="header" class="clearfix" style="text-align:center;">
+              <span class="homedesrc">Single Cell Immunity</span>
+              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+            </div>
+            <div style="text-align:center;">
+              <img height="150px" src="../assets/homesc.png" />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="4" :push="4">
+          <el-card shadow="hover" class="box-card"  @click.native="handleEdit('screen')">
+            <div slot="header" class="clearfix" style="text-align:center;">
+              <span class="homedesrc">Immune Screening</span>
+              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+            </div>
+            <div style="text-align:center;">
+              <img width="150px" src="../assets/homeis.png" />
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+      <v-helpdetail
+        ref="helpdetail"
+        v-show="true"
+        :tabname="detailname">
+      </v-helpdetail>
+          </el-col>
     </el-card>
+
     <goTop></goTop>
   </div>
 </template>
@@ -98,9 +96,6 @@ import goTop from "./public/goTop";
 export default {
   data() {
     return {
-      scrollTop2: "",
-      fix: "fixed",
-      toCity: "Help",
       home: require("../assets/home1.png"),
       help1: require("../assets/help1.png"),
       help2: require("../assets/help2.png"),
@@ -111,13 +106,26 @@ export default {
       help7: require("../assets/help7.png"),
       help8: require("../assets/help8.png"),
       help9: require("../assets/help9.png"),
-      help10: require("../assets/help10.png")
+      help10: require("../assets/help10.png"),
+      detailname: "",
     };
   },
-  methods: {},
+  created(){
+    this.$refs.helpdetail.changeshow("search")
+  },
+  methods: {
+    handleEdit(tabname){
+      console.log(tabname)
+      this.detailname = tabname;
+      this.$refs.helpdetail.changeshow(this.detailname)
+    }
+  },
   components: {
     goTop
-  }
+  },
+  components: {
+    "v-helpdetail": () => import("./helpdetail.vue"),
+  },
 };
 </script>
 

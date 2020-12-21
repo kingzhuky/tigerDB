@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="card-title">{{sigID}}</p>
+        <p class="card-title">{{sigID}} Details</p>
         <el-row class="detailimg">
             <el-col push="1" span="22">
                 <p class="card-title">Signature Informations</p>
@@ -54,7 +54,7 @@
                         ></el-table-column>
                     </el-table>
                     </el-row>
-                <p class="card-title">Signature Score in Different Cancer Type (Response vs Non-Response)</p>
+                <p class="card-title">Signature Score in Different Dataset (Response vs Non-Response)</p>
                     <img height="400px" :src="imgUrlRNRBox" />
                 <p class="card-title">Signature Score in Different Cancer Type (Tumor vs Normal)</p>
                     <img height="400px" :src="imgUrlTNBox" />
