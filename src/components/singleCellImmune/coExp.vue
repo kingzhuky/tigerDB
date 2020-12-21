@@ -82,7 +82,7 @@ export default {
         this.searchinput,
         "singleCellCorTumor",
         1,
-        10
+        20
       );
     },
     cancerSelectChange() {

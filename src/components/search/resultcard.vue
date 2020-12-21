@@ -37,9 +37,10 @@
               <el-table-column v-if="conditi === 'Responder'" prop="NonresponseSampleCount" label="Non-responder Number"></el-table-column>
               <el-table-column v-if="conditi === 'Therapy'" prop="PretherapySampleCount" label="Pre-therapy Sample Number"></el-table-column>
               <el-table-column v-if="conditi === 'Therapy'" prop="PosttherapySampleCount" label="Post-therapy Sample Number"></el-table-column>
-              <el-table-column v-if="conditi === 'Survival'" prop="ZScore" label="Hazard Ratio"></el-table-column>
-              <el-table-column v-else prop="Log2FC" label="Log2 Fold Change"></el-table-column>
-              <el-table-column prop="PValue" label="P Value"></el-table-column>
+              <el-table-column v-if="conditi === 'Survival'" prop="ZScore" label="Hazard Ratio" sortable></el-table-column>
+              <el-table-column v-else prop="Log2FC" label="Log2 Fold Change" sortable></el-table-column>
+              <el-table-column v-if="conditi === 'Survival'" prop="PValue" label="P Score" sortable></el-table-column>
+              <el-table-column v-else prop="PValue" label="-log10 (P Value)" sortable></el-table-column>
             </el-table>
           </el-row>
         </el-card>
@@ -261,8 +262,8 @@ export default {
 <style>
 
 .el-table__expand-icon:after{
-  content: "View";
-  color: #09e1c0;
+  /* content: "View";
+  color: #09e1c0; */
   cursor: pointer;
 }
 </style>

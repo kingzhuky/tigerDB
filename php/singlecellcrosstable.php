@@ -16,7 +16,7 @@ mysqli_select_db( $conn, 'tiger' );
 $celltype = $_GET['celltype'];
 $table = $_GET['sqltable'];
 
-$sql = "SELECT * FROM `".$table."1` as a, `".$table."2` as b WHERE a.gene LIKE '%".$celltype."%' AND a.gene=b.gene";
+$sql = "SELECT * FROM `".$table."1` as a, `".$table."2` as b WHERE a.gene LIKE '%".$celltype."%' AND a.gene=b.gene limit 20";
 
  // query data
  $infos = array();

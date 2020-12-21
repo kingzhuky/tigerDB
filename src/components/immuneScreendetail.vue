@@ -12,9 +12,33 @@
       <div class="infor">
         <el-card>
           <p class="card-title">Article Infomations</p>
-          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+          <!-- <el-table :data="articleData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>
             <el-table-column prop="value" label></el-table-column>
+          </el-table> -->
+            <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+              <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
+              <el-table-column prop="title" label width="250">
+                  <template slot-scope="{row: {title}}">
+                  <span v-if="title === 'dataset_id'">Dataset ID</span>
+                  <span v-else-if="title === 'Dataset_name'">Dataset Name</span>
+                  <span v-else-if="title === 'Cancer_type'">Cancer Type</span>
+                  <span v-else-if="title === 'dataset_type'">Dataset Type</span>
+                  <span v-else-if="title === 'article_name'">Ariticle Title</span>
+                  <span v-else-if="title === 'First_author'">First Author</span>
+                  <span v-else>{{title}}</span>
+                  </template>
+              </el-table-column>
+              <el-table-column label>
+                  <template slot-scope="scope">
+                  <span v-if="scope.row.title === 'PMID'">
+                      <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.value"
+                      target="_blank"
+                      class="buttonText">{{scope.row.value}}</a>
+                      </span>
+                  <span v-else><a v-html="scope.row.value"></a></span>
+                  </template>
+              </el-table-column>
           </el-table>
           <div v-show="drugshow">
             <p class="card-title">drug-gene interactions</p>

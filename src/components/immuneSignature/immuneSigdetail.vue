@@ -10,40 +10,45 @@
       </div>
       <div class="infor">
         <el-card>
-          <div class="wergeneinfo">
-            <div id="collapseCard">
-              <el-collapse>
-                <el-collapse-item title="Optional" name="1">
-                  <template slot="title">
-                    Optional
-                    <i class="el-icon-setting"></i>
-                  </template>
-                  <el-row class="detail1">Normalized By</el-row>
-                  <el-row class="detail2">
-                    <el-radio v-model="normalMed" label="None">None</el-radio>
-                    <el-radio v-model="normalMed" label="gene">Gene</el-radio>
-                  </el-row>
-                  <el-row>
-                    <el-input v-model="normalGene"></el-input>
-                  </el-row>
-                  <br />
-                  <el-row class="detail1">Correlation Coefficient</el-row>
 
-                  <el-row>
-                    <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
-                    <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
-                  </el-row>
-                  <br />
-                  <el-row class="plot">
-                    <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
-                  </el-row>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </div>
           <p class="card-title">Correlation between Custom Signature and Selected Signature</p>
           <el-row v-show="resultShow" v-loading="loading" class="detailimg">
-            <img width="400px" :src="imgUrlWgcna" />
+             <el-col span="4" push="2">
+              <div class="wergeneinfo">
+                <div id="collapseCard">
+                  <el-collapse>
+                    <el-collapse-item title="Optional" name="1">
+                      <template slot="title">
+                        Optional
+                        <i class="el-icon-setting"></i>
+                      </template>
+                      <!-- <el-row class="detail1">Normalized By</el-row>
+                      <el-row class="detail2">
+                        <el-radio v-model="normalMed" label="None">None</el-radio>
+                        <el-radio v-model="normalMed" label="gene">Gene</el-radio>
+                      </el-row>
+                      <el-row>
+                        <el-input v-model="normalGene"></el-input>
+                      </el-row>
+                      <br /> -->
+                      <el-row class="detail1">Correlation Coefficient</el-row>
+
+                      <el-row>
+                        <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
+                        <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
+                      </el-row>
+                      <br />
+                      <el-row class="plot">
+                        <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+                      </el-row>
+                    </el-collapse-item>
+                  </el-collapse>
+                </div>
+              </div>
+            </el-col>
+            <el-col span="12" push="2">
+              <img width="400px" :src="imgUrlWgcna" />
+            </el-col>
           </el-row>
           <p class="card-title">Signature Informations</p>
           <el-table :data="articleData" style="width: 100%" v-loading="artloading">
@@ -104,7 +109,7 @@ export default {
     },
 
     clickPlot() {
-      this.Plot(this.path, this.cancer, this.sign);
+      this.Plot(this.gene, this.cancer, this.sign);
     },
 
     artivcleDetail(sample) {

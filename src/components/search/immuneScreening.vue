@@ -4,7 +4,7 @@
       <div class="tablewidth" v-loading="cardLoading">
         <el-card v-show="diffExpResponShow">
           <el-row v-loading="diffExpResponloading">
-            <p class="card-title">Informations</p>
+            <p class="card-title">Immune Screening Information Table</p>
             <el-table :data="articleData" style="width: 100%">
               <el-table-column type="expand">
                 <template slot-scope="props">

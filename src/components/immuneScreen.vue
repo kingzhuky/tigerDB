@@ -1,10 +1,10 @@
 <template>
   <div>
-    <el-row id="readme">Readme:</el-row>
+    <!-- <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
       1.The integration of CRISPR Screen and shRNA Screen shows the correlation between genes and immunity in cell experiments.
       <br />2.Click to get detailed Screen data information and gene-related drug information.
-    </el-card>
+    </el-card> -->
 
     <el-card>
       <el-col :span="4" :offset="20">

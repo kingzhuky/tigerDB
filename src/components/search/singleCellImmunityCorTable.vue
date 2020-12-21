@@ -24,7 +24,7 @@
             <el-table-column prop="CellType" label="Cell Type"></el-table-column>
             <el-table-column prop="genea" label="Search Gene" width="180"></el-table-column>
             <el-table-column prop="geneb" label="Correlated Gene" width="180"></el-table-column>
-            <el-table-column label="COR" prop="r"></el-table-column>
+            <el-table-column label="COR" prop="r" sortable></el-table-column>
             <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
             <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
           </el-table>
