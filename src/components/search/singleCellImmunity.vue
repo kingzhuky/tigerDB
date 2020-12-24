@@ -196,8 +196,8 @@ export default {
       total: 200,
       CellTypeLoading: false,
       GlobalCluster: "All",
-      CellType: "CAF",
-      CancerType: "BCC",
+      CellType: "",
+      CancerType: "PDAC",
       singleCellImmuTumorImgshow: false,
       singleCellImmuTumorImgloading: false,
       singleCellImmuResponseImgshow: false,
@@ -210,7 +210,7 @@ export default {
       loading: false,
       gloCluoptions: [],
       gloClu: "All",
-      cancer: "BCC",
+      cancer: "PDAC",
       canceroptions: [],
       subClu: [],
       geneplots: [],
@@ -400,6 +400,7 @@ export default {
           },
           axisLabel: {
             rotate: 45,
+            interval: 0
           },
         },
         angleAxis: {
@@ -415,6 +416,9 @@ export default {
           },
           axisLine: {
             show: true,
+          },
+          axisLabel: {
+            interval: 0
           },
         },
         series: [

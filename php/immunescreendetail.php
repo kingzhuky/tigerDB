@@ -42,7 +42,7 @@ while ($row = mysqli_fetch_assoc($dataResult)) {
 
 echo json_encode(array(
     "status"=>200,
-    "sql"=>$sql,
+    // "sql"=>$sql,
     "list" =>$infos // necessary
     ),JSON_UNESCAPED_UNICODE); 
 

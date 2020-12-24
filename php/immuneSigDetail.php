@@ -19,7 +19,7 @@ exec($zhiling,$output,$status);
 
 //执行成功都是返回0
 echo json_encode(array(
-   "zhiling" =>$zhiling,
+  //  "zhiling" =>$zhiling,
    "output" => $output,
    "status"=>$status
     ),JSON_UNESCAPED_UNICODE); 

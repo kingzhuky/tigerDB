@@ -43,7 +43,7 @@ foreach($infos2[0] as $key => $value){
 
 echo json_encode(array(
     "status"=>200,
-    "sql"=>$sql,
+  // "sql"=>$sql,
     "list" =>$infos // necessary
     ),JSON_UNESCAPED_UNICODE); 
 

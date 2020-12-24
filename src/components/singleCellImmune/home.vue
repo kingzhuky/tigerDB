@@ -20,6 +20,7 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
+                  :disabled="dataisrenew(item.value)"
                 ></el-option>
               </el-option-group>
             </el-select>
@@ -127,6 +128,7 @@ export default {
       Signatures: "",
       vsType: "Tumor vs Normal",
       scpathwayVue: "",
+      datasetrenewed: ['PDAC','CAC','BTCC','UCEC'],
     };
   },
 
@@ -140,7 +142,7 @@ export default {
   methods: {
     getcancer() {
       this.$http.get("/tiger/singlecelldataset.json").then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         this.canceroptions = res.data;
       });
     },
@@ -197,6 +199,16 @@ export default {
           break;
       }
     },
+    dataisrenew(datasetid){
+      // console.log(datasetid)
+      for(const reneweddata of this.datasetrenewed){
+        // console.log(reneweddata)
+        if(datasetid === reneweddata){
+          return false
+        }
+      }
+      return true
+    }
   },
 };
 </script>

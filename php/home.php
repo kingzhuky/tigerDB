@@ -35,7 +35,7 @@ $gene = $_GET['gene'];
 
   echo json_encode(array(
       "status"=>200,
-      "sql"=>$sql,
+      // "sql"=>$sql,
       "list" =>$infos, // necessary
       "tabledata" =>$tabledata, // necessary
       "cancer" =>array_unique($cancer) // necessary

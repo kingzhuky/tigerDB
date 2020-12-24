@@ -113,7 +113,7 @@ if ($conditi=="Responder"){
 
   echo json_encode(array(
       "status"=>200,
-      "sql"=>$sql,
+      // "sql"=>$sql,
       "sqltable"=>$sqltable,
       "list" =>$infos, // necessary
       "datatable"=>$datatable,

@@ -22,7 +22,7 @@ echo json_encode(array(
    "corMed" =>$corMed,
    "mergedatasets" =>$mergedatasets,
    "datatype" =>$datatype,
-   "zhiling" =>$zhiling,
+// "zhiling" =>$zhiling,
    "output" => $output,
    "status"=>$status
     ),JSON_UNESCAPED_UNICODE); 

@@ -29,7 +29,7 @@
             <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
           </el-table>
         </el-row>
-        <br />
+        <!-- <br />
         <el-row>
           <el-pagination
             class="scPagination"
@@ -42,7 +42,7 @@
             layout="sizes,prev, pager, next"
             :total="total"
           ></el-pagination>
-        </el-row>
+        </el-row> -->
       </div>
     </el-card>
   </div>
@@ -164,7 +164,7 @@ export default {
           params: {
             gene: gene,
             currentPage: currentPage,
-            pageSize: pageSize,
+            pageSize: 20,
             GlobalCluster: this.GlobalCluster,
             CellType: this.CellType,
             CancerType: this.CancerType,

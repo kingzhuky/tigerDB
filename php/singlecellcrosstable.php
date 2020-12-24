@@ -30,7 +30,7 @@ $sql = "SELECT * FROM `".$table."1` as a, `".$table."2` as b WHERE a.gene LIKE '
 
   echo json_encode(array(
       "status"=>200,
-      "sql"=>$sql,
+    // "sql"=>$sql,
       "list" =>$infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
 

@@ -61,7 +61,7 @@ foreach($row as $key=>$value){
 
   echo json_encode(array(
       "status"=>200,
-      "sql"=>$sql,
+    // "sql"=>$sql,
       "links" =>$links, // necessary
       "nodes"=>$nodes
       ),JSON_UNESCAPED_UNICODE); 

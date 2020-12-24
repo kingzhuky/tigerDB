@@ -41,7 +41,7 @@ $sqlTotal ="SELECT COUNT(1) FROM sigauctable as a, datesetinfo as b WHERE a.".$s
 
   echo json_encode(array(
       "status"=>200,
-      "sql"=>$sql,
+    // "sql"=>$sql,
       "total"=>$total,
       "list" =>$infos // necessary
       ),JSON_UNESCAPED_UNICODE); 
