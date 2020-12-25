@@ -42,6 +42,7 @@ import Vue from 'vue'
 
 //cdn加
 import ELEMENT from 'element-ui'
+import VueAnalytics from 'vue-analytics'
 Vue.use(ELEMENT)
 ELEMENT.locale(ELEMENT.lang.en)
 
@@ -55,8 +56,19 @@ Vue.config.productionTip = false
 import '../static/css/theme/index.css'
 import './style/main.css';
 import hevueImgPreview from 'hevue-img-preview'
+// // const isProd = process.env.NODE_ENV == 'production'
+// Vue.use(VueAnalytics, {
+//   id: 'G-PL92W5GB84',
+//   router,
+//   // debug: {
+//   //   enabled: !isProd,
+//   //   sendHitTask: isProd
+//   // },
+//   autoTracking: {
+//     pageviewOnLoad: false
+//   }
+// })
 Vue.use(hevueImgPreview)
-
 Vue.directive('loadmore', {
   bind(el, binding) {
     const selectWrap = el.querySelector('.el-table__body-wrapper')

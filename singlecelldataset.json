@@ -1,6 +1,6 @@
 [
     {"label":"Breast cancer (BC)","options":[
-        {"label":"Breast cancer (BC) | Qian J, et al. Cell Res. 2020 Jun 21 | Cell Number: 43892 | Sample Number: 14 | Patient Number: 14","value":"BC"}
+        {"label":"Breast cancer (BC) | Qian J, et al. Cell Res. 2020 Jun 21 | Cell Number: 41292 | Sample Number: 14 | Patient Number: 14","value":"BC"}
     ]},
     {"label":"Basal cell carcinoma (BCC)","options":[
         {"label":"Basal cell carcinoma (BCC) | Yost KE, et al. Nat Med. 2019 Aug | Cell Number: 49480 | Sample Number: 12 | Patient Number: 12","value":"BCC"}
@@ -16,10 +16,10 @@
     ]},
     {"label":"Colorectal cancer (CRC)","options":[
         {"label":"Colorectal cancer (CRC) | Lee HO, et al. Nat Genet. 2020 May 25 | Cell Number: 87540 | Sample Number: 29 | Patient Number: 29","value":"CRC1"},
-        {"label":"Colorectal cancer (CRC) | Qian J, et al. Cell Res. 2020 Jun 20 | Cell Number: 44612 | Sample Number: 7 | Patient Number: 7","value":"CRC2"}
+        {"label":"Colorectal cancer (CRC) | Qian J, et al. Cell Res. 2020 Jun 20 | Cell Number: 42631 | Sample Number: 14 | Patient Number: 7","value":"CRC2"}
     ]},
     {"label":"Hepatocellular carcinoma (HCC)","options":[
-        {"label":"Hepatocellular carcinoma (HCC) | Ma L, et al. Cancer Cell. 2019 Oct 14 | Cell Number: 9946 | Sample Number: 19 | Patient Number: 19","value":"HCC"}
+        {"label":"Hepatocellular carcinoma (HCC) | Ma L, et al. Cancer Cell. 2019 Oct 14 | Cell Number: 9777 | Sample Number: 19 | Patient Number: 19","value":"HCC"}
     ]},
     {"label":"Head-Neck Squamous Cell Carcinoma (HNSC)","options":[
         {"label":"Head-Neck Squamous Cell Carcinoma (HNSC) | Cillo AR, et al. Immunity. 2020 Jan 14 | Cell Number: 130939 | Sample Number: 37 | Patient Number: 37","value":"HNSC"}
@@ -37,10 +37,10 @@
         {"label":"Non-small-cell lung carcinoma (NSCLC) | Lambrechts D, et al. Nat Med. 2018 Aug | Cell Number: 52273 | Sample Number: 9 | Patient Number: 5","value":"NSCLC"},
         {"label":"Non-small-cell lung carcinoma (NSCLC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 91680 | Sample Number: 6 | Patient Number: 6","value":"NSCLC1"},
         {"label":"Non-small-cell lung carcinoma (NSCLC) | Zilionis R, et al. Immunity. 2019 May 21 | Cell Number: 41874 | Sample Number: 7 | Patient Number: 7","value":"NSCLC3"},
-        {"label":"Non-small-cell lung carcinoma (NSCLC) | Guo X, et al. Nat Med. 2018 Jul | Cell Number: 12346 | Sample Number: 14 | Patient Number: 14","value":"NSCLC4"}
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Guo X, et al. Nat Med. 2018 Jul | Cell Number: 10806 | Sample Number: 39 | Patient Number: 13","value":"NSCLC4"}
     ]},
     {"label":"Ovarian cancer (OV)","options":[
-        {"label":"Ovarian cancer (OV) | Qian J, et al. Cell Res. 2020 Jun 19 | Cell Number: 44469 | Sample Number: 5 | Patient Number: 5","value":"OV"}
+        {"label":"Ovarian cancer (OV) | Qian J, et al. Cell Res. 2020 Jun 19 | Cell Number: 40225 | Sample Number: 7 | Patient Number: 5","value":"OV"}
     ]},
     {"label":"Pancreatic ductal adenocarcinoma (PDAC)","options":[
         {"label":"Pancreatic ductal adenocarcinoma (PDAC) | Peng J, et al. Cell Res. 2019 Sep | Cell Number: 55841 | Sample Number: 35 | Patient Number: 35","value":"PDAC"}

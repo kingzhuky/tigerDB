@@ -121,14 +121,14 @@ export default {
       colany: "Spearman",
       gene: "ERBB2",
       genelist: "",
-      cancer: "PDAC",
+      cancer: "CAC",
       gloClu: "",
       canceroptions: [],
       gloCluoptions: [],
       Signatures: "",
       vsType: "Tumor vs Normal",
       scpathwayVue: "",
-      datasetrenewed: ['PDAC','CAC','BTCC','UCEC'],
+      datasetrenewed: ['PDAC','CAC','BTCC','UCEC','MCC'],
     };
   },
 
