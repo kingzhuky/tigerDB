@@ -64,6 +64,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
     
     
     pic.name1=paste('umap',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
+    pic.name1=pic.name1 %>% str_replace_all('\\/','\\.')
   ggsave(paste0(resPath,pic.name1,'.png'),width =120,height =80, unit = "mm", dpi=100,p1)
   
   #-----饼图-------
@@ -73,6 +74,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   table.pic=data.frame(table.pic,prop=table.pic1$Freq)
   
   pic.name2=paste('pie',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
+  pic.name2=pic.name2 %>% str_replace_all('\\/','\\.')
   
   png(paste0(resPath,pic.name2,'.png'),width = 120, height =80, units = "mm",res = 100)
   pie(table.pic$Freq,labels=paste0(table.pic$.,' (',round(table.pic$prop,3),'%)'),col= my36colors,cex=0.8)
@@ -90,14 +92,15 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
     
     
     p2=ggplot(now.meta,aes(x=recluster,y=per,color=Response))+geom_boxplot(outlier.colour = NA)+scale_color_manual(values = c('#016af3','#f34b01'))+mytheme+
-      geom_jitter(aes(x=recluster,y=per,color=Tissue),position = position_jitterdodge(),size=1,shape=1)+
-      stat_compare_means(aes(group=Tissue,label = ..p.signif..),method ='wilcox')+theme(axis.title.x = element_blank())+labs(y=' (%) of cells')+
+      geom_jitter(aes(x=recluster,y=per,color=Response),position = position_jitterdodge(),size=1,shape=1)+
+      stat_compare_means(aes(group=Response,label = ..p.signif..),method ='wilcox')+theme(axis.title.x = element_blank())+labs(y=' (%) of cells')+
       theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.5),color="black"),
             axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
             panel.grid.major=element_line(color="grey95"),
             panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
     
     pic.name3=paste('Boxplot-Response',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
+    pic.name3=pic.name3 %>% str_replace_all('\\/','\\.')
     if(global.cluster=='Tcell'){
       ggsave(paste0(resPath,pic.name3,'.png'),p2,width = 120,height =80, unit = "mm", dpi=100)
     }else{
@@ -118,7 +121,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
             panel.grid.major=element_line(color="grey95"),legend.text = element_text(size=15),legend.title =  element_text(size=15),
             panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
     pic.name4=paste('Boxplot-tissue',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
-    
+    pic.name4=pic.name4 %>% str_replace_all('\\/','\\.')
     if(global.cluster=='Tcell'){
     ggsave(paste0(resPath,pic.name4,'.png'),p2,width = 120,height =80, unit = "mm", dpi=100)
     }else{
@@ -133,7 +136,7 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   heatmap.markers=heatmap.markers[[global.cluster]]
 
   pic.name5=paste('Heatmap',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
-  
+  pic.name5=pic.name5 %>% str_replace_all('\\/','\\.')
   if(global.cluster=='Tcell'){
     ggsave(paste0(resPath,pic.name5,'.png'), plot = print(heatmap.markers),width = 120,height =80, unit = "mm", dpi=100)
   }else{
@@ -148,12 +151,10 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   }else if (is.null(levels(meta$Response)) & sum(meta$Tissue=='Tumor')!=nrow(meta)){
     cat(paste(pic.name1,pic.name2,pic.name4,pic.name5,sep=','))
   }else if (!is.null(levels(meta$Response)) & sum(meta$Tissue=='Tumor')==nrow(meta)){
-    cat(paste(pic.name1,pic.name2,pic.name4,pic.name5,sep=','))
+    cat(paste(pic.name1,pic.name2,pic.name3,pic.name5,sep=','))
   }else{
     cat(paste(pic.name1,sep=','))
   }
 }
 
 pic.overview(metadata, global.cluster , sub.cluster )
-
-

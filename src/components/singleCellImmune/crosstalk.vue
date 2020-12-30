@@ -1,241 +1,298 @@
 <template>
-  <transition name="move3">
-    <div>
-      <el-card id="scummuviewer">
-        <p class="card-title">Cross Talk</p>
-        <el-row>
-          <el-col :span="7" :offset="3">
-            <el-row>
-              <span id="homespan">Select Cluster</span>
-            </el-row>
-          </el-col>
-          <el-col :span="7">
-            <el-row>
-              <span id="homespan">Select Cell Type</span>
-            </el-row>
-          </el-col>
-          <!-- <el-col :span="10">
-            <el-row>
-              <span id="homespan">Search Ligand or Receptor</span>
-            </el-row>
-          </el-col> -->
-        </el-row>
-        <br />
-        <el-row>
-          <el-col :span="7" :offset="3">
-            <el-select v-model="gloclu" placeholder="Select Cluster" @change="GlobalClusterChange">
-              <el-option
-                v-for="item in gloCluoptions"
-                :key="item.GlobalCluster"
-                :label="item.GlobalCluster"
-                :value="item.GlobalCluster"
-              ></el-option>
-            </el-select>
-          </el-col>
-
-          <el-col :span="7" :offset="0">
-            <el-select
-              v-model="crossClu"
-              placeholder="Select CellType"
-              v-loading="crossCluloading"
-            >
-            <el-option 
-              v-for="item in crossClucoptions" 
-              :key="item.CellType" 
-              :label="item.CellType" 
-              :value="item.CellType"
-            ></el-option>
-            </el-select>
-          </el-col>
-          <el-col :span="2" :offset="1">
-            <el-button id="scimmubt" @click="searchCro">Search</el-button>
-          </el-col>
-        </el-row>
-
-        <div id="crossplot" v-loading="crossloading" v-show="scimmuShow">
-          <!-- <el-row class="detailimg" v-if="crossplots.split(',').length>1">
-            <el-col :span="8">
-              <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[0]+'.png'" />
-            </el-col>
-            <el-col :span="8">
-              <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[1]+'.png'" />
-            </el-col>
-            <el-col :span="8">
-              <img id="singleimg2" :src="'tiger/img/'+crossplots.split(',')[2]+'.png'" />
-            </el-col>
-          </el-row> -->
-          <el-card>
-            <el-table
-              class="tigtablele"
-              id="immuneSigTable"
-              ref="singleTable"
-              border
-              max-height="800"
-              :data="tableData"
-              @cell-click="heandleclick"
-              :cell-style="tableCellStyle"
-              style="100%"
-            >
-              <el-table-column
-                v-for="(item,index) in tableDataheader"
-                :key="index"
-                :property="item"
-                :label="item"
-                sortable
-                align="center"
-                width="80"
-              >
-                <template
-                  slot-scope="scope"
-                >{{ scope.row[item]===undefined ? '': scope.row[item].split('_')[0] }}</template>
-              </el-table-column>
-              <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-            </el-table>
-
-            <div class="colorbar">
-              <span>Negative correlation</span>
-              <span class="heatMapTable--colorbar"></span>
-              <span>Positive correlation</span>
-            </div>
-            <div id="logFC">correlation</div>
-          </el-card>
-        </div>
-        <div v-show="scimmuShowNoRes" id="norult">No result</div>
-      </el-card>
-      <v-goTop></v-goTop>
-    </div>
-  </transition>
+  <div>
+    <el-row>
+      <el-col :span="4" :offset="20">
+        <el-input
+          v-model="searchinput"
+          @change="searchChange"
+          placeholder="Input Cell Type"
+        ></el-input>
+      </el-col>
+    </el-row>
+    <br />
+    <el-table
+      class="tigtablele"
+      id="scDiffExpTable"
+      ref="singleTable"
+      border
+      max-height="750"
+      :data="tableData"
+      @cell-click="heandleclick"
+      :cell-style="tableCellStyle"
+      :header-cell-class-name="headerStyle"
+      v-loadmore="tabelloadmore"
+      v-loadlast="tableloadlast"
+      v-loading="loading"
+      @sort-change="sortChangeClick"
+      style="100%"
+    >
+      <el-table-column
+        v-for="(item,index) in tableDataheader"
+        :key="index"
+        :property="item.key"
+        :label="item.name"
+        :type="item.type"
+        sortable="custom"
+        :sort-orders="['ascending', 'descending', null]"
+        align="center"
+        width="80"
+      ></el-table-column>
+      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+    </el-table>
+<!-- 
+    <div class="colorbar">
+      <span>Low Correlation&lt;0</span>
+      <span class="heatMapTable--colorbar"></span>
+      <span>High Correlation&gt;0</span>
+    </div> -->
+    <v-crosstalkdetail
+      ref="detailPlot"
+      v-show="isShow"
+      :cancer="cancer"
+      :celltype="celltype"
+      :celltype2="clickGene"
+      :gloclu="gloclu"
+    ></v-crosstalkdetail>
+  </div>
 </template>
 
 <script>
-import goTop from "../public/goTop";
+import {
+  scrollRow,
+  toTarget,
+  gStyle,
+  move,
+  stop,
+} from "../../../static/js/utils.js";
 
 export default {
   props: {
-    gene: {
-      type: String,
-    },
-    cancer: {
-      type: String,
-    },
-    clickGene: {
-      type: String,
-    },
-    gloCluoptions: Array,
+    cancer: String,
+    subClu: Array,
+    subClucoptions: Array,
   },
-
   data() {
     return {
-      gloclu: this.gloCluoptions[0].GlobalCluster,
-      crossCluloading: true,
-      crossloading: false,
-      plots: "",
-      crossplots: "",
-      seargene: "HLA-A_CD3G",
-      restaurants: [],
-      crossClucoptions: [],
-      crossClu: [],
-      scimmuShowNoRes: false,
+      clickGene: "",
+      loading: true,
+      isShow: false,
+      loadpage: 1,
       tableData: [],
+      searchinput: "",
+      loadDir: "",
+      sortCol: "",
+      sortOrder: "",
       tableDataheader: [],
+      oldcancer: "",
+      celltype: "",
+      gloclu: "",
     };
   },
 
-  mounted() {
-    this.getCellType();
+  mounted: function () {
+    this.oldcancer = this.cancer;
+    this.getTableData(1, "", "");
+  },
+
+  watch: {
+    loading() {
+      switch (this.loading) {
+        case true:
+          stop();
+          break;
+        case false:
+          move();
+          break;
+      }
+    },
   },
 
   methods: {
-    checkInput() {
-      if (this.normalMed !== "None" && this.normalGene.length == 0) {
-        alert("please input Normalized gene or Cell fration");
-        return false;
+    plot() {
+      if ((this.oldcancer !== this.cancer) | (this.oldcancer === "")) {
+        this.reset();
+        this.oldcancer = this.cancer;
+        this.getTableData(1, "", "");
       }
-      return true;
     },
-    clickPlot() {
-      this.genePlot(this.clickGene);
+    sortChangeClick(column) {
+      console.log(column.prop, column.order);
+      this.loadDir = "";
+      this.sortCol = column.prop;
+      this.sortOrder = column.order;
+      this.loadpage = 1;
+      this.tableData = [];
+      this.getTableData(this.loadpage, column.prop, column.order);
     },
-    getCellType() {
-      this.crossCluloading = true;
+    headerStyle({ column }) {
+      let cancer = column.type
+      switch (cancer) {
+        case "All":
+          return "scglo-all";
+        case "Tcell":
+          return "scglo-g1";
+        case "Myeloid":
+          return "scglo-g2";
+        case "Bcell":
+          return "scglo-g3";
+        case "CD4":
+          return "scglo-g4";
+        case "CD8":
+          return "scglo-g5";
+        case "gene":
+          return "";
+        default:
+          return "defalutColor";
+      }
+    },
+    //顶部加载更多
+    tableloadlast() {
+      this.loadDir = "up";
+      if (this.loading == false && this.loadpage > 1) {
+        this.loading = true;
+        this.loadpage = this.loadpage - 1;
+        this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
+        if (this.loadpage > 1) {
+          console.log(this.loadpage);
+          scrollRow("scDiffExpTable", 400);
+          this.loading = false;
+        }
+      }
+    },
+
+    //底部加载更多
+    tabelloadmore() {
+      this.loadDir = "down";
+      if (this.loading == false) {
+        this.loading = true;
+        this.loadpage = this.loadpage + 1;
+        this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
+        scrollRow("scDiffExpTable", 780);
+      }
+    },
+    reset() {
+      this.tableData = [];
+      this.loadDir = "";
+      this.tableDataheader = [];
+    },
+
+    //获取表格数据
+    getTableData(page, sortCol, sortOrder) {
+      this.loading = true;
       this.$http
-        .get("/tiger/scCelltype.php", {
+        .get("/tiger/responseexpvs.php", {
           params: {
-            CancerType: this.cancer,
-            GlobalCluster: this.gloclu,
+            type: "sccrosstalk_" + this.cancer,
+            draw: page,
+            search: this.searchinput.trim(),
+            start: (page - 1) * 20,
+            length: 20,
+            sortcol: sortCol,
+            sortorder: sortOrder === null ? "None" : sortOrder,
           },
         })
         .then((res) => {
           if (res.data.status === 200) {
-            this.crossClucoptions = res.data.list;
-            this.crossClu = [res.data.list[0].CellType];
-            this.crossCluloading = false;
+            this.loading = false;
+            if (this.loadDir === "down") {
+              this.tableData = this.tableData.slice(
+                this.tableData.length - 20,
+                this.tableData.length
+              );
+              res.data.list.forEach((n) => {
+                this.tableData.push(n);
+              });
+            } else if (this.loadDir === "up") {
+              if (res.data.list.length !== 0) {
+                let old = this.tableData.slice(0, 20);
+                this.tableData = res.data.list;
+                old.forEach((n) => {
+                  this.tableData.push(n);
+                });
+              }
+            } else {
+              res.data.list.forEach((n) => {
+                this.tableData.push(n);
+              });
+              this.tableDataheader = Object.keys(res.data.list[0]);
+            }
+            var new_rows = [];// matrix key .替换为_
+            for (const row of this.tableData) {
+              var new_row = {}
+              for (const key in row) {
+                let new_key = key
+                if(new_key === "gene"){
+                  new_row[new_key] = row[key]
+                }else{
+                  new_row[new_key] = row[key].split("_")[0]
+                }              
+              }
+              new_rows.push(new_row)
+            }
+            this.tableData = new_rows  // matrix key .替换为_
+            var new_columns = [] // generate header
+            for (const column of this.tableDataheader) {
+              var col_obj = {};
+              col_obj.name = column.split(',').pop()
+              col_obj.key = column
+              col_obj.type = column.split(',')[0]
+              // console.log(col_obj)
+              new_columns.push(col_obj)
+            }
+            this.tableDataheader = new_columns
+            // console.log(new_rows)
           }
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
-    GlobalClusterChange() {
-      this.getCellType();
+
+    searchChange() {
+      this.loading = true;
+      this.loadDir = "";
+      this.tableData = [];
+      this.loadpage = 1;
+      this.getTableData(this.loadpage, "", "");
     },
 
-    checkdataset() {
-      if (
-        (Array.isArray(this.crossClu) && this.crossClu.length === 0) 
-      ) {
-        return true;
+    //点击单个格子
+    heandleclick(row, column) {
+      if (column["label"] !== "gene") {
+        this.subClu = this.subClucoptions;
+        this.isShow = true;
+        this.clickGene = row["gene"];
+        this.celltype = column["label"];
+        this.gloclu = column["type"];
+        this.$refs.detailPlot.markerPlot(row["gene"], column["label"]);
+        toTarget(820);
       }
-      return false;
     },
 
-    reset() {
-      this.scimmuShow = false;
-      this.scimmuShowNoRes = false;
-    },
-
-    searchCro() {
-      if (!this.checkdataset()) {
-        this.scimmuShow = true;
-        this.scimmuShowNoRes = false;
-        this.crossloading = true;
-        var that = this;
-
-        this.$http
-          .get("/tiger/singlecellcrosstable.php", {
-            params: {
-              celltype: that.crossClu.join(","),
-              sqltable: "sccrosstalk_" + that.cancer,
-            },
-          })
-          .then(function (res) {
-            // if (res.data.status == 0) {
-              // setTimeout((that.crossplots = res.data.output[0]), 1000);
-              that.tableData = res.data.list
-              that.tableDataheader = Object.keys(res.data.list[0])
-              console.log(that.tableData)
-            // } else {
-              that.scimmuShow = false;
-              that.scimmuShowNoRes = true;
-            // }
-            that.crossloading = false;
-          })
-          .catch(function (res) {
-            console.log(res);
-          });
-      } else {
-        alert("Please  select cross Clusters");
-      }
+    //渲染每个格子的颜色
+    tableCellStyle({ row, column }) {
+      // if (row[column["property"]] === null || column["property"] == 'gene') {
+      //   return {
+      //     background: "white",
+      //   };
+      // }
+      // var mycolr = gStyle(parseFloat(row[column["property"]]), 2.25);
+      // return {
+      //   background: mycolr["background"],
+      //   color: mycolr["color"],
+      // };
     },
   },
-
   components: {
-    "v-goTop": goTop,
+    "v-crosstalkdetail": () => import("./crosstalkdetail.vue"),
   },
 };
 </script>
 
+
 <style>
-.singleimg2 {
-  width: 400px;
+#scDiffExpTable th {
+  left: 70px !important;
+  height: 140px !important;
 }
 </style>
-
-

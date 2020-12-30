@@ -128,7 +128,7 @@ export default {
       Signatures: "",
       vsType: "Tumor vs Normal",
       scpathwayVue: "",
-      datasetrenewed: ['PDAC','CAC','BTCC','UCEC','MCC'],
+      datasetrenewed: ['BTCC','CAC','PDAC','UCEC','MCC','UM','CRC2','BC','BCC','OV'],
     };
   },
 

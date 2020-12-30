@@ -8,14 +8,14 @@
     {"label":"Bladder Transitional Cell Carcinoma (BTCC)","options":[
         {"label":"Bladder Transitional Cell Carcinoma (BTCC) | Oh DY, et al. Cell. 2020 Jun 25 | Cell Number: 30455 | Sample Number: 14 | Patient Number: 7","value":"BTCC"}
     ]},
-    {"label":"Colitis associated cancer (CAC)","options":[
+    {"label":"Colorectal Adenocarcinoma (CAC)","options":[
         {"label":"Colorectal Adenocarcinoma (CAC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 12180 | Sample Number: 4 | Patient Number: 2","value":"CAC"}
     ]},
     {"label":"Clear cell renal cell carcinoma (CCRCC)","options":[
         {"label":"Clear cell renal cell carcinoma (CCRCC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 52340 | Sample Number: 9 | Patient Number: 3","value":"CCRCC"}
     ]},
     {"label":"Colorectal cancer (CRC)","options":[
-        {"label":"Colorectal cancer (CRC) | Lee HO, et al. Nat Genet. 2020 May 25 | Cell Number: 87540 | Sample Number: 29 | Patient Number: 29","value":"CRC1"},
+        {"label":"Colorectal cancer (CRC) | Lee HO, et al. Nat Genet. 2020 May 25 | Cell Number: 90276 | Sample Number: 51 | Patient Number: 29","value":"CRC1"},
         {"label":"Colorectal cancer (CRC) | Qian J, et al. Cell Res. 2020 Jun 20 | Cell Number: 42631 | Sample Number: 14 | Patient Number: 7","value":"CRC2"}
     ]},
     {"label":"Hepatocellular carcinoma (HCC)","options":[
@@ -25,7 +25,7 @@
         {"label":"Head-Neck Squamous Cell Carcinoma (HNSC) | Cillo AR, et al. Immunity. 2020 Jan 14 | Cell Number: 130939 | Sample Number: 37 | Patient Number: 37","value":"HNSC"}
     ]},
     {"label":"Intrahepatic cholangiocarcinoma (ICC)","options":[
-        {"label":"Intrahepatic cholangiocarcinoma (ICC) | Zhang M, et al. J Hepatol. 2020 Jun 5 | Cell Number: 33402 | Sample Number: 5 | Patient Number: 5","value":"ICC"}
+        {"label":"Intrahepatic cholangiocarcinoma (ICC) | Zhang M, et al. J Hepatol. 2020 Jun 5 | Cell Number: 32259 | Sample Number: 7 | Patient Number: 5","value":"ICC"}
     ]},
     {"label":"Merkel cell carcinoma (MCC)","options":[
         {"label":"Merkel cell carcinoma (MCC) | Paulson KG, et al. Nat Commun. 2018 Sep 24 | Cell Number: 10578 | Sample Number: 2 | Patient Number: 1","value":"MCC"}
@@ -35,8 +35,8 @@
     ]},
     {"label":"Non-small-cell lung carcinoma (NSCLC)","options":[
         {"label":"Non-small-cell lung carcinoma (NSCLC) | Lambrechts D, et al. Nat Med. 2018 Aug | Cell Number: 52273 | Sample Number: 9 | Patient Number: 5","value":"NSCLC"},
-        {"label":"Non-small-cell lung carcinoma (NSCLC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 91680 | Sample Number: 6 | Patient Number: 6","value":"NSCLC1"},
-        {"label":"Non-small-cell lung carcinoma (NSCLC) | Zilionis R, et al. Immunity. 2019 May 21 | Cell Number: 41874 | Sample Number: 7 | Patient Number: 7","value":"NSCLC3"},
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 93391 | Sample Number: 11 | Patient Number: 6","value":"NSCLC1"},
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Zilionis R, et al. Immunity. 2019 May 21 | Cell Number: 41483 | Sample Number: 13 | Patient Number: 7","value":"NSCLC3"},
         {"label":"Non-small-cell lung carcinoma (NSCLC) | Guo X, et al. Nat Med. 2018 Jul | Cell Number: 10806 | Sample Number: 39 | Patient Number: 13","value":"NSCLC4"}
     ]},
     {"label":"Ovarian cancer (OV)","options":[
@@ -46,7 +46,7 @@
         {"label":"Pancreatic ductal adenocarcinoma (PDAC) | Peng J, et al. Cell Res. 2019 Sep | Cell Number: 55841 | Sample Number: 35 | Patient Number: 35","value":"PDAC"}
     ]},
     {"label":"Triple-negative breast cancer (TNBC)","options":[
-        {"label":"Triple-negative breast cancer (TNBC) | Savas P, et al. Nat Med. 2018 Jul | Cell Number: 6274 | Sample Number: 2 | Patient Number: 2","value":"TNBC"}
+        {"label":"Triple-negative breast cancer (TNBC) | Savas P, et al. Nat Med. 2018 Jul | Cell Number: 6182 | Sample Number: 2 | Patient Number: 2","value":"TNBC"}
     ]},
     {"label":"Uterine Corpus Endometrial Carcinoma (UCEC)","options":[
         {"label":"Uterine Corpus Endometrial Carcinoma (UCEC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 33976 | Sample Number: 6 | Patient Number: 3","value":"UCEC"}
