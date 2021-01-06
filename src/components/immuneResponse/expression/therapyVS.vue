@@ -42,8 +42,7 @@
         width="80"
       >
       </el-table-column>
-            <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-
+      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
       <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
     </el-table>
 
@@ -251,20 +250,20 @@ export default {
       this.getTableData("expresponse", this.loadpage,column.prop,column.order);
     },
     headerStyle({ column }) {
-      let cancer = column.label.split("_")[0];
+      let cancer = column.label.split("-")[0];
       switch (cancer) {
         case "Melanoma":
           return "melanoma";
-          break;
         case "GBM":
           return "gbm";
-          break;
-        case "ccRCC":
-          return "ccRCC";
-          break;
-        case "Renal":
-          return "Renal";
-          break;
+        case "RCC":
+          return "rcc";
+        case "nonsqNSCLC":
+          return "nsclc";
+        case "LUSC":
+          return "lusc";
+        case "STAD":
+          return "stad";
         default:
           return "defalutColor";
       }

@@ -30,7 +30,7 @@
             <br />
             <br />
             <el-row>
-              <el-select v-model="gloClu" @change="gloCluChange">
+              <el-select v-model="gloClu" @change="GlobalClusterChange">
                 <el-option
                   v-for="item in gloCluoptions"
                   :key="item.GlobalCluster"
@@ -50,7 +50,7 @@
         <div class="textitem" v-if="geneshow" v-loading="geneloading">
           <p class="card-title">Gene Expression in cell type selected</p>
           <div class="geneExp">
-            <img id="singleimg" :src="imgUrlBox" />
+            <img id="singleimg" :src="imgpathBox" />
             <img id="singleimg" :src="imgUrlBar" />
           </div>
         </div>
@@ -65,7 +65,7 @@
         <div>
           <el-row class="selectrow">
             <el-col :span="8">
-              <span class="demonstration">DataSet:</span>
+              <span class="demonstration">DataSet: </span>
               <el-select
                 v-model="cancer"
                 @change="cancerSelectChange"
@@ -87,7 +87,7 @@
             </el-col>
 
             <el-col :span="8">
-              <span class="demonstration">Global Cluster:</span>
+              <span class="demonstration">Global Cluster: </span>
               <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
                 <el-option
                   v-for="item in gloCluoptions"
@@ -99,7 +99,7 @@
             </el-col>
 
             <el-col :span="8">
-              <span class="demonstration">Cell Type:</span>
+              <span class="demonstration">Cell Type: </span>
               <el-select v-model="CellType" v-loading="CellTypeLoading" @change="subClusterChange">
                 <el-option
                   v-for="item in CellTypeCluoptions"
@@ -211,6 +211,7 @@ export default {
       gloCluoptions: [],
       gloClu: "All",
       cancer: "PDAC",
+      CellTypeExp: "T cell",
       canceroptions: [],
       subClu: [],
       geneplots: [],
@@ -570,12 +571,12 @@ export default {
                 that.singleCellImmuTumorImgshow = true;
                 that.singleCellImmuTumorImgloading = false;
                 that.imgpathBar2 =
-                  "/tiger/img/" + res.data.output[0].split(",")[0];
+                  "/tiger/img/" + res.data.output[0].split(",")[2];
               } else {
                 that.singleCellImmuResponseImgshow = true;
                 that.singleCellImmuResponseImgloading = false;
                 that.imgpathBar3 =
-                  "/tiger/img/" + res.data.output[0].split(",")[0];
+                  "/tiger/img/" + res.data.output[0].split(",")[2] + '.png';
               }
             }
           } else {
@@ -590,74 +591,35 @@ export default {
           console.log(res);
         });
     },
-
-    // draw_chart_Diagram(data, id) {
-    //   var targetdiv = document.getElementById(id);
-    //   //let myChart_mercor = this.$echarts.init(targetdiv);
-    //   //cdn替换为
-    //   let myChart_mercor = window.echarts.init(targetdiv);
-
-    //   let option = {
-    //     title: {
-    //       text: "Sankey Diagram",
-    //     },
-    //     tooltip: {
-    //       trigger: "item",
-    //       triggerOn: "mousemove",
-    //     },
-
-    //     series: [
-    //       {
-    //         type: "sankey",
-    //         data: data.nodes,
-    //         links: data.links,
-    //         focusNodeAdjacency: true,
-    //         levels: [
-    //           {
-    //             depth: 0,
-    //             itemStyle: {
-    //               color: "#fbb4ae",
-    //             },
-    //             lineStyle: {
-    //               color: "source",
-    //               opacity: 0.6,
-    //             },
-    //           },
-    //           {
-    //             depth: 1,
-    //             itemStyle: {
-    //               color: "#b3cde3",
-    //             },
-    //             lineStyle: {
-    //               color: "source",
-    //               opacity: 0.6,
-    //             },
-    //           },
-    //           {
-    //             depth: 2,
-    //             itemStyle: {
-    //               color: "#ccebc5",
-    //             },
-    //             lineStyle: {
-    //               color: "source",
-    //               opacity: 0.6,
-    //             },
-    //           },
-    //         ],
-    //         lineStyle: {
-    //           curveness: 0.5,
-    //         },
-    //       },
-    //     ],
-    //   };
-
-    //   myChart_mercor.clear();
-    //   myChart_mercor.setOption(option);
-    //   window.onresize = function () {
-    //     myChart_mercor.resize();
-    //   };
-    // },
-
+    clickPlot(){
+      var that = this;
+      that.geneloading = true;
+      that.geneshow = true;
+      that.imgpathBox = ""
+      that.imgpathBar = ""
+      this.$http
+        .get("/tiger/scimmudiffexpdetailgene.php", {
+          params: {
+            cancer: that.cancer,
+            celltype: that.CellTypeExp,
+            type: "celltype",
+            gene: that.seargene,
+            gloclu: that.gloClu
+          },
+        })
+        .then(function (res) {
+          if (res.data.status == 0) {
+            that.imgpathBox = 'tiger/img/' + res.data.output[0].split(",")[0];
+            console.log(that.imgpathBox)
+            //that.evoluplots = res.data.output[0];
+            that.geneloading = false;
+          }
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+    },
+        
     draw_chart_sca(data, id) {
       var that = this;
       var targetdiv = document.getElementById(id);

@@ -42,6 +42,7 @@
         width="80"
       ></el-table-column>
       <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
     </el-table>
 
     <div class="colorbar">
@@ -154,17 +155,23 @@ export default {
         column.order
         );
     },
-    headerStyle({ row, column, rowIndex, columnIndex }) {
-      let cancer = column.label.split("_")[0];
+    headerStyle({ column }) {
+      let cancer = column.label.split("-")[0];
       switch (cancer) {
         case "Melanoma":
           return "melanoma";
         case "GBM":
           return "gbm";
-        case "ccRCC":
-          return "ccRCC";
-        case "Renal":
-          return "Renal";
+        case "RCC":
+          return "rcc";
+        case "nonsqNSCLC":
+          return "nsclc";
+        case "HNSC":
+          return "hnsc";
+        case "LUSC":
+          return "lusc";
+        case "STAD":
+          return "stad";
         default:
           return "defalutColor";
       }

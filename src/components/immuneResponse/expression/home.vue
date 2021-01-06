@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="expressioTab">
+    <div id="expressionTab">
       <el-card class="expressionCard">
         <el-tabs v-model="weractiveName"  @tab-click="handleClick2"  >
           <el-tab-pane label="Response VS Non-Response" name="response" >

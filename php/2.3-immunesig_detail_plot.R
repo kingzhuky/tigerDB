@@ -11,12 +11,8 @@ result.path <- "./img/"
 maintitle1 <- paste("ImmuneSig-Detial","RNR","boxplot",sigid,sep="-")
 maintitle2 <- paste("ImmuneSig-Detial","pancancer","boxplot",sigid,sep="-")
 
-colors=c('#E5D2DD', '#53A85F', '#F1BB72', '#F3B1A0', '#D6E7A3', '#57C3F3', '#476D87',
-         '#E95C59', '#E59CC4', '#AB3282', '#23452F', '#BD956A', '#8C549C', '#585658',
-         '#9FA3A8', '#E0D4CA', '#5F3D69', '#C5DEBA', '#58A4C3', '#E4C755', '#F7F398',
-         '#AA9A59', '#E63863', '#E39A35', '#C1E6F3', '#6778AE', '#91D0BE', '#B53E2B',
-         '#712820', '#DCC1DD', '#CCE0F5',  '#CCC9E6', '#625D9E', '#68A180', '#3A6963',
-         '#968175')
+colors=c('#D6E7A3',"orange1", 'lightblue','#7142AC',"darkcyan","royalblue1","red3",'#53A85F',"deeppink",
+         "mediumvioletred","gold","darkorange2", "tan2","darkorange2","darkorchid","chocolate4","darkred","lightskyblue","gold1")
 mytheme <- theme_bw() + 
   theme(plot.title=element_text(size=rel(2),hjust=0.5),
         axis.title=element_text(size=rel(1)),

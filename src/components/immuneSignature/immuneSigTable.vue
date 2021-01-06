@@ -3,8 +3,8 @@
     <el-row>
         <el-col :push="1" :span="22">
         <el-table v-loading="loading" :data="sigtable" max-height="620" stripe border style="width: 100%">
-            <el-table-column property="Signature_ID" label="Signature ID" align="center" ></el-table-column>
-            <el-table-column property="Signature_Name" label="Signature Name" align="center" ></el-table-column>
+            <el-table-column property="SignatureID" label="Signature ID" align="center" ></el-table-column>
+            <el-table-column property="SignatureName" label="Signature Name" align="center" ></el-table-column>
             <el-table-column property="PMID" label="PMID" align="center">
                 <template slot-scope="scope">
                   <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.PMID"
@@ -12,13 +12,13 @@
                     class="buttonText">{{scope.row.PMID}}</a>
                 </template>
               </el-table-column>
-            <el-table-column prop="Immune_Response_Correlation" label="AUC" align="center"></el-table-column>
+            <el-table-column prop="AUC" label="AUC" align="center"></el-table-column>
               <el-table-column label="Detail" align="center" width="120%">
                 <template slot-scope="scope">
                     <el-button
                     id="immusignatureplot"
                     icon="el-icon-s-marketing"
-                    @click="showDetail(scope.row.Signature_ID)"
+                    @click="showDetail(scope.row.SignatureID)"
                     >Detail</el-button>
                 </template>
             </el-table-column>

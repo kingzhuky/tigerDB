@@ -291,16 +291,20 @@ export default {
       );
     },
     headerStyle({ column }) {
-      let cancer = column.label.split("_")[0];
+      let cancer = column.label.split("-")[0];
       switch (cancer) {
         case "Melanoma":
           return "melanoma";
         case "GBM":
           return "gbm";
-        case "ccRCC":
-          return "ccRCC";
-        case "Renal":
-          return "Renal";
+        case "RCC":
+          return "rcc";
+        case "nonsqNSCLC":
+          return "nsclc";
+        case "LUSC":
+          return "lusc";
+        case "STAD":
+          return "stad";
         default:
           return "defalutColor";
       }

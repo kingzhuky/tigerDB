@@ -142,17 +142,32 @@ div#logFC {
   border-top-width: 5px;
 }
 
-.ccRCC{
-  border-top-color: red;
+.rcc{
+  border-top-color: rgb(181, 224, 28);
+  border-top-style: solid;
+  border-top-width: 5px;
+}
+.nsclc{
+  border-top-color: rgb(236, 164, 29);
+  border-top-style: solid;
+  border-top-width: 5px;
+}
+.lusc{
+  border-top-color: rgb(103, 236, 41);
+  border-top-style: solid;
+  border-top-width: 5px;
+}
+.stad{
+  border-top-color: rgb(47, 133, 8);
+  border-top-style: solid;
+  border-top-width: 5px;
+}
+.hnsc{
+  border-top-color: rgb(82, 110, 69);
   border-top-style: solid;
   border-top-width: 5px;
 }
 
-.Renal{
-  border-top-color: rgb(139, 195, 74);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
 
 .defalutColor{
   background-color: rgb(28, 224, 250);

@@ -55,9 +55,17 @@
                     </el-table>
                     </el-row>
                 <p class="card-title">Signature Score in Different Dataset (Response vs Non-Response)</p>
-                    <img height="400px" :src="imgUrlRNRBox" />
+                <el-row v-loading="artloading">
+                    <el-col span="12" push="6">
+                        <img width="100%" :src="imgUrlRNRBox" />
+                    </el-col>
+                </el-row>
                 <p class="card-title">Signature Score in Different Cancer Type (Tumor vs Normal)</p>
-                    <img height="400px" :src="imgUrlTNBox" />
+                <el-row v-loading="artloading">
+                    <el-col span="12" push="6">
+                        <img width="100%" :src="imgUrlTNBox" />
+                    </el-col>
+                </el-row>
             </el-col>
         </el-row>
     </div>

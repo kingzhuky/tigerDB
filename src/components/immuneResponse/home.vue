@@ -18,9 +18,9 @@
           <component :is="signatureVue"></component>
         </el-tab-pane>
 
-        <!-- <el-tab-pane label="Dataset Overview" name="overview">
+        <el-tab-pane label="Dataset Overview" name="overview">
           <component :is="dataOverviewVue"></component>
-        </el-tab-pane> -->
+        </el-tab-pane>
 
       </el-tabs>
     </el-card>
