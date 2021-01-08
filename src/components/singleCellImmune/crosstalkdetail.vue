@@ -18,14 +18,13 @@
               <el-col :span="12" :offset="0" v-show="resultShow">
                 <div class="detailimg">
                   <el-table
-                    ref="singleTable"
+                    class="detailtable"
                     border
-                    max-height="420"
+                    max-height="600"
                     :data="tableData"
                     v-loading="loading"
-                    :row-style="tableCellStyle"
+                    :cell-style="tableCellStyle"
                     header-row-class-name="tableHead"
-                    
                     @cell-click="heandleclick"
                     style="100%"
                   >
@@ -36,87 +35,76 @@
                       :label="item"
                       sortable
                       cursor="pointer"
-                      :sort-orders="['ascending', 'descending', null]"
+                      :sort-orders="['descending', null]"
                       align="center"
                       width="85%"
                     ></el-table-column>
                   </el-table>
                 </div>
               </el-col>
-              <el-col :span="4" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-                <p class="imgtitle">Cell Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + crossimg[0]+ '.png'"
-                  @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+              <el-col :span="12" >
+                <el-row v-loading="plotloading">
+                  <el-col :span="11" push="1" v-show="evolushow2">
+                    <p class="imgtitle">Tissue in {{celltype_1}} </p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + crossimg[0]+ '.png'"
+                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                  </el-col>
+                  <el-col :span="11" push="1" v-show="evolushow2">
+                    <p class="imgtitle">Tissue in {{celltype_2}} </p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + crossimg[2] + '.png'"
+                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                  </el-col>
+                  
+                </el-row>
+                <el-row v-loading="plotloading">
+                  <el-col :span="11" push="1" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
+                    <p class="imgtitle">UMAP Plot of {{gene_1}} Expression in {{celltype_1}}</p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + crossimg[1]+ '.png'"
+                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                  </el-col>
+                  <el-col :span="11" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
+                    <p class="imgtitle">UMAP Plot of {{gene_2}} Expression in {{celltype_2}}</p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + crossimg[3]+ '.png'"
+                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                  </el-col>
+                </el-row>
+                <!-- <el-row v-loading="plotloading">
+                  <el-col :span="11" push="1" v-show="evolushow2">
+                    <p class="imgtitle">Tissue in {{celltype_1}} </p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + crossimg[5]"
+                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                  </el-col>
+                  <el-col :span="11" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
+                    <p class="imgtitle">UMAP Plot of {{gene1}} Expression in {{celltype_1}}</p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + crossimg[7]"
+                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                  </el-col>
+                </el-row> -->
               </el-col>
-              <el-col :span="4" v-show="evolushow2" style="position:relative;left:100px;top:0px;">
-                <p class="imgtitle">UMAP Plot of {{celltype2}} Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + crossimg[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-              </el-col>
-              <el-col :span="5" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-                <p class="imgtitle">Cell Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + crossimg[2]+ '.png'"
-                  @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-              </el-col>
-              <!-- <el-col :span="3" v-show="evolushow2" style="position:relative;left:100px;top:0px;">
-                <p class="imgtitle">UMAP Plot of {{celltype2}} Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + crossimg[3] + '.png'"
-                  @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-              </el-col> -->
-              <!-- <el-col :span="8" :offset="1" v-show="resultShow">
-                <div class="detailimg" v-loading="loading">
-                  <p class="imgtitle">Differential Expression between R and NR</p>
-                  <img style="position:relative;top:10px;right:0px;" width="350px" :src="imgUrlBox" />
-                </div>
-              </el-col>
-
-              <el-col  :span="14" v-show="!resultShow" v-loading="loading">
-                <div id="norult">No result</div>
-              </el-col> -->
-              <!-- <p class="card-title">tSNE</p> -->
-            <!-- <el-col :span="6" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-              <p class="imgtitle">Cell Types</p>
-              <img
-                id="singleimg"
-                fit="fill"
-                width="100%"
-                :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
-                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-            </el-col>
-            <el-col :span="6" v-show="evolushow2" style="position:relative;left:100px;top:0px;">
-              <p class="imgtitle">UMAP Plot of {{celltype2}} Types</p>
-              <img
-                id="singleimg"
-                fit="fill"
-                width="100%"
-                :src="'tiger/img/' + evoluplots.split(',')[1]"
-                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-            </el-col>
-            <el-col :span="12" v-show="evolushow2" style="position:relative;left:40px;top:0px;">
-              <p class="imgtitle">Boxplot of {{celltype2}} Expression</p>
-              <img
-                id="singleimg"
-                fit="fill"
-                height="250px"
-                :src="'tiger/img/' + evoluplots.split(',')[0]"
-                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-            </el-col> -->
             </el-row>
             <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
               <div id="norult">No result</div>
@@ -131,6 +119,14 @@
 
 <script>
 import goTop from "../public/goTop";
+import {
+  scrollRow,
+  toTarget,
+  gStyle,
+  move,
+  stop,
+  onesidecolor,
+} from "../../../static/js/utils.js";
 
 export default {
   props: {
@@ -160,7 +156,11 @@ export default {
       normalGene: "",
       logScale: "FALSE",
       evoluloading: true,
-      geneloading: true,
+      plotloading: false,
+      celltype_1: '',
+      celltype_2: '',
+      gene_1: '',
+      gene_2: '',
       //geneplots: "",
       evoluplots: "",
       tableData: [],
@@ -184,7 +184,7 @@ export default {
         .then(function(res) {
           that.tableData = res.data;
           that.tableDataheader = Object.keys(res.data[0])
-          console.log(that.tableDataheader)
+          // console.log(that.tableDataheader)
           that.resultShow = true;
         })
         .catch(function(res) {
@@ -234,7 +234,6 @@ export default {
             let imgpath = res.data.output[0].split(",");
             console.log(imgpath)
             that.crossimg = imgpath
-            that.evolushow2 = true;
           }
         })
         .catch(function (res) {
@@ -243,33 +242,39 @@ export default {
     },
     heandleclick(row, column) {
       if (column["label"] !== "gene") {
+        this.evolushow2 = false;
+        this.plotloading = true;
+        this.crossimg = [];
+        this.celltype_1 = column["label"].split(",").pop().split('|')[0]
+        this.celltype_2 = column["label"].split('|').pop()
+        this.gene_1 = row["gene"].split('_')[0]
+        this.gene_2 = row["gene"].split('_').pop()
         this.crossPlot(row["gene"], column["label"]);
+        this.plotloading = false;
+        this.evolushow2 = true;
         // toTarget(820);
       }
     },
     previewImg(url){
-    this.$hevueImgPreview({
-      url: url,
-      multiple: false, // 开启多图预览模式
-      keyboard: true,
-      nowImgIndex: 0, // 多图预览，默认展示第二张图片
-      mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-    })
+      this.$hevueImgPreview({
+        url: url,
+        multiple: false, // 开启多图预览模式
+        keyboard: true,
+        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+      })
     },
-  },
-
-  computed: {
-    imgUrlWgcna: function () {
-      return "tiger/img/" + this.imgpath + ".png";
-    },
-    imgUrlBox: function () {
-      return "tiger/img/" + this.imgpathBox + ".png";
-    },
-    imgUrlBar: function () {
-      return "tiger/img/" + this.imgpathBar + ".png";
-    },
-    imgUrlEvo: function () {
-      return "tiger/img/" + this.imgpathEvo + ".png";
+    tableCellStyle({ row, column }) {
+      if (row[column["property"]] === null || column["property"] == 'gene') {
+        return {
+          background: "white",
+        };
+      }
+      var mycolr = onesidecolor(0,4,parseFloat(row[column["property"]]));
+      return {
+        background: mycolr["background"],
+        color: mycolr["color"],
+      };
     },
   },
   components: {
@@ -279,6 +284,18 @@ export default {
 </script>
 
 <style>
+.detailtable .el-table__body tr>td:hover {
+  cursor: pointer;
+  outline: 1px solid rgba(82, 168, 236, .8);
+  outline-offset: -1px;
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, .6);
+  box-shadow: 0 0 8px rgba(82, 168, 236, .6);
+}
+
+.detailtable .el-table__body tr>th:hover {
+  background-color: black;
+}
+
 </style>
 
 

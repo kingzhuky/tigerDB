@@ -4,8 +4,8 @@
       <div class="infor" v-loading="loading">
         <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
-          <el-row class="detailimg">
-            <el-col :span="6" :offset="0" style="position:relative;right:10px;top:20px;">
+          <el-row class="detailimg" type="flex" justify="center" >
+            <el-col :span="6" style="position:relative;right:10px;top:20px;">
               <p class="imgtitle">Cell Types</p>
               <img
                 id="singleimg"
@@ -14,7 +14,7 @@
                 :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" 
                 @click="previewImg(['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png'])">
             </el-col>
-            <el-col :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
+            <el-col v-show="typeof(plotsres[gloclu][1]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
               <p class="imgtitle">Cell Fraction</p>
               <img
                 id="singleimg"
@@ -23,9 +23,7 @@
                 :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" 
                 @click="previewImg(['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png'])">
             </el-col>
-          <!-- </el-row>
-          <el-row class="detailimg"> -->
-            <el-col :span="6" :offset="0" style="position:relative;right:30px;top:20px;">
+            <el-col v-show="typeof(plotsres[gloclu][2]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:30px;top:20px;">
               <p class="imgtitle">Group Difference of Each Cluster</p>
               <img
                 id="singleimg"
@@ -34,7 +32,7 @@
                 :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" 
                 @click="previewImg(['tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png'])">
             </el-col>
-            <el-col :span="6" :offset="0" style="position:relative;right:20px;top:20px;">
+            <el-col v-show="typeof(plotsres[gloclu][3]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:20px;top:20px;">
               <p class="imgtitle">Classical Cell Markers</p>
               <img
                 id="singleimg"
@@ -154,6 +152,7 @@ export default {
             that.gloclures.push(gloclu);
             // console.log(gloclu)
             that.plotsres[gloclu] = res.data.output[0].split(",");
+            // console.log(that.plotsres[gloclu][1])
             that.loading = false;
           }
         })

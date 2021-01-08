@@ -81,13 +81,13 @@
               :is="evolutionVue"
             ></component>
           </el-tab-pane>
-          <!-- <el-tab-pane label="Cross Talk" name="crosstalk">
+          <el-tab-pane label="Cross Talk" name="crosstalk">
             <component 
             :is="crosstalkVue" 
             :cancer="cancer"
             :gloCluoptions="gloCluoptions"
             ref="crosstalkRef"></component>
-          </el-tab-pane> -->
+          </el-tab-pane>
         </el-tabs>
       </el-card>
     </div>
@@ -128,7 +128,7 @@ export default {
       Signatures: "",
       vsType: "Tumor vs Normal",
       scpathwayVue: "",
-      datasetrenewed: ['BTCC','CAC','PDAC','UCEC','MCC','UM','CRC2','BC','BCC','OV'],
+      datasetrenewed: ["BCC", "BC", "BTCC", "CAC", "CCRCC", "CRC2", "HCC", "MCC", "NSCLC", "OV", "PDAC", "UCEC", "UM"],
     };
   },
 
@@ -192,7 +192,7 @@ export default {
           break;
         case "crosstalk":
           this.crosstalkVue = tigcrosstalk;
-          this.$refs.crosstalkRef.reset();
+          this.$refs.crosstalkRef.plot();
           break;
         case "evolution":
           this.evolutionVue = tigevolution;

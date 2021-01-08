@@ -167,7 +167,7 @@ export default {
       gloclu:"",
       whethrnr:true,
       whethtn:true,
-      tabactiveName:'response',
+      tabactiveName:'',
     };
   },
 

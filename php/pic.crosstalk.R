@@ -29,7 +29,7 @@ if(Sys.info()[8]=="zky"){
 Args <- commandArgs(T)
 
 # Args <- c("CAC","HLA-DPA1_TNFSF9",'All.Acinar.B_C1_RPS4Y1')
-Args <- c("CAC","CRTAM_CADM1","Tumor,CD4_C1_IL7R|CD8_C4_GNLY")
+# Args <- c("CAC","CRTAM_CADM1","Tumor,CD4_C1_IL7R|CD8_C4_GNLY")
 
 #Args <- c("PDAC","Tcell")
 #Args <- c("PDAC","Myeloid")
@@ -96,7 +96,7 @@ if (file.exists(gene1) & file.exists(gene2) ){
   
   #------Umap-type1----------
   p1=ggplot(gene1,aes(x=UMAP_1,y=UMAP_2,color=Tissue))+geom_point(size=0.3)+mytheme+scale_color_manual(values = c('#00000008',colors[c(6,9,8,2)]))+
-    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = paste0('Tissue in ',type1))+ theme(
+    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
       panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
       axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
       axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
@@ -115,7 +115,7 @@ if (file.exists(gene1) & file.exists(gene2) ){
       axis.text.x = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),axis.ticks = element_blank(),
       axis.text.y = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),plot.title = element_text(size=12),panel.grid.major=element_line(color="grey96"),
       panel.grid.minor=element_line(color="grey96")
-    )+labs(title = paste0('UMAP Plot of ',name.gene1,' Expression in ',type1))
+    )
   
   maintitle2=paste0(maintitle,'.umap.expr.type1')
   ggsave(paste0(resPath,maintitle2,'.png'),width =100,height =80, unit = "mm", dpi=100,p)
@@ -125,7 +125,7 @@ if (file.exists(gene1) & file.exists(gene2) ){
   
   #------Umap-type2----------
   p1=ggplot(gene2,aes(x=UMAP_1,y=UMAP_2,color=Tissue))+geom_point(size=0.3)+mytheme+scale_color_manual(values = c('#00000008',colors[c(6,9,8,2)]))+
-    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+labs(title = paste0('Tissue in ',type2))+ theme(
+    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
       panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
       axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
       axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
@@ -145,7 +145,7 @@ if (file.exists(gene1) & file.exists(gene2) ){
       axis.text.x = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),axis.ticks = element_blank(),
       axis.text.y = element_text(angle=0,hjust=0, vjust=1,size = rel(1.2),color="white"),plot.title = element_text(size=12),panel.grid.major=element_line(color="grey96"),
       panel.grid.minor=element_line(color="grey96")
-    )+labs(title = paste0('UMAP Plot of ',name.gene1,' Expression in ',type2))
+    )
   
   maintitle4=paste0(maintitle,'.umap.expr.type2')
   ggsave(paste0(resPath,maintitle4,'.png'),width =100,height =80, unit = "mm", dpi=100,p)

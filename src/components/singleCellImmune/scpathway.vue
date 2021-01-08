@@ -159,7 +159,7 @@ export default {
       gloclu:"",
       whetherrnr:true,
       whetherdiff:true,
-      tabactiveName: 'diff',
+      tabactiveName: 'cluster',
     };
   },
 
@@ -372,7 +372,7 @@ export default {
           background: "white",
         };
       }
-      var mycolr = gStyle(parseFloat(row[column["property"]]), 2.25);
+      var mycolr = gStyle(parseFloat(row[column["property"]]), 20.25);
       return {
         background: mycolr["background"],
         color: mycolr["color"],

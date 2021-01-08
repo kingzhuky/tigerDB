@@ -19,7 +19,6 @@
       :data="tableData"
       @cell-click="heandleclick"
       :cell-style="tableCellStyle"
-      :header-cell-class-name="headerStyle"
       v-loadmore="tabelloadmore"
       v-loadlast="tableloadlast"
       v-loading="loading"
@@ -39,12 +38,12 @@
       ></el-table-column>
       <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
     </el-table>
-<!-- 
+
     <div class="colorbar">
-      <span>Low Correlation&lt;0</span>
-      <span class="heatMapTable--colorbar"></span>
-      <span>High Correlation&gt;0</span>
-    </div> -->
+      <span>Less Effect</span>
+      <span class="crossTable--colorbar"></span>
+      <span>More Effect</span>
+    </div>
     <v-crosstalkdetail
       ref="detailPlot"
       v-show="isShow"
@@ -63,6 +62,7 @@ import {
   gStyle,
   move,
   stop,
+  onesidecolor,
 } from "../../../static/js/utils.js";
 
 export default {
@@ -271,16 +271,16 @@ export default {
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      // if (row[column["property"]] === null || column["property"] == 'gene') {
-      //   return {
-      //     background: "white",
-      //   };
-      // }
-      // var mycolr = gStyle(parseFloat(row[column["property"]]), 2.25);
-      // return {
-      //   background: mycolr["background"],
-      //   color: mycolr["color"],
-      // };
+      if (row[column["property"]] === null || column["property"] == 'gene') {
+        return {
+          background: "white",
+        };
+      }
+      var mycolr = onesidecolor(0,60,parseFloat(row[column["property"]]));
+      return {
+        background: mycolr["background"],
+        color: mycolr["color"],
+      };
     },
   },
   components: {
@@ -294,5 +294,13 @@ export default {
 #scDiffExpTable th {
   left: 70px !important;
   height: 140px !important;
+}
+
+.crossTable--colorbar {
+  margin: 0 5px;
+  display: inline-block;
+  width: 800px;
+  height: 18px;
+  background: linear-gradient(90deg, #fff, #db0000);
 }
 </style>

@@ -157,7 +157,23 @@ const move = function () {
   document.body.style.overflow = ''; //出现滚动条
   document.removeEventListener("touchmove", mo, false);
 }
-
+const onesidecolor = function(min,max,n) {
+  if(max == min){
+    if(n >0){
+      return 'rgb(255,0,0)'
+    }else{
+      return 'rgb(255,255,255)'
+    }
+  }
+  let c = Math.max(0, (n-min)/(max-min));
+  let red = 255;
+  let green = (1-c)*255;
+  return {
+    background: 'rgb('+red+','+green+','+green+')',
+    color: 'black',
+    cursor: n > 0.58 ? '' : 'not-allowed',
+  }
+}
 
 
 
@@ -165,6 +181,7 @@ export {
   hsv2rgb,
   gStyle,
   gStyle2,
+  onesidecolor,
   toTarget,
   scrollCol,
   scrollRow,
