@@ -18,7 +18,7 @@
       <div class="main_con" id="4" ref="userinfo4">
         <h1 class="subtitle">Usage of TIGER</h1>
         <el-divider></el-divider>
-        <p>TIGER is composed of four major modules, including Immune Response, Immune Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
+        <p>TIGER is composed of four major modules, including Immunotherapy Response, Immune Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
       </div>
       <el-row>
          <el-col :span="4" :push="0" >
@@ -35,7 +35,7 @@
         <el-col :span="4" :push="1" >
           <el-card shadow="hover" class="box-card" @click.native="handleEdit('response')">
             <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Immune Response</span>
+              <span class="homedesrc">Immunotherapy Response</span>
               <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
             </div>
             <div style="text-align:center;">

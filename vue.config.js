@@ -105,7 +105,7 @@ module.exports = {
   // webpack-dev-server 相关配置
   devServer: {
       open: true,                                 //配置自动启动浏览器
-      host: 'localhost',
+      host: '0.0.0.0',
       port: 8080,                                 // 端口号
       https: false,
       hotOnly: false, 

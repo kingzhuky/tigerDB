@@ -12,7 +12,7 @@
       <div align="center">
         <img alt="help1" v-lazy="help1" />
       </div>
-      <p>TIGER will comprehensively analyze the functions of the four modules (Immune Response, Immune Signature, Singcell Immunity, Immune Screening) to obtain an integrated result.<br/>
+      <p>TIGER will comprehensively analyze the functions of the four modules (Immunotherapy Response, Immune Signature, Singcell Immunity, Immune Screening) to obtain an integrated result.<br/>
       Firstly, There is a summary of Gene interested in, which including Gene Information and Pathway Information.</p>
       <div align="center">
         <img class="helpimg-detail" alt="search1_1" v-lazy="search1_1" />
@@ -34,15 +34,15 @@
     </div>
 
     <div v-show="responseshow">
-      <h2 class="sub">Module of Immune Response</h2>
-      <p>Users can enter the Immune Response module to visually view the expression differences of all genes in the immunotherapy response and non-response groups, including different immunotherapy methods, and even be able to view the gender differences in immunotherapy response.</p>
+      <h2 class="sub">Module of Immunotherapy Response</h2>
+      <p>Users can enter the Immunotherapy Response module to visually view the expression differences of all genes in the immunotherapy response and non-response groups, including different immunotherapy methods, and even be able to view the gender differences in immunotherapy response.</p>
       <p>The module is divided into three sub-modules, which are Differential Expression Analysis, Survival Analysis, Signature analysis.</p>
       <div align="center">
         <img alt="help2" v-lazy="help2" />
       </div>
 
-      <h3 class="sub">Differential Expression Analysis of Immune Response</h3>
-      <p>Users can directly switch between the results of differential expression analysis of immunotherapy Response and Non-response, Pre-Therapy and Post-Therapy. In additions, Users can visually view the differences in the expression of all genes in the Immune Response, including different immunotherapy methods, and even better, can view the gender differences in immunotherapy responses. The user can directly locate the corresponding gene through the search bar, and can jump to the data set of different cancer types through the drop-down bar on the left.</p>
+      <h3 class="sub">Differential Expression Analysis of Immunotherapy Response</h3>
+      <p>Users can directly switch between the results of differential expression analysis of immunotherapy Response and Non-response, Pre-Therapy and Post-Therapy. In additions, Users can visually view the differences in the expression of all genes in the Immunotherapy Response, including different immunotherapy methods, and even better, can view the gender differences in immunotherapy responses. The user can directly locate the corresponding gene through the search bar, and can jump to the data set of different cancer types through the drop-down bar on the left.</p>
       <div align="center">
         <img alt="help3" v-lazy="help3" />
       </div>
@@ -51,7 +51,7 @@
         <img alt="help4" v-lazy="help4" />
       </div>
 
-      <h3 class="sub">Survival Analysis of Immune Response</h3>
+      <h3 class="sub">Survival Analysis of Immunotherapy Response</h3>
       <p>Users can directly see the relationship between all gene expressions in different data sets and survival through the heat map. In the data set, the sample will be subdivided according to the sample's treatment information and gender differences. In addition, red represents poor prognosis and blue represents good prognosis. By clicking on the color square, you can live the Km survival curve, and the forest map of cox single factor regression.</p>
       <div align="center">
         <img class="helpimg-detail" alt="help3" v-lazy="help5" />
@@ -86,7 +86,7 @@
       </div>
 
       <h3 class="sub">Signature Correlation Analysis</h3>
-      <p>By inputting a single gene or gene set as a signature, the user performs correlation analysis with known signatures in pan-cancer species. TIGER provides an interactive heat map of correlation coefficients. You can see more detailed correlation results with user-defined signatures by clicking on different immune signatures. Carry out pan-cancer association analysis in the TCGA data to find genes or gene sets that are more relevant to the immune Signature in different cancers, and combine them with the results of the Immune Response module to be able to identify more cancers Find genes or gene sets related to immunotherapy, and help research and analysis of immunotherapy prognosis</p>
+      <p>By inputting a single gene or gene set as a signature, the user performs correlation analysis with known signatures in pan-cancer species. TIGER provides an interactive heat map of correlation coefficients. You can see more detailed correlation results with user-defined signatures by clicking on different immune signatures. Carry out pan-cancer association analysis in the TCGA data to find genes or gene sets that are more relevant to the immune Signature in different cancers, and combine them with the results of the Immunotherapy Response module to be able to identify more cancers Find genes or gene sets related to immunotherapy, and help research and analysis of immunotherapy prognosis</p>
       <div align="center">
          <img class="helpimg-detail" alt="signature3_1" v-lazy="signature3_1" />
       </div>

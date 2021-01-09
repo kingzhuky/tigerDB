@@ -9,12 +9,10 @@
     <div class="serachpage">
       <el-card class="box-card3" id="searchpart">
         <el-row class="searchrow">
-          <el-col :span="8" :offset="6">
+          <el-col :span="8" :offset="6" id="homeInput">
             <el-autocomplete
-              id="autoInput"
               v-model="seargene"
-              style="min-width:100px"
-              placeholder="Input Gene Symbol"
+              placeholder="Please Input A Gene Symbol (e.g. PDCD1 or CXCL13)"
               :fetch-suggestions="querySearchAsync"
               @keyup.enter.native="submsearch"
             ></el-autocomplete>
@@ -23,6 +21,7 @@
             <el-button id="homebt" @click="submsearch"  :disabled="isDisable">Search</el-button>
           </el-col>
         </el-row>
+        <br />
       </el-card>
 
       <br />
@@ -39,7 +38,7 @@
               ></component>
             </el-tab-pane>
 
-            <el-tab-pane label="Immune Response" name="immuneResponse">
+            <el-tab-pane label="Immunotherapy Response" name="immuneResponse">
               <component  :is="immuneResponseVue" ref="immuResponseVueRef" :seargene="seargene"></component>
             </el-tab-pane>
 
@@ -252,5 +251,8 @@ div#readmeCard {
     height: 55px;
     padding: 10px;
     font-weight: bold !important;
+}
+#homeInput .el-autocomplete {
+  width: 100%;
 }
 </style>

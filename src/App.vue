@@ -30,7 +30,7 @@
             <div class="header-nav">Home</div>
           </el-menu-item>
           <el-menu-item index="/immuneResponse">
-            <div class="header-nav">Immune Response</div>
+            <div class="header-nav">Immunotherapy Response</div>
           </el-menu-item>
           <el-menu-item index="/immuneSignature">
             <div class="header-nav">Immune Signature</div>

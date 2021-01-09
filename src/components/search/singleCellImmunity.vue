@@ -4,10 +4,10 @@
       <el-card>
         <p class="card-title">Expression in different cell types</p>
         <el-row>
-          <el-col :span="16" v-loading="loading">
-            <div id="scaterid" style="width: 600px;height:400px;"></div>
+          <el-col :span="16" push="3" v-loading="loading">
+            <div id="scaterid" style="width: 1000px;height:400px;"></div>
           </el-col>
-          <el-col :span="4" :offset="1">
+          <!-- <el-col :span="4" :offset="1">
             <br />
             <br />
             <br />
@@ -44,16 +44,28 @@
             <el-row class="plot">
               <el-button id="anabt" @click="clickPlot()" style="width:210px">Plot</el-button>
             </el-row>
-          </el-col>
+          </el-col> -->
         </el-row>
-
-        <div class="textitem" v-if="geneshow" v-loading="geneloading">
+        <!-- <div class="textitem" v-if="geneshow" v-loading="geneloading">
           <p class="card-title">Gene Expression in cell type selected</p>
           <div class="geneExp">
             <img id="singleimg" :src="imgpathBox" />
             <img id="singleimg" :src="imgUrlBar" />
           </div>
-        </div>
+        </div> -->
+        <el-table 
+          :data="MarkerTable" 
+          max-height="800" 
+          style="width: 100%"
+          :row-key="getRowKeys"
+          :expand-row-keys="expands"
+          @expand-change="diffExpRespontableExpand"
+          v-loading="loading"
+        >
+          <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
+          <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
+          <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
+        </el-table>
       </el-card>
     </div>
 
@@ -225,7 +237,8 @@ export default {
       imgpathBar3: "",
       picScattername: "",
       picScatterloading: true,
-      DiffExpTumorTableData: []
+      DiffExpTumorTableData: [],
+      MarkerTable: [],
     };
   },
   mounted() {
@@ -373,10 +386,10 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
       var hours = cancer;
       var days = [0, 1, 2, 3, 4, 5];
-      console.log("data:")
-      console.log(data)
-      console.log("cancer:")
-      console.log(cancer)
+      // console.log("data:")
+      // console.log(data)
+      // console.log("cancer:")
+      // console.log(cancer)
       var option2 = {
         title: {
           text: "Cell Type Marker\n ( |Log2FC| )\n",
@@ -473,11 +486,12 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            console.log(Object.values(res.data.cancer))
-            console.log("data.list:")
-            console.log(res.data.list)
+            // console.log(Object.values(res.data.cancer))
+            // console.log("data.list:")
+            // console.log(res.data.list)
+            this.MarkerTable = res.data.tabledata
             console.log("data.table:")
-            console.log(res.data.tabledata)
+            console.log(this.MarkerTable)
             this.draw_chart(Object.values(res.data.cancer), res.data.list);
             this.loading = false;
           }
@@ -673,6 +687,25 @@ export default {
       nowImgIndex: 0, // 多图预览，默认展示第二张图片
       mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
     })
+    },
+    diffExpRespontableExpand: function (row, expandedRows) {
+      var that = this;
+      if (expandedRows.length) {
+        that.expands = [];
+        if (row) {
+          that.expands.push(row.geneb);
+        }
+      } else {
+        that.expands = [];
+      }
+
+      this.picScatterPlot(
+        row.CellType,
+        row.GlobalCluster,
+        row.genea,
+        row.geneb,
+        row.CellType
+      );
     },
   },
 };

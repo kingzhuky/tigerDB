@@ -37,7 +37,7 @@
             <el-col :span="5">
               <el-card shadow="hover" class="box-card" @click.native="openpage('immuneResponse')">
                 <div slot="header" class="clearfix" style="text-align:center;">
-                  <span class="homedesrc">Immune Response</span>
+                  <span class="homedesrc">Immunotherapy Response</span>
                   <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
                 </div>
                 <div style="text-align:center;">

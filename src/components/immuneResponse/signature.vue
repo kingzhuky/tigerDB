@@ -50,7 +50,7 @@
 
         <el-col :span="5" :offset="1">
           <el-row class="sigInput">
-            <span class="label">Select A Immune Response Dataset</span>
+            <span class="label">Select A Immunotherapy Response Dataset</span>
           </el-row>
 
           <el-row>

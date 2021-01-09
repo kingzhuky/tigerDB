@@ -260,6 +260,7 @@ export default {
         this.clickGene = row["gene"];
         this.celltype = column["label"];
         this.gloclu = column["type"];
+        this.$refs.detailPlot.getdatagene(row["gene"]);
         this.$refs.detailPlot.markerPlot(row["gene"], column["label"], column["type"]);
         toTarget(820);
       }
