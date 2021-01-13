@@ -208,10 +208,13 @@ export default {
             this.whethrnr = false;
             this.whethtn = true;
             this.tabactiveName = "response"
-          }else{
+          }else if(this.vsType === "Tumor vs Normal"){
             this.whethrnr = true;
             this.whethtn = false;
             this.tabactiveName = "tn"
+          }else{
+            this.whethrnr = true;
+            this.whethtn = true;
           }
           console.log(this.whethtn)
         });

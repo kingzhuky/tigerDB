@@ -20,7 +20,7 @@ celltype2 <-  Args[3]
 
 maintitle <- paste(cancer.type, celltype1, celltype2,sep="-")
 
-crosstalk.table <- fread(paste0(Path,"crosstalk/sccrosstalk_",cancer.type,".tsv"),sep = "\t")
+crosstalk.table <- fread(paste0(Path,"crosstalk/",cancer.type,"_Crosstalk.mean.tsv"),sep = "\t")
 selected.cols.index <- intersect(grep(celltype1,colnames(crosstalk.table)),grep(celltype2,colnames(crosstalk.table)))
 selected.cols <- colnames(crosstalk.table)[c(1,selected.cols.index)]
 output.table <- crosstalk.table[, ..selected.cols]
