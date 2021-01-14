@@ -48,10 +48,7 @@
         </el-row>
         <!-- <div class="textitem" v-if="geneshow" v-loading="geneloading">
           <p class="card-title">Gene Expression in cell type selected</p>
-          <div class="geneExp">
-            <img id="singleimg" :src="imgpathBox" />
-            <img id="singleimg" :src="imgUrlBar" />
-          </div>
+
         </div> -->
         <el-table 
           :data="MarkerTable" 
@@ -59,12 +56,24 @@
           style="width: 100%"
           :row-key="getRowKeys"
           :expand-row-keys="expands"
-          @expand-change="diffExpRespontableExpand"
+          @expand-change="markertableExpand"
           v-loading="loading"
         >
-          <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
-          <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
-          <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
+          <el-table-column type="expand" >
+            <template slot-scope="scope">
+              <div class="detailimg" v-loading="geneloading">
+                <div v-show="geneshow">
+                  <img id="singleimg" :src="imgpathBox" />
+                  <img id="singleimg" :src="imgUrlBar" />
+                </div>
+                <div v-show="!geneshow">no result</div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
+          <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
+          <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
+          <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change )" sortable></el-table-column>
         </el-table>
       </el-card>
     </div>
@@ -139,25 +148,29 @@
         <p class="card-title">Differential expression between tumor and normal per cell type</p>
         <div class="geneExp">
           <div id="singleCellImmuTumor" class="scaterPlot" style="width: 800px;height:400px;"></div>
-          <div v-show="singleCellImmuTumorImgshow" v-loading="singleCellImmuTumorImgloading">
-            <!-- <img id="singleimg" :src="imgpathBar2" /> -->
-            <img
-                id="singleimg"
-                fit="fill"
-                height="350px"
-                style="position:relative;top:40px;"
-                :src="imgpathBar2" 
-                @click="previewImg(imgpathBar2)"/>
-          </div>
         </div>
-
-        <el-table :data="DiffExpTumorTableData" max-height="800" style="width: 100%">
-          <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
-          <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
-          <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
-          <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
-          <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
-        </el-table>
+          <el-table
+              max-height="800"
+              :data="DiffExpTumorTableData"
+              :row-key="getRowKeys"
+              :expand-row-keys="expands_tn"
+              @expand-change="diffExpTNtableExpand"
+              style="width: 100%"
+            >
+            <el-table-column type="expand" >
+              <template slot-scope="scope">
+                <div class="detailimg" v-loading="singleCellImmuTumorImgloading">
+                  <img width="300px" :src="imgpathBar2" v-show="singleCellImmuTumorImgshow" />
+                  <div v-show="!singleCellImmuTumorImgshow">no result</div>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
+            <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
+            <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
+            <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
+            <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
+          </el-table>
       </div>
 
       <div
@@ -170,17 +183,24 @@
         >Differential expression between response and non-response per cell type</p>
         <div class="geneExp">
           <div id="singleCellImmuResponse" class="scaterPlot" style="width: 800px;height:400px;"></div>
-          <div v-show="singleCellImmuResponseImgshow" v-loading="singleCellImmuResponseImgloading">
-            <img
-                id="singleimg"
-                fit="fill"
-                height="350px"
-                style="position:relative;top:40px;"
-                :src="imgpathBar3" 
-                @click="previewImg(imgpathBar3)"/>
-          </div>
         </div>
-        <el-table :data="DiffExpResponseableData" max-height="800" style="width: 100%">
+        <el-table
+          max-height="800"
+          :data="DiffExpResponseableData"
+          :row-key="getRowKeys"
+          :expand-row-keys="expands_rnr"
+          @expand-change="diffExpRNRtableExpand"
+          style="width: 100%"
+        >
+          <el-table-column type="expand" >
+            <template slot-scope="scope">
+              <div class="detailimg" v-loading="singleCellImmuResponseImgloading">
+                <img width="300px" :src="imgpathBar3" v-show="singleCellImmuResponseImgshow" />
+                <div v-show="!singleCellImmuResponseImgshow">no result</div>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="datasetid" label="Dataset ID" sortable></el-table-column>
           <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
           <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
           <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
@@ -202,6 +222,8 @@ export default {
   data() {
     return {
       expands: [],
+      expands_tn: [],
+      expands_rnr: [],
       detailimgShow: true,
       currentPage: 1,
       pageSize: 20,
@@ -490,8 +512,8 @@ export default {
             // console.log("data.list:")
             // console.log(res.data.list)
             this.MarkerTable = res.data.tabledata
-            console.log("data.table:")
-            console.log(this.MarkerTable)
+            // console.log("data.table:")
+            // console.log(this.MarkerTable)
             this.draw_chart(Object.values(res.data.cancer), res.data.list);
             this.loading = false;
           }
@@ -585,7 +607,7 @@ export default {
                 that.singleCellImmuTumorImgshow = true;
                 that.singleCellImmuTumorImgloading = false;
                 that.imgpathBar2 =
-                  "/tiger/img/" + res.data.output[0].split(",")[2];
+                  "/tiger/img/" + res.data.output[0].split(",")[2] + '.png';
               } else {
                 that.singleCellImmuResponseImgshow = true;
                 that.singleCellImmuResponseImgloading = false;
@@ -605,7 +627,7 @@ export default {
           console.log(res);
         });
     },
-    clickPlot(){
+    markerPlot(datasetid, glocluster, celltype){
       var that = this;
       that.geneloading = true;
       that.geneshow = true;
@@ -614,11 +636,11 @@ export default {
       this.$http
         .get("/tiger/scimmudiffexpdetailgene.php", {
           params: {
-            cancer: that.cancer,
-            celltype: that.CellTypeExp,
+            cancer: datasetid,
+            celltype: celltype,
             type: "celltype",
             gene: that.seargene,
-            gloclu: that.gloClu
+            gloclu: glocluster
           },
         })
         .then(function (res) {
@@ -688,24 +710,48 @@ export default {
       mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
     })
     },
-    diffExpRespontableExpand: function (row, expandedRows) {
+    markertableExpand: function (row, expandedRows) {
       var that = this;
       if (expandedRows.length) {
         that.expands = [];
         if (row) {
-          that.expands.push(row.geneb);
+          that.expands.push(row.CellType);
         }
       } else {
         that.expands = [];
       }
+      console.log(row.GlobalCluster)
+      this.markerPlot(row.datasetid,row.GlobalCluster,row.CellType);
+    },
+    getRowKeys: function (row) {
+      return row.CellType;
+    },
+    diffExpTNtableExpand: function (row, expandedRows) {
+      var that = this;
+      if (expandedRows.length) {
+        that.expands_tn = [];
+        if (row) {
+          that.expands_tn.push(row.CellType);
+        }
+      } else {
+        that.expands_tn = [];
+      }
+      console.log(that.expands_tn)
 
-      this.picScatterPlot(
-        row.CellType,
-        row.GlobalCluster,
-        row.genea,
-        row.geneb,
-        row.CellType
-      );
+      this.differentialExpressionPlot(row.datasetid, row.GlobalCluster, row.CellType, "singleCellImmuTumor");
+    },
+    diffExpRNRtableExpand: function (row, expandedRows) {
+      var that = this;
+      if (expandedRows.length) {
+        that.expands_rnr = [];
+        if (row) {
+          that.expands_rnr.push(row.CellType);
+        }
+      } else {
+        that.expands_rnr = [];
+      }
+
+      this.differentialExpressionPlot(row.datasetid, row.GlobalCluster, row.CellType, "asd");
     },
   },
 };
