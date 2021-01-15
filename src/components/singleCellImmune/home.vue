@@ -126,9 +126,9 @@ export default {
       canceroptions: [],
       gloCluoptions: [],
       Signatures: "",
-      vsType: "Tumor vs Normal",
+      vsType: "",
       scpathwayVue: "",
-      datasetrenewed: ["CAC","BC","BCC","CRC1","BTCC","UM","CRC2","UCEC","NSCLC","OV","PDAC","NSCLC6","NSCLC1","CCRCC","NSCLC3"],
+      datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC"],
     };
   },
 

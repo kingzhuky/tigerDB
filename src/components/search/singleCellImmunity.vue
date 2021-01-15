@@ -70,8 +70,8 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
-          <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
+          <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable></el-table-column>
+          <el-table-column prop="GlobalCluster" label="Global Cluster" width="180%" sortable></el-table-column>
           <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
           <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change )" sortable></el-table-column>
         </el-table>
@@ -88,7 +88,7 @@
             <el-col :span="8">
               <span class="demonstration">DataSet: </span>
               <el-select
-                v-model="cancer"
+                v-model="CancerType"
                 @change="cancerSelectChange"
                 placeholder="DataSet"
               >
@@ -165,11 +165,11 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="CancerType" prop="CancerType" sortable></el-table-column>
-            <el-table-column prop="GlobalCluster" label="GlobalCluster" sortable></el-table-column>
-            <el-table-column prop="CellType" label="CellType" sortable></el-table-column>
-            <el-table-column prop="Log2FoldChange" label="Log2FoldChange" sortable></el-table-column>
-            <el-table-column prop="P_Value" label="P-Value" sortable></el-table-column>
+            <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
+            <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
+            <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
+            <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change)" sortable></el-table-column>
+            <el-table-column prop="P_Value" label="P Value" sortable></el-table-column>
           </el-table>
       </div>
 
@@ -230,8 +230,8 @@ export default {
       total: 200,
       CellTypeLoading: false,
       GlobalCluster: "All",
-      CellType: "",
-      CancerType: "PDAC",
+      CellType: "T cell",
+      CancerType: "CAC",
       singleCellImmuTumorImgshow: false,
       singleCellImmuTumorImgloading: false,
       singleCellImmuResponseImgshow: false,
@@ -373,6 +373,7 @@ export default {
             this.CellTypeLoading = false;
             this.CellTypeCluoptions = res.data.list;
             this.CellType = res.data.list[0].CellType;
+            console.log(this.CellType)
             this.searchTable();
           }
         });
@@ -685,17 +686,17 @@ export default {
       myChart_mercor.clear();
       myChart_mercor.setOption(option);
 
-      myChart_mercor.on("click", function (param) {
-        if (param.componentSubType === "scatter") {
-          //console.log(param.data);
-          that.differentialExpressionPlot(
-            param.data[2],
-            param.data[3],
-            param.data[4],
-            id
-          );
-        }
-      });
+      // myChart_mercor.on("click", function (param) {
+      //   if (param.componentSubType === "scatter") {
+      //     //console.log(param.data);
+      //     that.differentialExpressionPlot(
+      //       param.data[2],
+      //       param.data[3],
+      //       param.data[4],
+      //       id
+      //     );
+      //   }
+      // });
 
       window.onresize = function () {
         myChart_mercor.resize();
@@ -751,7 +752,7 @@ export default {
         that.expands_rnr = [];
       }
 
-      this.differentialExpressionPlot(row.datasetid, row.GlobalCluster, row.CellType, "asd");
+      this.differentialExpressionPlot(row.datasetid, row.GlobalCluster, row.CellType, "singleCellImmuResponse");
     },
   },
 };
