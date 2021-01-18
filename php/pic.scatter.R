@@ -40,7 +40,7 @@ its.gene=readRDS(paste0(Path,cancer_type,'/',cancer_type,'.gene/',global.cluster
 click.gene=readRDS(paste0(Path,cancer_type,'/',cancer_type,'.gene/',global.cluster,'/',click.gene,'.rds'))
 
 
-now.data=data.frame(cluster=metadata[rownames(click.gene),'recluster'],its.gene=its.gene$Integrate,click.gene=click.gene$Integrate)
+now.data=data.frame(cluster=metadata[as.numeric(rownames(click.gene)),'recluster'],its.gene=its.gene$Integrate,click.gene=click.gene$Integrate)
 now.data=now.data[now.data$cluster %in% click.cluster,]
 
 

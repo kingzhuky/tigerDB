@@ -81,6 +81,9 @@ export default {
       this.$refs.coExpRef.getDiagramData(
         this.searchinput,
         "singleCellCorTumor",
+        this.CancerType,
+        this.GlobalCluster,
+        this.CellType,
         1,
         20
       );

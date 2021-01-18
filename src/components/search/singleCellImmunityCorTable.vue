@@ -4,8 +4,8 @@
       <div>
         <el-row v-loading="singleCellCorloading">
           <el-table
-            :data="ReactomeTableData"
-            max-height="800"
+            :data="sccoexpTable"
+            max-height="600"
             style="width: 100%"
             :row-key="getRowKeys"
             :expand-row-keys="expands"
@@ -14,7 +14,35 @@
             <el-table-column type="expand">
               <template slot-scope="props">
                 <div class="detailimg" v-loading="picScatterloading">
-                  <img width="450px" :src="picScatter" v-show="detailimgShow" />
+                  <el-row justify="center" >
+                    <el-col span="4" push="2">
+                      <el-collapse>
+                        <el-collapse-item title="Optional" name="1">
+                          <template slot="title">
+                            Optional
+                            <i class="el-icon-setting"></i>
+                          </template>
+                          <el-row class="detail1">Correlation Coefficient</el-row>
+                          <el-row>
+                            <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
+                            <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
+                          </el-row>
+                          <el-row class="detail1">Delete Cells Not Express</el-row>
+                          <el-row>
+                            <el-radio v-model="delzero" label="1">Yes</el-radio>
+                            <el-radio v-model="delzero" label="0">No</el-radio>
+                          </el-row>
+                          <br />
+                          <el-row class="plot">
+                            <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+                          </el-row>
+                        </el-collapse-item>
+                      </el-collapse>
+                    </el-col>
+                    <el-col span="12" push="2">
+                      <img width="300px" :src="picScatter" v-show="detailimgShow" />
+                    </el-col>
+                  </el-row>
                   <div v-show="!detailimgShow">no result</div>
                 </div>
               </template>
@@ -65,9 +93,12 @@ export default {
       total: 200,
       CellTypeLoading: false,
       loading: false,
-      ReactomeTableData: [],
+      sccoexpTable: [],
       picScattername: "",
       picScatterloading: true,
+      corMed: "spearman",
+      delzero: "0",
+      imgparam: [],
     };
   },
   mounted() {
@@ -85,24 +116,35 @@ export default {
 
   methods: {
     reset() {
-      this.ReactomeTableData = [];
+      this.sccoexpTable = [];
     },
     handleSizeChange(val) {
       this.pageSize = val;
       this.currentPage = 1;
-      this.getDiagramData(this.seargene, "singleCellCorTumor", 1, val);
+      this.getDiagramData(
+        this.seargene, 
+        "singleCellCorTumor",
+        this.CancerType,
+        this.GlobalCluster,
+        this.CellType,
+        1,
+        val
+      );
     },
     handleCurrentChange(val) {
       this.currentPage = val;
       this.getDiagramData(
         this.seargene,
         "singleCellCorTumor",
+        this.CancerType,
+        this.GlobalCluster,
+        this.CellType,
         val,
         this.pageSize
       );
     },
     picScatterPlot(datasetid, GlobalCluster, genea, geneb, CellType) {
-      console.log(datasetid, GlobalCluster, genea, geneb, CellType);
+      // console.log(datasetid, GlobalCluster, genea, geneb, CellType);
       var that = this;
       that.detailimgShow = true;
 
@@ -113,8 +155,8 @@ export default {
         gene: genea,
         clickgene: geneb,
         cluster: CellType,
-        method: "spearman",
-        delzero: "0",
+        method: this.corMed,
+        delzero: this.delzero,
       };
       this.$http
         .get("/tiger/scimmucoexpdetail.php", {
@@ -135,29 +177,28 @@ export default {
     plot() {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
         this.oldseargene = this.seargene;
-        this.clickPlot();
-        this.getScaData(
+        this.getDiagramData(
           this.seargene,
-          "home_scdiffexp_tn",
-          "singleCellImmuTumor"
-        );
-        this.getScaData(
-          this.seargene,
-          "home_scdiffexp_rnr",
-          "singleCellImmuResponse"
+          "singleCellCorTumor",
+          this.CancerType,
+          this.GlobalCluster,
+          this.CellType,
+          this.currentPage,
+          this.pageSize
         );
       }
     },
     clickPlot() {
-      this.getDiagramData(
-        this.seargene,
-        "singleCellCorTumor",
-        this.currentPage,
-        this.pageSize
+      this.picScatterPlot(
+        this.imgparam.datasetid,
+        this.imgparam.GlobalCluster,
+        this.imgparam.genea,
+        this.imgparam.geneb,
+        this.imgparam.CellType,
       );
     },
-    getDiagramData(gene, id, currentPage, pageSize) {
-      this.ReactomeTableData = [];
+    getDiagramData(gene, id, datasetid, gloclu, celltype, currentPage, pageSize) {
+      this.sccoexpTable = [];
       this.singleCellCorloading = true;
       this.$http
         .get("/tiger/searchcoeaTable.php", {
@@ -165,14 +206,14 @@ export default {
             gene: gene,
             currentPage: currentPage,
             pageSize: 20,
-            GlobalCluster: this.GlobalCluster,
-            CellType: this.CellType,
-            CancerType: this.CancerType,
+            GlobalCluster: gloclu,
+            CellType: celltype,
+            CancerType: datasetid,
           },
         })
         .then((res) => {
           if (res.data.status === 200) {
-            this.ReactomeTableData = res.data.list;
+            this.sccoexpTable = res.data.list;
             this.total = res.data.total[0];
             this.singleCellCorloading = false;
           }
@@ -191,17 +232,19 @@ export default {
         that.expands = [];
         if (row) {
           that.expands.push(row.geneb);
+          that.imgparam = row;
         }
       } else {
         that.expands = [];
+        that.imgparam = [];
       }
-
+      
       this.picScatterPlot(
         row.datasetid,
         row.GlobalCluster,
         row.genea,
         row.geneb,
-        row.CellType
+        row.CellType,
       );
     },
   },

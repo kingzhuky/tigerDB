@@ -82,7 +82,7 @@ if (file.exists(genefile)){
           axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
           axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
         )
-      maintitle1=paste0(maintitle,'.umap.response.png')
+      maintitle1=paste0(maintitle,'.umap.response')
       ggsave(paste0(resPath,maintitle1,'.png'),width =110,height =80, unit = "mm", dpi=100,p1)
       
       #---Gene expression Umap--------
@@ -96,7 +96,7 @@ if (file.exists(genefile)){
           panel.grid.minor=element_line(color="grey96")
         )
       
-      maintitle2=paste0(maintitle,'.umap.expr.png')
+      maintitle2=paste0(maintitle,'.umap.expr')
       ggsave(paste0(resPath,maintitle2,'.png'),width =110,height =80, unit = "mm", dpi=100,p)
       
       #---Gene expression boxplot--------
@@ -110,8 +110,8 @@ if (file.exists(genefile)){
       
       length=now.now.data$recluster %>% unique() %>% length()
       
-      maintitle3=paste0(maintitle,'.boxplot.expr.res-nores.png')
-      ggsave(paste0(resPath,'',maintitle3),p,width = length*12+40,height =80, unit = "mm", dpi=100)
+      maintitle3=paste0(maintitle,'.boxplot.expr.res-nores')
+      ggsave(paste0(resPath,'',maintitle3,".png"),p,width = length*12+40,height =80, unit = "mm", dpi=100)
       
       
       

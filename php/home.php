@@ -18,7 +18,7 @@ $gene = $_GET['gene'];
 
   // query data
 #$sql = "SELECT * FROM ".$type." WHERE GENE_SYMBOL='".$gene."'";
-  $sql = "SELECT abs(homemarkertable.Log2FoldChange),homescinfo.CancerType,homescinfo.CellType,homemarkertable.Log2FoldChange,homemarkertable.GENE_SYMBOL,homemarkertable.P_Value,homescinfo.datasetid,homescinfo.GlobalCluster FROM homemarkertable,homescinfo WHERE GENE_SYMBOL='".$gene."' AND homemarkertable.SCID=homescinfo.SCID";
+  $sql = "SELECT abs(a.Log2FoldChange),b.CancerType,b.CellType,a.Log2FoldChange,a.GENE_SYMBOL,a.P_Value,b.datasetid,b.GlobalCluster FROM homemarkertable as a,homescinfo as b WHERE a.GENE_SYMBOL='".$gene."' AND a.SCID=b.SCID";
   $infos = array();
   $cancer = array();
   $tabledata= array();

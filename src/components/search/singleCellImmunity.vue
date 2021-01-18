@@ -5,12 +5,14 @@
         <p class="card-title">Expression in different cell types</p>
         <el-row>
           <el-col :span="16" push="3" v-loading="loading">
-            <div id="scaterid" style="width: 1000px;height:400px;"></div>
+            <div id="scaterid" style="width: 1000px;height:500px;"></div>
+            <!-- <div id="scaterid" style="width: 100%;"></div> -->
+            <!-- <div id="scaterid" width="100%"></div> -->
           </el-col>
         </el-row>
         <el-table 
           :data="MarkerTable" 
-          max-height="800" 
+          max-height="600" 
           style="width: 100%"
           :row-key="getRowKeys"
           :expand-row-keys="expands"
@@ -35,7 +37,7 @@
                       @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
                   </el-col>
                   <el-col :span="6" style="position:relative;left:100px;top:0px;">
-                    <p class="imgtitle">UMAP Plot of {{gene}} Types</p>
+                    <p class="imgtitle">UMAP Plot of {{scope.row.CellType}} Types</p>
                     <img
                       id="singleimg"
                       fit="fill"
@@ -44,7 +46,7 @@
                       @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
                   </el-col>
                   <el-col :span="12" style="position:relative;left:40px;top:0px;">
-                    <p class="imgtitle">Boxplot of {{gene}} Expression</p>
+                    <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
                     <img
                       id="singleimg"
                       fit="fill"
@@ -77,7 +79,7 @@
               <span class="demonstration">DataSet: </span>
               <el-select
                 v-model="CancerType"
-                @change="cancerSelectChange"
+                @change="CancerTypeSelectChange"
                 placeholder="DataSet"
               >
                 <el-option-group
@@ -138,7 +140,7 @@
           <div id="singleCellImmuTumor" class="scaterPlot" style="width: 800px;height:400px;"></div>
         </div>
           <el-table
-              max-height="800"
+              max-height="600"
               :data="DiffExpTumorTableData"
               :row-key="getRowKeys"
               :expand-row-keys="expands_tn"
@@ -148,12 +150,44 @@
             <el-table-column type="expand" >
               <template slot-scope="scope">
                 <div class="detailimg" v-loading="singleCellImmuTumorImgloading">
-                  <img width="300px" :src="imgpathBar2" v-show="singleCellImmuTumorImgshow" />
+                  <!-- <img width="300px" :src="imgpathBar2" v-show="singleCellImmuTumorImgshow" /> -->
+                  <el-row class="scdetailimg" v-show="singleCellImmuTumorImgshow" >
+                    <el-col :span="6" >
+                      <p class="imgtitle">Cell Types</p>
+                      <img
+                        id="singleimg"
+                        fit="fill"
+                        width="100%"
+                        :src="'tiger/img/' + diffexpimgTN.split(',')[0] + '.png'"
+                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
+                    </el-col>
+                    <el-col :span="6">
+                      <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
+                      <img
+                        id="singleimg"
+                        fit="fill"
+                        width="100%"
+                        :src="'tiger/img/' + diffexpimgTN.split(',')[1] + '.png'"
+                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
+                    </el-col>
+                    <el-col :span="12">
+                      <div class="imgspan"> 
+                      <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
+                        <img
+                        id="singleimg"
+                        fit="fill"
+                        height="250px"
+                        :src="'tiger/img/' + diffexpimgTN.split(',')[2] + '.png'"
+                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
+                      </div>
+                    </el-col>
+                  </el-row> 
                   <div v-show="!singleCellImmuTumorImgshow">no result</div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
+            <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable></el-table-column>
+            <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable></el-table-column>
             <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
             <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
             <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
@@ -173,7 +207,7 @@
           <div id="singleCellImmuResponse" class="scaterPlot" style="width: 800px;height:400px;"></div>
         </div>
         <el-table
-          max-height="800"
+          max-height="600"
           :data="DiffExpResponseableData"
           :row-key="getRowKeys"
           :expand-row-keys="expands_rnr"
@@ -183,13 +217,44 @@
           <el-table-column type="expand" >
             <template slot-scope="scope">
               <div class="detailimg" v-loading="singleCellImmuResponseImgloading">
-                <img width="300px" :src="imgpathBar3" v-show="singleCellImmuResponseImgshow" />
+                <!-- <img width="300px" :src="imgpathBar3" v-show="singleCellImmuResponseImgshow" /> -->
+                  <el-row class="scdetailimg" v-show="singleCellImmuResponseImgshow" >
+                    <el-col :span="6" >
+                      <p class="imgtitle">Cell Types</p>
+                      <img
+                        id="singleimg"
+                        fit="fill"
+                        width="100%"
+                        :src="'tiger/img/' + diffexpimgRNR.split(',')[0] + '.png'"
+                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
+                    </el-col>
+                    <el-col :span="7">
+                      <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
+                      <img
+                        id="singleimg"
+                        fit="fill"
+                        width="100%"
+                        :src="'tiger/img/' + diffexpimgRNR.split(',')[1] + '.png'"
+                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
+                    </el-col>
+                    <el-col :span="11">
+                      <div class="imgspan"> 
+                      <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
+                        <img
+                        id="singleimg"
+                        fit="fill"
+                        height="250px"
+                        :src="'tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'"
+                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
+                      </div>
+                    </el-col>
+                  </el-row> 
                 <div v-show="!singleCellImmuResponseImgshow">no result</div>
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="datasetid" label="Dataset ID" sortable></el-table-column>
-          <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
+          <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable></el-table-column>
+          <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable></el-table-column>
           <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
           <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
           <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
@@ -251,6 +316,8 @@ export default {
       MarkerTable: [],
       markerimg: "",
       overviewimg: "",
+      diffexpimgTN: "",
+      diffexpimgRNR: "",
     };
   },
   mounted() {
@@ -322,6 +389,7 @@ export default {
     },
     cancerSelectChange() {
       this.getgloClu();
+      this.getCellType();
     },
 
     CancerTypeSelectChange() {
@@ -364,7 +432,15 @@ export default {
             this.CellTypeCluoptions = res.data.list;
             this.CellType = res.data.list[0].CellType;
             console.log(this.CellType)
-            this.searchTable();
+            this.$refs.singleCellImmunityCorTableRef.getDiagramData(
+              this.seargene,
+              "singleCellCorTumor",
+              this.CancerType,
+              this.GlobalCluster,
+              this.CellType,
+              1,
+              10
+            );
           }
         });
     },
@@ -372,6 +448,9 @@ export default {
       this.$refs.singleCellImmunityCorTableRef.getDiagramData(
         this.seargene,
         "singleCellCorTumor",
+        this.CancerType,
+        this.GlobalCluster,
+        this.CellType,
         1,
         10
       );
@@ -445,7 +524,9 @@ export default {
             show: true,
           },
           axisLabel: {
-            interval: 0
+            interval: 0,
+            margin: 12,
+            // rotate: 45,
           },
         },
         series: [
@@ -503,8 +584,8 @@ export default {
             // console.log("data.list:")
             // console.log(res.data.list)
             this.MarkerTable = res.data.tabledata
-            // console.log("data.table:")
-            // console.log(this.MarkerTable)
+            console.log("data.table:")
+            console.log(this.MarkerTable)
             this.draw_chart(Object.values(res.data.cancer), res.data.list);
             this.loading = false;
           }
@@ -519,11 +600,13 @@ export default {
         this.singleCellImmuTumorshow = true;
         this.singleCellImmuTumorImgshow = false;
         this.imgpathBar2 = "";
+        this.diffexpimgTN = "";
         this.singleCellImmuTumorloading = true;
       } else {
         this.singleCellImmuResponseshow = true;
         this.singleCellImmuResponseImgshow = false;
         this.singleCellImmuResponseloading = true;
+        this.diffexpimgRNR = "";
         this.imgpathBar3 = "";
       }
 
@@ -581,8 +664,9 @@ export default {
           params: {
             cancer: cancer,
             gene: this.seargene,
+            type: "exp",
             gloclu: gloclu,
-            subclu: subClu,
+            celltype: subClu,
           },
         })
         .then(function (res) {
@@ -599,11 +683,13 @@ export default {
                 that.singleCellImmuTumorImgloading = false;
                 that.imgpathBar2 =
                   "/tiger/img/" + res.data.output[0].split(",")[2] + '.png';
+                that.diffexpimgTN = res.data.output[0];
               } else {
                 that.singleCellImmuResponseImgshow = true;
                 that.singleCellImmuResponseImgloading = false;
                 that.imgpathBar3 =
                   "/tiger/img/" + res.data.output[0].split(",")[2] + '.png';
+                that.diffexpimgRNR = res.data.output[0];
               }
             }
           } else {
