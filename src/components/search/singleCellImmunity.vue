@@ -7,49 +7,7 @@
           <el-col :span="16" push="3" v-loading="loading">
             <div id="scaterid" style="width: 1000px;height:400px;"></div>
           </el-col>
-          <!-- <el-col :span="4" :offset="1">
-            <br />
-            <br />
-            <br />
-            <el-row>
-              <el-select v-model="cancer" @change="cancerSelectChange" placeholder="Cancer">
-                <el-option-group
-                  v-for="group in canceroptions"
-                  :key="group.label"
-                  :label="group.label"
-                >
-                  <el-option
-                    v-for="item in group.options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  ></el-option>
-                </el-option-group>
-              </el-select>
-            </el-row>
-            <br />
-            <br />
-            <el-row>
-              <el-select v-model="gloClu" @change="GlobalClusterChange">
-                <el-option
-                  v-for="item in gloCluoptions"
-                  :key="item.GlobalCluster"
-                  :label="item.GlobalCluster"
-                  :value="item.GlobalCluster"
-                ></el-option>
-              </el-select>
-            </el-row>
-            <br />
-            <br />
-            <el-row class="plot">
-              <el-button id="anabt" @click="clickPlot()" style="width:210px">Plot</el-button>
-            </el-row>
-          </el-col> -->
         </el-row>
-        <!-- <div class="textitem" v-if="geneshow" v-loading="geneloading">
-          <p class="card-title">Gene Expression in cell type selected</p>
-
-        </div> -->
         <el-table 
           :data="MarkerTable" 
           max-height="800" 
@@ -63,8 +21,38 @@
             <template slot-scope="scope">
               <div class="detailimg" v-loading="geneloading">
                 <div v-show="geneshow">
-                  <img id="singleimg" :src="imgpathBox" />
-                  <img id="singleimg" :src="imgUrlBar" />
+                  <!-- <img id="singleimg" :src="imgpathBox" />
+                  <img id="singleimg" :src="imgUrlBar" /> -->
+                  <el-row v-show="geneshow" class="scdetailimg">
+                    <!-- <p class="card-title">tSNE</p> -->
+                  <el-col :span="6" style="position:relative;left:20px;top:0px;">
+                    <p class="imgtitle">Cell Types</p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
+                      @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                  </el-col>
+                  <el-col :span="6" style="position:relative;left:100px;top:0px;">
+                    <p class="imgtitle">UMAP Plot of {{gene}} Types</p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      width="100%"
+                      :src="'tiger/img/' + markerimg.split(',')[1]"
+                      @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                  </el-col>
+                  <el-col :span="12" style="position:relative;left:40px;top:0px;">
+                    <p class="imgtitle">Boxplot of {{gene}} Expression</p>
+                    <img
+                      id="singleimg"
+                      fit="fill"
+                      height="250px"
+                      :src="'tiger/img/' + markerimg.split(',')[0]"
+                      @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                  </el-col>
+                  </el-row>
                 </div>
                 <div v-show="!geneshow">no result</div>
               </div>
@@ -168,8 +156,8 @@
             <el-table-column prop="CancerType" label="Cancer Type" sortable></el-table-column>
             <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
             <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
-            <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change)" sortable></el-table-column>
-            <el-table-column prop="P_Value" label="P Value" sortable></el-table-column>
+            <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
+            <el-table-column prop="P_Value" label="-log10 (P Value)" sortable></el-table-column>
           </el-table>
       </div>
 
@@ -205,7 +193,7 @@
           <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
           <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
           <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
-          <el-table-column prop="P_Value" label="P Value" sortable></el-table-column>
+          <el-table-column prop="P_Value" label="-log10 (P Value)" sortable></el-table-column>
         </el-table>
       </div>
     </el-card>
@@ -261,6 +249,8 @@ export default {
       picScatterloading: true,
       DiffExpTumorTableData: [],
       MarkerTable: [],
+      markerimg: "",
+      overviewimg: "",
     };
   },
   mounted() {
@@ -646,15 +636,57 @@ export default {
         })
         .then(function (res) {
           if (res.data.status == 0) {
-            that.imgpathBox = 'tiger/img/' + res.data.output[0].split(",")[0];
-            console.log(that.imgpathBox)
+            if (res.data.output[0] === "0") {
+              that.geneshow = false;
+              //alert("no gene file");
+            } else {
+              that.imgpathBox = 'tiger/img/' + res.data.output[0].split(",")[0];
+              console.log(that.imgpathBox)
+              that.markerimg = res.data.output[0];
+            }
+            that.evoluloading = false;
+          }
+          if (res.data.status2 == 0) {
+            if (res.data.output2[0] === "0") {
+              //that.evolushow2 = false;
+              //alert("no gene file");
+            } else {
+              // that.evolushow2 = true;
+              setTimeout((that.overviewimg = res.data.output2[0]), 1000);
+            }
             //that.evoluplots = res.data.output[0];
-            that.geneloading = false;
           }
         })
         .catch(function (res) {
           console.log(res);
         });
+        this.$http
+    .get("/tiger/scimmudiffexpdetailgene.php", {
+      params: {
+        cancer: this.cancer,
+        celltype: celltype,
+        type: "celltype",
+        gene: gene,
+        gloclu: gloclu
+      },
+    })
+    .then(function (res) {
+      if (res.data.status == 0) {
+        if (res.data.output[0] === "0") {
+          that.evolushow = false;
+          //alert("no gene file");
+        } else {
+          that.evolushow = true;
+          that.evoluplots = res.data.output[0];
+        }
+        //that.evoluplots = res.data.output[0];
+        that.evoluloading = false;
+      }
+
+    })
+    .catch(function (res) {
+      console.log(res);
+    });
     },
         
     draw_chart_sca(data, id) {
@@ -667,7 +699,7 @@ export default {
       let option = {
         xAxis: { name: "Log2FC" },
         yAxis: {
-          name: "–log10(P-Value)",
+          name: "–log10(P Value)",
           axisLine: { show: false },
           axisTick: { show: false },
         },

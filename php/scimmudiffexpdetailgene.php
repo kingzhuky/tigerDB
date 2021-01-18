@@ -64,10 +64,10 @@ if ($type=="celltype"){
   }
   if(PATH_SEPARATOR==':'){
     $zhiling="sudo Rscript pic.TN.gene.R $cancer $gloclu $gene";
-    // $zhiling2="sudo Rscript overview.R $cancer $gloclu";
+    $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }else{
     $zhiling="Rscript pic.TN.gene.R $cancer $gloclu $gene";
-    // $zhiling2="Rscript overview.R $cancer  $gloclu";
+    $zhiling2="Rscript overview.R $cancer  $gloclu";
   }
 }
 
