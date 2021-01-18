@@ -1,8 +1,8 @@
 <template>
   <transition name="move3">
     <div class="detail-card">
-      <div class="infor" v-loading="loading">
-        <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
+      <div class="infor">
+        <el-card v-loading="loading" v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
           <el-row class="detailimg" type="flex" justify="center" >
             <el-col :span="6" style="position:relative;right:10px;top:20px;">
@@ -114,6 +114,8 @@ export default {
     clickPlot() {
       this.reset();
       console.log(this.cancer)
+      this.loading = true;
+      var glocluindex = [];
       this.$http
         .get("/tiger/scglocluster.php", {
           params: {
@@ -125,40 +127,56 @@ export default {
           this.gloCluoptions = res.data.list;
           console.log(this.gloCluoptions)
           // let count = 0;
-          for (let gloclu of this.gloCluoptions) {
-            // console.log("son:"+ count++)
-            // console.log(gloclu["GlobalCluster"])
-            // console.log(gloclu["GlobalCluster"])
-            this.Plot(this.cancer, gloclu["GlobalCluster"]);
-          }
+          (async function loop() {
+            for (let gloclu of this.gloCluoptions) {
+              // console.log("son:"+ count++)
+              // console.log(gloclu["GlobalCluster"])
+              console.log("loop: ")
+              console.log(gloclu["GlobalCluster"])
+              glocluindex.push(gloclu["GlobalCluster"])
+              await this.Plot(this.cancer, gloclu["GlobalCluster"]).then((value) => {
+                  console.log(gloclu["GlobalCluster"])
+                })
+            }
+          })();
+          loop()
+          this.gloclures = glocluindex;
+          this.loading = false;
+          console.log(this.gloclures)
+          // this.$forceUpdate();
             // console.log(this.gloclures)
             // this.gloclures = this.gloclures.sort()
             // console.log(this.gloclures)
         });
     },
 
-    Plot(cancer, gloclu) {
+    async Plot(cancer, gloclu) {
       var that = this;
-      that.loading = true;
-      this.$http
-        .get("/tiger/singlecellimmu.php", {
-          params: {
-            cancer: cancer,
-            gloclu: gloclu,
-          },
-        })
-        .then(function (res) {
-          if (res.data.status == 0) {
-            that.gloclures.push(gloclu);
-            // console.log(gloclu)
-            that.plotsres[gloclu] = res.data.output[0].split(",");
-            // console.log(that.plotsres[gloclu][1])
-            that.loading = false;
-          }
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
+      // that.loading = true;
+      return new Promise(resolve => {
+        this.$http
+          .get("/tiger/singlecellimmu.php", {
+            params: {
+              cancer: cancer,
+              gloclu: gloclu,
+            },
+          })
+          .then(function (res) {
+            if (res.data.status == 0) {
+              console.log(that.loading)
+              console.log(gloclu)
+              // that.gloclures.push(gloclu);
+              that.plotsres[gloclu] = res.data.output[0].split(",");
+              resolve(res.data.output[0].split(","))
+              // console.log(that.plotsres[gloclu][1])
+              // that.loading = false;
+            }
+          })
+          .catch(function (res) {
+            reject(console.log(res))
+          });
+        console.log(gloclu + " is OK.");
+      });
     },
 
     previewImg(urlList){
