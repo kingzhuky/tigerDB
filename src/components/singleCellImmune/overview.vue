@@ -1,9 +1,14 @@
 <template>
   <transition name="move3">
-    <div class="detail-card">
+    <div class="detail-card" v-loading="loading" >
+      <div>
+        <el-card>
+          <p class="card-title">Dataset Information</p>
+        </el-card>
+      </div>
       <div class="infor">
-        <el-card v-loading="loading" v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
-          <p class="card-title">{{gloclu}}</p>
+        <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
+          <p class="card-title">{{gloclu}}&nbsp;&nbsp;&nbsp;&nbsp;{{cellnum[gloclu]}}</p>
           <el-row class="detailimg" type="flex" justify="center" >
             <el-col :span="6" style="position:relative;right:10px;top:20px;">
               <p class="imgtitle">Cell Types</p>
@@ -72,12 +77,11 @@ export default {
       crossClu: [],
       gloclures: [],
       plotsres: {},
-      test:[],
+      cellnum: {},
     };
   },
 
   mounted() {
-    this.test = this.gloCluoptions
     this.clickPlot();
   },
   methods: {
@@ -127,26 +131,22 @@ export default {
           this.gloCluoptions = res.data.list;
           console.log(this.gloCluoptions)
           // let count = 0;
-          (async function loop() {
-            for (let gloclu of this.gloCluoptions) {
-              // console.log("son:"+ count++)
-              // console.log(gloclu["GlobalCluster"])
-              console.log("loop: ")
-              console.log(gloclu["GlobalCluster"])
-              glocluindex.push(gloclu["GlobalCluster"])
-              await this.Plot(this.cancer, gloclu["GlobalCluster"]).then((value) => {
-                  console.log(gloclu["GlobalCluster"])
-                })
-            }
-          })();
-          loop()
-          this.gloclures = glocluindex;
-          this.loading = false;
-          console.log(this.gloclures)
-          // this.$forceUpdate();
-            // console.log(this.gloclures)
-            // this.gloclures = this.gloclures.sort()
-            // console.log(this.gloclures)
+          let plotflag = 0;
+          for (let gloclu of this.gloCluoptions) {
+            // console.log("loop: ")
+            // console.log(gloclu["GlobalCluster"])
+            glocluindex.push(gloclu["GlobalCluster"])
+            this.Plot(this.cancer, gloclu["GlobalCluster"]).then((value) => {
+              plotflag++
+              // console.log(plotflag)
+              // console.log("Max type: " + Object.keys(this.gloCluoptions).length)
+              if(plotflag == Object.keys(this.gloCluoptions).length){
+                this.gloclures = glocluindex;
+                this.loading = false;
+                console.log(this.gloclures)
+              }
+            })
+          }
         });
     },
 
@@ -163,19 +163,20 @@ export default {
           })
           .then(function (res) {
             if (res.data.status == 0) {
-              console.log(that.loading)
-              console.log(gloclu)
+              // console.log(that.loading)
+              // console.log(gloclu)
               // that.gloclures.push(gloclu);
               that.plotsres[gloclu] = res.data.output[0].split(",");
+              console.log(res.data.cellnum[0].split(","))
               resolve(res.data.output[0].split(","))
+              that.cellnum[gloclu] = res.data.cellnum[0].replace(/,/g," ")
               // console.log(that.plotsres[gloclu][1])
               // that.loading = false;
             }
           })
           .catch(function (res) {
-            reject(console.log(res))
+            resolve(console.log(res))
           });
-        console.log(gloclu + " is OK.");
       });
     },
 
