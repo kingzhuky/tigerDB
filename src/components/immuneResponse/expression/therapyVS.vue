@@ -2,22 +2,21 @@
   <div>
     <el-row>
       <el-col :span="4" :offset="20">
-<el-autocomplete
+        <el-autocomplete
           v-model="searchinput"
           placeholder="Please Input Gene Symbol"
           :fetch-suggestions="querySearchAsync"
           @change="searchChange"
           @keyup.enter.native="searchChange"
-
-        ></el-autocomplete>      </el-col>
-      
+        ></el-autocomplete>
+      </el-col>
     </el-row>
     <br />
 
     <el-table
       class="tigtablele"
-      ref="singleTable"
       id="therapyTable"
+      ref="singleTable"
       border
       max-height="800"
       :data="tableData"

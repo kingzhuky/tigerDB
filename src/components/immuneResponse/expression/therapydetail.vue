@@ -10,7 +10,7 @@
       </div>
       <div class="infor">
         <el-card>
-          <el-col :span="8" :offset="1">
+          <el-col :span="6" :offset="1">
             <el-row class="detail1">Normalized By</el-row>
             <br />
             <el-row class="detail2">
@@ -19,7 +19,7 @@
             </el-row>
             <br />
             <el-row>
-              <el-input v-model="normalGene"></el-input>
+              <el-input v-model="normalGene" v-show='normalMed != "None"' placeholder="Please Input A Gene Symbol"></el-input>
              </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
@@ -33,9 +33,9 @@
               <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
             </el-row>
           </el-col>
-          <el-col v-show="resultShow" :span="8" :offset="5" v-loading="loading">
+          <el-col v-show="resultShow" :span="8" :offset="4" v-loading="loading">
             <p class="imgtitle">Differential Expression between Post-Therapy and Pre-Therapy</p>
-            <img style="position:relative;left:30px;right:0px;" width="400px" :src="imgUrlBox" />
+            <img style="position:relative;left:0px;right:50px;" width="550px" :src="imgUrlBox" />
           </el-col>
           <el-col  :span="15" v-show="!resultShow" v-loading="loading">
             <div id="norult">No result</div>

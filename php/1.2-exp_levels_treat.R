@@ -69,23 +69,27 @@ if(length(unique(plot.data$group)) > 1){
   #                   stat_compare_means(aes(group = group),label.x.npc = 0.45, size = 6,label.sep = "\n")
   
   response.plot <- ggplot(plot.data,aes(x=group,y=gene.exp,color=group))+
-    geom_boxplot(outlier.colour = NA,width = .4)+
+    geom_boxplot(outlier.colour = NA,width = .4)+  
     scale_color_manual(values = c('#016af3','#f34b01'))+ mytheme+
-    geom_jitter(position = position_jitterdodge(),size=0.7,shape=1)+
-    stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 5,label.sep = "\n")+
-    theme(axis.title.x = element_blank())+
-    labs(x= element_blank(),y = ylab)+
-    theme(axis.text.x = element_text(angle=0,hjust=0.5, vjust=0,size = rel(1.5),color="black"),
-          axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
+    geom_jitter(position = position_jitterdodge(), size=0.7, shape=1)+
+    stat_compare_means(aes(group = group),label.x.npc = 0.35,label.y.npc = 0.95, size = 5,label.sep = "\n",show.legend = F)+
+    labs(x= element_blank(),y = ylab) +
+    theme(axis.text.x = element_text(angle=0,hjust=0.5, vjust=0,size = 15,color="black"),
+          axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = 15,color="black"),
           axis.title.y = element_text(size = 15, face = "plain", colour = "black"),
-          panel.grid.major=element_line(color="grey95"),
-          panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
+          legend.text = element_text(size = 12,color="black"),
+          legend.title = element_text(size = 12,color="black"),
+          legend.key.size = unit(10, "mm"),
+          panel.grid=element_line(color="grey95"))
+  
   if(datatype == "png"){
     filename = paste0(result.path,maintitle1,".png")
+    ggsave(filename = filename,plot = response.plot,width = 220, height =120, unit = "mm", dpi=80)
   }else{
     filename = paste0(result.path,maintitle1,".pdf")
+    ggsave(filename = filename,plot = response.plot,width = 220, height =120, unit = "mm", dpi=100,device = pdf())
+    dev.off()
   }
-  ggsave(filename = filename,plot = response.plot, dpi = 100)
 }else{
   maintitle1 <- "0"
 }

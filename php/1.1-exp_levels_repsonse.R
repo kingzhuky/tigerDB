@@ -13,7 +13,7 @@ mytheme <- theme_bw() +
         axis.line=element_line(color="black",size=0.5))
 
 Args <- commandArgs(T)
-#Args <- c("CD274","RCC-Braun_2020_ALL","CR","SD,PD","NULL","NULL","TRUE","pdf")
+#Args <- c("CD274,CD3D","RCC-Braun_2020_ALL","CR","SD,PD","NULL","NULL","TRUE","pdf")
 #Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","PR,CR","SD,PD","NULL","NULL","TRUE","pdf")
 gene <- unlist(strsplit(Args[1],split=','))
 mergedatasets <- unlist(strsplit(Args[2],split=','))
@@ -102,17 +102,18 @@ if (Log.scale == "TRUE") {
 #   stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 6,label.sep = "\n")
 
 response.plot <- ggplot(plot.data,aes(x=group,y=gene.exp,color=group))+
-  geom_boxplot(outlier.colour = NA,width = .4)+
+  geom_boxplot(outlier.colour = NA,width = .4)+  
   scale_color_manual(values = c('#016af3','#f34b01'))+ mytheme+
-  geom_jitter(position = position_jitterdodge(),size=0.7,shape=1)+
-  stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 5,label.sep = "\n")+
-  theme(axis.title.x = element_blank())+
-  labs(x= element_blank(),y = ylab)+
-  theme(axis.text.x = element_text(angle=0,hjust=0.5, vjust=0,size = rel(1.5),color="black"),
-        axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
+  geom_jitter(position = position_jitterdodge(), size=0.7, shape=1)+
+  stat_compare_means(aes(group = group),label.x.npc = 0.35,label.y.npc = 0.95, size = 5,label.sep = "\n",show.legend = F)+
+  labs(x= element_blank(),y = ylab) +
+  theme(axis.text.x = element_text(angle=0,hjust=0.5, vjust=0,size = 15,color="black"),
+        axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = 15,color="black"),
         axis.title.y = element_text(size = 15, face = "plain", colour = "black"),
-        panel.grid.major=element_line(color="grey95"),
-        panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
+        legend.text = element_text(size = 12,color="black"),
+        legend.title = element_text(size = 12,color="black"),
+        legend.key.size = unit(10, "mm"),
+        panel.grid=element_line(color="grey95"))
 
 if(whether.in.auc.list){
   auc.score <- auc(roc(factor(plot.data[,group],levels = c("Responder (R)","Non-Responder (NR)")),plot.data[,gene.exp],levels=c("Responder (R)","Non-Responder (NR)")))[1]
@@ -129,9 +130,11 @@ if(whether.in.auc.list){
 }
 if(datatype == "png"){
   filename = paste0(result.path,maintitle1,".png")
+  ggsave(filename = filename,plot = response.plot,width = 200, height =120, unit = "mm", dpi=100)
 }else{
   filename = paste0(result.path,maintitle1,".pdf")
+  ggsave(filename = filename,plot = response.plot,width = 220, height =120, unit = "mm", dpi=100,device = pdf())
+  dev.off()
 }
-ggsave(filename = filename,plot = response.plot, dpi = 100)
 # }
 cat(paste(maintitle1,maintitle2,sep=","))

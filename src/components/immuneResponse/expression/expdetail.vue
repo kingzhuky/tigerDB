@@ -56,7 +56,7 @@
             </el-row>
             <br />
             <el-row>
-              <el-input v-model="normalGene"></el-input>
+              <el-input v-model="normalGene" v-show='normalMed != "None"' placeholder="Please Input A Gene Symbol"></el-input>
             </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
@@ -73,7 +73,7 @@
           <el-col :span="8" :offset="1" v-show="resultShow">
             <div class="detailimg" v-loading="loading">
               <p class="imgtitle">Differential Expression between R and NR</p>
-              <img style="position:relative;top:10px;right:0px;" width="350px" :src="imgUrlBox" />
+              <img style="position:relative;top:10px;right:20px;" width="500px" :src="imgUrlBox" />
             </div>
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
