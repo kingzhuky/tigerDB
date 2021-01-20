@@ -39,18 +39,29 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-card class="infor" v-loading="artloading">
-      <el-row>
-        <p class="card-title">Diffexp</p>
+    <el-card class="infor" v-loading="artloading" v-show="isShow">
+      <p class="card-title">{{datasetid}} Details</p>
+      <el-row class="detailimg">
+        <v-resultcard
+          :conditi="'Responder'"
+          :datasetid="datasetid"
+          :title="'Differential expression between responder and non-responder'"
+          ref="immuResponseVueRefResponder"
+        ></v-resultcard>
+        <v-resultcard
+          :conditi="'Therapy'"
+          :datasetid="datasetid"
+          :title="'Differential expression between pre-therapy and post-therapy'"
+          ref="immuResponseVueRefTherapy"
+        ></v-resultcard>
+        <v-resultcard
+          :conditi="'Survival'"
+          :datasetid="datasetid"
+          :title="'Survival analysis'"
+          ref="immuResponseVueRefSurvival"
+        ></v-resultcard>
       </el-row>
     </el-card>
-    <!-- <el-row>
-      <v-sigdetail
-        ref="immuneSigDetail"
-        v-show="isShow"
-        :sigID="sigID"
-      ></v-sigdetail>
-    </el-row> -->
   </div>
 </template>
 
@@ -69,9 +80,9 @@ import {
 export default {
   data() {
     return {
-      sigtable:[],
-      sigID:"SIG6",
-      isShow: true,
+      sigtable: [],
+      datasetid:"GBM-PRJNA482620_anti-PD-1",
+      isShow: false,
       loading: true, 
     };
   },
@@ -90,13 +101,36 @@ export default {
       });
       // console.log(this.sigtable)
     },
-    showDetail(ID){
-      // console.log(sigID)
-      this.sigID = sigID
-      this.$refs.immuneSigDetail.renewDetail(this.sigID)
-      toTarget(720)
-      // console.log(this.sigID)
-    }
+    showDetail(datasetid){
+      // console.log(datasetid)
+      this.isShow = true
+      this.datasetid = datasetid
+      toTarget(900)
+      // this.$refs.immuneSigDetail.renewDetail(this.datasetid)
+      
+      // console.log(this.datasetid)
+    },
+    plot() {
+      if ((this.olddatasetid !== this.datasetid) | (this.olddatasetid === "")) {
+        this.olddatasetid = this.datasetid;
+        this.$refs.immuResponseVueRefResponder.getTableData(
+          this.datasetid,
+          "Responder"
+        );
+        this.$refs.immuResponseVueRefTherapy.getTableData(
+          this.datasetid,
+          "Therapy"
+        );
+        this.$refs.immuResponseVueRefSurvival.getTableData(
+          this.datasetid,
+          "Survival"
+        );
+      }
+    },
+  },
+
+  components: {
+    "v-resultcard": () => import("./datasetoverviewDetail.vue"),
   },
 };
 </script>

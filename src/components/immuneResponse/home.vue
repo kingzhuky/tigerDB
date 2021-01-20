@@ -2,6 +2,11 @@
   <div id="tigtable">
     <el-card class="box-card-heatmap">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigtable">
+        
+        <el-tab-pane label="Dataset Overview" name="overview">
+          <component :is="dataOverviewVue"></component>
+        </el-tab-pane>
+
         <el-tab-pane label="Differential Expression Analysis" name="diffexp">
           <component :is="diffexpVue"></component>
         </el-tab-pane>
@@ -17,10 +22,6 @@
         <el-tab-pane label="Gene Set Query" name="signature">
           <component :is="signatureVue"></component>
         </el-tab-pane>
-
-        <!-- <el-tab-pane label="Dataset Overview" name="overview">
-          <component :is="dataOverviewVue"></component>
-        </el-tab-pane> -->
 
       </el-tabs>
     </el-card>
@@ -38,7 +39,7 @@ const dataoverview = resolve => require(["./datasetoverview.vue"], resolve);
 export default {
   data() {
     return {
-      activeName: "diffexp",
+      activeName: "overview",
       diffexpVue: "",
       survivalVue: "",
       signatureVue: "",
@@ -47,7 +48,7 @@ export default {
     };
   },
   created() {
-    this.diffexpVue = werdiffexp;
+    this.dataOverviewVue = dataoverview;
   },
 
   methods: {
