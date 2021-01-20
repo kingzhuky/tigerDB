@@ -1,13 +1,19 @@
-library(dplyr)
-library(data.table)
-library(ggplot2)
-library(ggsci)
-library(ggpubr)
+library(dplyr);library(data.table);library(ggplot2);library(ggsci);library(ggpubr)
 library(pROC)
 library(jsonlite)
 
+mytheme <- theme_bw() + 
+  theme(plot.title=element_text(size=rel(2),hjust=0.5),
+        axis.title=element_text(size=rel(1)),
+        axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"),
+        axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"),
+        panel.grid.major=element_line(color="grey96"),
+        panel.grid.minor=element_line(color="grey96"),
+        panel.border=element_rect(color="black",size=1),
+        axis.line=element_line(color="black",size=0.5))
+
 Args <- commandArgs(T)
-#Args <- c("CD274","ccRCC_Braun_2020_EVEROLIMUS","CR","SD,PD","NULL","NULL","TRUE","pdf")
+#Args <- c("CD274","RCC-Braun_2020_ALL","CR","SD,PD","NULL","NULL","TRUE","pdf")
 #Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","PR,CR","SD,PD","NULL","NULL","TRUE","pdf")
 gene <- unlist(strsplit(Args[1],split=','))
 mergedatasets <- unlist(strsplit(Args[2],split=','))
@@ -85,15 +91,28 @@ if (Log.scale == "TRUE") {
 }else{
   ylab <- ifelse(length(gene) > 1,paste("Average Expression of Geneset (FPKM)"), paste("Gene Expression (FPKM)") )
 }
-response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
-  geom_boxplot(width = .4) +
-  geom_jitter(color="black", size=0.7, alpha=.9) +
-  theme_bw() + labs(x= element_blank(),y = ylab) +
-  theme(legend.position="none",
-        plot.title= element_text(size = 20, hjust=0.5),
+# response.plot <- ggplot(plot.data, aes(group,gene.exp,fill=group))+
+#   geom_boxplot(width = .4) +
+#   geom_jitter(color="black", size=0.7, alpha=.9) +
+#   theme_bw() + labs(x= element_blank(),y = ylab) +
+#   theme(legend.position="none",
+#         plot.title= element_text(size = 20, hjust=0.5),
+#         axis.title.y = element_text(size = 15, face = "plain", colour = "black"),
+#         axis.text = element_text(size = 15, face = "plain", colour = "black")) +
+#   stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 6,label.sep = "\n")
+
+response.plot <- ggplot(plot.data,aes(x=group,y=gene.exp,color=group))+
+  geom_boxplot(outlier.colour = NA,width = .4)+
+  scale_color_manual(values = c('#016af3','#f34b01'))+ mytheme+
+  geom_jitter(position = position_jitterdodge(),size=0.7,shape=1)+
+  stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 5,label.sep = "\n")+
+  theme(axis.title.x = element_blank())+
+  labs(x= element_blank(),y = ylab)+
+  theme(axis.text.x = element_text(angle=0,hjust=0.5, vjust=0,size = rel(1.5),color="black"),
+        axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
         axis.title.y = element_text(size = 15, face = "plain", colour = "black"),
-        axis.text = element_text(size = 15, face = "plain", colour = "black")) +
-  stat_compare_means(aes(group = group),label.x.npc = 0.45,label.y.npc = 0.95, size = 6,label.sep = "\n")
+        panel.grid.major=element_line(color="grey95"),
+        panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
 
 if(whether.in.auc.list){
   auc.score <- auc(roc(factor(plot.data[,group],levels = c("Responder (R)","Non-Responder (NR)")),plot.data[,gene.exp],levels=c("Responder (R)","Non-Responder (NR)")))[1]

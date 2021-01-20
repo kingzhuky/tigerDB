@@ -9,7 +9,7 @@
     </el-card> -->
     <el-card class="anaCard">
       <el-row type="flex" justify="center">
-        <el-col :span="12">
+        <el-col :span="10">
           <el-row>
             <el-col>
               <el-row class="sigInput">
@@ -48,7 +48,7 @@
           </el-row> -->
         </el-col>
 
-        <el-col :span="5" :offset="1">
+        <el-col :span="6" :offset="1">
           <el-row class="sigInput">
             <span class="label">Select A Immunotherapy Response Dataset</span>
           </el-row>
@@ -115,7 +115,7 @@
               <el-radio v-model="normalMedDiff" label="gene">Gene</el-radio>
             </el-row>
             <el-row>
-              <el-input v-model="normalGeneDiff" placeholder></el-input>
+              <el-input v-model="normalGeneDiff" v-show='normalMedDiff!="None"' placeholder="Please Input Gene Symbol"></el-input>
             </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
@@ -164,13 +164,13 @@
               <el-radio v-model="normalMedSur" label="gene">Gene</el-radio>
             </el-row>
             <el-row>
-              <el-input v-model="normalGeneSur" placeholder></el-input>
+              <el-input v-model="normalGeneSur" v-show='normalMedSur!="None"' placeholder="Please Input Gene Symbol"></el-input>
             </el-row>
             <br />
             <el-row class="detail1">Group Cutoff</el-row>
 
             <el-row>
-              <el-slider v-model="expcutoff" :min="0.1" :max="0.5" :step="0.1"></el-slider>
+              <el-slider v-model="expcutoff" :min="0.10" :max="0.50" :step="0.10"></el-slider>
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -277,7 +277,7 @@ export default {
       loadpage: 1,
       genelastclick: "",
       isDisable: false,
-      cancer: "Melanoma_PRJEB23709_ALL",
+      cancer: "Melanoma-PRJEB23709_ALL",
       gene: "CD274,CD3D",
       normalMedDiff: "None",
       normalGeneDiff: "",
@@ -453,8 +453,8 @@ export default {
         this.normalGeneDiff = "";
         this.normalMedSur = "None";
         this.normalGeneSur = "";
-        this.expcutoff = 0.5;
-        this.expcutoff2 = "";
+        this.expcutoff = 0.50;
+        this.expcutoff2 = 0.50;
         this.logScale = "FALSE";
         this.responder = ["CR", "PR"];
         this.noresponder = ["PD", "SD"];
