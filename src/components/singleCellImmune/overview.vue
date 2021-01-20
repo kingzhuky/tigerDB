@@ -1,9 +1,41 @@
 <template>
   <transition name="move3">
-    <div class="detail-card" v-loading="loading" >
-      <div>
-        <el-card>
+    <div class="detail-card">
+      <div class="infor" v-loading="artloading">
+        <el-card >
           <p class="card-title">Dataset Information</p>
+          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+              <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
+            <el-table-column prop="title" label width="250">
+                <template slot-scope="{row: {title}}">
+                <span v-if="title === 'datasetid'">Dataset ID</span>
+                <span v-else-if="title === 'datasetname'">Dataset Name</span>
+                <span v-else-if="title === 'cancertype'">Cancer Type</span>
+                <span v-else-if="title === 'platform'">Sequencing Platform</span>
+                <span v-else-if="title === 'title'">Ariticle Title</span>
+                <span v-else-if="title === 'cellnum'">Cell Number</span>
+                <span v-else-if="title === 'patientnum'">Patient Number</span>
+                <span v-else-if="title === 'samplenum'">Sample Number</span>
+                <span v-else-if="title === 'tissue'">Tissue Number</span>
+                <span v-else-if="title === 'checkpointtreatment'">Immunotherapy</span>
+                <span v-else-if="title === 'response'">Immunotherapy Response</span>
+                <span v-else-if="title === 'sorting'">Cell Sorting</span>
+                <span v-else-if="title === 'pmid'">PMID</span>
+                <span v-else-if="title === 'glo'">Differential Type</span>
+                <span v-else>{{title}}</span>
+                </template>
+            </el-table-column>
+            <el-table-column label>
+                <template slot-scope="scope">
+                <span v-if="scope.row.title === 'pmid'">
+                    <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.value"
+                    target="_blank"
+                    class="buttonText">{{scope.row.value}}</a>
+                    </span>
+                <span v-else><a v-html="scope.row.value"></a></span>
+                </template>
+            </el-table-column>
+          </el-table>
         </el-card>
       </div>
       <div class="infor">
@@ -78,6 +110,9 @@ export default {
       gloclures: [],
       plotsres: {},
       cellnum: {},
+      articleData: [],
+      artloading: true,
+      plotloading: true,
     };
   },
 
@@ -85,6 +120,25 @@ export default {
     this.clickPlot();
   },
   methods: {
+    articleDetail() {
+      var that = this;
+      that.artloading = true;
+      this.$http
+        .get("/tiger/immunescreendetail2.php", {
+          params: {
+            tabl: "scrnaseqinfo",
+            colu: "datasetid",
+            coluvalue: this.cancer,
+          },
+        })
+        .then(function (res) {
+          that.articleData = res.data.list;
+          that.artloading = false;
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
+    },
     querySearchAsync(queryString, cb) {
       var restaurants = this.restaurants;
       var results = queryString
@@ -117,9 +171,8 @@ export default {
     },
     clickPlot() {
       this.reset();
+      this.articleDetail();
       console.log(this.cancer)
-      this.loading = true;
-      var glocluindex = [];
       this.$http
         .get("/tiger/scglocluster.php", {
           params: {
@@ -130,54 +183,32 @@ export default {
         .then((res) => {
           this.gloCluoptions = res.data.list;
           console.log(this.gloCluoptions)
-          // let count = 0;
-          let plotflag = 0;
           for (let gloclu of this.gloCluoptions) {
-            // console.log("loop: ")
-            // console.log(gloclu["GlobalCluster"])
-            glocluindex.push(gloclu["GlobalCluster"])
-            this.Plot(this.cancer, gloclu["GlobalCluster"]).then((value) => {
-              plotflag++
-              // console.log(plotflag)
-              // console.log("Max type: " + Object.keys(this.gloCluoptions).length)
-              if(plotflag == Object.keys(this.gloCluoptions).length){
-                this.gloclures = glocluindex;
-                this.loading = false;
-                console.log(this.gloclures)
-              }
-            })
+            this.gloclures.push(gloclu["GlobalCluster"]);
+            this.Plot(this.cancer, gloclu["GlobalCluster"]);
           }
         });
     },
-
-    async Plot(cancer, gloclu) {
+    Plot(cancer, gloclu) {
       var that = this;
-      // that.loading = true;
-      return new Promise(resolve => {
-        this.$http
-          .get("/tiger/singlecellimmu.php", {
-            params: {
-              cancer: cancer,
-              gloclu: gloclu,
-            },
-          })
-          .then(function (res) {
-            if (res.data.status == 0) {
-              // console.log(that.loading)
-              // console.log(gloclu)
-              // that.gloclures.push(gloclu);
-              that.plotsres[gloclu] = res.data.output[0].split(",");
-              console.log(res.data.cellnum[0].split(","))
-              resolve(res.data.output[0].split(","))
-              that.cellnum[gloclu] = res.data.cellnum[0].replace(/,/g," ")
-              // console.log(that.plotsres[gloclu][1])
-              // that.loading = false;
-            }
-          })
-          .catch(function (res) {
-            resolve(console.log(res))
-          });
-      });
+      that.loading = true;
+      this.$http
+        .get("/tiger/singlecellimmu.php", {
+          params: {
+            cancer: cancer,
+            gloclu: gloclu,
+          },
+        })
+        .then(function (res) {
+          if (res.data.status == 0) {
+            Vue.set(that.plotsres, gloclu, res.data.output[0].split(","))
+            Vue.set(that.cellnum, gloclu, res.data.cellnum[0].replace(/,/g," "))
+            that.loading = false;
+          }
+        })
+        .catch(function (res) {
+          console.log(res);
+        });
     },
 
     previewImg(urlList){
