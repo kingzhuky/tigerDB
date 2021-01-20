@@ -9,7 +9,6 @@ export default {};
 <style>
 .box-card-footer {
   position: fixed ;
-
   background-color: #efeded;
   text-align: center;
   height: 60px;
@@ -18,5 +17,6 @@ export default {};
   line-height: 50px;
   font-size: 17px;
   bottom: 0;
+  z-index: 100;
 }
 </style>

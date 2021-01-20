@@ -1,54 +1,55 @@
 [
     {"label":"Breast cancer (BC)","options":[
-        {"label":"Qian  J, et al. Cell Res. 2020 Jun 21;  Number of cells: 43892;  Number of Patient: 14","value":"BC"}
+        {"label":"Breast cancer (BC) | Qian J, et al. Cell Res. 2020 Jun 21 | Cell Number: 41292 | Sample Number: 14 | Patient Number: 14","value":"BC"}
     ]},
     {"label":"Basal cell carcinoma (BCC)","options":[
-        {"label":"Yost KE, et al. Nat Med. 2019 Aug;  Number of cells: 50335;  Number of Patient: 11","value":"BCC"}
+        {"label":"Basal cell carcinoma (BCC) | Yost KE, et al. Nat Med. 2019 Aug | Cell Number: 49480 | Sample Number: 12 | Patient Number: 12","value":"BCC"}
     ]},
-    {"label":"Colitis associated cancer (CAC)","options":[
-        {"label":"Wu TD, et al. Nature. 2020 Mar;  Number of cells: 12408;  Number of Patient: 2","value":"CAC"}
+    {"label":"Bladder Transitional Cell Carcinoma (BTCC)","options":[
+        {"label":"Bladder Transitional Cell Carcinoma (BTCC) | Oh DY, et al. Cell. 2020 Jun 25 | Cell Number: 30455 | Sample Number: 14 | Patient Number: 7","value":"BTCC"}
     ]},
     {"label":"Clear cell renal cell carcinoma (CCRCC)","options":[
-        {"label":"Wu TD, et al. Nature. 2020 Mar;  Number of cells: 53430;  Number of Patient: 3","value":"CCRCC"}
+        {"label":"Clear cell renal cell carcinoma (CCRCC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 52340 | Sample Number: 9 | Patient Number: 3","value":"CCRCC"}
     ]},
     {"label":"Colorectal cancer (CRC)","options":[
-        {"label":"Lee HO,  et al.  Nat Genet. 2020 May 25;  Number of cells: 87540;  Number of Patient: 29","value":"CRC1"},
-        {"label":"Qian  J, et al. Cell Res. 2020 Jun 20;  Number of cells: 44612;  Number of Patient: 7","value":"CRC2"}
+        {"label":"Colorectal cancer (CRC) | Lee HO, et al. Nat Genet. 2020 May 25 | Cell Number: 90276 | Sample Number: 51 | Patient Number: 29","value":"CRC1"},
+        {"label":"Colorectal cancer (CRC) | Qian J, et al. Cell Res. 2020 Jun 20 | Cell Number: 42631 | Sample Number: 14 | Patient Number: 7","value":"CRC2"},
+        {"label":"Colorectal cancer (CRC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 12180 | Sample Number: 4 | Patient Number: 2","value":"CAC"}
     ]},
     {"label":"Hepatocellular carcinoma (HCC)","options":[
-        {"label":"Ma L, et al. Cancer Cell. 2019 Oct 14;  Number of cells: 9946;  Number of Patient: 19","value":"HCC"}
+        {"label":"Hepatocellular carcinoma (HCC) | Ma L, et al. Cancer Cell. 2019 Oct 14 | Cell Number: 9777 | Sample Number: 19 | Patient Number: 19","value":"HCC"}
     ]},
-    {"label":" Head-Neck Squamous Cell Carcinoma (HNSC)","options":[
-        {"label":"Cillo AR, et al. Immunity. 2020 Jan 14;  Number of cells: 130939;  Number of Patient: 37","value":"HNSC"}
+    {"label":"Head-Neck Squamous Cell Carcinoma (HNSC)","options":[
+        {"label":"Head-Neck Squamous Cell Carcinoma (HNSC) | Cillo AR, et al. Immunity. 2020 Jan 14 | Cell Number: 130939 | Sample Number: 37 | Patient Number: 37","value":"HNSC"}
     ]},
     {"label":"Intrahepatic cholangiocarcinoma (ICC)","options":[
-        {"label":"Zhang M, et al. J Hepatol. 2020 Jun 5;  Number of cells: 33402;  Number of Patient: 5","value":"ICC"}
+        {"label":"Intrahepatic cholangiocarcinoma (ICC) | Zhang M, et al. J Hepatol. 2020 Jun 5 | Cell Number: 32259 | Sample Number: 7 | Patient Number: 5","value":"ICC"}
     ]},
     {"label":"Merkel cell carcinoma (MCC)","options":[
-        {"label":"Paulson KG, et al. Nat Commun. 2018 Sep 24;  Number of cells: 10939;  Number of Patient: 1","value":"MCC"}
+        {"label":"Merkel cell carcinoma (MCC) | Paulson KG, et al. Nat Commun. 2018 Sep 24 | Cell Number: 10578 | Sample Number: 2 | Patient Number: 1","value":"MCC"}
     ]},
     {"label":"Mixed phenotype acute leukemia (MPAL)","options":[
-        {"label":"Granja JM, et al. Nat Biotechnol. 2019 Dec;  Number of cells: 52408;  Number of Patient: 10","value":"MPAL"}
+        {"label":"Mixed phenotype acute leukemia (MPAL) | Granja JM, et al. Nat Biotechnol. 2019 Dec | Cell Number: 52408 | Sample Number: 10 | Patient Number: 10","value":"MPAL"}
     ]},
     {"label":"Non-small-cell lung carcinoma (NSCLC)","options":[
-        {"label":"Lambrechts D, et al. Nat Med. 2018 Aug;  Number of cells: 50767;  Number of Patient: 5","value":"NSCLC"},
-        {"label":"Wu TD, et al. Nature. 2020 Mar;  Number of cells: 91680;  Number of Patient: 6","value":"NSCLC1"},
-        {"label":"Zilionis R, et al. Immunity. 2019 May 21;  Number of cells: 41874;  Number of Patient: 7","value":"NSCLC3"},
-        {"label":"Guo X, et al. Nat Med. 2018 Jul;  Number of cells: 12346;  Number of Patient: 14","value":"NSCLC4"}
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Lambrechts D, et al. Nat Med. 2018 Aug | Cell Number: 52273 | Sample Number: 9 | Patient Number: 5","value":"NSCLC"},
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 93391 | Sample Number: 11 | Patient Number: 6","value":"NSCLC1"},
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Guo X, et al. Nat Med. 2018 Jul | Cell Number: 10806 | Sample Number: 39 | Patient Number: 13","value":"NSCLC4"},
+        {"label":"Non-small-cell lung carcinoma (NSCLC) | Zilionis R, et al. Immunity. 2019 May 21 | Cell Number: 41483 | Sample Number: 13 | Patient Number: 7","value":"NSCLC3"}
     ]},
     {"label":"Ovarian cancer (OV)","options":[
-        {"label":"Qian  J, et al. Cell Res. 2020 Jun 19;  Number of cells: 44469;  Number of Patient: 5","value":"OV"}
+        {"label":"Ovarian cancer (OV) | Qian J, et al. Cell Res. 2020 Jun 19 | Cell Number: 40225 | Sample Number: 7 | Patient Number: 5","value":"OV"}
     ]},
     {"label":"Pancreatic ductal adenocarcinoma (PDAC)","options":[
-        {"label":"Peng J, et al. Cell Res. 2019 Sep;  Number of cells: 56114;  Number of Patient: 35","value":"PDAC"}
+        {"label":"Pancreatic ductal adenocarcinoma (PDAC) | Peng J, et al. Cell Res. 2019 Sep | Cell Number: 55841 | Sample Number: 35 | Patient Number: 35","value":"PDAC"}
     ]},
     {"label":"Triple-negative breast cancer (TNBC)","options":[
-        {"label":"Savas P, et al. Nat Med. 2018 Jul;  Number of cells: 6274;  Number of Patient: 2","value":"TNBC"}
+        {"label":"Triple-negative breast cancer (TNBC) | Savas P, et al. Nat Med. 2018 Jul | Cell Number: 6182 | Sample Number: 2 | Patient Number: 2","value":"TNBC"}
     ]},
     {"label":"Uterine Corpus Endometrial Carcinoma (UCEC)","options":[
-        {"label":"Wu TD, et al. Nature. 2020 Mar;  Number of cells: 33378;  Number of Patient: 3","value":"UCEC"}
+        {"label":"Uterine Corpus Endometrial Carcinoma (UCEC) | Wu TD, et al. Nature. 2020 Mar | Cell Number: 33976 | Sample Number: 6 | Patient Number: 3","value":"UCEC"}
     ]},
     {"label":"Uveal Melanoma (UM)","options":[
-        {"label":"Durante MA, et al. Nat Commun. 2020 Jan 24;  Number of cells: 52330;  Number of Patient: 8","value":"UM"} 
+        {"label":"Uveal Melanoma (UM) | Durante MA, et al. Nat Commun. 2020 Jan 24 | Cell Number: 67692 | Sample Number: 11 | Patient Number: 11","value":"UM"} 
     ]}
 ]

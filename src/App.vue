@@ -170,7 +170,7 @@ i.el-icon-setting {
   box-sizing: border-box;
   background: rgb(245, 248, 249);
   height: 100vh;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .searchBar {

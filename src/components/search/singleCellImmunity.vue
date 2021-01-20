@@ -584,6 +584,18 @@ export default {
             // console.log(Object.values(res.data.cancer))
             // console.log("data.list:")
             // console.log(res.data.list)
+            // var new_rows = [];// matrix key .替换为_
+            // for (const row of res.data.tabledata) {
+            //   var new_row = {}
+            //   for (const key in row) {
+            //     let new_key = key.replace(".",",")
+            //     new_row[new_key] = row[key]
+            //   }
+            //   new_row["id"] = this.getRowKeys(new_row)
+            //   new_rows.push(new_row)
+            // }
+            // this.MarkerTable = new_rows  // matrix key .替换为_
+
             this.MarkerTable = res.data.tabledata
             console.log("data.table:")
             console.log(this.MarkerTable)
@@ -685,6 +697,7 @@ export default {
                 that.imgpathBar2 =
                   "/tiger/img/" + res.data.output[0].split(",")[2] + '.png';
                 that.diffexpimgTN = res.data.output[0];
+                Vue.se
               } else {
                 that.singleCellImmuResponseImgshow = true;
                 that.singleCellImmuResponseImgloading = false;
@@ -732,6 +745,7 @@ export default {
               that.markerimg = res.data.output[0];
             }
             that.evoluloading = false;
+            that.geneloading = false;
           }
           if (res.data.status2 == 0) {
             if (res.data.output2[0] === "0") {
@@ -747,33 +761,33 @@ export default {
         .catch(function (res) {
           console.log(res);
         });
-        this.$http
-    .get("/tiger/scimmudiffexpdetailgene.php", {
-      params: {
-        cancer: this.cancer,
-        celltype: celltype,
-        type: "celltype",
-        gene: gene,
-        gloclu: gloclu
-      },
-    })
-    .then(function (res) {
-      if (res.data.status == 0) {
-        if (res.data.output[0] === "0") {
-          that.evolushow = false;
-          //alert("no gene file");
-        } else {
-          that.evolushow = true;
-          that.evoluplots = res.data.output[0];
-        }
-        //that.evoluplots = res.data.output[0];
-        that.evoluloading = false;
-      }
+        // this.$http
+        //   .get("/tiger/scimmudiffexpdetailgene.php", {
+        //     params: {
+        //       cancer: this.cancer,
+        //       celltype: celltype,
+        //       type: "celltype",
+        //       gene: gene,
+        //       gloclu: gloclu
+        //     },
+        //   })
+        //   .then(function (res) {
+        //     if (res.data.status == 0) {
+        //       if (res.data.output[0] === "0") {
+        //         that.evolushow = false;
+        //         //alert("no gene file");
+        //       } else {
+        //         that.evolushow = true;
+        //         that.evoluplots = res.data.output[0];
+        //       }
+        //       //that.evoluplots = res.data.output[0];
+        //       that.evoluloading = false;
+        //     }
 
-    })
-    .catch(function (res) {
-      console.log(res);
-    });
+        //   })
+        //   .catch(function (res) {
+        //     console.log(res);
+        //   });
     },
         
     draw_chart_sca(data, id) {
@@ -835,23 +849,26 @@ export default {
       if (expandedRows.length) {
         that.expands = [];
         if (row) {
-          that.expands.push(row.CellType);
+          that.expands.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
         }
       } else {
         that.expands = [];
       }
-      console.log(row.GlobalCluster)
+      // console.log(row)
       this.markerPlot(row.datasetid,row.GlobalCluster,row.CellType);
     },
     getRowKeys: function (row) {
-      return row.CellType;
+      return (row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_');
+    },
+    getRowKeys2: function (row) {
+      return row.id;
     },
     diffExpTNtableExpand: function (row, expandedRows) {
       var that = this;
       if (expandedRows.length) {
         that.expands_tn = [];
         if (row) {
-          that.expands_tn.push(row.CellType);
+          that.expands_tn.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
         }
       } else {
         that.expands_tn = [];
@@ -865,7 +882,7 @@ export default {
       if (expandedRows.length) {
         that.expands_rnr = [];
         if (row) {
-          that.expands_rnr.push(row.CellType);
+          that.expands_rnr.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
         }
       } else {
         that.expands_rnr = [];
