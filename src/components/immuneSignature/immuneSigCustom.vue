@@ -1,20 +1,8 @@
 <template>
-    <div>
-    <!-- <el-row id="readme">Readme:</el-row>
-    <el-card id="readmeCard">
-    1. Input genes to analyze the immune signature of pan-cancer species.
-    <br />2. Correlation heat map shows the correlation between user-defined genes between pan-cancer species and immune signatures.
-    <br />3. Click the correlation heatmap to display the detailed correlation scatter plot.
-    </el-card> -->
-    <el-card id="scummuviewer">
+  <div class="detail-card">
+    <el-card id="scummuviewer" class="infor">
     <p class="card-title">Upload Matrix</p>
     <el-row>
-
-      <!-- <el-col :span="10">
-        <el-row>
-          <span id="homespan">Search Ligand or Receptor</span>
-        </el-row>
-      </el-col> -->
     </el-row>
     <br />
     <el-row>
@@ -34,7 +22,6 @@
                     <i class="el-icon-info"></i>
                   </el-tooltip>
                 </el-button>
-            <!-- <el-button id="immusignatureplot">Upload Expression Matrix</el-button> -->
           </el-upload>
         </el-col>
         <el-col span="6" push="2" align="center">
@@ -42,10 +29,6 @@
               <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a>
               the example expression matrix.</p>
         </el-col>
-        
-        <!-- <el-col push="8" span="2">
-            
-        </el-col> -->
     </el-row>
     <br/>
     <el-row>
@@ -87,13 +70,9 @@
         <el-button id="immusignatureplot" @click="submitAnalysis">Submit</el-button>
       </el-col>
     </el-row>
+    </el-card>
     <br />
-
-     <el-row>
-
-    </el-row>
-    <br/>
-    <el-row>
+    <el-card class="infor" v-show="isShow">
       <v-customdetail
         ref="immuneSigCustomDetail"
         v-show="isShow"
@@ -101,8 +80,8 @@
         :annoDataPath="annoDataPath"
         :taskuid="taskuid"
       ></v-customdetail>
-    </el-row>
-  </el-card>
+    </el-card>
+
     </div>
 </template>
 
@@ -152,7 +131,9 @@ export default {
       this.annoDataPath = response.list
     },
     submitAnalysis(){
-      console.log("start ~~");
+      // console.log("start ~~");
+      this.expDataPath = this.expDataPath == "" ? "Download/customSig_example.exp.tsv.zip" : this.expDataPath
+      // this.annoDataPath = this.annoDataPath == "none" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
       // this.expDataPath = "Download/customSig_example.exp.tsv.zip";
       // this.annoDataPath = "Download/customSig_example.anno.tsv.zip";
       this.$refs.immuneSigCustomDetail.analysisData(this.expDataPath,this.annoDataPath,this.taskuid)

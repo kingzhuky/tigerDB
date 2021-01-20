@@ -1,6 +1,7 @@
 <template>
-  <div id='sigtablepage'>
-    <el-row>
+  <div id='sigtablepage' class="detail-card">
+    <el-card class="infor">
+      <el-row>
         <el-col :push="1" :span="22">
         <el-table v-loading="loading" :data="sigtable" max-height="620" stripe border style="width: 100%">
             <el-table-column property="SignatureID" label="Signature ID" align="center" ></el-table-column>
@@ -13,7 +14,7 @@
                 </template>
               </el-table-column>
             <el-table-column prop="AUC" label="AUC" align="center"></el-table-column>
-              <el-table-column label="Detail" align="center" width="120%">
+            <el-table-column label="Detail" align="center" width="120%">
                 <template slot-scope="scope">
                     <el-button
                     id="immusignatureplot"
@@ -24,14 +25,16 @@
             </el-table-column>
         </el-table>
         </el-col>
-    </el-row>
-    <el-row>
+      </el-row>
+    </el-card>
+    <br />
+    <el-card class="infor">
       <v-sigdetail
         ref="immuneSigDetail"
         v-show="isShow"
         :sigID="sigID"
       ></v-sigdetail>
-    </el-row>
+    </el-card>
   </div>
 </template>
 

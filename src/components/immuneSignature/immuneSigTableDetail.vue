@@ -36,7 +36,7 @@
                         :expand-row-keys="expands"
                         @expand-change="diffExpRespontableExpand"
                     >
-                        <el-table-column prop="dataset_id" label="Dataset ID"></el-table-column> 
+                        <el-table-column prop="dataset_id" label="Dataset ID" width="400%"></el-table-column> 
                         <el-table-column prop="Dataset" label="Dataset" sortable></el-table-column>
                         <el-table-column property="PMID" label="PMID" align="center">
                             <template slot-scope="scope">

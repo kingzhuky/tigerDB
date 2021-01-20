@@ -3,7 +3,7 @@ library(reshape2)
 library(rlist)
 library(jsonlite)
 Args <- commandArgs(TRUE)
-#Args <- c("Download/customSig_example.exp.tsv.zip","Download/customSig_example.anno.tsv","asdasda")
+#Args <- c("Download/customSig_example.exp.tsv.zip","none","asdasda")
 #Args <- c("Download/customSig_example.exp.tsv","none","png")
 exp.matrix.file <- Args[1]
 sample.anno.file <- ifelse(Args[2] == "none", NA, Args[2])
@@ -17,7 +17,7 @@ if(gregexpr("[.]zip$", exp.matrix.file)[[1]][1] != -1){
   exp.matrix.table <- fread(exp.matrix.file)
 }
 if(is.na(sample.anno.file)){
-  
+  sample.anno.table <- NULL
 }else if(gregexpr("[.]zip$", sample.anno.file)[[1]][1] != -1){
   tmp_dir = tempdir()
   outf = unzip(sample.anno.file, list = TRUE)$Name

@@ -537,6 +537,7 @@ export default {
             large: true,
             data: data,
             symbolSize: 15,
+            animation: false,
             emphasis: {
               label: {
                 borderWidth: 1.5,

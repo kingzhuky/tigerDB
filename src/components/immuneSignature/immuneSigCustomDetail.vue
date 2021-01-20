@@ -1,6 +1,5 @@
 <template>
-    <div>
-    <el-card v-loading="loading">
+    <div v-loading="loading">
         <el-row>
             <p class="card-title">Signature Score Table</p>
             <div class="detailimg">
@@ -28,7 +27,7 @@
             </el-table>
             </div>
         </el-row>
-        <el-row >
+        <el-row v-show="isgroupshow">
             <p class="card-title">Signature Score Table</p>
             <div class="detailimg">
             <el-table
@@ -63,8 +62,6 @@
                 :sigID="sigID"
             ></v-sigdetail>
         </el-row>
-
-    </el-card>
     </div>
 </template>
 
@@ -94,6 +91,7 @@
                 resultShow: true,
                 loading: false,
                 grouploading: false,
+                isgroupshow: false,
                 sigID: "",
                 isShow: false,
             };
@@ -147,8 +145,11 @@
                         that.getsampletableData(imgpath[0]);
                         if(imgpath[1] === "0"){
                             that.grouploading = false;
+                            that.isgroupshow = false;
                         }else{
                             that.getgrouptableData(imgpath[1])
+                            that.isgroupshow = true;
+                            that.grouploading = false;
                         }
                     }else{
                         that.resultShow=false;

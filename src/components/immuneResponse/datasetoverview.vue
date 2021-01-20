@@ -1,6 +1,7 @@
 <template>
-  <div id='sigtablepage'>
-    <el-row>
+  <div id='sigtablepage' class="detail-card">
+    <el-card class="infor">
+      <el-row>
         <el-col :push="1" :span="22">
         <el-table v-loading="loading" :data="sigtable" max-height="620" stripe border style="width: 100%">
             <el-table-column property="DatasetID" label="Dataset ID" align="center" ></el-table-column>
@@ -19,25 +20,30 @@
                 <template slot-scope="scope">
                   {{scope.row.ResponseSampleCount}} : {{scope.row.NonresponseSampleCount}}
                 </template>
-              </el-table-column>
+            </el-table-column>
             <el-table-column property="RNR" label="Pre-therapy : Post-therapy" align="center">
                 <template slot-scope="scope">
                   {{scope.row.PretherapySampleCount}} : {{scope.row.PosttherapySampleCount}}
                 </template>
-              </el-table-column>
-            <!-- <el-table-column prop="AUC" label="AUC" align="center"></el-table-column>
-              <el-table-column label="Detail" align="center" width="120%">
-                <template slot-scope="scope">
-                    <el-button
-                    id="immusignatureplot"
-                    icon="el-icon-s-marketing"
-                    @click="showDetail(scope.row.SignatureID)"
-                    >Detail</el-button>
-                </template> -->
+            </el-table-column>
+            <el-table-column label="Detail" align="center" width="120%">
+              <template slot-scope="scope">
+                  <el-button
+                  id="immusignatureplot"
+                  icon="el-icon-s-marketing"
+                  @click="showDetail(scope.row.DatasetID)"
+                  >Detail</el-button>
+              </template>
             </el-table-column>
         </el-table>
         </el-col>
-    </el-row>
+      </el-row>
+    </el-card>
+    <el-card class="infor" v-loading="artloading">
+      <el-row>
+        <p class="card-title">Diffexp</p>
+      </el-row>
+    </el-card>
     <!-- <el-row>
       <v-sigdetail
         ref="immuneSigDetail"
@@ -84,7 +90,7 @@ export default {
       });
       // console.log(this.sigtable)
     },
-    showDetail(sigID){
+    showDetail(ID){
       // console.log(sigID)
       this.sigID = sigID
       this.$refs.immuneSigDetail.renewDetail(this.sigID)
