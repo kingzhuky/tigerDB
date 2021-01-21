@@ -2,21 +2,25 @@
   <div class="outside">
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
-        <el-row>
-          <el-col span="4">
-            <select-cancer-icon
-              :imgurl="IconBladder"
-              IconName="haha">
-            </select-cancer-icon>
-          </el-col>
-        </el-row>
 
         <el-row>
           <el-col :span="20" :offset="2">
             <p class="scImmuTitle">Select A Dataset</p>
           </el-col>
         </el-row>
-        <el-row>
+        <br/>
+        <el-row gutter="40" justify="center">
+          <el-col span="5" push="2" v-for="cancertype in cancertypearr" :key="cancertype.icon">
+            <select-cancer-icon
+              v-on:datasetid="getdatasetid"
+              :imgurl="cancertype.icon"
+              :IconName="cancertype.name"
+              :datasets="cancertype.datasetid.split('_')">
+            </select-cancer-icon>
+          </el-col>
+        </el-row>
+
+        <!-- <el-row>
           <el-col :span="20" :offset="2" id="homeInput">
             <el-select v-model="cancer" @change="cancerSelectChange" placeholder="请选择">
               <el-option-group
@@ -34,7 +38,7 @@
               </el-option-group>
             </el-select>
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-row>
     </el-card>
     <div>
@@ -113,7 +117,7 @@ import tigevolution from './evolution.vue'
 import tigpathway from './scpathway.vue'
       
 import selectCancerIcon from './selectCancerIcon.vue'
-
+import toTarget from "../public/goTop";
 export default {
   components: {
     selectCancerIcon,
@@ -158,6 +162,83 @@ export default {
       vsType: "",
       scpathwayVue: "",
       datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC","NSCLC4","HNSC"],
+      cancertypearr:[
+	{
+		"icon": require("../../assets/Icons/Bladder.png"),
+		"name": "Bladder",
+		"datasetid": "BTCC"
+	},
+	{
+		"icon": require("../../assets/Icons/Blood.png"),
+		"name": "Blood",
+		"datasetid": "MPAL"
+	},
+	{
+		"icon": require("../../assets/Icons/Breast.png"),
+		"name": "Breast",
+		"datasetid": "BC_BC1_TNBC"
+	},
+	{
+		"icon": require("../../assets/Icons/Colorectum.png"),
+		"name": "Colorectum",
+		"datasetid": "CAC_CRC1_CRC2"
+	},
+	{
+		"icon": require("../../assets/Icons/Eye.png"),
+		"name": "Eye",
+		"datasetid": "UM"
+	},
+	{
+		"icon": require("../../assets/Icons/HeadNeck.png"),
+		"name": "Head & Neck",
+		"datasetid": "HNSC"
+	},
+	{
+		"icon": require("../../assets/Icons/Kidney.png"),
+		"name": "Kidney",
+		"datasetid": "CCRCC"
+	},
+	{
+		"icon": require("../../assets/Icons/Liver.png"),
+		"name": "Liver",
+		"datasetid": "HCC_ICC"
+	},
+	{
+		"icon": require("../../assets/Icons/Lung.png"),
+		"name": "Lung",
+		"datasetid": "NSCLC_NSCLC1_NSCLC3_NSCLC4_NSCLC5_NSCLC6"
+	},
+	{
+		"icon": require("../../assets/Icons/Nasopharyngeal.png"),
+		"name": "Nasopharyngeal",
+		"datasetid": "NPC"
+	},
+	{
+		"icon": require("../../assets/Icons/Ovarian.png"),
+		"name": "Ovarian",
+		"datasetid": "OV"
+	},
+	{
+		"icon": require("../../assets/Icons/Pancreas.png"),
+		"name": "Pancreas",
+		"datasetid": "PDAC"
+	},
+	{
+		"icon": require("../../assets/Icons/Skin.png"),
+		"name": "Skin",
+		"datasetid": "BCC_MCC_SKCM1"
+	},
+	{
+		"icon": require("../../assets/Icons/Stomach.png"),
+		"name": "Stomach",
+		"datasetid": "STAD"
+	},
+	{
+		"icon": require("../../assets/Icons/Uterine.png"),
+		"name": "Uterine",
+		"datasetid": "UCEC"
+	}
+]
     };
   },
 
@@ -237,6 +318,12 @@ export default {
         }
       }
       return true
+    },
+    getdatasetid: function(childid){
+      console.log(childid)
+      this.cancer = childid
+      this.cancerSelectChange()
+      
     }
   },
 };

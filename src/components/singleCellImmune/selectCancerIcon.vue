@@ -2,12 +2,12 @@
   <div>
     <el-row>
       <el-col :span="12">
-        <img class="iconsCancer" alt="imgurl" v-lazy="imgurl" />
+        <img class="iconsCancer" alt="imgurl" :src="imgurl" />
       </el-col>
       <el-col :span="12">
         <p>{{IconName}}</p>
-        <el-row class="rowbutton" v-for="dataset in datasets" :key="dataset.id">
-          <li @click="changedataset(dataset.id)">{{dataset.name}}</li>
+        <el-row class="rowbutton" v-for="dataset in datasets" :key="dataset">
+          <el-button type="text" @click="changedataset(dataset)">{{dataset}}</el-button>
         </el-row>
         
       </el-col>
@@ -18,26 +18,33 @@
 <script>
 
 export default {
-  components: {
-
+  props: {
+    imgurl: String,
+    IconName: String,
+    datasets: Array,
   },
   data(){
     return{
-      imgurl: require("../../assets/Icons/Bladder.png"),
-      IconName: "Bladder",
-      datasets: [
-        {
-          name: "BCC",
-          id: "BCC1"
-        },{
-          name: "BCC",
-          id: "BCC1"
-        }],
+      // imgurl: require("../../assets/Icons/Bladder.png"),
+      // IconName: "Bladder",
+    //   datasets: [
+    //     {
+    //       name: "BCC",
+    //       id: "BCC"
+    //     },{
+    //       name: "BCC",
+    //       id: "BCC1"
+    //     }],
     }
   },
+  methods:{
   changedataset(datasetid){
-    this.datasetid = datasetid
+    console.log(this.imgurl)
+    console.log("child: " + datasetid)
+    this.$emit("datasetid",datasetid)
   }
+  }
+
 }
 </script>
 
