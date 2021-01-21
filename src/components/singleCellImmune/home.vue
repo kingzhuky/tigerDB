@@ -3,6 +3,15 @@
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
         <el-row>
+          <el-col span="4">
+            <select-cancer-icon
+              :imgurl="IconBladder"
+              IconName="haha">
+            </select-cancer-icon>
+          </el-col>
+        </el-row>
+
+        <el-row>
           <el-col :span="20" :offset="2">
             <p class="scImmuTitle">Select A Dataset</p>
           </el-col>
@@ -102,10 +111,30 @@ import tigcelltype from './celltype.vue'
 import tigcrosstalk from './crosstalk.vue'
 import tigevolution from './evolution.vue'
 import tigpathway from './scpathway.vue'
+      
+import selectCancerIcon from './selectCancerIcon.vue'
 
 export default {
+  components: {
+    selectCancerIcon,
+  },
   data() {
     return {
+      IconBladder: require("../../assets/Icons/Bladder.png"),
+      IconBlood: require("../../assets/Icons/Blood.png"),
+      IconBreast: require("../../assets/Icons/Breast.png"),
+      IconColorectum: require("../../assets/Icons/Colorectum.png"),
+      IconEye: require("../../assets/Icons/Eye.png"),
+      IconHeadNeck: require("../../assets/Icons/HeadNeck.png"),
+      IconKidney: require("../../assets/Icons/Kidney.png"),
+      IconLiver: require("../../assets/Icons/Liver.png"),
+      IconLung: require("../../assets/Icons/Lung.png"),
+      IconNasopharyngeal: require("../../assets/Icons/Nasopharyngeal.png"),
+      IconOvarian: require("../../assets/Icons/Ovarian.png"),
+      IconPancreas: require("../../assets/Icons/Pancreas.png"),
+      IconSkin: require("../../assets/Icons/Skin.png"),
+      IconStomach: require("../../assets/Icons/Stomach.png"),
+      IconUterine: require("../../assets/Icons/Uterine.png"),
       carouselShow: false,
       activeName: "overview",
       diffexpVue: "",
