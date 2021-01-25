@@ -2,13 +2,14 @@
   <div>
     <el-card shadow="hover" class="cancercard">
       <el-row gutter="10">
-        <el-col :span="11">
+        <el-col :span="10">
           <img class="iconsCancer" style="position:relative;top:30px;" alt="imgurl" :src="imgurl" />
         </el-col>
-        <el-col :span="12">
+        <el-col :span="14">
           <p class="cancertitle">{{IconName}}</p>
           <el-row class="rowbutton" v-for="(dataset, index) in datasets" :key="dataset">
-            <el-button  size="medium" type="text" @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</el-button>
+            <!-- <el-button size="medium" type="text" @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</el-button> -->
+            <p @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</p>
           </el-row>
         </el-col>
       </el-row>
@@ -56,7 +57,7 @@ export default {
   margin-bottom: 20px;
 }
 .cancercard{
-  height: 200px;
+  height: 220px;
 }
 .iconsCancer{
   width: 90px;
