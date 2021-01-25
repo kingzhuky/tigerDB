@@ -4,7 +4,7 @@
       <div class="infor" v-loading="artloading">
         <el-card >
           <p class="card-title">Dataset Information</p>
-          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+          <el-table :data="articleData" v-loading="artloading">
               <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
             <el-table-column prop="title" label width="250">
                 <template slot-scope="{row: {title}}">
@@ -38,8 +38,13 @@
           </el-table>
         </el-card>
       </div>
-      <div class="infor">
-        <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard">
+      <div v-if="loading">
+        <br />
+        <br />
+        <br />
+      </div>
+      <div class="infor" style="margin-top: -20px" v-loading="loading">
+        <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard" >
           <p class="card-title">{{gloclu}}&nbsp;&nbsp;&nbsp;&nbsp;{{cellnum[gloclu]}}</p>
           <el-row class="detailimg" type="flex" justify="center" >
             <el-col :span="6" style="position:relative;right:10px;top:20px;">

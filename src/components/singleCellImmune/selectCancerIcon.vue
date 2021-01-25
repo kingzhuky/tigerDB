@@ -1,59 +1,77 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="12">
-        <img class="iconsCancer" alt="imgurl" :src="imgurl" />
-      </el-col>
-      <el-col :span="12">
-        <p>{{IconName}}</p>
-        <el-row class="rowbutton" v-for="dataset in datasets" :key="dataset">
-          <el-button type="text" @click="changedataset(dataset)">{{dataset}}</el-button>
-        </el-row>
-        
-      </el-col>
-    </el-row>
+    <el-card shadow="hover" class="cancercard">
+      <el-row gutter="10">
+        <el-col :span="11">
+          <img class="iconsCancer" style="position:relative;top:30px;" alt="imgurl" :src="imgurl" />
+        </el-col>
+        <el-col :span="12">
+          <p class="cancertitle">{{IconName}}</p>
+          <el-row class="rowbutton" v-for="(dataset, index) in datasets" :key="dataset">
+            <el-button  size="medium" type="text" @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</el-button>
+          </el-row>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
 <script>
-
+import toTarget from "../public/goTop";
 export default {
   props: {
     imgurl: String,
     IconName: String,
     datasets: Array,
+    datasetsname: Array,
   },
   data(){
     return{
-      // imgurl: require("../../assets/Icons/Bladder.png"),
-      // IconName: "Bladder",
-    //   datasets: [
-    //     {
-    //       name: "BCC",
-    //       id: "BCC"
-    //     },{
-    //       name: "BCC",
-    //       id: "BCC1"
-    //     }],
+       datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC","NSCLC4","HNSC","NPC","MUC","PRAD2"],
     }
   },
   methods:{
-  changedataset(datasetid){
-    console.log(this.imgurl)
-    console.log("child: " + datasetid)
-    this.$emit("datasetid",datasetid)
-  }
+    changedataset(datasetid){
+      // console.log(this.imgurl)
+      // console.log("child: " + datasetid)
+      this.$emit("datasetid",datasetid)
+    },
+    dataisrenew(datasetid){
+      // console.log(datasetid)
+      for(const reneweddata of this.datasetrenewed){
+        // console.log(reneweddata)
+        if(datasetid === reneweddata){
+          return false
+        }
+      }
+      return true
+    },
   }
 
 }
 </script>
 
 <style>
+.el-card {
+  margin-bottom: 20px;
+}
+.cancercard{
+  height: 200px;
+}
 .iconsCancer{
-  width:80px;
-  height:80px;
+  width: 90px;
+  height: 90px;
 }
 .rowbutton{
-  margin-top: -20px;
+  margin-top: -15px;
+  font: 22px;
+}
+.cancertitle {
+  text-align: left;
+  padding-left: 0px;
+  color: rgb(20, 146, 140);
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  text-transform: capitalize;
 }
 </style>

@@ -9,13 +9,14 @@
           </el-col>
         </el-row>
         <br/>
-        <el-row gutter="40" justify="center">
+        <el-row gutter="20" justify="center">
           <el-col span="5" push="2" v-for="cancertype in cancertypearr" :key="cancertype.icon">
             <select-cancer-icon
               v-on:datasetid="getdatasetid"
               :imgurl="cancertype.icon"
               :IconName="cancertype.name"
-              :datasets="cancertype.datasetid.split('_')">
+              :datasets="cancertype.datasetid.split('_')"
+              :datasetsname="cancertype.datasetname.split('_')">
             </select-cancer-icon>
           </el-col>
         </el-row>
@@ -42,7 +43,7 @@
       </el-row>
     </el-card>
     <div>
-      <el-card class="box-card-heatmap">
+      <el-card id="tabdetail" class="box-card-heatmap">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigTab">
           <el-tab-pane label="Overview" name="overview">
             <component
@@ -154,90 +155,140 @@ export default {
       colany: "Spearman",
       gene: "ERBB2",
       genelist: "",
-      cancer: "CAC",
+      cancer: "BCC",
       gloClu: "",
       canceroptions: [],
       gloCluoptions: [],
       Signatures: "",
       vsType: "",
       scpathwayVue: "",
-      datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC","NSCLC4","HNSC"],
       cancertypearr:[
-	{
-		"icon": require("../../assets/Icons/Bladder.png"),
-		"name": "Bladder",
-		"datasetid": "BTCC"
-	},
-	{
-		"icon": require("../../assets/Icons/Blood.png"),
-		"name": "Blood",
-		"datasetid": "MPAL"
-	},
-	{
-		"icon": require("../../assets/Icons/Breast.png"),
-		"name": "Breast",
-		"datasetid": "BC_BC1_TNBC"
-	},
-	{
-		"icon": require("../../assets/Icons/Colorectum.png"),
-		"name": "Colorectum",
-		"datasetid": "CAC_CRC1_CRC2"
-	},
-	{
-		"icon": require("../../assets/Icons/Eye.png"),
-		"name": "Eye",
-		"datasetid": "UM"
-	},
-	{
-		"icon": require("../../assets/Icons/HeadNeck.png"),
-		"name": "Head & Neck",
-		"datasetid": "HNSC"
-	},
-	{
-		"icon": require("../../assets/Icons/Kidney.png"),
-		"name": "Kidney",
-		"datasetid": "CCRCC"
-	},
-	{
-		"icon": require("../../assets/Icons/Liver.png"),
-		"name": "Liver",
-		"datasetid": "HCC_ICC"
-	},
-	{
-		"icon": require("../../assets/Icons/Lung.png"),
-		"name": "Lung",
-		"datasetid": "NSCLC_NSCLC1_NSCLC3_NSCLC4_NSCLC5_NSCLC6"
-	},
-	{
-		"icon": require("../../assets/Icons/Nasopharyngeal.png"),
-		"name": "Nasopharyngeal",
-		"datasetid": "NPC"
-	},
-	{
-		"icon": require("../../assets/Icons/Ovarian.png"),
-		"name": "Ovarian",
-		"datasetid": "OV"
-	},
-	{
-		"icon": require("../../assets/Icons/Pancreas.png"),
-		"name": "Pancreas",
-		"datasetid": "PDAC"
-	},
-	{
-		"icon": require("../../assets/Icons/Skin.png"),
-		"name": "Skin",
-		"datasetid": "BCC_MCC_SKCM1"
-	},
-	{
-		"icon": require("../../assets/Icons/Stomach.png"),
-		"name": "Stomach",
-		"datasetid": "STAD"
-	},
-	{
-		"icon": require("../../assets/Icons/Uterine.png"),
-		"name": "Uterine",
-		"datasetid": "UCEC"
-	}
+  {
+    "name": "Bladder",
+    "datasetid": "BTCC",
+    "cancertype": "Bladder Transitional Cell Carcinoma (BTCC)",
+    "datasetname": "BTCC",
+    "PMID": "32497499",
+    "icon": require("../../assets/Icons/Bladder.png")
+  },
+  {
+    "name": "Blood",
+    "datasetid": "MPAL",
+    "cancertype": "Mixed phenotype acute leukemia (MPAL)",
+    "datasetname": "MPAL",
+    "PMID": "31792411",
+    "icon": require("../../assets/Icons/Blood.png")
+  },
+  {
+    "name": "Breast",
+    "datasetid": "BC_BC1_TNBC",
+    "cancertype": "Breast cancer (BC)_Breast cancer (BC)_Triple-negative breast cancer (TNBC)",
+    "datasetname": "BC1_BC2_TNBC",
+    "PMID": "32561859_29961579_29942092",
+    "icon": require("../../assets/Icons/Breast.png")
+  },
+  {
+    "name": "Colorectum",
+    "datasetid": "CAC_CRC1_CRC2",
+    "cancertype": "Colorectal cancer (CRC)_Colorectal cancer (CRC)_Colorectal cancer (CRC)",
+    "datasetname": "CRC_CRC1_CRC2",
+    "PMID": "32103181_32451460_32561858",
+    "icon": require("../../assets/Icons/Colorectum.png")
+  },
+  {
+    "name": "Eye",
+    "datasetid": "UM",
+    "cancertype": "Uveal Melanoma (UM)",
+    "datasetname": "UM",
+    "PMID": "31980621",
+    "icon": require("../../assets/Icons/Eye.png")
+  },
+  {
+    "name": "HeadNeck",
+    "datasetid": "HNSC",
+    "cancertype": "Head-Neck Squamous Cell Carcinoma (HNSC)",
+    "datasetname": "HNSC",
+    "PMID": "31924475",
+    "icon": require("../../assets/Icons/HeadNeck.png")
+  },
+  {
+    "name": "Kidney",
+    "datasetid": "CCRCC",
+    "cancertype": "Clear cell renal cell carcinoma (CCRCC)",
+    "datasetname": "CCRCC",
+    "PMID": "32103181",
+    "icon": require("../../assets/Icons/Kidney.png")
+  },
+  {
+    "name": "Liver",
+    "datasetid": "HCC_ICC",
+    "cancertype": "Hepatocellular carcinoma (HCC)_Intrahepatic cholangiocarcinoma (ICC)",
+    "datasetname": "HCC_ICC",
+    "PMID": "31588021_32505533",
+    "icon": require("../../assets/Icons/Liver.png")
+  },
+  {
+    "name": "Lung",
+    "datasetid": "NSCLC_NSCLC1_NSCLC3_NSCLC4_NSCLC6", //NSCLC5
+    "cancertype": "Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)",
+    "datasetname": "NSCLC1_NSCLC2_NSCLC3_NSCLC4_NSCLC5_NSCLC6",
+    "PMID": "29988129_32103181_30979687_29942094_32686767_32822576",
+    "icon": require("../../assets/Icons/Lung.png")
+  },
+  {
+    "name": "Nasopharyngeal",
+    "datasetid": "NPC",
+    "cancertype": "Nasopharyngeal carcinoma (NPC)",
+    "datasetname": "NPC",
+    "PMID": "32686767",
+    "icon": require("../../assets/Icons/Nasopharyngeal.png")
+  },
+  {
+    "name": "Ovarian",
+    "datasetid": "OV",
+    "cancertype": "Ovarian cancer (OV)",
+    "datasetname": "OV",
+    "PMID": "32561858",
+    "icon": require("../../assets/Icons/Ovarian.png")
+  },
+  {
+    "name": "Pancreas",
+    "datasetid": "PDAC",
+    "cancertype": "Pancreatic ductal adenocarcinoma (PDAC)",
+    "datasetname": "PDAC",
+    "PMID": "31273297",
+    "icon": require("../../assets/Icons/Pancreas.png")
+  },
+  {
+    "name": "Skin",
+    "datasetid": "BCC_MCC", // SKCM1
+    "cancertype": "Basal cell carcinoma (BCC)_Merkel cell carcinoma (MCC)_Skin cutaneous melanoma (SKCM)",
+    "datasetname": "BCC_MCC_SKCM",
+    "PMID": "31359002_30250229_30388456",
+    "icon": require("../../assets/Icons/Skin.png")
+  },
+  {
+    "name": "Stomach",
+    "datasetid": "STAD",
+    "cancertype": "Stomach adenocarcinoma (STAD)",
+    "datasetname": "STAD",
+    "PMID": "31067475",
+    "icon": require("../../assets/Icons/Stomach.png")
+  },
+  {
+    "name": "Uterine",
+    "datasetid": "UCEC",
+    "cancertype": "Uterine Corpus Endometrial Carcinoma (UCEC)",
+    "datasetname": "UCEC",
+    "PMID": "32103181",
+    "icon": require("../../assets/Icons/Uterine.png")
+  },
+  {
+    "name": "Prostate",
+    "datasetid": "PRAD2", // PRAD1
+    "datasetname": "PRAD_PRAD1",
+    "icon": require("../../assets/Icons/Uterine.png")
+  }
 ]
     };
   },
@@ -309,21 +360,19 @@ export default {
           break;
       }
     },
-    dataisrenew(datasetid){
-      // console.log(datasetid)
-      for(const reneweddata of this.datasetrenewed){
-        // console.log(reneweddata)
-        if(datasetid === reneweddata){
-          return false
-        }
-      }
-      return true
+    toTarget2() {
+      var PageId = document.querySelector('#tabdetail')
+      console.log(PageId.offsetTop)
+      window.scrollTo({
+        'top': PageId.offsetTop,
+        'behavior': 'smooth'
+      })
     },
     getdatasetid: function(childid){
       console.log(childid)
       this.cancer = childid
       this.cancerSelectChange()
-      
+      this.toTarget2()
     }
   },
 };

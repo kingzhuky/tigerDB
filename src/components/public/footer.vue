@@ -11,11 +11,11 @@ export default {};
   position: fixed ;
   background-color: #efeded;
   text-align: center;
-  height: 60px;
+  height: 30px;
   width: 100%;
   color: #77777e;
-  line-height: 50px;
-  font-size: 17px;
+  line-height: 30px;
+  font-size: 16px;
   bottom: 0;
   z-index: 100;
 }
