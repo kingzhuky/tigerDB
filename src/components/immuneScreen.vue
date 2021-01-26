@@ -58,6 +58,7 @@
     <!-- 详细页显示与否 -->
     <v-immuneScreendetail
       ref="detailPlot"
+      id="detailinfo"
       v-show="isShow"
       :datatype="datatype"
       :gene="m6aMsg"
@@ -70,7 +71,6 @@
 import {
   scrollRow,
   scrollCol,
-  toTarget,
   gStyle,
   move,
   stop,
@@ -81,132 +81,6 @@ export default {
     return {
       isDisable: "",
       cancer: "",
-      wercorcancer_data: [
-        {
-          value: "ACC",
-          label: "ACC",
-        },
-        {
-          value: "BLCA",
-          label: "BLCA",
-        },
-        {
-          value: "BRCA",
-          label: "BRCA",
-        },
-        {
-          value: "CESC",
-          label: "CESC",
-        },
-        {
-          value: "CHOL",
-          label: "CHOL",
-        },
-        {
-          value: "COAD",
-          label: "COAD",
-        },
-        {
-          value: "DLBC",
-          label: "DLBC",
-        },
-        {
-          value: "ESCA",
-          label: "ESCA",
-        },
-        {
-          value: "GBM",
-          label: "GBM",
-        },
-        {
-          value: "HNSC",
-          label: "HNSC",
-        },
-        {
-          value: "KICH",
-          label: "KICH",
-        },
-        {
-          value: "KIRC",
-          label: "KIRC",
-        },
-        {
-          value: "KIRP",
-          label: "KIRP",
-        },
-        {
-          value: "LIHC",
-          label: "LIHC",
-        },
-        {
-          value: "LAML",
-          label: "LAML",
-        },
-        {
-          value: "LGG",
-          label: "LGG",
-        },
-        {
-          value: "LUAD",
-          label: "LUAD",
-        },
-        {
-          value: "LUSC",
-          label: "LUSC",
-        },
-        {
-          value: "MESO",
-          label: "MESO",
-        },
-        {
-          value: "OV",
-          label: "OV",
-        },
-        {
-          value: "PAAD",
-          label: "PAAD",
-        },
-        {
-          value: "PCPG",
-          label: "PCPG",
-        },
-        {
-          value: "READ",
-          label: "READ",
-        },
-        {
-          value: "SKCM",
-          label: "SKCM",
-        },
-        {
-          value: "SARC",
-          label: "SARC",
-        },
-        {
-          value: "STAD",
-          label: "STAD",
-        },
-        {
-          value: "TGCT",
-          label: "TGCT",
-        },
-        {
-          value: "THCA",
-          label: "THCA",
-        },
-        {
-          value: "THYM",
-          label: "THYM",
-        },
-        {
-          value: "UCEC",
-          label: "UCEC",
-        },
-        {
-          value: "UCS",
-          label: "UCS",
-        },
-      ],
       datatype: {
         type: String,
       },
@@ -391,10 +265,18 @@ export default {
         this.isShow = true;
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
-        toTarget(820);
+        this.toTarget2("#detailinfo");
         this.$refs.detailPlot.tableDetail(row["gene"]);
         this.$refs.detailPlot.artivcleDetail(column["label"]);
       }
+    },
+    toTarget2(id) {
+      var PageId = document.querySelector(id)
+      console.log(PageId.offsetTop)
+      window.scrollTo({
+        'top': PageId.offsetTop,
+        'behavior': 'smooth'
+      })
     },
     querySearchAsync(queryString, cb) {
       this.$http

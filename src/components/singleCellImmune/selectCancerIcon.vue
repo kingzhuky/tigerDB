@@ -2,14 +2,14 @@
   <div>
     <el-card shadow="hover" class="cancercard">
       <el-row gutter="10">
-        <el-col :span="10">
-          <img class="iconsCancer" style="position:relative;top:30px;" alt="imgurl" :src="imgurl" />
+        <el-col :span="7">
+          <img class="iconsCancer" style="position:relative;top:40px;left:10px" alt="imgurl" :src="imgurl" />
         </el-col>
-        <el-col :span="14">
+        <el-col :span="15">
           <p class="cancertitle">{{IconName}}</p>
           <el-row class="rowbutton" v-for="(dataset, index) in datasets" :key="dataset">
-            <!-- <el-button size="medium" type="text" @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</el-button> -->
-            <p @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</p>
+            <el-button size="medium" type="text" @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</el-button>
+            <!-- <p @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</p> -->
           </el-row>
         </el-col>
       </el-row>
@@ -28,7 +28,7 @@ export default {
   },
   data(){
     return{
-       datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC","NSCLC4","HNSC","NPC","MUC","PRAD2"],
+       datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC","NSCLC4","HNSC","NPC","MUC","PRAD2","STAD","PRAD1"],
     }
   },
   methods:{

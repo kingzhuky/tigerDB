@@ -4,13 +4,13 @@
       <el-row id="scImmuInput">
 
         <el-row>
-          <el-col :span="20" :offset="2">
+          <el-col :span="20" :offset="0">
             <p class="scImmuTitle">Select A Dataset</p>
           </el-col>
         </el-row>
         <br/>
         <el-row gutter="20" justify="center">
-          <el-col span="cancertype.name === 'Lung' ? 10：5" push="2" v-for="cancertype in cancertypearr" :key="cancertype.icon">
+          <el-col span="8" push="0" v-for="cancertype in cancertypearr" :key="cancertype.icon">
             <select-cancer-icon
               v-on:datasetid="getdatasetid"
               :imgurl="cancertype.icon"
@@ -118,7 +118,6 @@ import tigevolution from './evolution.vue'
 import tigpathway from './scpathway.vue'
       
 import selectCancerIcon from './selectCancerIcon.vue'
-import toTarget from "../public/goTop";
 export default {
   components: {
     selectCancerIcon,
@@ -166,128 +165,119 @@ export default {
   {
     "name": "Bladder",
     "datasetid": "BTCC",
-    "cancertype": "Bladder Transitional Cell Carcinoma (BTCC)",
-    "datasetname": "Oh DY, et al. Cell. 2020 Jun 25",
+    "datasetname": "BTCC | Oh DY, et al. Cell. 2020_BTCC | Chen, Z., Nat Commun 2020",
     "PMID": "32497499",
     "icon": require("../../assets/Icons/Bladder.png")
   },
   {
     "name": "Blood",
     "datasetid": "MPAL",
-    "cancertype": "Mixed phenotype acute leukemia (MPAL)",
-    "datasetname": "Granja JM, et al. Nat Biotechnol. 2019 Dec",
+    "datasetname": "MPAL | Granja JM, et al. Nat Biotechnol. 2019",
     "PMID": "31792411",
     "icon": require("../../assets/Icons/Blood.png")
   },
   {
     "name": "Breast",
     "datasetid": "BC_BC1_TNBC",
-    "cancertype": "Breast cancer (BC)_Breast cancer (BC)_Triple-negative breast cancer (TNBC)",
-    "datasetname": "Qian J, et al. Cell Res. 2020 Jun 21_Elham A, et al. Cell. 2018 Aug 23_Savas P, et al. Nat Med. 2018 Jul",
+    "datasetname": "BC | Qian J, et al. Cell Res. 2020_BC | Elham A, et al. Cell. 2018 Aug 23_TNBC | Savas P, et al. Nat Med. 2018 Jul",
     "PMID": "32561859_29961579_29942092",
     "icon": require("../../assets/Icons/Breast.png")
   },
   {
     "name": "Colorectum",
     "datasetid": "CAC_CRC1_CRC2",
-    "cancertype": "Colorectal cancer (CRC)_Colorectal cancer (CRC)_Colorectal cancer (CRC)",
-    "datasetname": "Wu TD, et al. Nature. 2020 Mar_Lee HO, et al. Nat Genet. 2020 May 25_Qian J, et al. Cell Res. 2020 Jun 20",
+    "datasetname": "CRC | Wu TD, et al. Nature. 2020_CRC | Lee HO, et al. Nat Genet. 2020_CRC | Qian J, et al. Cell Res. 2020 Jun 20",
     "PMID": "32103181_32451460_32561858",
     "icon": require("../../assets/Icons/Colorectum.png")
   },
   {
     "name": "Eye",
     "datasetid": "UM",
-    "cancertype": "Uveal Melanoma (UM)",
-    "datasetname": "Durante MA, et al. Nat Commun. 2020 Jan 24",
+    "datasetname": "UM | Durante MA, et al. Nat Commun. 2020",
     "PMID": "31980621",
     "icon": require("../../assets/Icons/Eye.png")
   },
   {
     "name": "HeadNeck",
     "datasetid": "HNSC",
-    "cancertype": "Head-Neck Squamous Cell Carcinoma (HNSC)",
-    "datasetname": "Cillo AR, et al. Immunity. 2020 Jan 14",
+    "datasetname": "HNSC | Cillo AR, et al. Immunity. 2020",
     "PMID": "31924475",
     "icon": require("../../assets/Icons/HeadNeck.png")
   },
   {
     "name": "Kidney",
     "datasetid": "CCRCC",
-    "cancertype": "Clear cell renal cell carcinoma (CCRCC)",
-    "datasetname": "Wu TD, et al. Nature. 2020 Mar",
+    "datasetname": "CCRCC | Wu TD, et al. Nature. 2020_MUC | Yuen, K.C., et al. Nat Med 2020",
     "PMID": "32103181",
     "icon": require("../../assets/Icons/Kidney.png")
   },
   {
     "name": "Liver",
     "datasetid": "HCC_ICC",
-    "cancertype": "Hepatocellular carcinoma (HCC)_Intrahepatic cholangiocarcinoma (ICC)",
-    "datasetname": "Ma L, et al. Cancer Cell. 2019 Oct 14_Zhang M, et al. J Hepatol. 2020 Jun 5",
+    "datasetname": "HCC | Ma L, et al. Cancer Cell. 2019_ICC | Zhang M, et al. J Hepatol. 2020 Jun 5",
     "PMID": "31588021_32505533",
     "icon": require("../../assets/Icons/Liver.png")
   },
   {
     "name": "Lung",
     "datasetid": "NSCLC_NSCLC1_NSCLC3_NSCLC4_NSCLC5_NSCLC6",
-    "cancertype": "Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)_Non-small-cell lung carcinoma (NSCLC)",
-    "datasetname": "Lambrechts D, et al. Nat Med. 2018 Aug_Wu TD, et al. Nature. 2020 Mar_Zilionis R, et al. Immunity. 2019 May 21_Guo X, et al. Nat Med. 2018 Jul_Kim, N., et al. Nat Commu 2020 May 8_Ashley Maynard, et al. Cell. 2020 Sep 3",
+    "datasetname": "NSCLC | Lambrechts D, et al. Nat Med. 2018_NSCLC | Wu TD, et al. Nature. 2020_NSCLC | Zilionis R, et al. Immunity. 2019_NSCLC | Guo X, et al. Nat Med. 2018_NSCLC | Kim, N., et al. Nat Commu 2020_NSCLC | Ashley Maynard, et al. Cell. 2020",
     "PMID": "29988129_32103181_30979687_29942094_32686767_32822576",
     "icon": require("../../assets/Icons/Lung.png")
   },
   {
     "name": "Nasopharyngeal",
     "datasetid": "NPC",
-    "cancertype": "Nasopharyngeal carcinoma (NPC)",
-    "datasetname": "hen YP, et al. Cell Res. 2020 Jul",
+    "datasetname": "NPC | hen YP, et al. Cell Res. 2020",
     "PMID": "32686767",
     "icon": require("../../assets/Icons/Nasopharyngeal.png")
   },
   {
     "name": "Ovarian",
     "datasetid": "OV",
-    "cancertype": "Ovarian cancer (OV)",
-    "datasetname": "Qian J, et al. Cell Res. 2020 Jun 19",
+    "datasetname": "OV | Qian J, et al. Cell Res. 2020",
     "PMID": "32561858",
     "icon": require("../../assets/Icons/Ovarian.png")
   },
   {
     "name": "Pancreas",
     "datasetid": "PDAC",
-    "cancertype": "Pancreatic ductal adenocarcinoma (PDAC)",
-    "datasetname": "Peng J, et al. Cell Res. 2019 Sep",
+    "datasetname": "PDAC | Peng J, et al. Cell Res. 2019 Sep",
     "PMID": "31273297",
     "icon": require("../../assets/Icons/Pancreas.png")
   },
   {
     "name": "Skin",
     "datasetid": "BCC_MCC_SKCM1",
-    "cancertype": "Basal cell carcinoma (BCC)_Merkel cell carcinoma (MCC)_Skin cutaneous melanoma (SKCM)",
-    "datasetname": "Yost KE, et al. Nat Med. 2019 Aug_Paulson KG, et al. Nat Commun. 2018 Sep 24_Sade-Feldman M, et al. Cell. 2018 Nov 1",
+    "datasetname": "BCC | Yost KE, et al. Nat Med. 2019_MCC | Paulson KG, et al. Nat Commun. 2018_SKCM | Sade-Feldman M, et al. Cell. 2018",
     "PMID": "31359002_30250229_30388456",
     "icon": require("../../assets/Icons/Skin.png")
   },
   {
     "name": "Stomach",
     "datasetid": "STAD",
-    "cancertype": "Stomach adenocarcinoma (STAD)",
-    "datasetname": "Zhang P, et al. Cell Rep. 2019 May 7",
+    "datasetname": "STAD | Zhang P, et al. Cell Rep. 2019",
     "PMID": "31067475",
     "icon": require("../../assets/Icons/Stomach.png")
   },
   {
     "name": "Uterine",
     "datasetid": "UCEC",
-    "cancertype": "Uterine Corpus Endometrial Carcinoma (UCEC)",
-    "datasetname": "Wu TD, et al. Nature. 2020 Mar",
+    "datasetname": "UCEC | Wu TD, et al. Nature. 2020",
     "PMID": "32103181",
     "icon": require("../../assets/Icons/Uterine.png")
   },
   {
     "name": "Prostate",
-    "datasetid": "PRAD1_PRAD2",
-    "datasetname": "PRAD1_PRAD2",
-    "icon": require("../../assets/Icons/Uterine.png")
+    "datasetid": "PRAD1_PRAD2", // _CRPC_CRPC2
+    "datasetname": "PRAD | Chen, S., et al. Nat Cell Biol 2021_PRAD | Ma X, et al. Mol Cancer 2020_CRPC | Dong, B., et al Commun Biol 2020_CRPC | Chen, S., et al. Nat Cell Biol 2021",
+    "icon": require("../../assets/Icons/Prostate.png")
+  },
+  {
+    "name": "Osteosarcoma",
+    "datasetid": "OS",
+    "datasetname": "OS | Zhou, Y., et al Nat Commun. 2020",
+    "icon": require("../../assets/Icons/Bone.png")
   }
 ]
     };

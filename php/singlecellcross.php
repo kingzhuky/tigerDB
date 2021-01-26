@@ -54,8 +54,8 @@ if($type!=="table"){
 
 //执行成功都是返回0
 echo json_encode(array(
-   "zhiling" => $zhiling,
-   "zhiling2" => $zhiling2,
+  //  "zhiling" => $zhiling,
+  //  "zhiling2" => $zhiling2,
    "output" => $output,
    "status" => $status
     ),JSON_UNESCAPED_UNICODE); 
