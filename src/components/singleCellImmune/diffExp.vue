@@ -121,9 +121,8 @@
       <!-- <el-col :span="10" :offset="2">
       <div id="singleCellTitle">{{this.vsType}}</div>
       </el-col> -->
-
     </el-row>
-
+  <div id="norult" v-if="tabactiveName == 'none'">No result</div>
   </div>
 </template>
 
@@ -213,6 +212,7 @@ export default {
             this.whethtn = false;
             this.tabactiveName = "tn"
           }else{
+            this.tabactiveName = "none"
             this.whethrnr = true;
             this.whethtn = true;
           }

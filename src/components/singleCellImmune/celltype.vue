@@ -1,7 +1,18 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="4" :offset="20">
+      <el-col span="8">
+        <el-select v-model="selectgloclu" multiple @change="filtergloclu" placeholder="Select Global Cluster">
+          <el-option
+            v-for="item in gloclures"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-col>
+
+      <el-col :span="4" :offset="12">
         <el-input
           v-model="searchinput"
           @change="searchChange"
@@ -68,8 +79,7 @@ import {
 export default {
   props: {
     cancer: String,
-    subClu: Array,
-    subClucoptions: Array,
+    gloCluoptions: Array,
   },
   data() {
     return {
@@ -86,10 +96,17 @@ export default {
       oldcancer: "",
       celltype: "",
       gloclu: "",
+      gloclures:[],
+      selectgloclu: [],
     };
   },
 
   mounted: function () {
+    for (let gloclu of this.gloCluoptions) {
+      this.gloclures.push(gloclu["GlobalCluster"]);
+      this.selectgloclu.push(gloclu["GlobalCluster"]);
+    }
+    console.log(this.gloclures)
     this.oldcancer = this.cancer;
     this.getTableData(1, "", "");
   },
@@ -124,26 +141,37 @@ export default {
       this.tableData = [];
       this.getTableData(this.loadpage, column.prop, column.order);
     },
-    headerStyle({ column }) {
-      let cancer = column.type
-      switch (cancer) {
+    headerStyle({ column }) {  
+      let glocluster = column.type
+      switch (glocluster) {
         case "All":
           return "scglo-all";
+          break;
         case "Tcell":
           return "scglo-g1";
+          break;
         case "Myeloid":
           return "scglo-g2";
+          break;
         case "Bcell":
           return "scglo-g3";
+          break;
         case "CD4":
           return "scglo-g4";
+          break;
         case "CD8":
           return "scglo-g5";
+          break;
         case "gene":
           return "";
+          break;
         default:
           return "defalutColor";
+          break;
       }
+    },
+    filtergloclu( ){
+      this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
     //顶部加载更多
     tableloadlast() {
@@ -216,27 +244,28 @@ export default {
               });
               this.tableDataheader = Object.keys(res.data.list[0]);
             }
-            // var new_rows = [];// matrix key .替换为_
-            // for (const row of this.tableData) {
-            //   var new_row = {}
-            //   for (const key in row) {
-            //     let new_key = key.replace(".",",")
-            //     new_row[new_key] = row[key]
-            //   }
-            //   new_rows.push(new_row)
-            // }
-            // this.tableData = new_rows  // matrix key .替换为_
+            var new_rows = [];// matrix key .替换为_
+            for (const row of this.tableData) {
+              var new_row = {}
+              for (const key in row) {
+                let new_key = key.replace(".","_")
+                new_row[new_key] = row[key]
+              }
+              new_rows.push(new_row)
+            }
+            this.tableData = new_rows  // matrix key .替换为_
             var new_columns = [] // generate header
             for (const column of this.tableDataheader) {
               var col_obj = {};
               col_obj.name = column.split(',').pop()
-              col_obj.key = column
+              col_obj.key = column.replace(".","_")
               col_obj.type = column.split(',')[0]
-              // console.log(col_obj)
-              new_columns.push(col_obj)
+              if (col_obj.type == "gene" || this.selectgloclu.indexOf(col_obj.type) != -1){
+                new_columns.push(col_obj)
+              }
             }
             this.tableDataheader = new_columns
-            // console.log(new_rows)
+            console.log(this.tableDataheader)
           }
         })
         .catch((error) => {
@@ -255,7 +284,6 @@ export default {
     //点击单个格子
     heandleclick(row, column) {
       if (column["label"] !== "gene") {
-        this.subClu = this.subClucoptions;
         this.isShow = true;
         this.clickGene = row["gene"];
         this.celltype = column["label"];

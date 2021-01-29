@@ -20,14 +20,6 @@
       <div class="infor" v-loading="evoluloading">
         <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
           <p class="card-title">{{gloclu}}</p>
-          <!-- <el-row class="detailimg">
-            <el-col :span="10" :offset="1">
-              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][0]" />
-            </el-col>
-            <el-col :span="10" :offset="1">
-              <img id="singleimg" :src="'tiger/img/'+plotsres[gloclu][1]" />
-            </el-col>
-          </el-row> -->
           <el-row class="detailimg">
             <el-col :span="10" :offset="1">
               <p class="imgtitle">Pseudo-time of cells</p>
@@ -104,8 +96,7 @@ export default {
                 //alert("no gene file");
               } else {
                 that.evolushow = true;
-                that.gloclures.push(gloclu);
-                that.plotsres[gloclu] = res.data.output[0].split(",");
+                Vue.set(that.plotsres, gloclu, res.data.output[0].split(","))
               }
               //that.evoluplots = res.data.output[0];
               that.evoluloading = false;
@@ -136,6 +127,7 @@ export default {
       this.reset();
       this.isShow = true;
       for (let gloclu of this.gloCluoptions) {
+        this.gloclures.push(gloclu["GlobalCluster"]);
         this.evoluPlot(this.cancer, gloclu["GlobalCluster"], this.searchinput);
       }
       // this.sestate = true;

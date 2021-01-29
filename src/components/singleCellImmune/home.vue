@@ -57,7 +57,7 @@
             <component
               ref="celltypeRef"
               :cancer="cancer" 
-              :gloclu="gloClu" 
+              :gloCluoptions="gloCluoptions"
               :is="celltypeVue"
             ></component>
           </el-tab-pane>
@@ -164,7 +164,7 @@ export default {
       cancertypearr:[
   {
     "name": "Bladder",
-    "datasetid": "BTCC",
+    "datasetid": "BTCC_BTCC1",
     "datasetname": "BTCC | Oh DY, et al. Cell. 2020_BTCC | Chen, Z., Nat Commun 2020",
     "PMID": "32497499",
     "icon": require("../../assets/Icons/Bladder.png")
@@ -269,7 +269,7 @@ export default {
   },
   {
     "name": "Prostate",
-    "datasetid": "PRAD1_PRAD2", // _CRPC_CRPC2
+    "datasetid": "PRAD1_PRAD2_CRPC_CRPC2", // 
     "datasetname": "PRAD | Chen, S., et al. Nat Cell Biol 2021_PRAD | Ma X, et al. Mol Cancer 2020_CRPC | Dong, B., et al Commun Biol 2020_CRPC | Chen, S., et al. Nat Cell Biol 2021",
     "icon": require("../../assets/Icons/Prostate.png")
   },

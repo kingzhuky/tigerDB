@@ -38,12 +38,17 @@
           </el-table>
         </el-card>
       </div>
-      <div v-if="loading">
+      <div v-if="loading" v-loading="loading">
+        <br />
+        <br />
+        <br />
+        <br /> 
         <br />
         <br />
         <br />
       </div>
-      <div class="infor" style="margin-top: -20px" v-loading="loading">
+      <div id="norult" v-if="!resflag">No result<br /><br /></div>
+      <div class="infor" style="margin-top: -20px" v-if="resflag">
         <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard" >
           <p class="card-title">{{gloclu}}&nbsp;&nbsp;&nbsp;&nbsp;{{cellnum[gloclu]}}</p>
           <el-row class="detailimg" type="flex" justify="center" >
@@ -118,6 +123,7 @@ export default {
       articleData: [],
       artloading: true,
       plotloading: true,
+      resflag: true,
     };
   },
 
@@ -177,6 +183,7 @@ export default {
     clickPlot() {
       this.reset();
       this.articleDetail();
+      this.resflag=true;
       console.log(this.cancer)
       this.$http
         .get("/tiger/scglocluster.php", {
@@ -209,6 +216,9 @@ export default {
             Vue.set(that.plotsres, gloclu, res.data.output[0].split(","))
             Vue.set(that.cellnum, gloclu, res.data.cellnum[0].replace(/,/g," "))
             that.loading = false;
+          }else{
+            that.loading = false;
+            that.resflag = false;
           }
         })
         .catch(function (res) {
