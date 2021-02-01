@@ -134,157 +134,25 @@
     </div>
 
     <el-card>
-      <div class="textitem" v-show="singleCellImmuTumorshow" v-loading="singleCellImmuTumorloading">
-        <p class="card-title">Differential expression between tumor and normal per cell type</p>
-        <div class="geneExp">
-          <div id="singleCellImmuTumor" class="scaterPlot" style="width: 800px;height:400px;"></div>
-        </div>
-          <el-table
-              max-height="600"
-              :data="DiffExpTumorTableData"
-              :row-key="getRowKeys"
-              :expand-row-keys="expands_tn"
-              @expand-change="diffExpTNtableExpand"
-              style="width: 100%"
-            >
-            <el-table-column type="expand" >
-              <template slot-scope="scope">
-                <div class="detailimg" v-loading="singleCellImmuTumorImgloading">
-                  <!-- <img width="300px" :src="imgpathBar2" v-show="singleCellImmuTumorImgshow" /> -->
-                  <el-row class="scdetailimg" v-show="singleCellImmuTumorImgshow" >
-                    <el-col :span="6" >
-                      <p class="imgtitle">Cell Types</p>
-                      <img
-                        id="singleimg"
-                        fit="fill"
-                        width="100%"
-                        :src="'tiger/img/' + diffexpimgTN.split(',')[0] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
-                    </el-col>
-                    <el-col :span="6" >
-                      <p class="imgtitle">Cell Types</p>
-                      <img
-                        id="singleimg"
-                        fit="fill"
-                        width="100%"
-                        :src="'tiger/img/' + diffexpimgTN.split(',')[1] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
-                    </el-col>
-                    <el-col :span="6">
-                      <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
-                      <img
-                        id="singleimg"
-                        fit="fill"
-                        width="100%"
-                        :src="'tiger/img/' + diffexpimgTN.split(',')[2] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
-                    </el-col>
-                    <el-col :span="6">
-                      <div class="imgspan"> 
-                      <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
-                        <img
-                        id="singleimg"
-                        fit="fill"
-                        height="250px"
-                        :src="'tiger/img/' + diffexpimgTN.split(',')[3] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgTN.split(',')[0] + '.png','tiger/img/' + diffexpimgTN.split(',')[1] + '.png','tiger/img/' + diffexpimgTN.split(',')[2] + '.png'])">
-                      </div>
-                    </el-col>
-                  </el-row> 
-                  <div v-show="!singleCellImmuTumorImgshow">no result</div>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable></el-table-column>
-            <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable></el-table-column>
-            <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
-            <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
-            <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
-            <el-table-column prop="P_Value" label="-log10 (P Value)" sortable></el-table-column>
-          </el-table>
-      </div>
-
-      <div
-        class="textitem"
-        v-show="singleCellImmuResponseshow"
-        v-loading="singleCellImmuResponseloading"
-      >
-        <p
-          class="card-title"
-        >Differential expression between response and non-response per cell type</p>
-        <div class="geneExp">
-          <div id="singleCellImmuResponse" class="scaterPlot" style="width: 800px;height:400px;"></div>
-        </div>
-        <el-table
-          max-height="600"
-          :data="DiffExpResponseableData"
-          :row-key="getRowKeys"
-          :expand-row-keys="expands_rnr"
-          @expand-change="diffExpRNRtableExpand"
-          style="width: 100%"
-        >
-          <el-table-column type="expand" >
-            <template slot-scope="scope">
-              <div class="detailimg" v-loading="singleCellImmuResponseImgloading">
-                <!-- <img width="300px" :src="imgpathBar3" v-show="singleCellImmuResponseImgshow" /> -->
-                  <el-row class="scdetailimg" v-show="singleCellImmuResponseImgshow" >
-                    <el-col :span="4" >
-                      <p class="imgtitle">Cell Types</p>
-                      <img
-                        id="singleimg"
-                        fit="fill"
-                        width="100%"
-                        :src="'tiger/img/' + diffexpimgRNR.split(',')[0] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
-                    </el-col>
-                    <el-col :span="4" >
-                      <p class="imgtitle">Cell Types</p>
-                      <img
-                        id="singleimg"
-                        fit="fill"
-                        width="100%"
-                        :src="'tiger/img/' + diffexpimgRNR.split(',')[1] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
-                    </el-col>
-                    <el-col :span="5">
-                      <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
-                      <img
-                        id="singleimg"
-                        fit="fill"
-                        width="100%"
-                        :src="'tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
-                    </el-col>
-                    <el-col :span="11">
-                      <div class="imgspan"> 
-                      <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
-                        <img
-                        id="singleimg"
-                        fit="fill"
-                        height="250px"
-                        :src="'tiger/img/' + diffexpimgRNR.split(',')[3] + '.png'"
-                        @click="previewImg(['tiger/img/' + diffexpimgRNR.split(',')[0] + '.png','tiger/img/' + diffexpimgRNR.split(',')[1] + '.png','tiger/img/' + diffexpimgRNR.split(',')[2] + '.png'])">
-                      </div>
-                    </el-col>
-                  </el-row> 
-                <div v-show="!singleCellImmuResponseImgshow">no result</div>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable></el-table-column>
-          <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable></el-table-column>
-          <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
-          <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
-          <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
-          <el-table-column prop="P_Value" label="-log10 (P Value)" sortable></el-table-column>
-        </el-table>
-      </div>
+      <v-singleCellDiffexp
+        ref="singlecelldiffTN"
+        :gene="seargene"
+        conditi="home_scdiffexp_tn"
+        title="Differential expression between tumor and normal per cell type"
+      ></v-singleCellDiffexp>
+      <v-singleCellDiffexp
+        ref="singlecelldiffRNR"
+        :gene="seargene"
+        conditi="home_scdiffexp_rnr"
+        title="Differential expression between response and non-response per cell type"
+      ></v-singleCellDiffexp>
     </el-card>
   </div>
 </template>
 
 <script>
 import singleCellImmunityCorTable from "./singleCellImmunityCorTable.vue";
+import singleCellDiffexp from "./singleCellImmunityExpTable.vue";
 
 export default {
   props: {
@@ -303,15 +171,6 @@ export default {
       GlobalCluster: "All",
       CellType: "T cell",
       CancerType: "CAC",
-      singleCellImmuTumorImgshow: false,
-      singleCellImmuTumorImgloading: false,
-      singleCellImmuResponseImgshow: false,
-      singleCellImmuResponseImgloading: false,
-      singleCellImmuTumorshow: false,
-      singleCellImmuTumorloading: false,
-      singleCellImmuResponseshow: false,
-      singleCellImmuResponseloading: false,
-      singleCellCorloading: false,
       loading: false,
       gloCluoptions: [],
       gloClu: "All",
@@ -322,10 +181,6 @@ export default {
       geneplots: [],
       ReactomeTableData: [],
       geneshow: false,
-      imgpathBox: "",
-      imgpathBar: "",
-      imgpathBar1: "",
-      imgpathBar2: "",
       oldseargene: "",
       imgpathBar3: "",
       picScattername: "",
@@ -334,8 +189,6 @@ export default {
       MarkerTable: [],
       markerimg: "",
       overviewimg: "",
-      diffexpimgTN: "",
-      diffexpimgRNR: "",
     };
   },
   mounted() {
@@ -343,17 +196,6 @@ export default {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
       this.searchTable();
-      this.getScaData(
-        this.seargene,
-        "home_scdiffexp_tn",
-        "singleCellImmuTumor"
-      );
-      this.getScaData(
-        this.seargene,
-        "home_scdiffexp_rnr",
-        "singleCellImmuResponse"
-      );
-
       this.getcancer();
       this.getgloClu();
       this.getCellType();
@@ -361,15 +203,13 @@ export default {
   },
   components: {
     "v-singleCellImmunityCorTable": singleCellImmunityCorTable,
+    "v-singleCellDiffexp": singleCellDiffexp,
   },
 
   computed: {
-    imgUrlBox: function () {
-      return this.imgpathBox;
-    },
-    imgUrlBar: function () {
-      return this.imgpathBar;
-    },
+    // imgUrlBar: function () {
+    //   return this.imgpathBar;
+    // },
   },
 
   methods: {
@@ -386,17 +226,6 @@ export default {
         this.$refs.singleCellImmunityCorTableRef.reset();
         this.oldseargene = this.seargene;
         this.getTableData(this.seargene);
-
-        this.getScaData(
-          this.seargene,
-          "home_scdiffexp_tn",
-          "singleCellImmuTumor"
-        );
-        this.getScaData(
-          this.seargene,
-          "home_scdiffexp_rnr",
-          "singleCellImmuResponse"
-        );
       }
     },
 
@@ -599,24 +428,7 @@ export default {
         })
         .then((res) => {
           if (res.data.status === 200) {
-            // console.log(Object.values(res.data.cancer))
-            // console.log("data.list:")
-            // console.log(res.data.list)
-            // var new_rows = [];// matrix key .替换为_
-            // for (const row of res.data.tabledata) {
-            //   var new_row = {}
-            //   for (const key in row) {
-            //     let new_key = key.replace(".",",")
-            //     new_row[new_key] = row[key]
-            //   }
-            //   new_row["id"] = this.getRowKeys(new_row)
-            //   new_rows.push(new_row)
-            // }
-            // this.MarkerTable = new_rows  // matrix key .替换为_
-
             this.MarkerTable = res.data.tabledata
-            // console.log("data.table:")
-            // console.log(this.MarkerTable)
             this.draw_chart(Object.values(res.data.cancer), res.data.list);
             this.loading = false;
           }
