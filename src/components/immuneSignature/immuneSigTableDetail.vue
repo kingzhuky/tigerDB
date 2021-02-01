@@ -145,7 +145,7 @@ export default {
                     this.aucTableData = res.data.list;
                     this.total = res.data.total[0];
                     this.aucTableloading = false;
-                    console.log(aucTableData)
+                    // console.log(aucTableData)
                 }
             })
             .catch((error) => {

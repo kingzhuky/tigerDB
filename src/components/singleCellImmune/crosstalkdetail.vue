@@ -207,7 +207,7 @@ export default {
           .then(function (res) {
             if (res.data.status == 0) {
               let imgpath = res.data.output[0].split(",");
-              console.log(imgpath[0])
+              // console.log(imgpath[0])
               that.gettableData(imgpath[0])
               that.evoluloading = false;
               that.evolushow2 = false;

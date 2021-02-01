@@ -73,8 +73,11 @@ export default {
   },
 
   methods: {
-      getSampleDetail(sample){
+    getSampleDetail(sample){
       this.$refs.sampleDetail.getTableData(sample)
+    },
+    getGeneDetail(gene){
+      this.$refs.sampleDetail.getGeneData(gene)
     },
     checkInput() {
       if (this.normalMed !== "None" && this.normalGene.length == 0) {

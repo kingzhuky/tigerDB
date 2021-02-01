@@ -3,7 +3,18 @@
     <el-row>
       <el-tabs v-model="tabactiveName">
         <el-tab-pane :disabled="whethrnr" label="Response VS Non-Response" name="response" >
-            <el-col :span="4" :offset="20"> 
+              <el-col span="8">
+                <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+                  <el-option
+                    v-for="item in gloclures"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
+              </el-col>
+
+              <el-col :span="4" :offset="12">
               <el-autocomplete
                 v-model="searchinput"
                 placeholder="Please Input Gene Symbol"
@@ -61,7 +72,18 @@
         </el-tab-pane>
 
         <el-tab-pane :disabled="whethtn" label="Tumor VS Normal" name="tn">
-            <el-col :span="4" :offset="20"> 
+              <el-col span="8">
+                <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+                  <el-option
+                    v-for="item in gloclures"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
+              </el-col>
+
+              <el-col :span="4" :offset="12">
               <el-autocomplete
                 v-model="searchinput"
                 placeholder="Please Input Gene Symbol"
@@ -141,6 +163,7 @@ export default {
     subClu: Array,
     subClucoptions: Array,
     vsType: String,
+    gloCluoptions: Array,
   },
   data() {
     return {
@@ -167,14 +190,21 @@ export default {
       whethrnr:true,
       whethtn:true,
       tabactiveName:'',
+      gloclures:[],
+      selectgloclu: [],
     };
   },
 
   mounted: function () {
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
+    for (let gloclu of this.gloCluoptions) {
+      this.gloclures.push(gloclu["GlobalCluster"]);
+      this.selectgloclu.push(gloclu["GlobalCluster"]);
+    }
     this.getTableData(1, "", "");
     this.getvsType();
+    
   },
 
   watch: {
@@ -350,24 +380,27 @@ export default {
             }
             // console.log(Array.isArray(new_columns))
           }
-          // var new_rows = [];// matrix key .替换为_
-          //   for (const row of this.tableData) {
-          //     var new_row = {}
-          //     for (const key in row) {
-          //       let new_key = key.replace(".","_")
-          //       new_row[new_key] = row[key]
-          //     }
-          //     new_rows.push(new_row)
-          //   }
-          //   this.tableData = new_rows  // matrix key .替换为_
+          var new_rows = [];// matrix key .替换为_
+            for (const row of this.tableData) {
+              var new_row = {}
+              for (const key in row) {
+                let new_key = key.replace(".","_")
+                new_row[new_key] = row[key]
+              }
+              new_rows.push(new_row)
+            }
+            this.tableData = new_rows  // matrix key .替换为_
             var new_columns = [] // generate header
             for (const column of this.tableDataheader) {
               var col_obj = {};
               col_obj.name = column.split(',').pop()
-              col_obj.key = column
+              col_obj.key = column.replace(".","_")
               col_obj.type = column.split(',')[0]
               // console.log(col_obj)
-              new_columns.push(col_obj)
+              // new_columns.push(col_obj)
+              if (col_obj.type == "gene" || this.selectgloclu.indexOf(col_obj.type) != -1){
+                new_columns.push(col_obj)
+              }
             }
             this.tableDataheader = new_columns
             // console.log(new_rows)
@@ -412,6 +445,9 @@ export default {
         color: mycolr["color"],
         cursor: mycolr["cursor"],
       };
+    },
+    filtergloclu( ){
+      this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
   },
   components: {

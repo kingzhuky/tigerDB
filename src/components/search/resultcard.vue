@@ -182,7 +182,7 @@ export default {
         .then((res) => {
           if (res.data.status === 200) {
             this.cardLoading = false;
-            console.log( res.data.datatable)
+            // console.log( res.data.datatable)
             this.diffExpRespontableData = res.data.datatable;
             this.draw_chart(res.data.list);
           }

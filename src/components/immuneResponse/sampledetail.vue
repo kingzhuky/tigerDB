@@ -3,7 +3,7 @@
     <el-card v-loading="loading">
     <p class="card-title">Dataset Information</p>
     <div>
-    <el-table :data="tableData" style="width: 100%" v-loading="artloading">
+    <el-table :data="tableData" style="width: 100%">
             <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
             <el-table-column prop="title" label width="250">
               <template slot-scope="{row: {title}}">
@@ -31,7 +31,25 @@
     </el-table>
     </div>
     </el-card>
-    </div>
+    <el-card v-loading="detailload" class="decard">
+      <p class="card-title">Gene Information</p>
+      <el-table :data="geneData" style="width: 100%">
+        <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
+        <el-table-column prop="title" label style="font-weight:700;" width="250">
+          <template slot-scope="{row: {title}}" class="csstitle">
+            <span class="csstitle" v-if="title === 'Symbol'">Gene Symbol</span>
+            <span class="csstitle" v-else-if="title === 'description'">Description</span>
+            <span class="csstitle" v-else-if="title === 'type_of_gene'">Gene Type</span>
+            <span class="csstitle" v-else-if="title === 'Synonyms'">Aliases</span>
+            <span class="csstitle" v-else-if="title === 'Other_designations'">Summary</span>
+            <span class="csstitle" v-else-if="title === 'GeneID'">Entrez Gene</span>
+            <span class="csstitle" v-else>{{title}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="value" label></el-table-column>
+      </el-table>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -41,14 +59,15 @@ export default {
   data: function() {
     return {
       loading: true,
-      tableData: [
-      ]
+      tableData: [],
+      geneData: [],
+      detailload: true,
     };
   },
 
   methods: {
     //获取表格数据
-    getTableData(sample) {
+      getTableData(sample) {
       this.loading = true;
       this.$http
         .get("/tiger/immunescreendetail2.php", {
@@ -67,7 +86,26 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+    getGeneData(gene) {
+      this.detailload = true;
+      this.$http
+        .get("/tiger/searchGene.php", {
+          params: {
+            tabl: "home_geneinfo",
+            colu: "Symbol",
+            coluvalue: gene,
+          },
+        })
+        .then(res => {
+          this.geneData = res.data.list;
+          this.detailload = false;
+          //}
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
   }
 
    

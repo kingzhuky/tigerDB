@@ -122,12 +122,12 @@ export default {
       rm(`确定移除 ${ file.name }？`);
     },
     handleAvatarSuccess(response, file){
-      console.log(response.list);
+      // console.log(response.list);
       this.expDataPath = response.list
       this.taskuid = file.uid
     },
     handleAvatarSuccess2(response, file){
-      console.log(response.list)
+      // console.log(response.list)
       this.annoDataPath = response.list
     },
     submitAnalysis(){

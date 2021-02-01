@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col span="8">
-        <el-select v-model="selectgloclu" multiple @change="filtergloclu" placeholder="Select Global Cluster">
+        <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
           <el-option
             v-for="item in gloclures"
             :key="item"
@@ -25,7 +25,7 @@
       class="tigtablele"
       id="scDiffExpTable"
       ref="singleTable"
-      border
+      border=false
       max-height="750"
       :data="tableData"
       @cell-click="heandleclick"
@@ -44,7 +44,6 @@
         :label="item.name"
         :type="item.type"
         sortable="custom"
-        :sort-orders="['ascending', 'descending', null]"
         align="center"
         width="80"
       ></el-table-column>
@@ -126,9 +125,15 @@ export default {
 
   methods: {
     plot() {
-      if ((this.oldcancer !== this.cancer) | (this.oldcancer === "")) {
-        this.reset();
+      if (
+        (this.oldcancer !== this.cancer) |
+        (this.oldcancer === "") |
+        (this.oldgloclu !== this.gloclu) |
+        (this.oldgloclu === "")
+      ) {
+        this.reset()
         this.oldcancer = this.cancer;
+        this.oldgloclu = this.gloclu;
         this.getTableData(1, "", "");
       }
     },
@@ -141,33 +146,25 @@ export default {
       this.tableData = [];
       this.getTableData(this.loadpage, column.prop, column.order);
     },
-    headerStyle({ column }) {  
+    headerStyle({ column }) {
       let glocluster = column.type
       switch (glocluster) {
         case "All":
           return "scglo-all";
-          break;
         case "Tcell":
           return "scglo-g1";
-          break;
         case "Myeloid":
           return "scglo-g2";
-          break;
         case "Bcell":
           return "scglo-g3";
-          break;
         case "CD4":
           return "scglo-g4";
-          break;
         case "CD8":
           return "scglo-g5";
-          break;
         case "gene":
           return "";
-          break;
         default:
           return "defalutColor";
-          break;
       }
     },
     filtergloclu( ){

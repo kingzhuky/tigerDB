@@ -409,6 +409,7 @@ export default {
         this.cancerMsg = column["label"];
         this.$refs.detailPlot.Plot(row["gene"], column["label"]);
         this.$refs.detailPlot.getSampleDetail(column["label"]);
+        this.$refs.detailPlot.getGeneDetail(row["gene"]);
         toTarget(820);
       }
     },

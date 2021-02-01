@@ -129,7 +129,7 @@ export default {
     },
 
     submsearch() {
-      console.log(this.seargene);
+      // console.log(this.seargene);
       if (this.seargene.trim() === "") {
         alert("Please input Gene");
       } else {

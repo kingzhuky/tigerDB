@@ -222,6 +222,9 @@ export default {
     getSampleDetail(sample){
       this.$refs.sampleDetail.getTableData(sample)
     },
+    getGeneDetail(gene){
+      this.$refs.sampleDetail.getGeneData(gene)
+    },
     getPlot(gene, mergedatasets) {
       if (this.checkInput()) {
         var that = this;

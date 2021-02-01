@@ -97,7 +97,7 @@ export default {
       this.$http.get("/tiger/datesetinfo.json").then((res) => {
         this.sigtable = res.data;
         this.loading = false;
-        console.log(this.sigtable)
+        // console.log(this.sigtable)
       });
       // console.log(this.sigtable)
     },

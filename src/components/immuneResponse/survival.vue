@@ -274,6 +274,7 @@ export default {
         this.cancerMsg = column["label"];
         this.$refs.detailPlot.surPlot(row["gene"], column["label"]);
         this.$refs.detailPlot.getSampleDetail(column["label"]);
+        this.$refs.detailPlot.getGeneDetail(column["label"]);
         //this.$refs.detailPlot.tableDetail("survival", 1, "");
         toTarget(820);
       }

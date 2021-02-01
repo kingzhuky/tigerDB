@@ -66,6 +66,7 @@
               ref="diffexpRef" 
               :cancer="cancer"
               :gloclu="gloClu"
+              :gloCluoptions="gloCluoptions"
               tabactiveName="cluster"
               :is="diffexpVue"
             ></component>

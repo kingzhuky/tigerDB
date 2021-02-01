@@ -151,6 +151,9 @@ export default {
     getSampleDetail(sample){
       this.$refs.sampleDetail.getTableData(sample)
     },
+    getGeneDetail(gene){
+      this.$refs.sampleDetail.getGeneData(gene)
+    },
     gettableData(jsonUrl) {
       var that = this;
       this.$http
