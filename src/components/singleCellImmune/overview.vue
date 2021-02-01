@@ -1,6 +1,6 @@
 <template>
   <transition name="move3">
-    <div class="detail-card">
+    <div class="detail-card" v-loading="artloading">
       <div class="infor" v-loading="artloading">
         <el-card >
           <p class="card-title">Dataset Information</p>

@@ -61,7 +61,7 @@
 
 
 <script>
-const wercelltype = (resolve) => require(["./singleCellImmunity.vue"], resolve);
+const wercelltype = (resolve) => require(["./singleCell/singleCellImmunity.vue"], resolve);
 const werimmuneResponse = (resolve) => require(["./immuneResponse.vue"], resolve);
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
 //const wergeneralInformation = "./generalInformation.vue";

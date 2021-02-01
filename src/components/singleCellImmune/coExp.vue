@@ -168,7 +168,7 @@ export default {
 
   components: {
     "v-singleCellImmunityCorTable": () =>
-      import("../search/singleCellImmunityCorTable.vue"),
+      import("../search/singleCell/singleCellImmunityCorTable.vue"),
   },
 };
 </script>

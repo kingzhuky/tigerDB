@@ -2,8 +2,26 @@
   <div class="outside">
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
+        <el-col >
+          <el-collapse v-model="datasetcoll">
+            <el-collapse-item name="1">
+              <span class="collapse-title" slot="title">Select A Dataset</span>
+              <el-row class="detail1" gutter="20" justify="center">
+                <el-col span="8" push="0" v-for="cancertype in cancertypearr" :key="cancertype.icon">
+                  <select-cancer-icon
+                    v-on:datasetid="getdatasetid"
+                    :imgurl="cancertype.icon"
+                    :IconName="cancertype.name"
+                    :datasets="cancertype.datasetid.split('_')"
+                    :datasetsname="cancertype.datasetname.split('_')">
+                  </select-cancer-icon>
+                </el-col>
+              </el-row>
+            </el-collapse-item>
+          </el-collapse>
+        </el-col>
 
-        <el-row>
+        <!-- <el-row>
           <el-col :span="20" :offset="0">
             <p class="scImmuTitle">Select A Dataset</p>
           </el-col>
@@ -19,7 +37,7 @@
               :datasetsname="cancertype.datasetname.split('_')">
             </select-cancer-icon>
           </el-col>
-        </el-row>
+        </el-row> -->
 
         <!-- <el-row>
           <el-col :span="20" :offset="2" id="homeInput">
@@ -162,6 +180,7 @@ export default {
       Signatures: "",
       vsType: "",
       scpathwayVue: "",
+      datasetcoll: '1',
       cancertypearr:[
   {
     "name": "Bladder",
@@ -285,10 +304,10 @@ export default {
   },
 
   created() {
-    this.getcancer();
+    // this.getcancer();
   },
   mounted() {
-    this.getgloClu();
+    // this.getgloClu();
   },
 
   methods: {
@@ -361,6 +380,7 @@ export default {
     },
     getdatasetid: function(childid){
       console.log(childid)
+      this.datasetcoll = '0'
       this.cancer = childid
       this.cancerSelectChange()
       this.toTarget2()
@@ -408,4 +428,14 @@ div#scimmucard {
     padding: 10px;
     font-weight: bold !important;
 }
+.collapse-title {
+  flex: 1 0 90%;
+  order: 1;
+  color: rgb(20, 146, 140);
+  font-size: 18px;
+}
+.el-collapse-item__header {
+  flex: 1 0 auto;
+  order: -1;
+}    
 </style>
