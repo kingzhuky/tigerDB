@@ -57,6 +57,7 @@
     </div>
     <v-celltypedetail
       ref="detailPlot"
+      id="detailinfo"
       v-show="isShow"
       :gene="clickGene"
       :cancer="cancer"
@@ -73,6 +74,7 @@ import {
   gStyle,
   move,
   stop,
+  toTargetbyid
 } from "../../../static/js/utils.js";
 
 export default {
@@ -278,7 +280,14 @@ export default {
       this.loadpage = 1;
       this.getTableData(this.loadpage, "", "");
     },
-
+    toTargetbyid(id) {
+      var PageId = document.querySelector(id)
+      console.log(PageId.offsetTop)
+      window.scrollTo({
+        'top': PageId.offsetTop,
+        'behavior': 'smooth'
+      })
+    },
     //点击单个格子
     heandleclick(row, column) {
       if (column["label"] !== "gene") {
@@ -288,7 +297,7 @@ export default {
         this.gloclu = column["type"];
         this.$refs.detailPlot.getdatagene(row["gene"]);
         this.$refs.detailPlot.markerPlot(row["gene"], column["label"], column["type"]);
-        toTarget(820);
+        this.toTargetbyid('detailinfo');
       }
     },
 

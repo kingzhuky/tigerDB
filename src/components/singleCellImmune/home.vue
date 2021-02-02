@@ -21,43 +21,6 @@
           </el-collapse>
         </el-col>
 
-        <!-- <el-row>
-          <el-col :span="20" :offset="0">
-            <p class="scImmuTitle">Select A Dataset</p>
-          </el-col>
-        </el-row>
-        <br/>
-        <el-row gutter="20" justify="center">
-          <el-col span="8" push="0" v-for="cancertype in cancertypearr" :key="cancertype.icon">
-            <select-cancer-icon
-              v-on:datasetid="getdatasetid"
-              :imgurl="cancertype.icon"
-              :IconName="cancertype.name"
-              :datasets="cancertype.datasetid.split('_')"
-              :datasetsname="cancertype.datasetname.split('_')">
-            </select-cancer-icon>
-          </el-col>
-        </el-row> -->
-
-        <!-- <el-row>
-          <el-col :span="20" :offset="2" id="homeInput">
-            <el-select v-model="cancer" @change="cancerSelectChange" placeholder="请选择">
-              <el-option-group
-                v-for="group in canceroptions"
-                :key="group.label"
-                :label="group.label"
-              >
-                <el-option
-                  v-for="item in group.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="dataisrenew(item.value)"
-                ></el-option>
-              </el-option-group>
-            </el-select>
-          </el-col>
-        </el-row> -->
       </el-row>
     </el-card>
     <div>

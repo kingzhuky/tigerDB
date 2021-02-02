@@ -109,6 +109,14 @@ const toTarget = function (param) {
   scrollAnimation(currentY, param);
 }
 
+const toTargetbyid = function (id) {
+  var PageId = document.querySelector(id)
+  console.log(PageId.offsetTop)
+  window.scrollTo({
+    'top': PageId.offsetTop,
+    'behavior': 'smooth'
+  })
+}
 
 const scrollAnimationLeft = function (id, currentY, targetY) {
   var container = document.querySelector('#' + id + '>.el-table__body-wrapper');
@@ -186,5 +194,6 @@ export {
   scrollCol,
   scrollRow,
   stop,
-  move
+  move,
+  toTargetbyid
 }
