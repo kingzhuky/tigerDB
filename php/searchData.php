@@ -32,7 +32,6 @@ if((!empty($order_column))&&(!strcmp($order_dir,"None")==0)){
 }
 
 $infos = array();
-$infosTable = array();
 $total = array();
 
 if ($conditi=="Responder"){
@@ -114,7 +113,29 @@ if ($conditi=="Responder"){
   // 拼接最终SQL
   $dataResultTotal = mysqli_query($conn,$sqlTotal);
   while ($row = mysqli_fetch_assoc($dataResultTotal)) {
-      array_push($total,intval($row["COUNT(1)"]));
+    array_push($total,intval($row["COUNT(1)"]));
+  }
+
+}else if($conditi=="Marker"){
+  $sql = "SELECT abs(a.Log2FoldChange),b.CancerType,b.CellType,a.Log2FoldChange,a.GENE_SYMBOL,a.P_Value,b.datasetid,b.GlobalCluster FROM homemarkertable as a,homescinfo as b WHERE a.GENE_SYMBOL='".$gene."' AND a.SCID=b.SCID";
+  $dataResult = mysqli_query($conn,$sql);
+  while ($row = mysqli_fetch_assoc($dataResult)) {
+    array_push($infos,array_values($row));
+  }
+  
+  $sqltable = $sql.$orderSql." LIMIT ".$startPos.",".$pageSize;
+  $dataResulttable = mysqli_query($conn,$sqltable);
+  $datatable = array();
+  while ($row = mysqli_fetch_assoc($dataResulttable)) {
+    array_push($datatable,$row);
+  }
+
+  $sqlTotal = "SELECT COUNT(1) FROM homemarkertable as a,homescinfo as b WHERE a.GENE_SYMBOL='".$gene."' AND a.SCID=b.SCID";
+  $total = array();
+  // 拼接最终SQL
+  $dataResultTotal = mysqli_query($conn,$sqlTotal);
+  while ($row = mysqli_fetch_assoc($dataResultTotal)) {
+    array_push($total,intval($row["COUNT(1)"]));
   }
 
 }else{
@@ -128,10 +149,7 @@ if ($conditi=="Responder"){
     array_push($temp,$row["GlobalCluster"]);
     array_push($temp,$row["CellType"]);
     array_push($temp,$row["CancerType"]);
-
     array_push($infos,array_values($temp));
-
-    array_push($infosTable,$row);
     
   }
   
@@ -147,10 +165,8 @@ if ($conditi=="Responder"){
   // 拼接最终SQL
   $dataResultTotal = mysqli_query($conn,$sqlTotal);
   while ($row = mysqli_fetch_assoc($dataResultTotal)) {
-      array_push($total,intval($row["COUNT(1)"]));
+    array_push($total,intval($row["COUNT(1)"]));
   }
-
-
 }
 
 
@@ -165,12 +181,12 @@ if ($conditi=="Responder"){
 
   echo json_encode(array(
       "status"=>200,
-      "sql"=>$sql,
+      // "sql"=>$sql,
+      // "sqltable"=>$sqltable,
       "total"=>$total,
-      "sqltable"=>$sqltable,
       "list" =>$infos, // necessary
       "datatable"=>$datatable,
-      "infosTable"=>$infosTable
+      // "infosTable"=>$infosTable
       ),JSON_UNESCAPED_UNICODE); 
 
 mysql_close($conn);

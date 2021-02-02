@@ -1,73 +1,66 @@
 <template>
-  <div class="textitem" v-show="show" v-loading="loading">
+  <div class="textitem">   
     <p class="card-title">{{title}}</p>
-    <div class="geneExp">
-      <div :id="conditi" class="scaterPlot" style="width: 800px;height:400px;"></div>
-    </div>
-    <el-table
-        max-height="600"
-        :data="TableData"
-        :row-key="getRowKeys"
-        :expand-row-keys="expands"
-        @expand-change="rowExpand"
-        @sort-change="sortChangeClick"
-        style="width: 100%"
-      >
+    <el-row>
+      <el-col :span="16" push="3" v-loading="loading">
+        <div :id="conditi" style="width: 1000px;height:500px;"></div>
+      </el-col>
+    </el-row>
+    <el-table 
+      max-height="600"
+      :data="TableData"
+      :row-key="getRowKeys"
+      :expand-row-keys="expands"
+      @expand-change="rowExpand"
+      @sort-change="sortChangeClick"
+      style="width: 100%"
+    >
       <el-table-column type="expand" >
         <template slot-scope="scope">
           <div class="detailimg" v-loading="imgloading">
-            <el-row class="scdetailimg" v-show="imgshow" >
-              <el-col :span="6" >
-                <p class="imgtitle">UMAP Plot of Cell Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + diffexpimg.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
-              </el-col>
-              <el-col :span="6" >
-                <p class="imgtitle">UMAP Plot of Tissue Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + diffexpimg.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
-              </el-col>
-              <el-col :span="6">
-                <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + diffexpimg.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
-              </el-col>
-              <el-col :span="6">
-                <div class="imgspan"> 
-                <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
+            <div>
+              <!-- <img id="singleimg" :src="imgpathBox" />
+              <img id="singleimg" :src="imgUrlBar" /> -->
+              <el-row v-show="imgshow" class="scdetailimg">
+                <!-- <p class="card-title">tSNE</p> -->
+                <el-col :span="6" style="position:relative;left:20px;top:0px;">
+                  <p class="imgtitle">Cell Types</p>
                   <img
-                  id="singleimg"
-                  fit="fill"
-                  height="250px"
-                  :src="'tiger/img/' + diffexpimg.split(',')[3] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
-                </div>
-              </el-col>
-            </el-row> 
+                    id="singleimg"
+                    fit="fill"
+                    width="100%"
+                    :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
+                    @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                </el-col>
+                <el-col :span="6" style="position:relative;left:100px;top:0px;">
+                  <p class="imgtitle">UMAP Plot of {{scope.row.CellType}} Types</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="100%"
+                    :src="'tiger/img/' + markerimg.split(',')[1]"
+                    @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                </el-col>
+                <el-col :span="12" style="position:relative;left:40px;top:0px;">
+                  <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    height="250px"
+                    :src="'tiger/img/' + markerimg.split(',')[0]"
+                    @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                </el-col>
+              </el-row>
+            </div>
             <div v-show="!imgshow">no result</div>
           </div>
         </template>
       </el-table-column>
       <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable="custom"></el-table-column>
-      <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable="custom"></el-table-column>
-      <el-table-column prop="GlobalCluster" label="Global Cluster" sortable="custom"></el-table-column>
+      <el-table-column prop="GlobalCluster" label="Global Cluster" width="180%" sortable="custom"></el-table-column>
       <el-table-column prop="CellType" label="Cell Type" sortable="custom"></el-table-column>
-      <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable="custom"></el-table-column>
-      <el-table-column prop="P_Value" label="-log10 (P Value)" sortable="custom"></el-table-column>
+      <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change )" sortable="custom"></el-table-column>
     </el-table>
-    <br />   
     <el-row>
       <el-pagination
         class="scPagination"
@@ -80,7 +73,7 @@
         layout="sizes, prev, pager, next"
         :total="total"
       ></el-pagination>
-    </el-row>
+    </el-row> 
   </div>
 </template>
 
@@ -99,12 +92,14 @@ export default {
       currentPage: 1,
       pageSize: 10,
       total: 200,
-      diffexpimg: "",
       TableData: [],
       imgparam: [],
       sortCol: "",
       sortOrder: "",
-      imgparam: {}  
+      imgparam: {},
+      markerimg: "",
+      overviewimg: "",
+      imgpath: "",
     };
   },
   mounted() {
@@ -235,25 +230,34 @@ export default {
           params: {
             cancer: cancer,
             gene: that.seargene,
-            type: "exp",
+            type: "celltype",
             gloclu: gloclu,
-            celltype: subClu,
+            celltype: subClu
           },
         })
         .then(function (res) {
           if (res.data.status == 0) {
             if (res.data.output[0] === "0") {
               that.imgshow = false;
+              //alert("no gene file");
             } else {
-              that.imgshow = true;
-              that.imgloading = false;
-              that.diffexpimg = res.data.output[0];
-              that.diffexpimg = res.data.output2[0].split(",")[0] + ',' + that.diffexpimg;
-              console.log(that.diffexpimg)
+              that.imgpathBox = 'tiger/img/' + res.data.output[0].split(",")[0];
+              // console.log(that.imgpathBox)
+              that.markerimg = res.data.output[0];
             }
-          } else {
-            that.imgshow = false;
+            that.imgloading = false;
           }
+          if (res.data.status2 == 0) {
+            if (res.data.output2[0] === "0") {
+              //that.evolushow2 = false;
+              //alert("no gene file");
+            } else {
+              // that.evolushow2 = true;
+              (that.overviewimg = res.data.output2[0])
+            }
+            //that.evoluplots = res.data.output[0];
+          }
+          that.imgshow = true;
         })
         .catch(function (res) {
           console.log(res);
@@ -282,40 +286,91 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
-      let option = {
-        xAxis: { name: "Log2FC" },
-        yAxis: {
-          name: "–log10(P Value)",
-          axisLine: { show: false },
-          axisTick: { show: false },
+      // console.log("data:")
+      // console.log(data)
+      // console.log("cancer:")
+      // console.log(cancer)
+      var option2 = {
+        title: {
+          text: "Cell Type Marker\n ( |Log2FC| )\n",
+          textStyle: {
+            color: '#333',
+            lineHeight: 120,
+            height: 30,
+            fontFamily: 'Arial',
+          }
+          // link: "https://github.com/pissang/echarts-next/graphs/punch-card",
         },
-        tooltip: {
-          formatter: "{c}",
+        legend: {
+          data: ["Punch Card"],
+          left: "right",
+        },
+        polar: {},
+        radiusAxis: {
+          type: "value",
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            rotate: 45,
+            interval: 0
+          },
+        },
+        angleAxis: {
+          type: "category",
+          boundaryGap: false,
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#999",
+              type: "dashed",
+            },
+          },
+          axisLine: {
+            show: true,
+          },
+          axisLabel: {
+            interval: 0,
+            margin: 12,
+            // rotate: 45,
+          },
         },
         series: [
           {
-            symbolSize: 20,
-            data: data,
+            name: "Cell Type Marker",
             type: "scatter",
+            coordinateSystem: "polar",
+            large: true,
+            data: data,
+            symbolSize: 15,
+            animation: false,
+            emphasis: {
+              label: {
+                borderWidth: 1.5,
+                show: true,
+                position: "right",
+                distance: 10,
+                color: "rgba(255, 255, 255, 1)",
+                fontStyle: "normal",
+                fontWeight: "bold",
+                fontFamily: "Arial",
+                fontSize: 15,
+                align: "left",
+                verticalAlign: "middle",
+                backgroundColor: "rgba(50, 50, 50, 0.8)",
+                borderColor: "rgba(0, 0, 0, 1)",
+                padding: [9, 9, 9, 9],
+                borderRadius: [5, 5, 5, 5],
+                lineHeight: 25,
+                formatter:
+                  "CancerType: {@[1]}\nCellType: {@[2]}\nLog2FC: {@[3]}",
+              },
+            },
           },
         ],
       };
-
       myChart_mercor.clear();
-      myChart_mercor.setOption(option);
-
-      // myChart_mercor.on("click", function (param) {
-      //   if (param.componentSubType === "scatter") {
-      //     //console.log(param.data);
-      //     that.differentialExpressionPlot(
-      //       param.data[2],
-      //       param.data[3],
-      //       param.data[4],
-      //       id
-      //     );
-      //   }
-      // });
-
+      myChart_mercor.setOption(option2);
       window.onresize = function () {
         myChart_mercor.resize();
       };

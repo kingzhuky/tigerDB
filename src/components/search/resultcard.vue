@@ -239,7 +239,7 @@ export default {
       this.diffExpRespontableData = [];
       this.cardLoading = true;
       this.$http
-        .get("/tiger/homeresponse.php", {
+        .get("/tiger/searchData.php", {
           params: {
             gene: gene,
             conditi: conditi,
