@@ -136,13 +136,13 @@
     <el-card>
       <v-singleCellDiffexp
         ref="singlecelldiffTN"
-        :gene="seargene"
+        :seargene="seargene"
         conditi="home_scdiffexp_tn"
         title="Differential expression between tumor and normal per cell type"
       ></v-singleCellDiffexp>
       <v-singleCellDiffexp
         ref="singlecelldiffRNR"
-        :gene="seargene"
+        :seargene="seargene"
         conditi="home_scdiffexp_rnr"
         title="Differential expression between response and non-response per cell type"
       ></v-singleCellDiffexp>

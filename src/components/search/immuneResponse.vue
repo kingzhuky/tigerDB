@@ -42,17 +42,31 @@ export default {
         this.oldseargene = this.seargene;
         this.$refs.immuResponseVueRefResponder.getTableData(
           this.seargene,
-          "Responder"
+          "Responder",
+          this.currentPage,
+          this.pageSize,
+          "",
+          "",
+          true
         );
         this.$refs.immuResponseVueRefTherapy.getTableData(
           this.seargene,
-          "Therapy"
+          "Therapy",
+          this.currentPage,
+          this.pageSize,
+          "",
+          "",
+          true
         );
         this.$refs.immuResponseVueRefSurvival.getTableData(
           this.seargene,
-          "Survival"
+          "Survival",
+          this.currentPage,
+          this.pageSize,
+          "",
+          "",
+          true
         );
-        
       }
     },
   },

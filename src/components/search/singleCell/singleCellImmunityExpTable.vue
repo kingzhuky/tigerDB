@@ -2,14 +2,15 @@
   <div class="textitem" v-show="show" v-loading="loading">
     <p class="card-title">{{title}}</p>
     <div class="geneExp">
-      <div id="expscatter" class="scaterPlot" style="width: 800px;height:400px;"></div>
+      <div :id="conditi" class="scaterPlot" style="width: 800px;height:400px;"></div>
     </div>
       <el-table
           max-height="600"
           :data="TableData"
           :row-key="getRowKeys"
           :expand-row-keys="expands"
-          @expand-change="diffExptableExpand"
+          @expand-change="rowExpand"
+          @sort-change="sortChangeClick"
           style="width: 100%"
         >
         <el-table-column type="expand" >
@@ -59,20 +60,34 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable></el-table-column>
-        <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable></el-table-column>
-        <el-table-column prop="GlobalCluster" label="Global Cluster" sortable></el-table-column>
-        <el-table-column prop="CellType" label="Cell Type" sortable></el-table-column>
-        <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable></el-table-column>
-        <el-table-column prop="P_Value" label="-log10 (P Value)" sortable></el-table-column>
+        <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable="custom"></el-table-column>
+        <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable="custom"></el-table-column>
+        <el-table-column prop="GlobalCluster" label="Global Cluster" sortable="custom"></el-table-column>
+        <el-table-column prop="CellType" label="Cell Type" sortable="custom"></el-table-column>
+        <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable="custom"></el-table-column>
+        <el-table-column prop="P_Value" label="-log10 (P Value)" sortable="custom"></el-table-column>
       </el-table>
+      <br />   
+      <el-row>
+        <el-pagination
+          class="scPagination"
+          background
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageSize"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          layout="sizes, prev, pager, next"
+          :total="total"
+        ></el-pagination>
+      </el-row>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    gene: String,
+    seargene: String,
     conditi: String,
     title: String,
   },
@@ -82,17 +97,28 @@ export default {
       imgshow: true,
       loading: true,
       currentPage: 1,
-      pageSize: 20,
+      pageSize: 10,
       total: 200,
       diffexpimg: "",
       TableData: [],
       imgparam: [],
+      sortCol: "",
+      sortOrder: "",
+      imgparam: {}  
     };
   },
   mounted() {
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
-      this.getScaData(this.gene, this.conditi)
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        true
+      );
       //this.clickPlot();
     });
   },
@@ -108,32 +134,63 @@ export default {
       this.TableData = [];
       this.diffexpimg = "";
     },
+    plot() {
+      if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
+        this.oldseargene = this.seargene;
+        this.getTableData(
+          this.seargene,
+          this.conditi,
+          this.currentPage,
+          this.pageSize,
+          this.sortCol,
+          this.sortOrder,
+          true
+        );
+      }
+    },
     handleSizeChange(val) {
       this.pageSize = val;
       this.currentPage = 1;
-      this.getDiagramData(
-        this.seargene, 
-        "singleCellCorTumor",
-        this.CancerType,
-        this.GlobalCluster,
-        this.CellType,
-        1,
-        val
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        false
       );
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.getDiagramData(
+      this.getTableData(
         this.seargene,
-        "singleCellCorTumor",
-        this.CancerType,
-        this.GlobalCluster,
-        this.CellType,
-        val,
-        this.pageSize
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        false
       );
     },
-    getScaData(gene, conditi) {
+    sortChangeClick(column) {
+      // this.loadDir = "";
+      this.sortCol = column.prop;
+      this.sortOrder = column.order;
+      // this.loadpage = 1;
+      console.log(column.prop + column.order)
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        false
+      );
+    },
+    getTableData(gene, conditi, currentPage, pageSize, sortCol, sortOrder, ifplot){
+      console.log("Plot: "+ ifplot)
       this.show = true;
       this.imgshow = false;
       this.diffexpimg = "";
@@ -143,6 +200,10 @@ export default {
           params: {
             gene: gene,
             conditi: conditi,
+            currentPage: currentPage,
+            pageSize: pageSize,
+            sortcol: sortCol,
+            sortorder: sortOrder === null ? "None" : sortOrder,
           },
         })
         .then((res) => {
@@ -150,9 +211,9 @@ export default {
             if (res.data.list.length === 0) {
               this.show = false;
             } else {
-              this.draw_chart_sca(res.data.list, "expscatter");
               this.loading = false;
-              this.TableData = res.data.infosTable;
+              this.TableData = res.data.datatable;
+              if (ifplot) this.draw_chart(res.data.list, conditi);
             }
           } else {
             this.show = false;
@@ -162,55 +223,8 @@ export default {
           console.log(error);
         });
     },
-    plot() {
-      if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
-        this.oldseargene = this.seargene;
-        this.getDiagramData(
-          this.seargene,
-          "singleCellCorTumor",
-          this.CancerType,
-          this.GlobalCluster,
-          this.CellType,
-          this.currentPage,
-          this.pageSize
-        );
-      }
-    },
-    clickPlot() {
-      this.picScatterPlot(
-        this.imgparam.datasetid,
-        this.imgparam.GlobalCluster,
-        this.imgparam.genea,
-        this.imgparam.geneb,
-        this.imgparam.CellType,
-      );
-    },
-    getDiagramData(gene, datasetid, gloclu, celltype, currentPage, pageSize) {
-      this.sccoexpTable = [];
-      this.singleCellCorloading = true;
-      this.$http
-        .get("/tiger/searchcoeaTable.php", {
-          params: {
-            gene: gene,
-            currentPage: currentPage,
-            pageSize: 20,
-            GlobalCluster: gloclu,
-            CellType: celltype,
-            CancerType: datasetid,
-          },
-        })
-        .then((res) => {
-          if (res.data.status === 200) {
-            this.sccoexpTable = res.data.list;
-            this.total = res.data.total[0];
-            this.singleCellCorloading = false;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    differentialExpressionPlot(cancer, gloclu, subClu) {
+
+    expandPlot(cancer, gloclu, subClu) {
       var that = this;
       that.imgloading = true;
       that.imgshow = true;
@@ -219,7 +233,7 @@ export default {
         .get("/tiger/scimmudiffexpdetailgene.php", {
           params: {
             cancer: cancer,
-            gene: this.seargene,
+            gene: that.seargene,
             type: "exp",
             gloclu: gloclu,
             celltype: subClu,
@@ -249,44 +263,26 @@ export default {
     getRowKeys: function (row) {
       return (row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_');
     },
-    diffExptableExpand: function (row, expandedRows) {
-      var that = this;
+    rowExpand: function (row, expandedRows) {
       if (expandedRows.length) {
-        that.expands = [];
+        this.expands = [];
         if (row) {
-          that.expands.push(row.geneb);
-          that.imgparam = row;
+          this.expands.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
         }
       } else {
-        that.expands = [];
-        that.imgparam = [];
+        this.expands = [];
       }
-      
-      this.picScatterPlot(
-        row.datasetid,
-        row.GlobalCluster,
-        row.genea,
-        row.geneb,
-        row.CellType,
-      );
+      // console.log(that.expands_tn)
+
+      this.expandPlot(row.datasetid, row.GlobalCluster, row.CellType);
     },
 
-    previewImg(url){
-      this.$hevueImgPreview({
-        url: url,
-        multiple: false, // 开启多图预览模式
-        keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-      })
-    },
-    draw_chart_sca(data, id) {
-      var that = this;
+    draw_chart(data, id) {
       var targetdiv = document.getElementById(id);
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
-
+      myChart_mercor.clear();
       let option = {
         xAxis: { name: "Log2FC" },
         yAxis: {
@@ -324,6 +320,23 @@ export default {
       window.onresize = function () {
         myChart_mercor.resize();
       };
+    },
+
+    previewImg(url){
+      this.$hevueImgPreview({
+        url: url,
+        multiple: false, // 开启多图预览模式
+        keyboard: true,
+        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+      })
+    },
+    clickPlot() {
+      this.expandPlot(
+        this.imgparam.datasetid,
+        this.imgparam.GlobalCluster,
+        this.imgparam.CellType
+      );
     },
   },
 };

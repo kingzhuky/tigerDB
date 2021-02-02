@@ -11,7 +11,8 @@
               :data="diffExpRespontableData"
               :row-key="getRowKeys"
               :expand-row-keys="expands"
-              @expand-change="diffExpRespontableExpand"
+              @expand-change="rowExpand"
+              @sort-change="sortChangeClick"
               style="width: 100%"
             >
               <el-table-column type="expand" >
@@ -37,11 +38,25 @@
               <el-table-column v-if="conditi === 'Responder'" prop="NonresponseSampleCount" label="Non-responder Number"></el-table-column>
               <el-table-column v-if="conditi === 'Therapy'" prop="PretherapySampleCount" label="Pre-therapy Sample Number"></el-table-column>
               <el-table-column v-if="conditi === 'Therapy'" prop="PosttherapySampleCount" label="Post-therapy Sample Number"></el-table-column>
-              <el-table-column v-if="conditi === 'Survival'" prop="ZScore" label="Hazard Ratio" sortable></el-table-column>
-              <el-table-column v-else prop="Log2FC" label="Log2 Fold Change" sortable></el-table-column>
-              <el-table-column v-if="conditi === 'Survival'" prop="PValue" label="-log10 (P Value)" sortable></el-table-column>
-              <el-table-column v-else prop="PValue" label="-log10 (P Value)" sortable></el-table-column>
+              <el-table-column v-if="conditi === 'Survival'" prop="ZScore" label="Hazard Ratio" sortable="custom"></el-table-column>
+              <el-table-column v-else prop="Log2FC" label="Log2 Fold Change" sortable="custom"></el-table-column>
+              <el-table-column v-if="conditi === 'Survival'" prop="PValue" label="-log10 (P Value)" sortable="custom"></el-table-column>
+              <el-table-column v-else prop="PValue" label="-log10 (P Value)" sortable="custom"></el-table-column>
             </el-table>
+          </el-row>
+          <br />
+          <el-row>
+            <el-pagination
+              class="scPagination"
+              background
+              :page-sizes="[10, 20, 50, 100]"
+              :page-size="pageSize"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="currentPage"
+              layout="sizes,prev, pager, next"
+              :total="total"
+            ></el-pagination>
           </el-row>
         </el-card>
       </div>
@@ -68,6 +83,11 @@ export default {
       imgpathBox: "",
       getPlotUrl: "",
       detailimgShow: true,
+      currentPage: 1,
+      pageSize: 20,
+      total: 200,
+      sortCol: "",
+      sortOrder: "",
     };
   },
 
@@ -79,15 +99,64 @@ export default {
 
   mounted() {
     this.$nextTick(() => {
-      this.getTableData(this.seargene, this.conditi);
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        true
+      );
     });
   },
 
   methods: {
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.currentPage = 1;
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        false
+      );
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        false
+      );
+    },
+    sortChangeClick(column) {
+      // this.loadDir = "";
+      this.sortCol = column.prop;
+      this.sortOrder = column.order;
+      // this.loadpage = 1;
+      console.log(column.prop + column.order)
+      this.getTableData(
+        this.seargene,
+        this.conditi,
+        this.currentPage,
+        this.pageSize,
+        this.sortCol,
+        this.sortOrder,
+        false
+      );
+    },
     getRowKeys: function (row) {
       return row.DatasetID;
     },
-    diffExpRespontableExpand: function (row, expandedRows) {
+    rowExpand: function (row, expandedRows) {
       var that = this;
       if (expandedRows.length) {
         that.expands = [];
@@ -166,10 +235,7 @@ export default {
         });
     },
 
-    getTableData(gene, conditi) {
-      var targetdiv = document.getElementById(this.conditi);
-      let myChart_mercor = window.echarts.init(targetdiv);
-      myChart_mercor.clear();
+    getTableData(gene, conditi, currentPage, pageSize, sortCol, sortOrder, ifplot){
       this.diffExpRespontableData = [];
       this.cardLoading = true;
       this.$http
@@ -177,14 +243,19 @@ export default {
           params: {
             gene: gene,
             conditi: conditi,
+            currentPage: currentPage,
+            pageSize: pageSize,
+            sortcol: sortCol,
+            sortorder: sortOrder === null ? "None" : sortOrder,
           },
         })
         .then((res) => {
           if (res.data.status === 200) {
             this.cardLoading = false;
             // console.log( res.data.datatable)
+            this.total = res.data.total[0];
             this.diffExpRespontableData = res.data.datatable;
-            this.draw_chart(res.data.list);
+            if (ifplot === true) this.draw_chart(res.data.list) 
           }
         })
         .catch((error) => {
@@ -198,6 +269,7 @@ export default {
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
+      myChart_mercor.clear();
       var xAxis = "";
       var yAxis = "";
       var xlabname = ""
@@ -266,4 +338,8 @@ export default {
   color: #09e1c0; */
   cursor: pointer;
 }
+.scPagination.el-pagination.is-background {
+  text-align: center;
+}
+
 </style>
