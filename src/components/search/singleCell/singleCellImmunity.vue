@@ -243,7 +243,6 @@ export default {
         10
       );
     },
-
     getcrossClu() {
       this.$http
         .get("/tiger/sccluster.php", {
@@ -258,99 +257,6 @@ export default {
           this.subClu = res.data.list;
         });
     },
-
-    //获取表格数据
-    getTableData(gene) {
-      this.loading = true;
-      this.$http
-        .get("/tiger/home.php", {
-          params: {
-            gene: gene,
-            //type: "home"
-          },
-        })
-        .then((res) => {
-          if (res.data.status === 200) {
-            this.MarkerTable = res.data.tabledata
-            this.draw_chart(res.data.list, "scaterid");
-            this.loading = false;
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    markerPlot(datasetid, glocluster, celltype){
-      var that = this;
-      that.geneloading = true;
-      that.geneshow = true;
-      that.imgpathBox = ""
-      that.imgpathBar = ""
-      this.$http
-        .get("/tiger/scimmudiffexpdetailgene.php", {
-          params: {
-            cancer: datasetid,
-            celltype: celltype,
-            type: "celltype",
-            gene: that.seargene,
-            gloclu: glocluster
-          },
-        })
-        .then(function (res) {
-          if (res.data.status == 0) {
-            if (res.data.output[0] === "0") {
-              that.geneshow = false;
-              //alert("no gene file");
-            } else {
-              that.imgpathBox = 'tiger/img/' + res.data.output[0].split(",")[0];
-              // console.log(that.imgpathBox)
-              that.markerimg = res.data.output[0];
-            }
-            that.evoluloading = false;
-            that.geneloading = false;
-          }
-          if (res.data.status2 == 0) {
-            if (res.data.output2[0] === "0") {
-              //that.evolushow2 = false;
-              //alert("no gene file");
-            } else {
-              // that.evolushow2 = true;
-              setTimeout((that.overviewimg = res.data.output2[0]), 1000);
-            }
-            //that.evoluplots = res.data.output[0];
-          }
-        })
-        .catch(function (res) {
-          console.log(res);
-        });
-        // this.$http
-        //   .get("/tiger/scimmudiffexpdetailgene.php", {
-        //     params: {
-        //       cancer: this.cancer,
-        //       celltype: celltype,
-        //       type: "celltype",
-        //       gene: gene,
-        //       gloclu: gloclu
-        //     },
-        //   })
-        //   .then(function (res) {
-        //     if (res.data.status == 0) {
-        //       if (res.data.output[0] === "0") {
-        //         that.evolushow = false;
-        //         //alert("no gene file");
-        //       } else {
-        //         that.evolushow = true;
-        //         that.evoluplots = res.data.output[0];
-        //       }
-        //       //that.evoluplots = res.data.output[0];
-        //       that.evoluloading = false;
-        //     }
-
-        //   })
-        //   .catch(function (res) {
-        //     console.log(res);
-        //   });
-    },
     previewImg(url){
       this.$hevueImgPreview({
         url: url,
@@ -359,22 +265,6 @@ export default {
         nowImgIndex: 0, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
       })
-    },
-    markertableExpand: function (row, expandedRows) {
-      var that = this;
-      if (expandedRows.length) {
-        that.expands = [];
-        if (row) {
-          that.expands.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
-        }
-      } else {
-        that.expands = [];
-      }
-      // console.log(row)
-      this.markerPlot(row.datasetid,row.GlobalCluster,row.CellType);
-    },
-    getRowKeys: function (row) {
-      return (row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_');
     },
   },
 };

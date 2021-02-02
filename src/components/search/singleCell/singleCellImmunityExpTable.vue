@@ -177,7 +177,7 @@ export default {
       // this.loadDir = "";
       this.sortCol = column.prop;
       this.sortOrder = column.order;
-      // this.loadpage = 1;
+      this.currentPage = 1;
       console.log(column.prop + column.order)
       this.getTableData(
         this.seargene,

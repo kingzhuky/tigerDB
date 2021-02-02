@@ -443,10 +443,11 @@ export default {
       return {
         background: mycolr["background"],
         color: mycolr["color"],
-        cursor: mycolr["cursor"],
+        // cursor: mycolr["cursor"],
       };
     },
     filtergloclu( ){
+      this.reset()
       this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
   },

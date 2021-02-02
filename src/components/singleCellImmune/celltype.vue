@@ -124,6 +124,11 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.tableData = [];
+      this.loadDir = "";
+      this.tableDataheader = [];
+    },
     plot() {
       if (
         (this.oldcancer !== this.cancer) |
@@ -168,6 +173,7 @@ export default {
       }
     },
     filtergloclu( ){
+      this.reset()
       this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
     //顶部加载更多
@@ -194,11 +200,6 @@ export default {
         this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
         scrollRow("scDiffExpTable", 780);
       }
-    },
-    reset() {
-      this.tableData = [];
-      this.loadDir = "";
-      this.tableDataheader = [];
     },
 
     //获取表格数据
