@@ -74,6 +74,7 @@ import {
   gStyle,
   move,
   stop,
+  toTargetbyid
 } from "../../static/js/utils.js";
 
 export default {
@@ -265,18 +266,10 @@ export default {
         this.isShow = true;
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
-        this.toTarget2("#detailinfo");
+        toTargetbyid("#detailinfo");
         this.$refs.detailPlot.tableDetail(row["gene"]);
         this.$refs.detailPlot.artivcleDetail(column["label"]);
       }
-    },
-    toTarget2(id) {
-      var PageId = document.querySelector(id)
-      console.log(PageId.offsetTop)
-      window.scrollTo({
-        'top': PageId.offsetTop,
-        'behavior': 'smooth'
-      })
     },
     querySearchAsync(queryString, cb) {
       this.$http

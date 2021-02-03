@@ -39,7 +39,7 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-card class="infor" v-loading="artloading" v-show="isShow">
+    <el-card id="detailinfo" class="infor" v-loading="artloading" v-show="isShow">
       <p class="card-title">{{datasetid}} Details</p>
       <el-row class="detailimg">
         <v-resultcard
@@ -71,7 +71,7 @@
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
 import {
   scrollRow,
-  toTarget,
+  toTargetbyid,
   gStyle,
   move,
   stop,
@@ -105,7 +105,7 @@ export default {
       // console.log(datasetid)
       this.isShow = true
       this.datasetid = datasetid
-      toTarget(900)
+      toTargetbyid("#detailinfo")
       // this.$refs.immuneSigDetail.renewDetail(this.datasetid)
       
       // console.log(this.datasetid)
@@ -132,6 +132,13 @@ export default {
   components: {
     "v-resultcard": () => import("./datasetoverviewDetail.vue"),
   },
+  watch: {
+    datasetid(){
+      this.$nextTick(() =>{
+        toTargetbyid('#detailinfo');
+      })
+    }
+  }
 };
 </script>
 

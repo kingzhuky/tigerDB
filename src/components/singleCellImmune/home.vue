@@ -98,8 +98,9 @@ import tigcelltype from './celltype.vue'
 import tigcrosstalk from './crosstalk.vue'
 import tigevolution from './evolution.vue'
 import tigpathway from './scpathway.vue'
-      
 import selectCancerIcon from './selectCancerIcon.vue'
+import toTargetbyid from "../../../static/js/utils.js";
+
 export default {
   components: {
     selectCancerIcon,
@@ -333,20 +334,13 @@ export default {
           break;
       }
     },
-    toTarget2() {
-      var PageId = document.querySelector('#tabdetail')
-      console.log(PageId.offsetTop)
-      window.scrollTo({
-        'top': PageId.offsetTop,
-        'behavior': 'smooth'
-      })
-    },
-    getdatasetid: function(childid){
+    getdatasetid(childid){
       console.log(childid)
       this.datasetcoll = '0'
       this.cancer = childid
       this.cancerSelectChange()
-      this.toTarget2()
+      toTargetbyid('#tabdetail')
+      // toTarget(720)
     }
   },
 };

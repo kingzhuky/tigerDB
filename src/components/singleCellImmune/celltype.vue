@@ -55,22 +55,23 @@
       <span class="heatMapTable--colorbar"></span>
       <span>High logFC&gt;0</span>
     </div>
-    <v-celltypedetail
-      ref="detailPlot"
-      id="detailinfo"
-      v-show="isShow"
-      :gene="clickGene"
-      :cancer="cancer"
-      :celltype="celltype"
-      :gloclu="gloclu"
-    ></v-celltypedetail>
+    <div id="detailinfo">
+      <v-celltypedetail
+        ref="detailPlot"    
+        v-show="isShow"
+        :gene="clickGene"
+        :cancer="cancer"
+        :celltype="celltype"
+        :gloclu="gloclu"
+      ></v-celltypedetail>
+    </div>
+
   </div>
 </template>
 
 <script>
 import {
   scrollRow,
-  toTarget,
   gStyle,
   move,
   stop,
@@ -103,10 +104,6 @@ export default {
   },
 
   mounted: function () {
-    for (let gloclu of this.gloCluoptions) {
-      this.gloclures.push(gloclu["GlobalCluster"]);
-      this.selectgloclu.push(gloclu["GlobalCluster"]);
-    }
     console.log(this.gloclures)
     this.oldcancer = this.cancer;
     this.getTableData(1, "", "");
@@ -130,6 +127,12 @@ export default {
       this.tableData = [];
       this.loadDir = "";
       this.tableDataheader = [];
+      this.gloclures = [];
+      this.selectgloclu = [];
+      for (let gloclu of this.gloCluoptions) {
+        this.gloclures.push(gloclu["GlobalCluster"]);
+        this.selectgloclu.push(gloclu["GlobalCluster"]);
+      }
     },
     plot() {
       if (
@@ -280,14 +283,7 @@ export default {
       this.loadpage = 1;
       this.getTableData(this.loadpage, "", "");
     },
-    toTargetbyid(id) {
-      var PageId = document.querySelector(id)
-      console.log(PageId.offsetTop)
-      window.scrollTo({
-        'top': PageId.offsetTop,
-        'behavior': 'smooth'
-      })
-    },
+
     //点击单个格子
     heandleclick(row, column) {
       if (column["label"] !== "gene") {
@@ -297,7 +293,7 @@ export default {
         this.gloclu = column["type"];
         this.$refs.detailPlot.getdatagene(row["gene"]);
         this.$refs.detailPlot.markerPlot(row["gene"], column["label"], column["type"]);
-        this.toTargetbyid('detailinfo');
+        toTargetbyid('#detailinfo');
       }
     },
 
@@ -318,6 +314,14 @@ export default {
   components: {
     "v-celltypedetail": () => import("./celltypedetail.vue"),
   },
+  watch: {
+    clickGene(){
+      console.log("click")
+      this.$nextTick(() =>{
+        toTargetbyid('#detailinfo');
+      })
+    }
+  }
 };
 </script>
 

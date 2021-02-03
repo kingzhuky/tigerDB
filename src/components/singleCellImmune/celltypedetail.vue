@@ -6,7 +6,7 @@
           <div class="text item">
             <h1
               style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu}}<br>Gene Symobl: {{gene}}</h1>
+            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu == "All" ? celltype : gloclu}}<br>Gene Symobl: {{gene}}</h1>
           </div>
         </el-card>
       </div>

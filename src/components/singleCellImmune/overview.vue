@@ -49,8 +49,8 @@
       </div>
       <div id="norult" v-if="!resflag">No result<br /><br /></div>
       <div class="infor" style="margin-top: -20px" v-if="resflag">
-        <el-card v-for="gloclu in gloclures" :key="gloclu" overflow="auto" class="overiewcard" >
-          <p class="card-title">{{gloclu}}&nbsp;&nbsp;&nbsp;&nbsp;{{cellnum[gloclu]}}</p>
+        <el-card v-for="(gloclu, index) in gloclures" :key="gloclu" overflow="auto" class="overiewcard" >
+          <p class="card-title">{{gloclu}}&nbsp;&nbsp;&nbsp;&nbsp;{{cellnum[index]}}</p>
           <el-row class="detailimg" type="flex" justify="center" >
             <el-col :span="6" style="position:relative;right:10px;top:20px;">
               <p class="imgtitle">Cell Types</p>
@@ -58,35 +58,35 @@
                 id="singleimg"
                 fit="fill"
                 width="250px"
-                :src="'tiger/img/'+plotsres[gloclu][0]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png'])">
+                :src="'tiger/img/'+plotsres[index][0]+'.png'" 
+                @click="previewImg(['tiger/img/'+plotsres[index][0]+'.png','tiger/img/'+plotsres[index][1]+'.png','tiger/img/'+plotsres[index][2]+'.png','tiger/img/'+plotsres[index][3]+'.png'])">
             </el-col>
-            <el-col v-show="typeof(plotsres[gloclu][1]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
+            <el-col v-show="typeof(plotsres[index][1]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
               <p class="imgtitle">Cell Fraction</p>
               <img
                 id="singleimg"
                 fit="fill"
                 width="300px"
-                :src="'tiger/img/'+plotsres[gloclu][1]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png'])">
+                :src="'tiger/img/'+plotsres[index][1]+'.png'" 
+                @click="previewImg(['tiger/img/'+plotsres[index][1]+'.png','tiger/img/'+plotsres[index][2]+'.png','tiger/img/'+plotsres[index][3]+'.png','tiger/img/'+plotsres[index][0]+'.png'])">
             </el-col>
-            <el-col v-show="typeof(plotsres[gloclu][2]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:30px;top:20px;">
+            <el-col v-show="typeof(plotsres[index][2]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:30px;top:20px;">
               <p class="imgtitle">Group Difference of Each Cluster</p>
               <img
                 id="singleimg"
                 fit="fill"
                 width="300px"
-                :src="'tiger/img/'+plotsres[gloclu][2]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][2]+'.png','tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png'])">
+                :src="'tiger/img/'+plotsres[index][2]+'.png'" 
+                @click="previewImg(['tiger/img/'+plotsres[index][2]+'.png','tiger/img/'+plotsres[index][3]+'.png','tiger/img/'+plotsres[index][0]+'.png','tiger/img/'+plotsres[index][1]+'.png'])">
             </el-col>
-            <el-col v-show="typeof(plotsres[gloclu][3]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:20px;top:20px;">
+            <el-col v-show="typeof(plotsres[index][3]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:20px;top:20px;">
               <p class="imgtitle">Classical Cell Markers</p>
               <img
                 id="singleimg"
                 fit="fill"
                 width="350px"
-                :src="'tiger/img/'+plotsres[gloclu][3]+'.png'" 
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][3]+'.png','tiger/img/'+plotsres[gloclu][0]+'.png','tiger/img/'+plotsres[gloclu][1]+'.png','tiger/img/'+plotsres[gloclu][2]+'.png'])">
+                :src="'tiger/img/'+plotsres[index][3]+'.png'" 
+                @click="previewImg(['tiger/img/'+plotsres[index][3]+'.png','tiger/img/'+plotsres[index][0]+'.png','tiger/img/'+plotsres[index][1]+'.png','tiger/img/'+plotsres[index][2]+'.png'])">
             </el-col>
           </el-row>
         </el-card>
@@ -197,24 +197,26 @@ export default {
           console.log(this.gloCluoptions)
           for (let gloclu of this.gloCluoptions) {
             this.gloclures.push(gloclu["GlobalCluster"]);
-            this.Plot(this.cancer, gloclu["GlobalCluster"]);
           }
+          this.Plot(this.cancer, this.gloclures.join(','));
         });
     },
-    Plot(cancer, gloclu) {
+    Plot(cancer, gloclus) {
       var that = this;
       that.loading = true;
       this.$http
-        .get("/tiger/singlecellimmu.php", {
+        .get("/tiger/singlecellimmuall.php", {
           params: {
             cancer: cancer,
-            gloclu: gloclu,
+            gloclu: gloclus,
           },
         })
         .then(function (res) {
           if (res.data.status == 0) {
-            Vue.set(that.plotsres, gloclu, res.data.output[0].split(","))
-            Vue.set(that.cellnum, gloclu, res.data.cellnum[0].replace(/,/g," "))
+            for(let i=0; i< res.data.output.length; ++i){
+              Vue.set(that.plotsres, i, res.data.output[0].split(","))
+              Vue.set(that.cellnum, i, res.data.cellnum[0].replace(/,/g," "))
+            }
             that.loading = false;
           }else{
             that.loading = false;

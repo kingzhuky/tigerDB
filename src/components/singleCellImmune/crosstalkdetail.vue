@@ -84,26 +84,6 @@
                       @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
                   </el-col>
                 </el-row>
-                <!-- <el-row v-loading="plotloading">
-                  <el-col :span="11" push="1" v-show="evolushow2">
-                    <p class="imgtitle">Tissue in {{celltype_1}} </p>
-                    <img
-                      id="singleimg"
-                      fit="fill"
-                      width="100%"
-                      :src="'tiger/img/' + crossimg[5]"
-                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
-                  </el-col>
-                  <el-col :span="11" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-                    <p class="imgtitle">UMAP Plot of {{gene1}} Expression in {{celltype_1}}</p>
-                    <img
-                      id="singleimg"
-                      fit="fill"
-                      width="100%"
-                      :src="'tiger/img/' + crossimg[7]"
-                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
-                  </el-col>
-                </el-row> -->
               </el-col>
             </el-row>
             <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">

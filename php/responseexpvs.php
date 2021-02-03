@@ -108,7 +108,7 @@ if ($start<0){
   echo json_encode(array(
       "status" => 200,
       "draw" => $draw,
-    // "sql" => $sql,
+    "sql" => $sql,
       "recordsTotal" => $recordsTotal,  // necessary
       "recordsFiltered" => $recordsFiltered, // necessary
       "list" => $infos // necessary

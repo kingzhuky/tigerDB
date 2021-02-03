@@ -63,6 +63,7 @@
             <!-- 详细页显示与否 -->
             <v-expdetail
               ref="detailPlot"
+              id="detailinfo"
               v-show="isShow"
               :gene="clickGene"
               :celltype="celltype"
@@ -132,6 +133,7 @@
             <!-- 详细页显示与否 -->
             <v-expdetail
               ref="detailPlot"
+              id="detailinfo2"
               v-show="isShow"
               :gene="clickGene"
               :celltype="celltype"
@@ -151,7 +153,7 @@
 <script>
 import {
   scrollRow,
-  toTarget,
+  toTargetbyid,
   gStyle,
   move,
   stop,
@@ -218,6 +220,12 @@ export default {
           break;
       }
     },
+    clickGene(){
+      this.$nextTick(() =>{
+        toTargetbyid('#detailinfo');
+        toTargetbyid('#detailinfo2');
+      })
+    }
   },
 
   methods: {
@@ -428,7 +436,8 @@ export default {
         this.gloclu = column["type"];
         this.$refs.detailPlot.getdatagene(row["gene"]);
         this.$refs.detailPlot.genePlot(row["gene"], column["label"], column["type"]);
-        toTarget(820);
+        toTargetbyid('#detailinfo');
+        toTargetbyid('#detailinfo2');
       }
     },
 
@@ -452,7 +461,7 @@ export default {
     },
   },
   components: {
-    "v-expdetail": () => import("./expdetail.vue"),
+    "v-expdetail": () => import("./diffExpdetail.vue"),
   },
 };
 </script>

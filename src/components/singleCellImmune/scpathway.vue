@@ -49,6 +49,7 @@
           <!-- 详细页显示与否 -->
           <v-scpathwaydetail2
             ref="pathwaydetailPlot"
+            id="detailinfo"
             v-show="isShow"
             :pathway="clickGene"
             :celltype="celltype"
@@ -105,6 +106,7 @@
           <!-- 详细页显示与否 -->
           <v-scpathwaydetail
             ref="pathwaydetailPlot"
+            id="detailinfo2"
             v-show="isShow"
             :pathway="clickGene"
             :celltype="celltype"
@@ -123,7 +125,7 @@
 <script>
 import {
   scrollRow,
-  toTarget,
+  toTargetbyid,
   gStyle,
   move,
   stop,
@@ -180,6 +182,13 @@ export default {
           break;
       }
     },
+    clickGene(){
+      console.log("click")
+      this.$nextTick(() =>{
+        toTargetbyid('#detailinfo');
+        toTargetbyid('#detailinfo2');
+      })
+    }
   },
 
   methods: {
@@ -361,7 +370,8 @@ export default {
         this.celltype=column["label"]
         this.gloclu = column["type"];
         this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
-        toTarget(820);
+        toTargetbyid('#detailinfo');
+        toTargetbyid('#detailinfo2');
       }
     },
 
