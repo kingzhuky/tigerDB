@@ -184,7 +184,7 @@ export default {
       this.reset();
       this.articleDetail();
       this.resflag=true;
-      console.log(this.cancer)
+      // console.log(this.cancer)
       this.$http
         .get("/tiger/scglocluster.php", {
           params: {
@@ -194,7 +194,7 @@ export default {
         })
         .then((res) => {
           this.gloCluoptions = res.data.list;
-          console.log(this.gloCluoptions)
+          // console.log(this.gloCluoptions)
           for (let gloclu of this.gloCluoptions) {
             this.gloclures.push(gloclu["GlobalCluster"]);
           }
@@ -214,8 +214,8 @@ export default {
         .then(function (res) {
           if (res.data.status == 0) {
             for(let i=0; i< res.data.output.length; ++i){
-              Vue.set(that.plotsres, i, res.data.output[0].split(","))
-              Vue.set(that.cellnum, i, res.data.cellnum[0].replace(/,/g," "))
+              Vue.set(that.plotsres, i, res.data.output[i].split(","))
+              Vue.set(that.cellnum, i, res.data.cellnum[i].replace(/,/g," "))
             }
             that.loading = false;
           }else{
