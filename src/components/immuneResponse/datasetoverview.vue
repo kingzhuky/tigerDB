@@ -105,7 +105,7 @@ export default {
       // console.log(datasetid)
       this.isShow = true
       this.datasetid = datasetid
-      toTarget(720)
+      setTimeout(() => { toTarget(500) }, 300);  
       // this.$refs.immuneSigDetail.renewDetail(this.datasetid)
       
       // console.log(this.datasetid)
@@ -132,13 +132,6 @@ export default {
   components: {
     "v-resultcard": () => import("./datasetoverviewDetail.vue"),
   },
-  watch: {
-    datasetid(){
-      this.$nextTick(() =>{
-        setTimeout(() => { toTarget(720) }, 300);  
-      })
-    }
-  }
 };
 </script>
 

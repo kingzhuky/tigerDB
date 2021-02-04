@@ -4,7 +4,7 @@
       <el-row id="scImmuInput">
         <el-col >
           <el-collapse v-model="datasetcoll">
-            <el-collapse-item name="1">
+            <el-collapse-item name="datasetsel">
               <span class="collapse-title" slot="title">Select A Dataset</span>
               <el-row class="detail1" gutter="20" justify="center">
                 <el-col span="8" push="0" v-for="cancertype in cancertypearr" :key="cancertype.icon">
@@ -145,7 +145,7 @@ export default {
       Signatures: "",
       vsType: "",
       scpathwayVue: "",
-      datasetcoll: '1',
+      datasetcoll: "datasetsel",
       cancertypearr:[
   {
     "name": "Bladder",
@@ -268,13 +268,6 @@ export default {
     };
   },
 
-  created() {
-    // this.getcancer();
-  },
-  mounted() {
-    // this.getgloClu();
-  },
-
   methods: {
     getcancer() {
       this.$http.get("/tiger/singlecelldataset.json").then((res) => {
@@ -298,7 +291,7 @@ export default {
           this.gloCluoptions = res.data.list;
           this.overviewVue = tigoverview;
           this.activeName = "overview";
-          this.$refs.overviewRef.clickPlot(); 
+          // this.$refs.overviewRef.clickPlot(); 
           // this.$refs.coexpRef.CancerTypeSelectChange();
         });
     },
@@ -336,8 +329,8 @@ export default {
       }
     },
     getdatasetid(childid){
-      console.log(childid)
-      this.datasetcoll = '0'
+      // console.log(childid)
+      this.datasetcoll = ""
       this.cancer = childid
       this.cancerSelectChange()
       toTargetbyid('#tabdetail')
