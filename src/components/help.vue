@@ -7,7 +7,7 @@
         <el-divider></el-divider>
         <el-row>
           <el-col :span="12">
-            <p>TIGER, a web-accessible and comprehensive open resource for providing the gene expression landscape of tumor immunology. Currently, TIGER contains bulk transcriptome data for 1,145 samples with immunotherapy clinical outcome and 11,057 samples from TCGA, and single cell transcriptome data for ~720,000 immune cells of 225 samples, among which ~66,000 immune cells of 43 samples have immunotherapy clinical data. Besides, we also collected eight CRISPR and two shRNA screening data from studies identifying genes responsible of anticancer immune response. Moreover, we collected 63 gene signatures that could be potentially used to predict the immunotherapy response from public literature.</p>
+            <p>TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,145 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,042,791 immune cells of 655 samples, among which 88,584 immune cells of 49 samples have immunotherapy clinical data. Besides, we also collected eight CRISPR and two shRNA screening data from studies identifying genes responsible of anticancer immune response. Moreover, we collected 63 gene signatures that could be potentially used to predict the immunotherapy response from public literature.</p>
           </el-col>
           <el-col :span="10" :offset="2">
             <img alt="help" v-lazy="home" />
