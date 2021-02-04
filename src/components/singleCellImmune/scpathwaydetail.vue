@@ -124,14 +124,11 @@ export default {
               that.geneshow = true;
               that.pathwayplots = res.data.output[0];
             }
-            console.log(that.geneloading)
             that.geneloading = false;
-            console.log(that.geneloading)
           }
           if (res.data.status2 == 0) {
             that.pathwayplots = that.pathwayplots + "," + res.data.output2[0].split(",")[0]
           }
-          console.log(that.pathwayplots)
         })
         .catch(function (res) {
           console.log(res);

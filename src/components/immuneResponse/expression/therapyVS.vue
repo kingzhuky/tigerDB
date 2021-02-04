@@ -239,8 +239,8 @@ export default {
           console.log(error);
         });
     },
-    sortChangeClick(column, prop, order){
-      console.log(column.prop,column.order)
+    sortChangeClick(column){
+      // console.log(column.prop,column.order)
       this.loadDir =""
       this.sortCol=column.prop
       this.sortOrder=column.order

@@ -107,7 +107,7 @@
                     .then((res) => {
                         this.sigsampletable = res.data;
                         this.sigsampletableheader = Object.keys(res.data[0]);
-                        console.log( res.data);
+                        // console.log(res.data);
                     })
                     .catch((error) => {
                         console.log(error);
@@ -120,7 +120,7 @@
                     .then((res2) => {
                         this.siggrouptable = res2.data;
                         this.siggrouptableheader = Object.keys(res2.data[0]);
-                        console.log(siggrouptableheader);
+                        // console.log(siggrouptableheader);
                     })
                     .catch(function(error) {
                         console.log(error);

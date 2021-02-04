@@ -178,7 +178,7 @@ export default {
       this.sortCol = column.prop;
       this.sortOrder = column.order;
       this.currentPage = 1;
-      console.log(column.prop + column.order)
+      // console.log(column.prop + column.order)
       this.getTableData(
         this.seargene,
         this.conditi,
@@ -190,7 +190,6 @@ export default {
       );
     },
     getTableData(gene, conditi, currentPage, pageSize, sortCol, sortOrder, ifplot){
-      console.log("Plot: "+ ifplot)
       this.show = true;
       this.imgshow = false;
       this.diffexpimg = "";
@@ -249,7 +248,6 @@ export default {
               that.imgloading = false;
               that.diffexpimg = res.data.output[0];
               that.diffexpimg = res.data.output2[0].split(",")[0] + ',' + that.diffexpimg;
-              console.log(that.diffexpimg)
             }
           } else {
             that.imgshow = false;
@@ -306,7 +304,7 @@ export default {
 
       // myChart_mercor.on("click", function (param) {
       //   if (param.componentSubType === "scatter") {
-      //     //console.log(param.data);
+      //     console.log(param.data);
       //     that.differentialExpressionPlot(
       //       param.data[2],
       //       param.data[3],

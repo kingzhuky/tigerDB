@@ -259,7 +259,7 @@ export default {
       }
     },
     openDetails(row){
-      console.log(row.signature_id);
+      // console.log(row.signature_id);
       this.$router.push({
         name: "immuneSignature",
         params: {

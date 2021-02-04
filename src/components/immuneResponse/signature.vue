@@ -362,14 +362,13 @@ export default {
         });
     },
     tableCellStyleSur({row}) {
-      console.log(row["PValue"])
+      // console.log(row["PValue"])
       var mycolr = ""
       if(parseFloat(row["PValue"]) < 0.1){
         mycolr = "#f0b6b6"
       }else{
         mycolr = "rgb(255,255,255)"
       }
-      console.log(mycolr)
       return {
         background: mycolr
       };

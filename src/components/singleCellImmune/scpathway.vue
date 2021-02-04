@@ -183,7 +183,6 @@ export default {
       }
     },
     clickGene(){
-      console.log("click")
       this.$nextTick(() =>{
         toTargetbyid('#detailinfo');
         toTargetbyid('#detailinfo2');
@@ -244,7 +243,7 @@ export default {
     },
 
     sortChangeClick(column) {
-      console.log(column.prop, column.order);
+      // console.log(column.prop, column.order);
       this.loadDir = "";
       this.sortCol = column.prop;
       this.sortOrder = column.order;
@@ -263,7 +262,7 @@ export default {
         this.loadpage = this.loadpage - 1;
         this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
         if (this.loadpage > 1) {
-          console.log(this.loadpage);
+          // console.log(this.loadpage);
           scrollRow("scDiffExpTable", 400);
           this.loading = false;
         }

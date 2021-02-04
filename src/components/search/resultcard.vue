@@ -142,7 +142,7 @@ export default {
       this.sortCol = column.prop;
       this.sortOrder = column.order;
       // this.loadpage = 1;
-      console.log(column.prop + column.order)
+      // console.log(column.prop + column.order)
       this.getTableData(
         this.seargene,
         this.conditi,

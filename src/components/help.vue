@@ -115,7 +115,6 @@ export default {
   },
   methods: {
     handleEdit(tabname){
-      console.log(tabname)
       this.detailname = tabname;
       this.$refs.helpdetail.changeshow(this.detailname)
     }

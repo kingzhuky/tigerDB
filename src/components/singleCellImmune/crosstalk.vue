@@ -116,7 +116,6 @@ export default {
       }
     },
     sortChangeClick(column) {
-      console.log(column.prop, column.order);
       this.loadDir = "";
       this.sortCol = column.prop;
       this.sortOrder = column.order;

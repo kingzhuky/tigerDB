@@ -240,7 +240,7 @@ export default {
         })
         .then(res => {
           this.vsType = res.data.list[0].glo;
-          console.log(this.vsType);
+          // console.log(this.vsType);
           if(this.vsType === "Response vs Non-response"){
             this.whethrnr = false;
             this.whethtn = true;
@@ -254,7 +254,7 @@ export default {
             this.whethrnr = true;
             this.whethtn = true;
           }
-          console.log(this.whethtn)
+          // console.log(this.whethtn)
         });
       return this.vsType
     },
@@ -306,7 +306,7 @@ export default {
     },
 
     sortChangeClick(column) {
-      console.log(column.prop, column.order);
+      // console.log(column.prop, column.order);
       this.loadDir = "";
       this.sortCol = column.prop;
       this.sortOrder = column.order;

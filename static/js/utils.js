@@ -117,7 +117,6 @@ const toTarget = function (param) {
 
 const toTargetbyid = function (id) {
   var PageId = document.querySelector(id)
-  console.log(PageId.offsetTop)
   window.scrollTo({
     'top': PageId.offsetTop,
     'behavior': 'smooth'

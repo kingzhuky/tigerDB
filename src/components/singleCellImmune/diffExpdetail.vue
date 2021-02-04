@@ -197,9 +197,9 @@ export default {
                 that.geneplots = res.data.output[0];
               }
               //that.geneplots = res.data.output[0];
-            console.log(that.geneloading)
+            // console.log(that.geneloading)
             that.geneloading = false;
-            console.log(that.geneloading)
+            // console.log(that.geneloading)
             }
           })
           .catch(function (res) {

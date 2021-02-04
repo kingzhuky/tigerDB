@@ -123,7 +123,7 @@ export default {
                 that.articleData = res.data.list;
                 that.imgpathRNRBox = "ImmuneSig-Detial-RNR-boxplot-" + sigID
                 that.imgpathTNBox = "ImmuneSig-Detial-pancancer-boxplot-" + sigID
-                console.log(that.imgpathTNBox)
+                // console.log(that.imgpathTNBox)
                 that.artloading = false;
             })
             .catch(function (error) {
