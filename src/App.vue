@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="content">
+    <div id="app2" class="content">
       <div class="searchBar">
         <div>
           <el-row>
@@ -19,6 +19,7 @@
 
         <el-menu
           :default-active="activeIndex"
+          id="haha"
           class="el-menu-demo"
           mode="horizontal"
           background-color="rgb(47, 175, 169)"
@@ -169,8 +170,8 @@ i.el-icon-setting {
   padding-bottom: 50px;
   box-sizing: border-box;
   background: rgb(245, 248, 249);
-  height: 100vh;
-  /* overflow-y: scroll; */
+  height: auto;
+  overflow-y: visible;
 }
 
 .searchBar {

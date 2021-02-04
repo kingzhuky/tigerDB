@@ -99,7 +99,8 @@ import tigcrosstalk from './crosstalk.vue'
 import tigevolution from './evolution.vue'
 import tigpathway from './scpathway.vue'
 import selectCancerIcon from './selectCancerIcon.vue'
-import toTargetbyid from "../../../static/js/utils.js";
+import {toTargetbyid} from "../../../static/js/utils.js"
+
 
 export default {
   components: {
@@ -340,7 +341,7 @@ export default {
       this.cancer = childid
       this.cancerSelectChange()
       toTargetbyid('#tabdetail')
-      // toTarget(720)
+      // toTargetbyid('#tabdetail')
     }
   },
 };

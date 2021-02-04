@@ -265,7 +265,7 @@ export default {
         this.celltype = column["label"];
         this.gloclu = column["type"];
         this.$refs.detailPlot.markerPlot(row["gene"], column["label"]);
-        toTarget(820);
+        setTimeout(() => { toTarget(820) }, 200); 
       }
     },
 

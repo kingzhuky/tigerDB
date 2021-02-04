@@ -183,7 +183,7 @@ export default {
           row["Signature"]
         );
         this.$refs.detailPlot.artivcleDetail(row["Signature"]);
-        toTarget(820);
+        setTimeout(() => { toTarget(820) }, 200); 
       }
     },
 

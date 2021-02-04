@@ -276,7 +276,7 @@ export default {
         this.$refs.detailPlot.getSampleDetail(column["label"]);
         this.$refs.detailPlot.getGeneDetail(column["label"]);
         //this.$refs.detailPlot.tableDetail("survival", 1, "");
-        toTarget(820);
+        setTimeout(() => { toTarget(820) }, 200); 
       }
     },
 

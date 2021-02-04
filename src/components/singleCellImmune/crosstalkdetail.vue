@@ -232,7 +232,7 @@ export default {
         this.crossPlot(row["gene"], column["label"]);
         this.plotloading = false;
         this.evolushow2 = true;
-        // toTarget(820);
+        // setTimeout(() => { toTarget(820) }, 200); 
       }
     },
     previewImg(url){

@@ -105,8 +105,14 @@ const scrollAnimation = function (currentY, targetY) {
 }
 
 const toTarget = function (param) {
-  const currentY = document.querySelector("#app").scrollTop || document.body.scrollTop;
-  scrollAnimation(currentY, param);
+  // const currentY = document.querySelector("#app").scrollTop || document.body.scrollTop;
+  // scrollAnimation(currentY, param);
+  const pos = document.querySelector("#app").offsetTop + 250 + param 
+  console.log(pos)
+  window.scrollTo({
+    'top': pos,
+    'behavior': 'smooth'
+  })
 }
 
 const toTargetbyid = function (id) {

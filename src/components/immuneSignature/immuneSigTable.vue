@@ -78,7 +78,7 @@ export default {
       // console.log(sigID)
       this.sigID = sigID
       this.$refs.immuneSigDetail.renewDetail(this.sigID)
-      toTarget(720)
+      setTimeout(() => { toTarget(720) }, 200); 
       // console.log(this.sigID)
     }
   },

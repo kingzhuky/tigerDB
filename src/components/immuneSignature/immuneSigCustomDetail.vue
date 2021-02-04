@@ -168,7 +168,7 @@
                     this.$refs.immuneSigDetail.renewDetail(this.sigID)
                     // this.m6aMsg = row["gene"];
                     // this.cancerMsg = column["label"];
-                    // toTarget(820);
+                    // setTimeout(() => { toTarget(820) }, 200); 
                     // this.$refs.detailPlot.tableDetail(row["gene"]);
                     // this.$refs.detailPlot.artivcleDetail(column["label"]);
                 }else{
