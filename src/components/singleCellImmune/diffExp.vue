@@ -153,7 +153,7 @@
 <script>
 import {
   scrollRow,
-  toTargetbyid,
+  toTarget,
   gStyle,
   move,
   stop,
@@ -198,6 +198,7 @@ export default {
   },
 
   mounted: function () {
+    this.reset()
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     for (let gloclu of this.gloCluoptions) {
@@ -222,8 +223,8 @@ export default {
     },
     clickGene(){
       this.$nextTick(() =>{
-        toTargetbyid('#detailinfo');
-        toTargetbyid('#detailinfo2');
+        setTimeout(() => { toTarget(720) }, 300);  
+        // toTarget('#detailinfo2');
       })
     }
   },
@@ -436,8 +437,8 @@ export default {
         this.gloclu = column["type"];
         this.$refs.detailPlot.getdatagene(row["gene"]);
         this.$refs.detailPlot.genePlot(row["gene"], column["label"], column["type"]);
-        toTargetbyid('#detailinfo');
-        toTargetbyid('#detailinfo2');
+        setTimeout(() => { toTarget(720) }, 300);  
+        // toTarget('#detailinfo2');
       }
     },
 

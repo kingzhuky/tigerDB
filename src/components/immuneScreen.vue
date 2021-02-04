@@ -74,7 +74,7 @@ import {
   gStyle,
   move,
   stop,
-  toTargetbyid
+  toTarget
 } from "../../static/js/utils.js";
 
 export default {
@@ -266,7 +266,7 @@ export default {
         this.isShow = true;
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
-        toTargetbyid("#detailinfo");
+        setTimeout(() => { toTarget(720) }, 300);  
         this.$refs.detailPlot.tableDetail(row["gene"]);
         this.$refs.detailPlot.artivcleDetail(column["label"]);
       }

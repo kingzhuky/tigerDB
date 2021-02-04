@@ -71,7 +71,7 @@
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
 import {
   scrollRow,
-  toTargetbyid,
+  toTarget,
   gStyle,
   move,
   stop,
@@ -105,7 +105,7 @@ export default {
       // console.log(datasetid)
       this.isShow = true
       this.datasetid = datasetid
-      toTargetbyid("#detailinfo")
+      toTarget(720)
       // this.$refs.immuneSigDetail.renewDetail(this.datasetid)
       
       // console.log(this.datasetid)
@@ -135,7 +135,7 @@ export default {
   watch: {
     datasetid(){
       this.$nextTick(() =>{
-        toTargetbyid('#detailinfo');
+        setTimeout(() => { toTarget(720) }, 300);  
       })
     }
   }

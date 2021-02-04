@@ -75,7 +75,7 @@ import {
   gStyle,
   move,
   stop,
-  toTargetbyid
+  toTarget
 } from "../../../static/js/utils.js";
 
 export default {
@@ -104,9 +104,7 @@ export default {
   },
 
   mounted: function () {
-    console.log(this.gloclures)
-    this.oldcancer = this.cancer;
-    this.getTableData(1, "", "");
+    this.plot()
   },
 
   watch: {
@@ -291,7 +289,7 @@ export default {
         this.gloclu = column["type"];
         this.$refs.detailPlot.getdatagene(row["gene"]);
         this.$refs.detailPlot.markerPlot(row["gene"], column["label"], column["type"]);
-        toTargetbyid('#detailinfo');
+        setTimeout(() => { toTarget(720) }, 300);  
       }
     },
 
@@ -316,7 +314,7 @@ export default {
     clickGene(){
       console.log("click")
       this.$nextTick(() =>{
-        toTargetbyid('#detailinfo');
+        setTimeout(() => { toTarget(720) }, 300);  
       })
     }
   }

@@ -125,7 +125,7 @@
 <script>
 import {
   scrollRow,
-  toTargetbyid,
+  toTarget,
   gStyle,
   move,
   stop,
@@ -166,6 +166,7 @@ export default {
   },
 
   mounted: function () {
+    this.reset()
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     this.getTableData(1, "", "");
@@ -184,14 +185,15 @@ export default {
     },
     clickGene(){
       this.$nextTick(() =>{
-        toTargetbyid('#detailinfo');
-        toTargetbyid('#detailinfo2');
+        setTimeout(() => { toTarget(720) }, 300);  
+        toTarget('#detailinfo2');
       })
     }
   },
 
   methods: {
     handleClick(tab, event) {
+      this.reset();
       this.tabactiveName = tab.name;
       this.getTableData(1, "", "");
     },
@@ -369,8 +371,8 @@ export default {
         this.celltype=column["label"]
         this.gloclu = column["type"];
         this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
-        toTargetbyid('#detailinfo');
-        toTargetbyid('#detailinfo2');
+        setTimeout(() => { toTarget(720) }, 300);  
+        toTarget('#detailinfo2');
       }
     },
 

@@ -341,7 +341,7 @@ export default {
       this.cancer = childid
       this.cancerSelectChange()
       toTargetbyid('#tabdetail')
-      // toTargetbyid('#tabdetail')
+      // toTarget('#tabdetail')
     }
   },
 };

@@ -52,99 +52,94 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   names(my36colors)=levels(as.factor(meta$recluster))
   my36colors[setdiff(unique(meta$recluster)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ,sub.cluster)]='#aeaeb140'
   
-  #----分群图-----
-  p1=ggplot(meta,aes(x=UMAP_1,y=UMAP_2,color=recluster))+geom_point(size=0.3)+mytheme+scale_color_manual(values = my36colors)+
-    guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
-    panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
-    axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
-    axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
-    )
-   
-  
-    
-    
-    pic.name1=paste('umap',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
-    pic.name1=pic.name1 %>% str_replace_all('\\/','\\.')
-  ggsave(paste0(resPath,pic.name1,'.png'),width =120,height =80, unit = "mm", dpi=100,p1)
-  
-  #-----饼图-------
-  table.pic=meta$recluster %>% table() %>% data.frame()
-  table.pic1=meta$recluster%>% table() %>% prop.table() %>% data.frame()
-  table.pic1$Freq=table.pic1$Freq*100
-  table.pic=data.frame(table.pic,prop=table.pic1$Freq)
-  
+  pic.name1=paste('umap',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
+  pic.name1=pic.name1 %>% str_replace_all('\\/','\\.')
   pic.name2=paste('pie',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
   pic.name2=pic.name2 %>% str_replace_all('\\/','\\.')
-  
-  png(paste0(resPath,pic.name2,'.png'),width = 120, height =80, units = "mm",res = 100)
-  pie(table.pic$Freq,labels=paste0(table.pic$.,' (',round(table.pic$prop,3),'%)'),col= my36colors,cex=0.8)
-
-  dev.off()
-  
-  
-  #----组织特异性图-------
-  meta=meta[meta$recluster %in% sub.cluster,]
-  if(!is.null(levels(meta$Response))){
-    now.meta=meta %>% data.table() %$% .[,.N,.(recluster,Response,Patient)] %>% data.frame()
-    now.meta= ddply(now.meta,'Patient',transform,per=N/sum(N))
-    now.meta=now.meta[now.meta$recluster %in% sub.cluster,]
-    now.meta$per=now.meta$per*100
-    
-    
-    p2=ggplot(now.meta,aes(x=recluster,y=per,color=Response))+geom_boxplot(outlier.colour = NA)+scale_color_manual(values = c('#016af3','#f34b01'))+mytheme+
-      geom_jitter(aes(x=recluster,y=per,color=Response),position = position_jitterdodge(),size=1,shape=1)+
-      stat_compare_means(aes(group=Response,label = ..p.signif..),method ='wilcox')+theme(axis.title.x = element_blank())+labs(y=' (%) of cells')+
-      theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.5),color="black"),
-            axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
-            panel.grid.major=element_line(color="grey95"),
-            panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
-    
-    pic.name3=paste('Boxplot-Response',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
-    pic.name3=pic.name3 %>% str_replace_all('\\/','\\.')
-    if(global.cluster=='Tcell'){
-      ggsave(paste0(resPath,pic.name3,'.png'),p2,width = 120,height =80, unit = "mm", dpi=100)
-    }else{
-      ggsave(paste0(resPath,pic.name3,'.png'),p2,width = 200,height =80, unit = "mm", dpi=100)
-    }
-    
-      }
-  if(sum(meta$Tissue=='Tumor')!=nrow(meta)){
-    now.meta=meta %>% data.table() %$% .[,.N,.(recluster,Tissue,Patient)] %>% data.frame()
-    now.meta= ddply(now.meta,'Patient',transform,per=N/sum(N))
-    now.meta=now.meta[now.meta$recluster %in% sub.cluster,]
-    now.meta$per=now.meta$per*100
-    p2=ggplot(now.meta,aes(x=recluster,y=per,color=Tissue))+geom_boxplot(outlier.colour = NA)+scale_color_manual(values = c('#016af3','#f34b01','#f5e31b','green'))+mytheme+
-      geom_jitter(aes(x=recluster,y=per,color=Tissue),position = position_jitterdodge(),size=1,shape=1)+
-      stat_compare_means(aes(group=Tissue,label = ..p.signif..),method ='wilcox')+theme(axis.title.x = element_blank())+labs(y=' (%) of cells')+
-      theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.2),color="black"),
-            axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"),axis.title=element_text(size=rel(1.5)),
-            panel.grid.major=element_line(color="grey95"),legend.text = element_text(size=15),legend.title =  element_text(size=15),
-            panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
-    pic.name4=paste('Boxplot-tissue',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
-    pic.name4=pic.name4 %>% str_replace_all('\\/','\\.')
-    if(global.cluster=='Tcell'){
-    ggsave(paste0(resPath,pic.name4,'.png'),p2,width = 120,height =80, unit = "mm", dpi=100)
-    }else{
-    ggsave(paste0(resPath,pic.name4,'.png'),p2,width = 200,height =80, unit = "mm", dpi=100)
-    }
-    
-  }
-  
-  
-  #----细胞类型特异性-------
-  heatmap.markers=readRDS(paste0(Path,cancer_type,'/',cancer_type,'/Classical.markers.heatmap.rds'))
-  heatmap.markers=heatmap.markers[[global.cluster]]
-
+  pic.name3=paste('Boxplot-Response',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
+  pic.name3=pic.name3 %>% str_replace_all('\\/','\\.')
+  pic.name4=paste('Boxplot-tissue',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
+  pic.name4=pic.name4 %>% str_replace_all('\\/','\\.')
   pic.name5=paste('Heatmap',cancer_type,global.cluster,paste(sub.cluster,collapse = "_"),sep='-')
   pic.name5=pic.name5 %>% str_replace_all('\\/','\\.')
-  if(global.cluster=='Tcell'){
-    ggsave(paste0(resPath,pic.name5,'.png'), plot = print(heatmap.markers),width = 120,height =80, unit = "mm", dpi=100)
-  }else{
-    ggsave(paste0(resPath,pic.name5,'.png'), plot = print(heatmap.markers),width = 200,height =80, unit = "mm", dpi=100)
+
+  ## check file exist
+  if(!file.exists(paste0(resPath,pic.name1,'.png'))){
+    p1=ggplot(meta,aes(x=UMAP_1,y=UMAP_2,color=recluster))+geom_point(size=0.3)+mytheme+scale_color_manual(values = my36colors)+
+        guides(color = guide_legend(override.aes = list(size = 3),title = NULL))+ theme(
+          panel.border=element_rect(color="white",size=1),axis.line=element_line(color="white",size=0.5),
+          axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),axis.ticks = element_blank(),
+          axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="white"),plot.title = element_text(size=15)
+        )
+   
+    ggsave(paste0(resPath,pic.name1,'.png'),width =120,height =80, unit = "mm", dpi=100,p1)
+    
+    #-----饼图-------
+    table.pic=meta$recluster %>% table() %>% data.frame()
+    table.pic1=meta$recluster%>% table() %>% prop.table() %>% data.frame()
+    table.pic1$Freq=table.pic1$Freq*100
+    table.pic=data.frame(table.pic,prop=table.pic1$Freq)
+
+    png(paste0(resPath,pic.name2,'.png'),width = 120, height =80, units = "mm",res = 100)
+    pie(table.pic$Freq,labels=paste0(table.pic$.,' (',round(table.pic$prop,3),'%)'),col= my36colors,cex=0.8)
+
+    dev.off()
+    
+    
+    #----组织特异性图-------
+    meta=meta[meta$recluster %in% sub.cluster,]
+    if(!is.null(levels(meta$Response))){
+      now.meta=meta %>% data.table() %$% .[,.N,.(recluster,Response,Patient)] %>% data.frame()
+      now.meta= ddply(now.meta,'Patient',transform,per=N/sum(N))
+      now.meta=now.meta[now.meta$recluster %in% sub.cluster,]
+      now.meta$per=now.meta$per*100
+      
+      
+      p2=ggplot(now.meta,aes(x=recluster,y=per,color=Response))+geom_boxplot(outlier.colour = NA)+scale_color_manual(values = c('#016af3','#f34b01'))+mytheme+
+        geom_jitter(aes(x=recluster,y=per,color=Response),position = position_jitterdodge(),size=1,shape=1)+
+        stat_compare_means(aes(group=Response,label = ..p.signif..),method ='wilcox')+theme(axis.title.x = element_blank())+labs(y=' (%) of cells')+
+        theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.5),color="black"),
+              axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.5),color="black"),
+              panel.grid.major=element_line(color="grey95"),
+              panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
+
+      if(global.cluster=='Tcell'){
+        ggsave(paste0(resPath,pic.name3,'.png'),p2,width = 120,height =80, unit = "mm", dpi=100)
+      }else{
+        ggsave(paste0(resPath,pic.name3,'.png'),p2,width = 200,height =80, unit = "mm", dpi=100)
+      }
+    }
+    if(sum(meta$Tissue=='Tumor')!=nrow(meta)){
+      now.meta=meta %>% data.table() %$% .[,.N,.(recluster,Tissue,Patient)] %>% data.frame()
+      now.meta= ddply(now.meta,'Patient',transform,per=N/sum(N))
+      now.meta=now.meta[now.meta$recluster %in% sub.cluster,]
+      now.meta$per=now.meta$per*100
+      p2=ggplot(now.meta,aes(x=recluster,y=per,color=Tissue))+geom_boxplot(outlier.colour = NA)+scale_color_manual(values = c('#016af3','#f34b01','#f5e31b','green'))+mytheme+
+        geom_jitter(aes(x=recluster,y=per,color=Tissue),position = position_jitterdodge(),size=1,shape=1)+
+        stat_compare_means(aes(group=Tissue,label = ..p.signif..),method ='wilcox')+theme(axis.title.x = element_blank())+labs(y=' (%) of cells')+
+        theme(axis.text.x = element_text(angle=-20,hjust=0, vjust=1,size = rel(1.2),color="black"),
+              axis.text.y = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"),axis.title=element_text(size=rel(1.5)),
+              panel.grid.major=element_line(color="grey95"),legend.text = element_text(size=15),legend.title =  element_text(size=15),
+              panel.grid.minor=element_line(color="grey95"),plot.title = element_text(size=15))
+      if(global.cluster=='Tcell'){
+        ggsave(paste0(resPath,pic.name4,'.png'),p2,width = 120,height =80, unit = "mm", dpi=100)
+      }else{
+        ggsave(paste0(resPath,pic.name4,'.png'),p2,width = 200,height =80, unit = "mm", dpi=100)
+      }
+    }
+      
+      
+    #----细胞类型特异性-------
+    heatmap.markers=readRDS(paste0(Path,cancer_type,'/',cancer_type,'/Classical.markers.heatmap.rds'))
+    heatmap.markers=heatmap.markers[[global.cluster]]
+
+    if(global.cluster=='Tcell'){
+      ggsave(paste0(resPath,pic.name5,'.png'), plot = print(heatmap.markers),width = 120,height =80, unit = "mm", dpi=100)
+    }else{
+      ggsave(paste0(resPath,pic.name5,'.png'), plot = print(heatmap.markers),width = 200,height =80, unit = "mm", dpi=100)
+    }
   }
-  
-  
-  
+  #----分群图-----
 
   if(!is.null(levels(meta$Response)) & sum(meta$Tissue=='Tumor')!=nrow(meta)){
     cat(paste(pic.name1,pic.name2,pic.name3,pic.name4,pic.name5,sep=','))
