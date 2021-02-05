@@ -67,7 +67,7 @@ export default {
 
   methods: {
     //获取表格数据
-      getTableData(sample) {
+    getTableData(sample) {
       this.loading = true;
       this.$http
         .get("/tiger/immunescreendetail2.php", {

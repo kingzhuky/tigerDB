@@ -48,9 +48,9 @@
           <el-menu-item index="/help">
             <div class="header-nav">Help</div>
           </el-menu-item>
-          <!-- <el-menu-item index="/download">
+          <el-menu-item index="/download">
             <div class="header-nav">Download</div>
-          </el-menu-item> -->
+          </el-menu-item>
           <el-menu-item index="/contact">
             <div class="header-nav">Contact</div>
           </el-menu-item>

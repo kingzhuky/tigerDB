@@ -100,6 +100,7 @@ export default {
       }
 
       let option = {
+        animation: false,
         xAxis: {
           name: xAxis,
           // show: false,
@@ -129,7 +130,7 @@ export default {
         },
         series: [
           {
-            symbolSize: 20,
+            symbolSize: 10,
             data: data,
             type: "scatter",
           },
