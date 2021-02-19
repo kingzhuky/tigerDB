@@ -63,10 +63,10 @@ if ($type=="celltype"){
     $gloclu=$row["GlobalCluster"];
   }
   if(PATH_SEPARATOR==':'){
-    $zhiling="sudo Rscript pic.TN.gene2.R $cancer $gloclu $celltype $gene";
+    $zhiling="sudo Rscript pic.TN.gene2.R $cancer $gloclu \"$celltype\" $gene";
     $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }else{
-    $zhiling="Rscript pic.TN.gene2.R $cancer $gloclu $celltype $gene";
+    $zhiling="Rscript pic.TN.gene2.R $cancer $gloclu \"$celltype\" $gene";
     $zhiling2="Rscript overview.R $cancer  $gloclu";
   }
 }

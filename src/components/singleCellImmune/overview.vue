@@ -228,15 +228,16 @@ export default {
         });
     },
 
-    previewImg(urlList){
+    previewImg(url){
       this.$hevueImgPreview({
+        imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: 0, // 多图预览，默认展示第二张图片
-        imgList: urlList, // 需要预览的多图数组
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+        closeColor: 'rgba(255,255,255,.5)'
       })
-    }
+    },
   },
 
   components: {

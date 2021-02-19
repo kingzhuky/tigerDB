@@ -132,6 +132,7 @@ export default {
     };
   },
   mounted() {
+    this.CancerTypeSelectChange()
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
@@ -175,11 +176,6 @@ export default {
         this.canceroptions = res.data;
       });
     },
-    cancerSelectChange() {
-      this.getgloClu();
-      this.getCellType();
-    },
-
     CancerTypeSelectChange() {
       this.getgloClu();
       this.getCellType();
@@ -256,15 +252,6 @@ export default {
           //this.subClucoptions = res.data.list;
           this.subClu = res.data.list;
         });
-    },
-    previewImg(url){
-      this.$hevueImgPreview({
-        url: url,
-        multiple: false, // 开启多图预览模式
-        keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-      })
     },
   },
 };

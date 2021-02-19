@@ -6,7 +6,7 @@
           <div class="text item">
             <h1
               style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu == "All" ? celltype : gloclu}} Cells<br>Gene Symobl: {{gene}}</h1>
+            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu == "All" ? celltype : gloclu}}<br>Gene Symobl: {{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -14,41 +14,63 @@
       <div class="infor">
         <el-card>
           <el-row v-loading="geneloading">
-            <el-row class="scdetailimg" v-show="geneshow" >
-              <el-col :span="6" >
-                <p class="imgtitle">Cell Types</p>
+            <el-row class="scdetailimg" v-show="geneshow" :gutter="20" type="flex" justify="space-around">
+              <el-col :span="4" >
+                <p class="imgtitle">UMAP Plot of Cell Types</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
               </el-col>
-              <el-col :span="6">
-                <p class="imgtitle">UMAP Plot of {{gene}} Expression</p>
+              <el-col :span="4" >
+                <p class="imgtitle">UMAP Plot of Tissue Types</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
               </el-col>
-              <el-col :span="12">
+              <el-col :span="4">
                 <div class="imgspan"> 
-                <p class="imgtitle">Boxplot of {{gene}} Expression</p>
+                <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
                   <img
                   id="singleimg"
                   fit="fill"
-                  height="250px"
-                  :src="'tiger/img/' + geneplots.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png'])">
+                  width="100%"
+                  :src="'tiger/img/' + geneplots.split(',')[3] + '.png'"
+                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
                 </div>
               </el-col>
-            </el-row>
+              <el-col :span="4">
+                <p class="imgtitle">Boxplot of Tissue Types</p>
+                <img
+                  id="singleimg"
+                  fit="fill"
+                  width="100%"
+                  :src="'tiger/img/' + geneplots.split(',')[2] + '.png'"
+                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+              </el-col>
+              <el-col :span="4">
+                <div class="imgspan"> 
+                <p class="imgtitle">Boxplot of {{seargene}} Expression Composition</p>
+                  <img
+                  id="singleimg"
+                  fit="fill"
+                  width="100%"
+                  :src="'tiger/img/' + geneplots.split(',')[4] + '.png'"
+                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                </div>
+              </el-col>
+            </el-row> 
               <el-col :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
                 <div id="norult">No result</div>
               </el-col>
           </el-row>
+          <br />
+          <br />
         </el-card>
         <br />
         <el-card v-loading="detailload" class="decard" v-if="wershow">
@@ -179,7 +201,7 @@ export default {
         that.geneloading = true;
         that.geneshow = true;
         this.$http
-          .get("/tiger/scimmudiffexpdetailgene.php", {
+          .get("/tiger/scimmudiffexpdetailgene2.php", {
             params: {
               cancer: this.cancer,
               gene: clickgene,
@@ -190,11 +212,11 @@ export default {
           })
           .then(function (res) {
             if (res.data.status == 0) {
-              if (res.data.output[0] === "0") {
+              if (res.data.output[0] === "0" || res.data.output2[0] === "0") {
                 that.geneshow = false;
               } else {
                 that.geneshow = true;
-                that.geneplots = res.data.output[0];
+                that.geneplots = res.data.output2[0].split(",")[0] + ',' + res.data.output[0];
               }
               //that.geneplots = res.data.output[0];
             // console.log(that.geneloading)
@@ -209,11 +231,12 @@ export default {
     },
     previewImg(url){
       this.$hevueImgPreview({
-        url: url,
-        multiple: false, // 开启多图预览模式
+        imgList: url,
+        multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: 0, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+        closeColor: 'rgba(255,255,255,.5)'
       })
     },
   },

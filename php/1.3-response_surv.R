@@ -59,8 +59,7 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
   colnames(plot.data)[seq(ncol(plot.data)-1,ncol(plot.data))] <- c("Overall_survival_days","Status")
   plot.data$Status <- ifelse(plot.data$Status == "Dead", 1, 0)
   if( sum(!is.na(plot.data$Overall_survival_days)) < 3 ){
-    maintitle1 <- 0
-    maintitle2 <- 0
+    cat("0")
   }else{
     if (normalMed == "gene"){
       plot.data$gene.exp <- plot.data[,CustomGene]/plot.data[,NormalGene]
@@ -149,7 +148,7 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
       print(response.surv.plot)
       dev.off()
     }
+    cat(paste(maintitle1,maintitle2,sep=","))
   }
 # }
-cat(paste(maintitle1,maintitle2,sep=","))
 

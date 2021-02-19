@@ -16,43 +16,54 @@
       <el-table-column type="expand" >
         <template slot-scope="scope">
           <div class="detailimg" v-loading="imgloading">
-            <el-row class="scdetailimg" v-show="imgshow" >
-              <el-col :span="6" >
+            <el-row class="scdetailimg" v-show="imgshow" :gutter="20" type="flex" justify="space-around">
+              <el-col :span="4" >
                 <p class="imgtitle">UMAP Plot of Cell Types</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
+                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
               </el-col>
-              <el-col :span="6" >
+              <el-col :span="4" >
                 <p class="imgtitle">UMAP Plot of Tissue Types</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
+                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
               </el-col>
-              <el-col :span="6">
+              <el-col :span="4">
+                <div class="imgspan"> 
                 <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
+                  <img
+                  id="singleimg"
+                  fit="fill"
+                  width="100%"
+                  :src="'tiger/img/' + diffexpimg.split(',')[3] + '.png'"
+                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                </div>
+              </el-col>
+              <el-col :span="4">
+                <p class="imgtitle">Boxplot of Tissue Types</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
+                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
               </el-col>
-              <el-col :span="6">
+              <el-col :span="4">
                 <div class="imgspan"> 
-                <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
+                <p class="imgtitle">Boxplot of {{seargene}} Expression Composition</p>
                   <img
                   id="singleimg"
                   fit="fill"
-                  height="250px"
-                  :src="'tiger/img/' + diffexpimg.split(',')[3] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png'])">
+                  width="100%"
+                  :src="'tiger/img/' + diffexpimg.split(',')[4] + '.png'"
+                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
                 </div>
               </el-col>
             </el-row> 
@@ -230,7 +241,7 @@ export default {
       that.imgshow = true;
 
       this.$http
-        .get("/tiger/scimmudiffexpdetailgene.php", {
+        .get("/tiger/scimmudiffexpdetailgene2.php", {
           params: {
             cancer: cancer,
             gene: that.seargene,
@@ -321,11 +332,12 @@ export default {
 
     previewImg(url){
       this.$hevueImgPreview({
-        url: url,
-        multiple: false, // 开启多图预览模式
+        imgList: url,
+        multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: 0, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
+        closeColor: 'rgba(255,255,255,.5)'
       })
     },
     clickPlot() {

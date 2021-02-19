@@ -541,16 +541,22 @@ export default {
             }
           })
           .then(function(res) {
-            if (res.data.status == 0) {
-              let imgpath2 = res.data.output[2].split(",");
-              setTimeout((that.imgpath = imgpath2[0]), 1000);
-              that.gettableDataSur(imgpath2[1]);
-              // that.imgpath = imgpath2[0];
-              // that.imgpathSur = imgpath2[1];
-              that.loadingSur = false;
+            if (res.data.status == 0 ) {
+              if(res.data.output[0] == '0'){
+                that.surresultShow = false;
+              }else{
+                let imgpath2 = res.data.output[0].split(",");
+                setTimeout((that.imgpath = imgpath2[0]), 1000);
+                that.gettableDataSur(imgpath2[1]);
+                // that.imgpath = imgpath2[0];
+                // that.imgpathSur = imgpath2[1];
+                that.loadingSur = false;
+                console.log("haha")
+              }
             } else {
               that.surresultShow = false;
             }
+            console.log(that.surresultShow)
           })
           .catch(function(res) {
             console.log(res);
