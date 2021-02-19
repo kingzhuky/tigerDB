@@ -108,7 +108,7 @@ const toTarget = function (param) {
   // const currentY = document.querySelector("#app").scrollTop || document.body.scrollTop;
   // scrollAnimation(currentY, param);
   const pos = document.querySelector("#app").offsetTop + 250 + param 
-  console.log(pos)
+  // console.log(pos)
   window.scrollTo({
     'top': pos,
     'behavior': 'smooth'

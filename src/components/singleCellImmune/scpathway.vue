@@ -47,7 +47,7 @@
             <span>High NES&gt;0</span>
           </div>
           <!-- 详细页显示与否 -->
-          <v-scpathwaydetail2
+          <v-scpathwaydetail
             ref="pathwaydetailPlot"
             id="detailinfo"
             v-show="isShow"
@@ -56,7 +56,7 @@
             :cancer="cancer"
             :gloclu="gloclu"
             :tabtype="tabactiveName"
-          ></v-scpathwaydetail2>
+          ></v-scpathwaydetail>
         </el-tab-pane>
         <el-tab-pane label="Tumor VS Normal" name="diff">
             <el-col :span="4" :offset="20"> 
@@ -105,7 +105,7 @@
           </div>
           <!-- 详细页显示与否 -->
           <v-scpathwaydetail
-            ref="pathwaydetailPlot"
+            ref="pathwaydetailPlotdiff"
             id="detailinfo2"
             v-show="isShow"
             :pathway="clickGene"
@@ -370,7 +370,12 @@ export default {
         this.clickGene = row["gene"];
         this.celltype=column["label"]
         this.gloclu = column["type"];
-        this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
+        if(this.tabactiveName == "cluster"){
+          this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
+        }else if(this.tabactiveName == "diff"){
+          this.$refs.pathwaydetailPlotdiff.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
+        }
+        
         setTimeout(() => { toTarget(720) }, 300);  
         toTarget('#detailinfo2');
       }

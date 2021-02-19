@@ -263,7 +263,13 @@ export default {
     "datasetid": "OS",
     "datasetname": "OS | Zhou, Y., et al Nat Commun. 2020",
     "icon": require("../../assets/Icons/Bone.png")
-  }
+  },
+  // {
+  //   "name": "Esophagus",
+  //   "datasetid": "ESCC",
+  //   "datasetname": "ESCC | Zheng, Y., Nat Commun 2020",
+  //   "icon": require("../../assets/Icons/Esophagus.png")
+  // },
 ]
     };
   },
@@ -291,7 +297,7 @@ export default {
           this.gloCluoptions = res.data.list;
           this.overviewVue = tigoverview;
           this.activeName = "overview";
-          // this.$refs.overviewRef.clickPlot(); 
+          this.$refs.overviewRef.clickPlot(); 
           // this.$refs.coexpRef.CancerTypeSelectChange();
         });
     },
