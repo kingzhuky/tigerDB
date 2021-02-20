@@ -201,7 +201,7 @@ export default {
         that.geneloading = true;
         that.geneshow = true;
         this.$http
-          .get("/tiger/scimmudiffexpdetailgene2.php", {
+          .get("/tiger/scimmudiffexpdetailgene.php", {
             params: {
               cancer: this.cancer,
               gene: clickgene,

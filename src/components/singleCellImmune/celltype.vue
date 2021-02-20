@@ -104,7 +104,15 @@ export default {
   },
 
   mounted: function () {
-    this.plot()
+    // this.plot()
+    this.reset()
+    this.oldcancer = this.cancer;
+    this.oldgloclu = this.gloclu;
+    for (let gloclu of this.gloCluoptions) {
+      this.gloclures.push(gloclu["GlobalCluster"]);
+      this.selectgloclu.push(gloclu["GlobalCluster"]);
+    }
+    this.getTableData(1, "", "");
   },
 
   watch: {
@@ -125,12 +133,6 @@ export default {
       this.tableData = [];
       this.loadDir = "";
       this.tableDataheader = [];
-      this.gloclures = [];
-      this.selectgloclu = [];
-      for (let gloclu of this.gloCluoptions) {
-        this.gloclures.push(gloclu["GlobalCluster"]);
-        this.selectgloclu.push(gloclu["GlobalCluster"]);
-      }
     },
     plot() {
       if (
@@ -174,7 +176,7 @@ export default {
           return "defalutColor";
       }
     },
-    filtergloclu( ){
+    filtergloclu(){
       this.reset()
       this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
@@ -264,6 +266,7 @@ export default {
                 new_columns.push(col_obj)
               }
             }
+            console.log(this.selectgloclu)
             this.tableDataheader = new_columns
           }
         })

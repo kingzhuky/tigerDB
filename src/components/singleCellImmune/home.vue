@@ -141,7 +141,7 @@ export default {
       cancer: "CAC",
       gloClu: "",
       canceroptions: [],
-      gloCluoptions: [],
+      gloCluoptions: [{GlobalCluster: "All"}, {GlobalCluster: "Tcell"}, {GlobalCluster: "CD4"}, {GlobalCluster: "CD8"},{GlobalCluster: "Bcell"},{GlobalCluster: "Myeloid"}],
       Signatures: "",
       vsType: "",
       scpathwayVue: "",

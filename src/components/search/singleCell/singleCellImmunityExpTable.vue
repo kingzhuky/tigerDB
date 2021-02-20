@@ -241,7 +241,7 @@ export default {
       that.imgshow = true;
 
       this.$http
-        .get("/tiger/scimmudiffexpdetailgene2.php", {
+        .get("/tiger/scimmudiffexpdetailgene.php", {
           params: {
             cancer: cancer,
             gene: that.seargene,
