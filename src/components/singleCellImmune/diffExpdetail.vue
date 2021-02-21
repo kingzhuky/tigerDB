@@ -6,7 +6,7 @@
           <div class="text item">
             <h1
               style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Global Cluster: {{gloclu == "All" ? celltype : gloclu}}<br>Gene Symobl: {{gene}}</h1>
+            >Cancer Type: {{cancer}}<br>Cell Type: {{gloclu == "All" ? celltype : gloclu}}<br>Gene Symobl: {{gene}}</h1>
           </div>
         </el-card>
       </div>
@@ -16,7 +16,7 @@
           <el-row v-loading="geneloading">
             <el-row class="scdetailimg" v-show="geneshow" :gutter="20" type="flex" justify="space-around">
               <el-col :span="4" >
-                <p class="imgtitle">UMAP Plot of Cell Types</p>
+                <p class="imgtitle">Cell Types Distribution</p>
                 <img
                   id="singleimg"
                   fit="fill"
@@ -25,7 +25,7 @@
                   @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4" >
-                <p class="imgtitle">UMAP Plot of Tissue Types</p>
+                <p class="imgtitle">Tissue Types Distribution</p>
                 <img
                   id="singleimg"
                   fit="fill"
@@ -35,7 +35,7 @@
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
-                <p class="imgtitle">UMAP Plot of {{seargene}} Expression</p>
+                <p class="imgtitle"> {{gene}} Expression</p>
                   <img
                   id="singleimg"
                   fit="fill"
@@ -45,7 +45,7 @@
                 </div>
               </el-col>
               <el-col :span="4">
-                <p class="imgtitle">Boxplot of Tissue Types</p>
+                <p class="imgtitle">Ductal Cell Type Distribution Difference</p>
                 <img
                   id="singleimg"
                   fit="fill"
@@ -55,7 +55,7 @@
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
-                <p class="imgtitle">Boxplot of {{seargene}} Expression Composition</p>
+                <p class="imgtitle"> {{gene}} Expression Difference</p>
                   <img
                   id="singleimg"
                   fit="fill"

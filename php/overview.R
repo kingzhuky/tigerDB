@@ -142,13 +142,13 @@ pic.overview=function(metadata , global.cluster , sub.cluster){
   #----分群图-----
 
   if(!is.null(levels(meta$Response)) & sum(meta$Tissue=='Tumor')!=nrow(meta)){
-    cat(paste(pic.name1,pic.name2,pic.name3,pic.name4,pic.name5,sep=','))
+    cat(paste(pic.name1,pic.name2,pic.name3,pic.name5,pic.name4,sep=','))
   }else if (is.null(levels(meta$Response)) & sum(meta$Tissue=='Tumor')!=nrow(meta)){
-    cat(paste(pic.name1,pic.name2,pic.name4,pic.name5,sep=','))
+    cat(paste(pic.name1,pic.name2,pic.name5,pic.name4,sep=','))
   }else if (!is.null(levels(meta$Response)) & sum(meta$Tissue=='Tumor')==nrow(meta)){
-    cat(paste(pic.name1,pic.name2,pic.name3,pic.name5,sep=','))
+    cat(paste(pic.name1,pic.name2,pic.name5,pic.name3,sep=','))
   }else{
-    cat(paste(pic.name1,sep=','))
+    cat(paste(pic.name1,0,pic.name3,pic.name5,sep=','))
   }
 }
 

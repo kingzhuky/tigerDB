@@ -30,14 +30,14 @@
           <el-menu-item index="/home">
             <div class="header-nav">Home</div>
           </el-menu-item>
+          <el-menu-item index="/singleCellImmune">
+            <div class="header-nav">Single-cell Immunity</div>
+          </el-menu-item>
           <el-menu-item index="/immuneResponse">
             <div class="header-nav">Immunotherapy Response</div>
           </el-menu-item>
           <el-menu-item index="/immuneSignature">
             <div class="header-nav">Immune Signature</div>
-          </el-menu-item>
-          <el-menu-item index="/singleCellImmune">
-            <div class="header-nav">Single-cell Immunity</div>
           </el-menu-item>
           <el-menu-item index="/immuneScreen">
             <div class="header-nav">Immune Screening</div>

@@ -38,12 +38,12 @@
               ></component>
             </el-tab-pane>
 
-            <el-tab-pane label="Immunotherapy Response" name="immuneResponse">
-              <component  :is="immuneResponseVue" ref="immuResponseVueRef" :seargene="seargene"></component>
-            </el-tab-pane>
-
             <el-tab-pane label="Single-Cell Immunity" name="singleCellImmunity">
               <component :is="singleCellImmunityVue" ref="singleCellImmunityVueRef" :seargene="seargene"></component>
+            </el-tab-pane>
+            
+            <el-tab-pane label="Immunotherapy Response" name="immuneResponse">
+              <component  :is="immuneResponseVue" ref="immuResponseVueRef" :seargene="seargene"></component>
             </el-tab-pane>
             
             <el-tab-pane label="Immune Screening" name="immuneScreening">

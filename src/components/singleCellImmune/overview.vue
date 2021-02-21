@@ -61,7 +61,7 @@
                 :src="'tiger/img/'+plotsres[index][0]+'.png'" 
                 @click="previewImg(['tiger/img/'+plotsres[index][0]+'.png','tiger/img/'+plotsres[index][1]+'.png','tiger/img/'+plotsres[index][2]+'.png','tiger/img/'+plotsres[index][3]+'.png'])">
             </el-col>
-            <el-col v-show="typeof(plotsres[index][1]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
+            <el-col v-show="typeof(plotsres[index][1]) === '0' ? false: true" :span="6" :offset="0" style="position:relative;right:40px;top:20px;">
               <p class="imgtitle">Cell Fraction</p>
               <img
                 id="singleimg"
@@ -71,7 +71,7 @@
                 @click="previewImg(['tiger/img/'+plotsres[index][1]+'.png','tiger/img/'+plotsres[index][2]+'.png','tiger/img/'+plotsres[index][3]+'.png','tiger/img/'+plotsres[index][0]+'.png'])">
             </el-col>
             <el-col v-show="typeof(plotsres[index][2]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:30px;top:20px;">
-              <p class="imgtitle">Group Difference of Each Cluster</p>
+              <p class="imgtitle">Classical Cell Markers</p>
               <img
                 id="singleimg"
                 fit="fill"
@@ -80,7 +80,7 @@
                 @click="previewImg(['tiger/img/'+plotsres[index][2]+'.png','tiger/img/'+plotsres[index][3]+'.png','tiger/img/'+plotsres[index][0]+'.png','tiger/img/'+plotsres[index][1]+'.png'])">
             </el-col>
             <el-col v-show="typeof(plotsres[index][3]) === 'undefined' ? false: true" :span="6" :offset="0" style="position:relative;right:20px;top:20px;">
-              <p class="imgtitle">Classical Cell Markers</p>
+              <p class="imgtitle">Group Difference of Each Cluster</p>
               <img
                 id="singleimg"
                 fit="fill"

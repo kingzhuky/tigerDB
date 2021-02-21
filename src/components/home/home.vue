@@ -33,7 +33,18 @@
         </el-row>
         <el-row>
           <el-col :span="5">
-            <el-card shadow="hover" class="box-card" @click.native="openpage('immuneResponse')">
+            <el-card shadow="hover" class="box-card"  @click.native="openpage('singleCellImmune')">
+              <div slot="header" class="clearfix" style="text-align:center;">
+                <span class="homedesrc">Single Cell Immunity</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align:center;">
+                <img height="250px" src="../../assets/homesc.png" />
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="5">
+            <el-card shadow="hover" class="box-card" style="position:relative;left:30px;" @click.native="openpage('immuneResponse')">
               <div slot="header" class="clearfix" style="text-align:center;">
                 <span class="homedesrc">Immunotherapy Response</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
@@ -44,24 +55,13 @@
             </el-card>
           </el-col>
           <el-col :span="5" >
-            <el-card shadow="hover" class="box-card" style="position:relative;left:30px;" @click.native="openpage('immuneSignature')">
+            <el-card shadow="hover" class="box-card" style="position:relative;left:60px;" @click.native="openpage('immuneSignature')">
               <div slot="header" class="clearfix" style="text-align:center;">
                 <span class="homedesrc">Immune Signature</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
               <div style="text-align:center;">
                 <img height="250px" src="../../assets/homesig.png" />
-              </div>
-            </el-card>
-          </el-col>
-          <el-col :span="5">
-            <el-card shadow="hover" class="box-card" style="position:relative;left:60px;" @click.native="openpage('singleCellImmune')">
-              <div slot="header" class="clearfix" style="text-align:center;">
-                <span class="homedesrc">Single Cell Immunity</span>
-                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-              </div>
-              <div style="text-align:center;">
-                <img height="250px" src="../../assets/homesc.png" />
               </div>
             </el-card>
           </el-col>
