@@ -92,7 +92,7 @@
               >
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
                 <el-table-column prop="Signature_Cite" label="Description" width="180%" ></el-table-column>
-                <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" > 
+                <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" sortable> 
                   <template slot-scope="scope">
                     <span class="skucost-pruice">{{scope.row.AUC}}</span>
                   </template>

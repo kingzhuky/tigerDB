@@ -13,7 +13,7 @@
                     class="buttonText">{{scope.row.PMID}}</a>
                 </template>
               </el-table-column>
-            <el-table-column prop="AUC" label="AUC" align="center"></el-table-column>
+            <el-table-column prop="AUC" label="AUC" align="center" sortable></el-table-column>
             <el-table-column label="Detail" align="center" width="120%">
                 <template slot-scope="scope">
                     <el-button

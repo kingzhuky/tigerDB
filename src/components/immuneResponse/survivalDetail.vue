@@ -19,7 +19,7 @@
             </el-row>
             <br />
             <el-row>
-              <el-input v-model="normalGene" placeholder></el-input>
+              <el-input v-model="normalGene" v-show='normalMed!="None"' placeholder="Please Input Gene Symbol"></el-input>
             </el-row>
             <br />
 
@@ -66,9 +66,9 @@
               >
                 <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
                 <el-table-column prop="Signature_Cite" label="Description" width="130%" ></el-table-column>
-                <el-table-column prop="HR" label="HR" width="80%"></el-table-column>
-                <el-table-column prop="CI95" label="95% CI" width="90%"></el-table-column>
-                <el-table-column prop="PValue" label="P Value" width="90%"></el-table-column>
+                <el-table-column prop="HR" label="HR" width="80%" sortable></el-table-column>
+                <el-table-column prop="CI95" label="95% CI" width="90%" sortable></el-table-column>
+                <el-table-column prop="PValue" label="P Value" width="90%" sortable></el-table-column>
               </el-table>
             </div>
           </el-col>
@@ -224,7 +224,7 @@ export default {
           .then(function(res) {
             if (res.data.status == 0) {
               
-              let imgpath = res.data.output[2].split(",");
+              let imgpath = res.data.output[0].split(",");
               setTimeout(that.imgpathBox = imgpath[0],1000);
               that.gettableData(imgpath[1]);
               that.loading = false;

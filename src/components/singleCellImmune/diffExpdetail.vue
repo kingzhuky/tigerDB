@@ -35,7 +35,7 @@
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
-                <p class="imgtitle"> {{gene}} Expression</p>
+                <p class="imgtitle">{{gene}} Expression</p>
                   <img
                   id="singleimg"
                   fit="fill"

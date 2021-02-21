@@ -34,7 +34,7 @@
         ></el-autocomplete>
       </el-col>
       <el-col :span="4">
-        <el-button @click="searchTable">Search</el-button>
+        <el-button @click="searchTable">Go</el-button>
       </el-col>
     </el-row>
     <br />
