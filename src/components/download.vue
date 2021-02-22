@@ -104,7 +104,7 @@
     <el-card class="infor">
       <el-row >
         <el-col :push="1" :span="22">
-          <p class="title">Study related to Immune Signature</p>
+          <p class="title">Study related to Immunotherapy Response Signature</p>
         </el-col>
       </el-row>
       <el-row>

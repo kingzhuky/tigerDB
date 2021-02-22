@@ -149,7 +149,7 @@
             </div>
           </el-col>
           <el-col :span="14" v-show="!resultShow" v-loading="loadingDiff">
-            <div id="norult">No result</div>
+            <div id="norult">Not available</div>
           </el-col>
         </el-card>
       </div>
@@ -217,7 +217,7 @@
             </div>
           </el-col>
           <el-col :span="18" v-show="!surresultShow" v-loading="loadingSur">
-            <div id="norult">No result</div>
+            <div id="norult">Not available</div>
           </el-col>
         </el-card>
       </div>
@@ -345,7 +345,7 @@ export default {
     renderHeader(h){
        return h('span', {}, [
         h('span', {}, 'AUC'),
-        h('el-popover', { props: { placement: 'top-start', width: '200', trigger: 'hover', content: 'AUC means the immune signature is more related to immunotherapy response' }}, [
+        h('el-popover', { props: { placement: 'top-start', width: '200', trigger: 'hover', content: 'AUC indicates the performance of immunotherapy response prediction' }}, [
            h('i', { slot: 'reference', class:'el-icon-question'}, '')
           ])
        ])

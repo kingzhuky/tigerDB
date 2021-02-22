@@ -5,7 +5,7 @@
         <el-tab-pane label="Overview" name="sigtable">
           <component ref="sigtableRef" :is="sigtableVue"></component>
         </el-tab-pane>
-        <el-tab-pane label="Custom Immune Signature Analysis" name="customsig">
+        <el-tab-pane label="Custom Immunotherapy Response Signature Analysis" name="customsig">
           <component :is="customsigVue"></component>
         </el-tab-pane>
         <el-tab-pane label="Signature Correlation Matrix" name="sigcorrmat">

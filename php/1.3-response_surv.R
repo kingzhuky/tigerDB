@@ -6,7 +6,7 @@ library(data.table)
 library(jsonlite)
 
 Args <- commandArgs(T)
-#Args <- c("TP53_CD274","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","gene","CD3D","0.5","pdf")
+#Args <- c("CD274,CD3D","Melanoma-PRJEB23709_anti-CTLA-4+anti-PD-1","None","None","0.5","pdf")
 #Args <- c("TP53","ccRCC_Braun_2020_EVEROLIMUS","None","None","0.5","png")
 #Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL","None","None","0.2","png")
 gene <- unlist(strsplit(Args[1],split=','))
@@ -78,7 +78,7 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     surv.plot.data[down.index,"group"] <- "Custom_low"
     surv.plot.data <- subset(surv.plot.data,group != "0")
     surv.plot.data$group <- factor(surv.plot.data$group)
-    sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
+    sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
     response.surv.plot <- ggsurvplot(sfit, conf.int = TRUE, pval = TRUE, risk.table = TRUE,
                                      legend.labs = c("High", "Low"), legend.title = title.gene,
                                      xlab = "Time (Days)",
@@ -107,11 +107,10 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
       surv.data[down.index,"group"] <- paste0(x,"_low")
       surv.data <- subset(surv.data,group != "0")
       surv.data$group <- factor(surv.data$group)
-      # sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
+      sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
       cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.data)
       cox.res <- summary(cox.res)
-      cox.res$table
-      p.value <- signif(cox.res$wald["pvalue"], digits=4)
+      p.value <- signif(surv_pvalue(sfit)$pval, digits=4)
       wald.test <- signif(cox.res$wald["test"], digits=4)
       beta<-signif(cox.res$coef[1], digits=4);#coeficient beta
       HR <-signif(cox.res$coef[2], digits=4);#exp(beta)
