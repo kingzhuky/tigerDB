@@ -22,7 +22,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="previewImg(0,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4" >
                 <p class="imgtitle">Tissue Types Distribution</p>
@@ -31,7 +31,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="previewImg(1,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
@@ -41,7 +41,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[3] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="previewImg(3,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
                 </div>
               </el-col>
               <el-col :span="4">
@@ -51,7 +51,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="previewImg(2,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
@@ -61,7 +61,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[4] + '.png'"
-                  @click="previewImg(['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="previewImg(4,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
                 </div>
               </el-col>
             </el-row> 
@@ -229,12 +229,12 @@ export default {
           });
       }
     },
-    previewImg(url){
+    previewImg(index,url){
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        nowImgIndex: index, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
         closeColor: 'rgba(255,255,255,.5)'
       })

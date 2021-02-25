@@ -2,74 +2,74 @@
   <div>
     <el-row>
       <el-tabs v-model="tabactiveName">
-        <el-tab-pane :disabled="whethrnr" label="Response VS Non-Response" name="response" >
-              <el-col span="8">
-                <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
-                  <el-option
-                    v-for="item in gloclures"
-                    :key="item"
-                    :label="item"
-                    :value="item">
-                  </el-option>
-                </el-select>
-              </el-col>
+        <el-tab-pane :disabled="whethrnr" label="Response VS Non-Response" name="response">
+          <el-col span="8">
+            <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+              <el-option
+                v-for="item in gloclures"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-col>
 
-              <el-col :span="4" :offset="12">
-              <el-autocomplete
-                v-model="searchinput"
-                placeholder="Please Input Gene Symbol"
-                :fetch-suggestions="querySearchAsync"
-                @change="searchChange"
-              ></el-autocomplete>
-            </el-col>
-            <br />
-            <br />
-            <br />
-            <el-table
-              class="tigtablele"
-              id="scDiffExpTable"
-              ref="singleTable"
-              border=false
-              max-height="750"
-              :data="tableData"
-              @cell-click="heandleclick"
-              :cell-style="tableCellStyle"
-              :header-cell-class-name="headerStyle"
-              v-loadmore="tabelloadmore"
-              v-loadlast="tableloadlast"
-              v-loading="loading"
-              @sort-change="sortChangeClick"
-              style="100%"
-            >
-              <el-table-column
-                v-for="(item,index) in tableDataheader"
-                :key="index"
-                :property="item.key"
-                :label="item.name"
-                :type="item.type"
-                sortable="custom"
-                align="center"
-                width="80"
-              ></el-table-column>
-              <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-            </el-table>
+          <el-col :span="4" :offset="12">
+            <el-autocomplete
+              v-model="searchinput"
+              placeholder="Please Input Gene Symbol"
+              :fetch-suggestions="querySearchAsync"
+              @change="searchChange"
+            ></el-autocomplete>
+          </el-col>
+          <br />
+          <br />
+          <br />
+          <el-table
+            class="tigtablele"
+            id="scDiffExpTable"
+            ref="singleTable"
+            border=false
+            max-height="750"
+            :data="tableData"
+            @cell-click="heandleclick"
+            :cell-style="tableCellStyle"
+            :header-cell-class-name="headerStyle"
+            v-loadmore="tabelloadmore"
+            v-loadlast="tableloadlast"
+            v-loading="loading"
+            @sort-change="sortChangeClick"
+            style="100%"
+          >
+            <el-table-column
+              v-for="(item,index) in tableDataheader"
+              :key="index"
+              :property="item.key"
+              :label="item.name"
+              :type="item.type"
+              sortable="custom"
+              align="center"
+              width="80"
+            ></el-table-column>
+            <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+          </el-table>
 
-            <div class="colorbar">
-              <span>Low logFC&lt;0</span>
-              <span class="heatMapTable--colorbar"></span>
-              <span>High logFC&gt;0</span>
-              
-            </div>
+          <div class="colorbar">
+            <span>Low logFC&lt;0</span>
+            <span class="heatMapTable--colorbar"></span>
+            <span>High logFC&gt;0</span>
+            
+          </div>
             <!-- 详细页显示与否 -->
-            <v-expdetail
-              ref="detailPlot"
-              id="detailinfo"
-              v-show="isShow"
-              :gene="clickGene"
-              :celltype="celltype"
-              :cancer="cancer"
-              :gloclu="gloclu"
-            ></v-expdetail>
+          <v-expdetail
+            ref="detailPlot"
+            id="detailinfo"
+            v-show="isShow"
+            :gene="clickGene"
+            :celltype="celltype"
+            :cancer="cancer"
+            :gloclu="gloclu"
+          ></v-expdetail>
         </el-tab-pane>
 
         <el-tab-pane :disabled="whethtn" label="Tumor VS Normal" name="tn">
@@ -140,6 +140,14 @@
               :cancer="cancer"
               :gloclu="gloclu"
             ></v-expdetail>
+        </el-tab-pane>
+        <el-tab-pane label="Pathway Analysis" name="diff">
+          <v-scpathway
+            ref="scpathwayRef" 
+            :cancer="cancer"
+            :gloCluoptions="gloCluoptions"
+            tabactiveName="diff"
+          ></v-scpathway>
         </el-tab-pane>
       </el-tabs>
       <!-- <el-col :span="10" :offset="2">
@@ -463,6 +471,7 @@ export default {
   },
   components: {
     "v-expdetail": () => import("./diffExpdetail.vue"),
+    "v-scpathway": () => import("./scpathway.vue"),
   },
 };
 </script>
@@ -479,7 +488,8 @@ div#singleCellTitle {
     padding-top: 10px;
 }
 #tab-response,
-#tab-tn {
+#tab-tn,
+#tab-diff {
   font-size: 18px;
   height: 40px;
   padding: 0px 10px;

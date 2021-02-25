@@ -23,7 +23,7 @@
                 fit="fill"
                 width="100%"
                 :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
-                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+                @click="previewImg(0,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
             <el-col :span="6" v-show="evolushow2" style="position:relative;left:100px;top:0px;">
               <p class="imgtitle">{{gene}} Expression</p>
@@ -32,7 +32,7 @@
                 fit="fill"
                 width="100%"
                 :src="'tiger/img/' + evoluplots.split(',')[1]"
-                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+                @click="previewImg(1,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
             <el-col :span="12" v-show="evolushow2" style="position:relative;left:40px;top:0px;">
               <p class="imgtitle">{{gene}} Expression Difference</p>
@@ -41,7 +41,7 @@
                 fit="fill"
                 height="250px"
                 :src="'tiger/img/' + evoluplots.split(',')[0]"
-                @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
+                @click="previewImg(2,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
             </el-col>
             </el-row>
             <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
@@ -250,12 +250,12 @@ export default {
           });
       }
     },
-    previewImg(url){
+    previewImg(index,url){
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        nowImgIndex: index, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
         closeColor: 'rgba(255,255,255,.5)'
       })

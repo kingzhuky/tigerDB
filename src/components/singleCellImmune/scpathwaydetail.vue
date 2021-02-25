@@ -23,7 +23,7 @@
                   width="250px"
                   style="position:relative;left:0px;top:20px;"
                   :src="'tiger/img/' + pathwayplots.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
+                  @click="previewImg(0,['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
               </el-col>
               <el-col :span="6">
                 <p class="imgtitle">UMAP Plot of {{pathway}} score</p>
@@ -32,7 +32,7 @@
                   fit="fill"
                   width="250px"
                   :src="'tiger/img/' + pathwayplots.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
+                  @click="previewImg(1,['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
               </el-col>
               <el-col :span="12">
                 <p class="imgtitle">Boxplot of {{pathway}} score</p>
@@ -41,7 +41,7 @@
                   fit="fill"
                   width="450px"
                   :src="'tiger/img/' + pathwayplots.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
+                  @click="previewImg(2,['tiger/img/' + pathwayplots.split(',')[0] + '.png','tiger/img/' + pathwayplots.split(',')[1] + '.png','tiger/img/' + pathwayplots.split(',')[2] + '.png'])">
               </el-col>
             </el-row>
               <el-col :span="16" :offset="2" v-show="!geneshow">
@@ -101,7 +101,7 @@ export default {
       that.geneloading = true;
       that.geneshow = true;
       var plottype = "";
-      if(that.tabtype === "cluster"){
+      if(tabtype === "cluster"){
         plottype = "pathway"
       }else{
         plottype = "pathwaydiff"
@@ -136,12 +136,12 @@ export default {
           console.log(res);
         });
     },
-    previewImg(url){
+    previewImg(index,url){
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        nowImgIndex: index, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
         closeColor: 'rgba(255,255,255,.5)'
       })

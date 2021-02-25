@@ -52,7 +52,7 @@
               :is="diffexpVue"
             ></component>
           </el-tab-pane>
-          <el-tab-pane label="Pathway Analysis" name="scpathway">
+          <!-- <el-tab-pane label="Pathway Analysis" name="scpathway">
             <component 
               ref="scpathwayRef" 
               :cancer="cancer"
@@ -60,7 +60,7 @@
               :vsType="vsType"
               :is="scpathwayVue"
             ></component>
-          </el-tab-pane>
+          </el-tab-pane> -->
           <el-tab-pane label="Co-expression Analysis" name="coexp">
             <component 
               ref="coexpRef" 

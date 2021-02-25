@@ -1,122 +1,71 @@
 <template>
   <div>
     <el-row>
-      <el-tabs v-model="tabactiveName" @tab-click="handleClick" >
-        <el-tab-pane label="Cluster" name="cluster" >
-          <el-col :span="4" :offset="20"> 
-            <el-autocomplete
-              v-model="searchinput"
-              placeholder="Please Input GSEA Name"
-              @change="searchChange"
-            ></el-autocomplete>
-          </el-col>
-          <br />
-          <br />
-          <br />
-          <el-table
-            class="tigtablele"
-            id="scDiffExpTable"
-            ref="singleTable"
-            border
-            max-height="750"
-            :data="tableData"
-            @cell-click="heandleclick"
-            :cell-style="tableCellStyle"
-            :header-cell-class-name="headerStyle"
-            v-loadmore="tabelloadmore"
-            v-loadlast="tableloadlast"
-            v-loading="loading"
-            @sort-change="sortChangeClick"
-            style="100%"
-          >
-            <el-table-column
-              v-for="(item,index) in tableDataheader"
-              :key="index"
-              :property="item.key"
-              :label="item.name"
-              :type="item.type"
-              sortable="custom"
-              align="center"
-              width="80"
-            ></el-table-column>
-            <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-          </el-table>
-          <div class="colorbar">
-            <span>Low NES&lt;0</span>
-            <span class="heatMapTable--colorbar"></span>
-            <span>High NES&gt;0</span>
-          </div>
-          <!-- 详细页显示与否 -->
-          <v-scpathwaydetail
-            ref="pathwaydetailPlot"
-            id="detailinfo"
-            v-show="isShow"
-            :pathway="clickGene"
-            :celltype="celltype"
-            :cancer="cancer"
-            :gloclu="gloclu"
-            :tabtype="tabactiveName"
-          ></v-scpathwaydetail>
-        </el-tab-pane>
-        <el-tab-pane label="Tumor VS Normal" name="diff">
-            <el-col :span="4" :offset="20"> 
-              <el-autocomplete
-                v-model="searchinput"
-                placeholder="Please Input GSEA Name"
-                @change="searchChange"
-              ></el-autocomplete>
-            </el-col>
-          <br />
-          <br />
-          <br />
-          <el-table
-            class="tigtablele"
-            id="scDiffExpTable"
-            ref="singleTable"
-            border
-            max-height="750"
-            :data="tableData"
-            @cell-click="heandleclick"
-            :cell-style="tableCellStyle"
-            :header-cell-class-name="headerStyle"
-            v-loadmore="tabelloadmore"
-            v-loadlast="tableloadlast"
-            v-loading="loading"
-            @sort-change="sortChangeClick"
-            style="100%"
-          >
-            <el-table-column
-              v-for="(item,index) in tableDataheader"
-              :key="index"
-              :property="item.key"
-              :label="item.name"
-              :type="item.type"
-              sortable="custom"
-              align="center"
-              width="80"
-            ></el-table-column>
-            <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-          </el-table>
-          <div class="colorbar">
-            <span>Low NES&lt;0</span>
-            <span class="heatMapTable--colorbar"></span>
-            <span>High NES&gt;0</span>
-            
-          </div>
-          <!-- 详细页显示与否 -->
-          <v-scpathwaydetail
-            ref="pathwaydetailPlotdiff"
-            id="detailinfo2"
-            v-show="isShow"
-            :pathway="clickGene"
-            :celltype="celltype"
-            :cancer="cancer"
-            :gloclu="gloclu"
-            :tabtype="tabactiveName"
-          ></v-scpathwaydetail>
-        </el-tab-pane>
-      </el-tabs>
+      <el-col span="8">
+        <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+          <el-option
+            v-for="item in gloclures"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+      </el-col>
 
+      <el-col :span="4" :offset="12">
+        <el-input
+          v-model="searchinput"
+          placeholder="Please Input GSEA Name"
+          @change="searchChange"
+        ></el-input>
+      </el-col>
+      <br />
+      <br />
+      <br />
+      <el-table
+        class="tigtablele"
+        id="scDiffExpTable"
+        ref="singleTable"
+        border
+        max-height="750"
+        :data="tableData"
+        @cell-click="heandleclick"
+        :cell-style="tableCellStyle"
+        :header-cell-class-name="headerStyle"
+        v-loadmore="tabelloadmore"
+        v-loadlast="tableloadlast"
+        v-loading="loading"
+        @sort-change="sortChangeClick"
+        style="100%"
+      >
+        <el-table-column
+          v-for="(item,index) in tableDataheader"
+          :key="index"
+          :property="item.key"
+          :label="item.name"
+          :type="item.type"
+          sortable="custom"
+          align="center"
+          width="80"
+        ></el-table-column>
+        <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+      </el-table>
+      <div class="colorbar">
+        <span>Low NES&lt;0</span>
+        <span class="heatMapTable--colorbar"></span>
+        <span>High NES&gt;0</span>
+      </div>
+      <!-- 详细页显示与否 -->
+      <v-scpathwaydetail
+        ref="pathwaydetailPlot"
+        id="detailinfo"
+        v-show="isShow"
+        :pathway="clickGene"
+        :celltype="celltype"
+        :cancer="cancer"
+        :gloclu="gloclu"
+        :tabtype="tabactiveName"
+      ></v-scpathwaydetail>
     </el-row>
 
   </div>
@@ -134,8 +83,8 @@ import {
 export default {
   props: {
     cancer: String,
-    subClu: Array,
-    subClucoptions: Array,
+    gloCluoptions: Array,
+    tabactiveName: String,
   },
   data() {
     return {
@@ -158,10 +107,9 @@ export default {
       oldcancer: "",
       oldgloclu: "",
       tableDataheader: [],
-      gloclu:"",
-      whetherrnr:true,
-      whetherdiff:true,
-      tabactiveName: 'cluster',
+      gloclu: "",
+      gloclures:[],
+      selectgloclu: [],
     };
   },
 
@@ -169,6 +117,10 @@ export default {
     this.reset()
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
+    for (let gloclu of this.gloCluoptions) {
+      this.gloclures.push(gloclu["GlobalCluster"]);
+      this.selectgloclu.push(gloclu["GlobalCluster"]);
+    }
     this.getTableData(1, "", "");
   },
 
@@ -186,7 +138,7 @@ export default {
     clickGene(){
       this.$nextTick(() =>{
         setTimeout(() => { toTarget(720) }, 300);  
-        toTarget('#detailinfo2');
+        toTarget('#detailinfo');
       })
     }
   },
@@ -286,6 +238,10 @@ export default {
       this.loadDir = "";
       this.tableDataheader = [];
     },
+    filtergloclu(){
+      this.reset()
+      this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
+    },
 
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
@@ -335,17 +291,41 @@ export default {
             }
             // console.log(Array.isArray(new_columns))
           }
-            var new_columns = [] // generate header
-            for (const column of this.tableDataheader) {
-              var col_obj = {};
-              col_obj.name = column.split(',').pop()
-              if(col_obj.name === "gene") col_obj.name = "Pathway Name"
-              col_obj.key = column
-              col_obj.type = column.split(',')[0]
-              // console.log(col_obj)
+          var new_rows = [];// matrix key .替换为_
+          for (const row of this.tableData) {
+            var new_row = {}
+            for (const key in row) {
+              let new_key = key.replace(".","_")
+              new_row[new_key] = row[key]
+            }
+            new_rows.push(new_row)
+          }
+          this.tableData = new_rows  // matrix key .替换为_
+          var new_columns = [] // generate header
+          for (const column of this.tableDataheader) {
+            var col_obj = {};
+            col_obj.name = column.split(',').pop()
+            if(col_obj.name === "gene") col_obj.name = "Pathway Name"
+            col_obj.key = column.replace(".","_")
+            col_obj.type = column.split(',')[0]
+            if (col_obj.type == "gene" || this.selectgloclu.indexOf(col_obj.type) != -1){
               new_columns.push(col_obj)
             }
-            this.tableDataheader = new_columns
+          }
+          // console.log(this.selectgloclu)
+          this.tableDataheader = new_columns
+
+            // var new_columns = [] // generate header
+            // for (const column of this.tableDataheader) {
+            //   var col_obj = {};
+            //   col_obj.name = column.split(',').pop()
+            //   if(col_obj.name === "gene") col_obj.name = "Pathway Name"
+            //   col_obj.key = column
+            //   col_obj.type = column.split(',')[0]
+            //   // console.log(col_obj)
+            //   new_columns.push(col_obj)
+            // }
+            // this.tableDataheader = new_columns
             // console.log(new_rows)
         })
         .catch((error) => {
@@ -365,19 +345,13 @@ export default {
     //点击单个格子
     heandleclick(row, column) {
       if (column["label"] !== "gene") {
-        this.subClu = this.subClucoptions;
         this.isShow = true;
         this.clickGene = row["gene"];
         this.celltype=column["label"]
         this.gloclu = column["type"];
-        if(this.tabactiveName == "cluster"){
-          this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
-        }else if(this.tabactiveName == "diff"){
-          this.$refs.pathwaydetailPlotdiff.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
-        }
-        
+        this.$refs.pathwaydetailPlot.pathwayPlot(row["gene"], column["label"], column["type"], this.tabactiveName);
         setTimeout(() => { toTarget(720) }, 300);  
-        toTarget('#detailinfo2');
+        toTarget('#detailinfo');
       }
     },
 
@@ -398,7 +372,6 @@ export default {
   },
   components: {
     "v-scpathwaydetail": () => import("./scpathwaydetail.vue"),
-    "v-scpathwaydetail2": () => import("./scpathwaydetail.vue"),
   },
 };
 </script>
