@@ -14,7 +14,7 @@ exec($zhiling,$output,$status);
 echo json_encode(array(
   //  "zhiling" =>$zhiling,
    "output" => $output,
-   "status"=>$status
+   "status" => $status
     ),JSON_UNESCAPED_UNICODE); 
 
 ?>

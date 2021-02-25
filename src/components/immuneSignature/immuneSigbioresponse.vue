@@ -31,9 +31,9 @@
 
         <div class="colorbar">
           <span class="crossTable--colorbar"></span>
-          <span>High AUC</span>
+          <span>Better Performance</span>
         </div>
-        <div id="logFC">correlation</div>
+        <div id="logFC">AUC</div>
       </el-card>
     </div>
 

@@ -1,7 +1,6 @@
 <template>
   <div>
     <div v-show="immuneTabShow" v-loading="loading">
-      <el-card>
         <el-table
           class="tigtablele"
           id="immuneSigTable"
@@ -35,7 +34,6 @@
           <span>Positive correlation</span>
         </div>
         <div id="logFC">correlation</div>
-      </el-card>
     </div>
 
     <!-- 详细页显示与否 -->

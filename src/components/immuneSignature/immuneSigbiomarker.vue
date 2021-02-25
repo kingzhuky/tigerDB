@@ -31,8 +31,18 @@
         </el-col>
       </el-row>
     </el-card>
-    <v-immuneSigTable ref="immuSignatureRef" :gene="gene"></v-immuneSigTable>
-    <!-- <v-immuneSigBioRes ref="immuSigbioresRef" :gene="gene"></v-immuneSigBioRes> -->
+    <el-card class="anaCard" id="inputCard" v-show="isShow">
+      <el-tabs v-model="tabactiveName" @tab-click="handleClick" >
+        <el-tab-pane label="Correlation Matrix" name="cormat">
+          <v-immuneSigTable ref="immuSignatureRef" :gene="gene"></v-immuneSigTable>
+        </el-tab-pane>
+        <el-tab-pane label="AUC Matrix" name="response">
+          <v-immuneSigBioRes ref="immuSigbioresRef" :gene="gene"></v-immuneSigBioRes>
+        </el-tab-pane>
+      </el-tabs>
+    </el-card>
+    
+    
   </div>
 </template>
 
@@ -43,19 +53,11 @@ export default {
     return {
       isDisable: false,
       cancer: "",
-      tableDataheader: [],
-      datatype: "",
-      signature: "",
-      m6aMsg: "",
-      cancerMsg: "",
       loading: false,
       isShow: false,
       loadpage: 1,
-      tableData: [],
-      search: "",
-      loadDir: "",
       gene: "CD274,CD3D",
-      path: "",
+      tabactiveName: "cormat"
     };
   },
 
@@ -63,11 +65,13 @@ export default {
     //搜索
     signatureDiffPlot() {
       this.$refs.immuSignatureRef.getTableData("expresponse", 1);
+      this.isShow = true;
+      // this.$refs.immuSigbioresRef.getTableData("expresponse", 1);
     },
   },
   components: {
     "v-immuneSigTable": () => import("./immuneSigCorTable.vue"),
-    // "v-immuneSigBioRes": () => import("./immuneSigbioresponse.vue")
+    "v-immuneSigBioRes": () => import("./immuneSigbioresponse.vue")
   },
 };
 </script>
@@ -85,5 +89,12 @@ export default {
   background-color: rgb(20, 146, 140) !important;
   color: white;
   font-weight: bold;
+}
+#tab-cormat,
+#tab-response {
+  font-size: 18px;
+  height: 40px;
+  padding: 0px 10px;
+  font-weight: bold !important;
 }
 </style>
