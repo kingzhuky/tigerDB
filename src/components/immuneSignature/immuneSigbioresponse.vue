@@ -4,11 +4,11 @@
       <el-card>
         <el-table
           class="tigtablele"
-          id="immuneSigTable"
+          id="survivaltable"
           ref="singleTable"
           border
           max-height="800"
-          :data="tableData.filter(data => !search || data.Signature.toLowerCase().includes(search.toLowerCase()))"
+          :data="tableData"
           @cell-click="heandleclick"
           :cell-style="tableCellStyle"
           style="100%"
@@ -22,9 +22,9 @@
             align="center"
             width="80"
           >
-            <template
+            <!-- <template
               slot-scope="scope"
-            >{{ scope.row[item]===undefined ? '': scope.row[item].split('_')[0] }}</template>
+            >{{ scope.row[item]===undefined ? '': scope.row[item].split('_')[0] }}</template> -->
           </el-table-column>
           <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
         </el-table>
@@ -38,15 +38,14 @@
     </div>
 
     <!-- 详细页显示与否 -->
-    <v-immuneSigdetail
+    <v-immuneSigResdetail
       ref="detailPlot"
       v-show="isShow"
       :sign="signature"
       :datatype="datatype"
-      :gene="m6aMsg"
-      :cancer="cancerMsg"
+      :dataset="datasetid"
       :path="path"
-    ></v-immuneSigdetail>
+    ></v-immuneSigResdetail>
   </div>
 </template>
 
@@ -71,8 +70,7 @@ export default {
       tableDataheader: [],
       datatype: "",
       signature: "",
-      m6aMsg: "",
-      cancerMsg: "",
+      datasetid: "",
       loading: false,
       isShow: false,
       loadpage: 1,
@@ -87,13 +85,13 @@ export default {
     cancer() {
       switch (this.cancer) {
         case "KIRP":
-          scrollCol("immuneSigTable", 100);
+          scrollCol("immuneSigResTable", 100);
           break;
         case "GBM":
-          scrollCol("immuneSigTable", 1000);
+          scrollCol("immuneSigResTable", 1000);
           break;
         default:
-          scrollCol("immuneSigTable", 0);
+          scrollCol("immuneSigResTable", 0);
       }
     },
     loading() {
@@ -112,7 +110,7 @@ export default {
     signatureDiffPlot() {
       this.tableData = [];
       this.loadpage = 1;
-      this.getTableData("expresponse", this.loadpage);
+      this.getTableData();
     },
     getColumn(tabl, mycolumn) {
       this.$http
@@ -137,9 +135,10 @@ export default {
       this.loading = true;
       this.immuneTabShow = true;
       this.$http
-        .get("/tiger/immuneSig.php", {
+        .get("/tiger/immuneSig2.php", {
           params: {
-            gene: this.gene.trim(),
+            gene: this.gene.trim().replace(" ",""),
+            condi: "response"
           },
         })
         .then((res) => {
@@ -159,6 +158,7 @@ export default {
         .then((res) => {
           this.loading = false;
           this.tableData = res.data;
+          // console.log(this.tableData)
           this.tableDataheader = Object.keys(res.data[0]);
         })
         .catch((error) => {
@@ -168,18 +168,12 @@ export default {
 
     //点击单个格子
     heandleclick(row, column) {
-      this.datatype = "expression";
+      this.datatype = "response";
       if (column["label"] !== "") {
         this.isShow = true;
-        this.m6aMsg = this.gene.trim();
-        this.signature = row["Signature"];
-        this.cancerMsg = column["label"];
-        this.$refs.detailPlot.Plot(
-          this.gene.trim(),
-          column["label"],
-          row["Signature"]
-        );
-        this.$refs.detailPlot.artivcleDetail(row["Signature"]);
+        this.signature = row["group"];
+        this.datasetid = column["label"];
+        this.$refs.detailPlot.gettable(this.gene,column["label"]);
         setTimeout(() => { toTarget(820) }, 200); 
       }
     },
@@ -195,7 +189,7 @@ export default {
         parseFloat(
           row[column["label"]] === undefined
             ? ""
-            : row[column["label"]].split("_")[0]
+            : row[column["label"]]
         ),
         2.25
       );
@@ -206,7 +200,7 @@ export default {
     },
   },
   components: {
-    "v-immuneSigdetail": () => import("./immuneSigCorTabledetail.vue"),
+    "v-immuneSigResdetail": () => import("./immuneSigbioresponsedetail.vue"),
   },
 };
 </script>
@@ -214,10 +208,10 @@ export default {
 
 <style>
 
-#immuneSigTable th {
+/* #immuneSigResTable th {
   left: 35px !important;
   height: 70px !important;
-}
+} */
 
 #immusignatureplot {
   width: 100%;

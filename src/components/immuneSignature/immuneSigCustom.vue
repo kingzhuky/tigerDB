@@ -131,7 +131,7 @@ export default {
     submitAnalysis(){
       // console.log("start ~~");
       this.expDataPath = this.expDataPath == "" ? "Download/customSig_example.exp.tsv.zip" : this.expDataPath
-      // this.annoDataPath = this.annoDataPath == "none" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
+      this.annoDataPath = this.annoDataPath == "none" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
       // this.expDataPath = "Download/customSig_example.exp.tsv.zip";
       // this.annoDataPath = "Download/customSig_example.anno.tsv.zip";
       this.$refs.immuneSigCustomDetail.analysisData(this.expDataPath,this.annoDataPath,this.taskuid)

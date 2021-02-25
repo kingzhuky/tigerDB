@@ -133,7 +133,7 @@ export default {
       this.$http
         .get("/tiger/immuneSig.php", {
           params: {
-            gene: this.gene.trim(),
+            gene: this.gene.trim().replace(" ",""),
           },
         })
         .then((res) => {

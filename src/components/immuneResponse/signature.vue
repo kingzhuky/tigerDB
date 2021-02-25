@@ -515,7 +515,7 @@ export default {
       }
     },
 
-        tableCellStyle({ row, column}) {
+    tableCellStyle({ row, column}) {
       var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],

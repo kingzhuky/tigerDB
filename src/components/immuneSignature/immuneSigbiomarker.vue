@@ -64,9 +64,9 @@ export default {
   methods: {
     //搜索
     signatureDiffPlot() {
-      this.$refs.immuSignatureRef.getTableData("expresponse", 1);
       this.isShow = true;
-      // this.$refs.immuSigbioresRef.getTableData("expresponse", 1);
+      this.$refs.immuSignatureRef.getTableData();  
+      this.$refs.immuSigbioresRef.getTableData();
     },
   },
   components: {
