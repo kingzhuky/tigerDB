@@ -16,7 +16,7 @@
       <el-row>
         <el-col :span="10" :offset="3">
           <el-row>
-            <el-input v-model="gene" @keyup.enter.native="signatureDiffPlot" placeholder="SEMA3F"></el-input>
+            <el-input v-model="gene" @keyup.enter.native="signatureDiffPlot" placeholder="Please Input Gene/Geneset (eg.CD274 OR CD274,CD3D)"></el-input>
           </el-row> 
         </el-col>
 
@@ -24,7 +24,7 @@
           <el-row>
             <el-button
               id="immusignatureplot"
-              v-on:click="signatureDiffPlot"
+              @click="signatureDiffPlot"
               :disabled="isDisable"
             >Submit</el-button>
           </el-row>
@@ -32,6 +32,7 @@
       </el-row>
     </el-card>
     <v-immuneSigTable ref="immuSignatureRef" :gene="gene"></v-immuneSigTable>
+    <!-- <v-immuneSigBioRes ref="immuSigbioresRef" :gene="gene"></v-immuneSigBioRes> -->
   </div>
 </template>
 
@@ -65,7 +66,8 @@ export default {
     },
   },
   components: {
-    "v-immuneSigTable": () => import("./immuneSignatureTable.vue"),
+    "v-immuneSigTable": () => import("./immuneSigCorTable.vue"),
+    // "v-immuneSigBioRes": () => import("./immuneSigbioresponse.vue")
   },
 };
 </script>

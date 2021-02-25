@@ -209,7 +209,7 @@ export default {
     },
   },
   components: {
-    "v-immuneSigdetail": () => import("./immuneSignatureTableCordetail.vue"),
+    "v-immuneSigdetail": () => import("./immuneSigCorTabledetail.vue"),
   },
 };
 </script>

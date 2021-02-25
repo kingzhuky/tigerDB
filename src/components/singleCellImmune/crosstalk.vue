@@ -295,11 +295,4 @@ export default {
   height: 140px !important;
 }
 
-.crossTable--colorbar {
-  margin: 0 5px;
-  display: inline-block;
-  width: 800px;
-  height: 18px;
-  background: linear-gradient(90deg, #fff, #db0000);
-}
 </style>

@@ -110,6 +110,13 @@ th.el-table_1_column_1.is-center.is-leaf .cell {
   height: 18px;
   background: linear-gradient(90deg, #41588c, #fff, #db0000);
 }
+.crossTable--colorbar {
+  margin: 0 5px;
+  display: inline-block;
+  width: 800px;
+  height: 18px;
+  background: linear-gradient(90deg, #fff, #db0000);
+}
 
 .colorbar {
   margin-top: 10px;

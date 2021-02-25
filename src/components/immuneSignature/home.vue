@@ -5,11 +5,11 @@
         <el-tab-pane label="Overview" name="sigtable">
           <component ref="sigtableRef" :is="sigtableVue"></component>
         </el-tab-pane>
-        <el-tab-pane label="Custom Immunotherapy Response Signature Analysis" name="customsig">
-          <component :is="customsigVue"></component>
+        <el-tab-pane label="Biomarker Analysis" name="biomarker">
+          <component :is="biomarkerVue"></component>
         </el-tab-pane>
-        <el-tab-pane label="Signature Correlation Matrix" name="sigcorrmat">
-          <component :is="sigmatVue"></component>
+        <el-tab-pane label="Immunetherapy Response Prediction" name="customsig">
+          <component :is="customsigVue"></component>
         </el-tab-pane>
       </el-tabs>
     </el-card>
@@ -18,7 +18,7 @@
 
 <script>
 import sigtablepage from "./immuneSigTable.vue";
-import sigcorrmat from "./immuneSignature.vue";
+import sigbiomarker from "./immuneSigbiomarker.vue";
 import sigcustompage from "./immuneSigCustom.vue";
 
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
@@ -30,7 +30,7 @@ export default {
       sigid:"SIG2",
       sigtableVue: "",
       customsigVue: "",
-      sigmatVue: "",
+      biomarkerVue: "",
     };
   },
   created() {
@@ -65,8 +65,8 @@ export default {
         case "customsig":
           this.customsigVue = sigcustompage;
           break;
-        case "sigcorrmat":
-          this.sigmatVue = sigcorrmat;
+        case "biomarker":
+          this.biomarkerVue = sigbiomarker;
           break;
       }
     },
@@ -81,7 +81,7 @@ div#sigpage {
 
 #tab-sigtable,
 #tab-customsig,
-#tab-sigcorrmat {
+#tab-biomarker {
   font-size: 20px;
   height: 55px;
   padding: 10px;

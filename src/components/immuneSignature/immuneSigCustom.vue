@@ -1,11 +1,9 @@
 <template>
   <div class="detail-card">
     <el-card id="scummuviewer" class="infor">
-    <p class="card-title">Upload Matrix</p>
-    <el-row>
-    </el-row>
-    <br />
-    <el-row>
+      <p class="card-title">Upload Matrix</p>
+      <br />
+      <el-row>
         <el-col span="6" push="2" align="center">
           <el-upload
             class="upload-demo"
@@ -29,9 +27,9 @@
               <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a>
               the example expression matrix.</p>
         </el-col>
-    </el-row>
-    <br/>
-    <el-row>
+      </el-row>
+      <br/>
+      <el-row>
         <el-col span="6" push="2">
             <div class="tiggeneinfo">
               <div id="collapseCard">
@@ -66,10 +64,10 @@
             </div>
         </el-col>
         <br/>
-       <el-col push="12" span="3">
+        <el-col push="12" span="3">
         <el-button id="immusignatureplot" @click="submitAnalysis">Submit</el-button>
-      </el-col>
-    </el-row>
+        </el-col>
+      </el-row>
     </el-card>
     <br />
     <el-card class="infor" v-show="isShow">
