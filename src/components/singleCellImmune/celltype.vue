@@ -4,7 +4,7 @@
       <el-tabs v-model="tabactiveName" @tab-click="handleClick" >
         <el-tab-pane label="Cell Type Expression" name="marker">
           <el-col span="8">
-            <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+            <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Main Lineage">
               <el-option
                 v-for="item in gloclures"
                 :key="item"

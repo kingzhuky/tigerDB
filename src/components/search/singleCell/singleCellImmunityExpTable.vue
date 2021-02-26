@@ -24,7 +24,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[0] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="previewImg(0,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4" >
                 <p class="imgtitle">Tissue Types Distribution</p>
@@ -33,7 +33,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[1] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="previewImg(1,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
@@ -43,7 +43,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[3] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="previewImg(3,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
                 </div>
               </el-col>
               <el-col :span="4">
@@ -53,7 +53,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[2] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="previewImg(2,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
               </el-col>
               <el-col :span="4">
                 <div class="imgspan"> 
@@ -63,7 +63,7 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[4] + '.png'"
-                  @click="previewImg(['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="previewImg(4,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
                 </div>
               </el-col>
             </el-row> 
@@ -73,7 +73,7 @@
       </el-table-column>
       <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable="custom"></el-table-column>
       <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable="custom"></el-table-column>
-      <el-table-column prop="GlobalCluster" label="Global Cluster" sortable="custom"></el-table-column>
+      <el-table-column prop="GlobalCluster" label="Main Lineage" sortable="custom"></el-table-column>
       <el-table-column prop="CellType" label="Cell Type" sortable="custom"></el-table-column>
       <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable="custom"></el-table-column>
       <el-table-column prop="P_Value" label="-log10 (P Value)" sortable="custom"></el-table-column>
@@ -330,12 +330,12 @@ export default {
       };
     },
 
-    previewImg(url){
+    previewImg(index,url){
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        nowImgIndex: index, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
         closeColor: 'rgba(255,255,255,.5)'
       })

@@ -4,7 +4,7 @@
       <el-tabs v-model="tabactiveName">
         <el-tab-pane :disabled="whethrnr" label="Response VS Non-Response" name="response">
           <el-col span="8">
-            <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+            <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Main Lineage">
               <el-option
                 v-for="item in gloclures"
                 :key="item"
@@ -74,7 +74,7 @@
 
         <el-tab-pane :disabled="whethtn" label="Tumor VS Normal" name="tn">
               <el-col span="8">
-                <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Global Cluster">
+                <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Main Lineage">
                   <el-option
                     v-for="item in gloclures"
                     :key="item"

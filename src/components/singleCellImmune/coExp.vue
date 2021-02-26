@@ -3,7 +3,7 @@
     <el-row class="selectrow">
       <br />
       <el-col :span="6" :offset="2">
-        <span class="demonstration">Global Cluster:</span>
+        <span class="demonstration">Main Lineage:</span>
         <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
           <el-option
             v-for="item in gloCluoptions"

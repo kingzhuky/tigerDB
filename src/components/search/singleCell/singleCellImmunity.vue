@@ -38,7 +38,7 @@
             </el-col>
 
             <el-col :span="8">
-              <span class="demonstration">Global Cluster: </span>
+              <span class="demonstration">Main Lineage: </span>
               <el-select v-model="GlobalCluster" @change="GlobalClusterChange">
                 <el-option
                   v-for="item in gloCluoptions"

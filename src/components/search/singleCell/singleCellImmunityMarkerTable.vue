@@ -24,31 +24,31 @@
               <el-row v-show="imgshow" class="scdetailimg">
                 <!-- <p class="card-title">tSNE</p> -->
                 <el-col :span="6" style="position:relative;left:20px;top:0px;">
-                  <p class="imgtitle">Cell Types</p>
+                  <p class="imgtitle">Cell Types Distribution</p>
                   <img
                     id="singleimg"
                     fit="fill"
                     width="100%"
                     :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
-                    @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                    @click="previewImg(0,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
                 </el-col>
                 <el-col :span="6" style="position:relative;left:100px;top:0px;">
-                  <p class="imgtitle">UMAP Plot of {{scope.row.CellType}} Types</p>
+                  <p class="imgtitle">{{seargene}} Expression</p>
                   <img
                     id="singleimg"
                     fit="fill"
                     width="100%"
                     :src="'tiger/img/' + markerimg.split(',')[1]"
-                    @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                    @click="previewImg(1,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
                 </el-col>
                 <el-col :span="12" style="position:relative;left:40px;top:0px;">
-                  <p class="imgtitle">Boxplot of {{seargene}} Expression</p>
+                  <p class="imgtitle">{{seargene}} Expression Difference</p>
                   <img
                     id="singleimg"
                     fit="fill"
                     height="250px"
                     :src="'tiger/img/' + markerimg.split(',')[0]"
-                    @click="previewImg(['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                    @click="previewImg(2,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
                 </el-col>
               </el-row>
             </div>
@@ -57,7 +57,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable="custom"></el-table-column>
-      <el-table-column prop="GlobalCluster" label="Global Cluster" width="180%" sortable="custom"></el-table-column>
+      <el-table-column prop="GlobalCluster" label="Main Lineage" width="180%" sortable="custom"></el-table-column>
       <el-table-column prop="CellType" label="Cell Type" sortable="custom"></el-table-column>
       <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change )" sortable="custom"></el-table-column>
     </el-table>
@@ -376,12 +376,12 @@ export default {
       };
     },
 
-    previewImg(url){
+    previewImg(index,url){
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
-        nowImgIndex: 0, // 多图预览，默认展示第二张图片
+        nowImgIndex: index, // 多图预览，默认展示第二张图片
         mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
         closeColor: 'rgba(255,255,255,.5)'
       })
