@@ -8,8 +8,8 @@
                     <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
                     <el-table-column prop="title" label width="250">
                         <template slot-scope="{row: {title}}">
-                        <span v-if="title === 'SignatureID'">Signature ID</span>
-                        <span v-if="title === 'SignatureName'">Signature Name</span>
+                        <span v-if="title === 'SignatureID'" >Signature ID</span>
+                        <span v-else-if="title === 'SignatureName'">Signature Name</span>
                         <span v-else-if="title === 'SignatureCite'">Signature Cite</span>
                         <span v-else>{{title}}</span>
                         </template>
@@ -25,6 +25,7 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <br/>
                 <!-- <p class="card-title">Signature Component</p> -->
                 <p class="card-title">AUC Table</p>
                     <el-row v-loading="aucTableloading">
@@ -121,7 +122,14 @@ export default {
             })
             .then(function (res) {
                 // console.log(res.data.list)
+                function removeid(element){
+                    if(element.title == "SignatureID" || element.title == "SignatureCite" ){
+                        return
+                    }
+                    return(element)
+                }
                 that.articleData = res.data.list;
+                that.articleData = that.articleData.filter(removeid)
                 that.imgpathRNRBox = "ImmuneSig-Detial-RNR-boxplot-" + sigID
                 that.imgpathTNBox = "ImmuneSig-Detial-pancancer-boxplot-" + sigID
                 // console.log(that.imgpathTNBox)

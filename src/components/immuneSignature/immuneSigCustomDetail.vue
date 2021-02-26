@@ -27,7 +27,7 @@
             </el-table>
             </div>
         </el-row>
-        <el-row v-show="isgroupshow">
+        <!-- <el-row v-show="isgroupshow">
             <p class="card-title">Signature Score Table</p>
             <div class="detailimg">
             <el-table
@@ -53,7 +53,7 @@
                 </el-table-column>
             </el-table>
             </div>
-        </el-row>
+        </el-row> -->
         <el-row>
             <!-- <p class="card-title">Signature Score Table</p> -->
             <v-sigdetail

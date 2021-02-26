@@ -28,9 +28,12 @@
               <a href="javascript:void(0);" @click="runExpample()">Run</a>
               the example expression matrix.</p>
         </el-col>
+        <el-col span="4" push="4">
+          <el-button id="immusignatureplot" @click="submitAnalysis">Submit</el-button>
+        </el-col>
       </el-row>
       <br/>
-      <el-row>
+      <!-- <el-row>
         <el-col span="6" push="2">
             <div class="tiggeneinfo">
               <div id="collapseCard">
@@ -68,7 +71,7 @@
         <el-col push="12" span="3">
         <el-button id="immusignatureplot" @click="submitAnalysis">Submit</el-button>
         </el-col>
-      </el-row>
+      </el-row> -->
     </el-card>
     <br />
     <el-card class="infor" v-show="isShow">
@@ -132,7 +135,7 @@ export default {
     submitAnalysis(){
       // console.log("start ~~");
       this.expDataPath = this.expDataPath == "" ? "Download/customSig_example.exp.tsv.zip" : this.expDataPath
-      this.annoDataPath = this.annoDataPath == "none" && this.expDataPath == "" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
+      // this.annoDataPath = this.annoDataPath == "none" && this.expDataPath == "" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
       // this.expDataPath = "Download/customSig_example.exp.tsv.zip";
       // this.annoDataPath = "Download/customSig_example.anno.tsv.zip";
       this.$refs.immuneSigCustomDetail.analysisData(this.expDataPath,this.annoDataPath,this.taskuid)
@@ -140,12 +143,12 @@ export default {
     },
     runExpample(){
       this.expDataPath = "Download/customSig_example.exp.tsv.zip"
-      this.annoDataPath = "Download/customSig_example.anno.tsv" 
+      // this.annoDataPath = "Download/customSig_example.anno.tsv" 
       this.submitAnalysis()
     },
     handleEdit(){
       window.open("/tiger/Download/customSig_example.exp.tsv.zip")
-      window.open("/tiger/Download/customSig_example.anno.tsv.zip")
+      // window.open("/tiger/Download/customSig_example.anno.tsv.zip")
     }
   },
   components: {
