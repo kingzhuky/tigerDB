@@ -4,9 +4,15 @@ $gene=trim($_GET['gene']);
 $condition=trim($_GET['condi']); 
 if($condition=="response"){
   if(PATH_SEPARATOR==':'){
-    $zhiling="sudo Rscript 2.5-generate_sig_auc_mat.R $gene";
+    $zhiling="sudo Rscript 2.5.1-generate_sig_auc_mat.R $gene";
   }else{
-    $zhiling="Rscript 2.5-generate_sig_auc_mat.R $gene";
+    $zhiling="Rscript 2.5.1-generate_sig_auc_mat.R $gene";
+  }
+}else if($condition=="survival"){
+  if(PATH_SEPARATOR==':'){
+    $zhiling="sudo Rscript 2.6.1-generate_sig_sur_mat.R $gene";
+  }else{
+    $zhiling="Rscript 2.6.1-generate_sig_sur_mat.R $gene";
   }
 }else{
   if(PATH_SEPARATOR==':'){

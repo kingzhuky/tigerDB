@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       activeName: "sigtable",
-      sigid:"SIG2",
+      sigid:"SIG1",
       sigtableVue: "",
       customsigVue: "",
       biomarkerVue: "",

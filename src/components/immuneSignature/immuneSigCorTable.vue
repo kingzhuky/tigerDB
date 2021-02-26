@@ -131,9 +131,10 @@ export default {
       this.loading = true;
       this.immuneTabShow = true;
       this.$http
-        .get("/tiger/immuneSig.php", {
+        .get("/tiger/immuneSig2.php", {
           params: {
             gene: this.gene.trim().replace(" ",""),
+            condi: "tcga"
           },
         })
         .then((res) => {
@@ -217,7 +218,7 @@ export default {
 
 #immuneSigTable th {
   left: 35px !important;
-  height: 70px !important;
+  height: 90px !important;
 }
 
 #immusignatureplot {

@@ -4,7 +4,7 @@
       <el-row>
         <el-col :push="1" :span="22">
         <el-table v-loading="loading" :data="sigtable" max-height="620" stripe border style="width: 100%">
-            <el-table-column property="SignatureID" label="Signature ID" align="center" ></el-table-column>
+            <!-- <el-table-column property="SignatureID" label="Signature ID" align="center" ></el-table-column> -->
             <el-table-column property="SignatureName" label="Signature Name" align="center" ></el-table-column>
             <el-table-column property="PMID" label="PMID" align="center">
                 <template slot-scope="scope">
@@ -19,7 +19,7 @@
                     <el-button
                     id="immusignatureplot"
                     icon="el-icon-s-marketing"
-                    @click="showDetail(scope.row.SignatureID)"
+                    @click="showDetail(scope.row)"
                     >Detail</el-button>
                 </template>
             </el-table-column>
@@ -33,6 +33,7 @@
         ref="immuneSigDetail"
         v-show="isShow"
         :sigID="sigID"
+        :sigName="sigName"
       ></v-sigdetail>
     </el-card>
   </div>
@@ -54,7 +55,8 @@ export default {
   data() {
     return {
       sigtable:[],
-      sigID:"SIG6",
+      sigID:"SIG1",
+      sigName: "T cell-inflamed GEP",
       isShow: true,
       loading: true, 
     };
@@ -74,9 +76,10 @@ export default {
       });
       // console.log(this.sigtable)
     },
-    showDetail(sigID){
+    showDetail(row){
       // console.log(sigID)
-      this.sigID = sigID
+      this.sigID = row["SignatureID"]
+      this.sigName = row["SignatureName"]
       this.$refs.immuneSigDetail.renewDetail(this.sigID)
       setTimeout(() => { toTarget(720) }, 300);  
       // console.log(this.sigID)

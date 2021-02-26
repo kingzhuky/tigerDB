@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="card-title">{{sigID}} Details</p>
+        <p class="card-title">{{sigName}} Details</p>
         <el-row class="detailimg">
             <el-col push="1" span="22">
                 <p class="card-title">Signature Informations</p>
@@ -9,7 +9,7 @@
                     <el-table-column prop="title" label width="250">
                         <template slot-scope="{row: {title}}">
                         <span v-if="title === 'SignatureID'">Signature ID</span>
-                        <span v-else-if="title === 'SignatureName'">Signature Name</span>
+                        <span v-if="title === 'SignatureName'">Signature Name</span>
                         <span v-else-if="title === 'SignatureCite'">Signature Cite</span>
                         <span v-else>{{title}}</span>
                         </template>
@@ -76,6 +76,7 @@
 export default {
     props:{
         sigID: String,
+        sigName: String,
     },
     data(){
         return{
@@ -107,7 +108,7 @@ export default {
             this.getDiagramData(sigID)
         },
         articleDetail(sigID) {
-            console.log(sigID)
+            // console.log(sigID)
             var that = this;
             that.artloading = true;
             this.$http

@@ -7,7 +7,7 @@ library(jsonlite)
 library(survival)
 library(survminer)
 Args <- commandArgs(T)
-#Args <- c("ALPL,BST1,CD93","Melanoma-PRJEB23709_ALL")
+#Args <- c("CD274,CD3D","Melanoma-GSE100797_ACT")
 gene <- unlist(strsplit(Args[1],split=','))
 mergedatasets <- unlist(strsplit(Args[2],split=','))
 
@@ -29,7 +29,7 @@ result.path <- "./img/"
 load(paste0(loading.data.path,"ResponseData.RData"))
 title.gene <- "Custom Geneset"
 exp.cutoff <- 0.5
-# if(!file.exists(paste0(result.path,maintitle1,".json")) | nchar(maintitle1) > 200 ){
+# if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle1) > 200 ){
   for (sl.dataset in mergedatasets){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
@@ -101,7 +101,8 @@ exp.cutoff <- 0.5
     dataset <- as.data.frame(dataset)
     covariates <- rownames(dataset)
     forest.plot.data <- sapply(covariates, function(x){
-      surv.data <-  data.table(sample_id = colnames(dataset), t(dataset[x,]))[surv.sample.info[,c(1,9,10)], on = c("sample_id"), nomatch = F][,-c("sample_id")]
+      surv.data <- data.table(sample_id = colnames(dataset), t(dataset[x,]))
+      surv.data <- surv.data[surv.sample.info[,c(1,9,10)], on = c("sample_id"), nomatch = F][,-c("sample_id")]
       order.index <-  order(surv.data[,1],decreasing = T)
       up.index <- order.index[seq(1,round(nrow(surv.data)*exp.cutoff))]
       down.index <- order.index[seq(round(nrow(surv.data)*(1-exp.cutoff))+1,nrow(surv.data))]
@@ -110,7 +111,7 @@ exp.cutoff <- 0.5
       surv.data[down.index,"group"] <- paste0(x,"_low")
       surv.data <- subset(surv.data,group != "0")
       surv.data$group <- factor(surv.data$group)
-      sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
+      sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
       
       cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.data)
       cox.res <- summary(cox.res)

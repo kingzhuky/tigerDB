@@ -22,9 +22,10 @@
                 </el-button>
           </el-upload>
         </el-col>
-        <el-col span="6" push="2" align="center">
+        <el-col span="8" push="2" align="center">
             <p class=downloadtext >
-              <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a>
+              <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a> Or
+              <a href="javascript:void(0);" @click="runExpample()">Run</a>
               the example expression matrix.</p>
         </el-col>
       </el-row>
@@ -131,11 +132,16 @@ export default {
     submitAnalysis(){
       // console.log("start ~~");
       this.expDataPath = this.expDataPath == "" ? "Download/customSig_example.exp.tsv.zip" : this.expDataPath
-      this.annoDataPath = this.annoDataPath == "none" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
+      this.annoDataPath = this.annoDataPath == "none" && this.expDataPath == "" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
       // this.expDataPath = "Download/customSig_example.exp.tsv.zip";
       // this.annoDataPath = "Download/customSig_example.anno.tsv.zip";
       this.$refs.immuneSigCustomDetail.analysisData(this.expDataPath,this.annoDataPath,this.taskuid)
       this.isShow = true
+    },
+    runExpample(){
+      this.expDataPath = "Download/customSig_example.exp.tsv.zip"
+      this.annoDataPath = "Download/customSig_example.anno.tsv" 
+      this.submitAnalysis()
     },
     handleEdit(){
       window.open("/tiger/Download/customSig_example.exp.tsv.zip")

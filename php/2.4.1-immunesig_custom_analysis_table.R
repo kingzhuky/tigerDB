@@ -40,6 +40,7 @@ maintitle2 <- "0"
 sig.mat <- sig.mat[exp.matrix.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
 GenerateSigScore <- function(exp.table,sig.weighted.mat){
   tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+  sig.weighted.mat <- sig.weighted.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")] 
   SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
 }
 SIG.score.seplist <- GenerateSigScore(exp.matrix.table,sig.mat)

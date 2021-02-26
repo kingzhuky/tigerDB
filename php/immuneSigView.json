@@ -7,76 +7,6 @@
     "AUC": 0.6348
   },
   {
-    "SignatureID": "SIG10",
-    "SignatureName": "Metagene",
-    "SignatureCite": "Metagene, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.6501
-  },
-  {
-    "SignatureID": "SIG11",
-    "SignatureName": "PGR-RAI2 Metagene",
-    "SignatureCite": "PGR-RAI2 Metagene, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.6891
-  },
-  {
-    "SignatureID": "SIG12",
-    "SignatureName": "Chr15q26.1 Attractor",
-    "SignatureCite": "Chr15q26.1 Attractor, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.8315
-  },
-  {
-    "SignatureID": "SIG13",
-    "SignatureName": "1-ER",
-    "SignatureCite": "1-ER, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.8438
-  },
-  {
-    "SignatureID": "SIG14",
-    "SignatureName": "2-Dev/Basal",
-    "SignatureCite": "2-Dev/Basal, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6428
-  },
-  {
-    "SignatureID": "SIG15",
-    "SignatureName": "3-Immune",
-    "SignatureCite": "3-Immune, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.7644
-  },
-  {
-    "SignatureID": "SIG16",
-    "SignatureName": "4-Immune",
-    "SignatureCite": "4-Immune, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6296
-  },
-  {
-    "SignatureID": "SIG17",
-    "SignatureName": "5-Immune",
-    "SignatureCite": "5-Immune, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6875
-  },
-  {
-    "SignatureID": "SIG18",
-    "SignatureName": "6-Histone",
-    "SignatureCite": "6-Histone, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.7262
-  },
-  {
-    "SignatureID": "SIG19",
-    "SignatureName": "7-ERBB2",
-    "SignatureCite": "7-ERBB2, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6676
-  },
-  {
     "SignatureID": "SIG2",
     "SignatureName": "ImmuneSignature",
     "SignatureCite": "ImmuneSignature, Yoshihara K, 2013",
@@ -84,67 +14,11 @@
     "AUC": 0.7258
   },
   {
-    "SignatureID": "SIG20",
-    "SignatureName": "8-Mixed",
-    "SignatureCite": "8-Mixed, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6592
-  },
-  {
-    "SignatureID": "SIG21",
-    "SignatureName": "9-ECM/Dev/Immune",
-    "SignatureCite": "9-ECM/Dev/Immune, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.5689
-  },
-  {
-    "SignatureID": "SIG22",
-    "SignatureName": "10-ECM",
-    "SignatureCite": "10-ECM, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6311
-  },
-  {
-    "SignatureID": "SIG23",
-    "SignatureName": "11-Prilif",
-    "SignatureCite": "11-Prilif, Wolf DM, 2014",
-    "PMID": 24516633,
-    "AUC": 0.6783
-  },
-  {
     "SignatureID": "SIG24",
     "SignatureName": "Immune contexture",
     "SignatureCite": "Immune contexture, Galon J, 2013",
     "PMID": 23890060,
     "AUC": 0.5826
-  },
-  {
-    "SignatureID": "SIG25",
-    "SignatureName": "Innate immunity cells",
-    "SignatureCite": "Innate immunity cells, ?enbabao?lu Y, 2016",
-    "PMID": 27855702,
-    "AUC": 0.6062
-  },
-  {
-    "SignatureID": "SIG26",
-    "SignatureName": "Adaptive immunity cells",
-    "SignatureCite": "Adaptive immunity cells, ?enbabao?lu Y, 2016",
-    "PMID": 27855702,
-    "AUC": 0.7538
-  },
-  {
-    "SignatureID": "SIG27",
-    "SignatureName": "Tfh & Tgd cells",
-    "SignatureCite": "Tfh & Tgd cells, ?enbabao?lu Y, 2016",
-    "PMID": 27855702,
-    "AUC": 0.7625
-  },
-  {
-    "SignatureID": "SIG28",
-    "SignatureName": "Angiogenesis & Antigen presenting machinery",
-    "SignatureCite": "Angiogenesis & Antigen presenting machinery, ?enbabao?lu Y, 2016",
-    "PMID": 27855702,
-    "AUC": 0.6618
   },
   {
     "SignatureID": "SIG29",
@@ -166,195 +40,6 @@
     "SignatureCite": "T-helper 1 immune response typifies a immune favorable phenotype, Bedognetti D, 2016",
     "PMID": 26967649,
     "AUC": 0.5883
-  },
-  {
-    "SignatureID": "SIG31",
-    "SignatureName": "B cells",
-    "SignatureCite": "B cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.685
-  },
-  {
-    "SignatureID": "SIG32",
-    "SignatureName": "T cells",
-    "SignatureCite": "T cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6546
-  },
-  {
-    "SignatureID": "SIG33",
-    "SignatureName": "T helper cells",
-    "SignatureCite": "T helper cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6672
-  },
-  {
-    "SignatureID": "SIG34",
-    "SignatureName": "Tcm",
-    "SignatureCite": "Tcm, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.59
-  },
-  {
-    "SignatureID": "SIG35",
-    "SignatureName": "Tem",
-    "SignatureCite": "Tem, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.7583
-  },
-  {
-    "SignatureID": "SIG36",
-    "SignatureName": "Th1 cells",
-    "SignatureCite": "Th1 cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.684
-  },
-  {
-    "SignatureID": "SIG37",
-    "SignatureName": "Th2 cells",
-    "SignatureCite": "Th2 cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6641
-  },
-  {
-    "SignatureID": "SIG38",
-    "SignatureName": "TFH",
-    "SignatureCite": "TFH, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.7422
-  },
-  {
-    "SignatureID": "SIG39",
-    "SignatureName": "Th17 cells",
-    "SignatureCite": "Th17 cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.8395
-  },
-  {
-    "SignatureID": "SIG4",
-    "SignatureName": "LYM feature",
-    "SignatureCite": "LYM feature, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.6858
-  },
-  {
-    "SignatureID": "SIG40",
-    "SignatureName": "TReg",
-    "SignatureCite": "TReg, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6739
-  },
-  {
-    "SignatureID": "SIG41",
-    "SignatureName": "CD8 T cells",
-    "SignatureCite": "CD8 T cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.7639
-  },
-  {
-    "SignatureID": "SIG42",
-    "SignatureName": "Tgd",
-    "SignatureCite": "Tgd, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.9271
-  },
-  {
-    "SignatureID": "SIG43",
-    "SignatureName": "Cytotoxic cells",
-    "SignatureCite": "Cytotoxic cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.7549
-  },
-  {
-    "SignatureID": "SIG44",
-    "SignatureName": "NK cells",
-    "SignatureCite": "NK cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6295
-  },
-  {
-    "SignatureID": "SIG45",
-    "SignatureName": "NK CD56dim cells",
-    "SignatureCite": "NK CD56dim cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.7608
-  },
-  {
-    "SignatureID": "SIG46",
-    "SignatureName": "NK CD56bright cells",
-    "SignatureCite": "NK CD56bright cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6723
-  },
-  {
-    "SignatureID": "SIG47",
-    "SignatureName": "DC",
-    "SignatureCite": "DC, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6701
-  },
-  {
-    "SignatureID": "SIG48",
-    "SignatureName": "iDC",
-    "SignatureCite": "iDC, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.5881
-  },
-  {
-    "SignatureID": "SIG49",
-    "SignatureName": "aDC",
-    "SignatureCite": "aDC, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.8034
-  },
-  {
-    "SignatureID": "SIG5",
-    "SignatureName": "CIN feature",
-    "SignatureCite": "CIN feature, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.6225
-  },
-  {
-    "SignatureID": "SIG50",
-    "SignatureName": "pDC",
-    "SignatureCite": "pDC, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.5714
-  },
-  {
-    "SignatureID": "SIG51",
-    "SignatureName": "Eosinophils",
-    "SignatureCite": "Eosinophils, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.7208
-  },
-  {
-    "SignatureID": "SIG52",
-    "SignatureName": "Macrophages",
-    "SignatureCite": "Macrophages, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6555
-  },
-  {
-    "SignatureID": "SIG53",
-    "SignatureName": "Mast cells",
-    "SignatureCite": "Mast cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6674
-  },
-  {
-    "SignatureID": "SIG54",
-    "SignatureName": "Neutrophils",
-    "SignatureCite": "Neutrophils, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.6856
-  },
-  {
-    "SignatureID": "SIG55",
-    "SignatureName": "SW480 cancer cells",
-    "SignatureCite": "SW480 cancer cells, Bindea G, 2013",
-    "PMID": 24138885,
-    "AUC": 0.8006
   },
   {
     "SignatureID": "SIG56",
@@ -385,13 +70,6 @@
     "AUC": 0.6888
   },
   {
-    "SignatureID": "SIG6",
-    "SignatureName": "MES feature",
-    "SignatureCite": "MES feature, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.5426
-  },
-  {
     "SignatureID": "SIG60",
     "SignatureName": "Exclusion",
     "SignatureCite": "Exclusion, Jiang P, 2018",
@@ -418,26 +96,5 @@
     "SignatureCite": "TAM M2, Jiang P, 2018",
     "PMID": 30127393,
     "AUC": 0.6717
-  },
-  {
-    "SignatureID": "SIG7",
-    "SignatureName": "Chr8q24.3 Attractor",
-    "SignatureCite": "Chr8q24.3 Attractor, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.7377
-  },
-  {
-    "SignatureID": "SIG8",
-    "SignatureName": "Chr7p11.2 Attractor",
-    "SignatureCite": "Chr7p11.2 Attractor, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.7453
-  },
-  {
-    "SignatureID": "SIG9",
-    "SignatureName": "ZMYND10 Metagene",
-    "SignatureCite": "ZMYND10 Metagene, Cheng WY, 2013",
-    "PMID": 23596202,
-    "AUC": 0.6364
   }
 ]

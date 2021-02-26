@@ -206,7 +206,7 @@
 <style>
 #immuneSigTable th {
   left: 35px !important;
-  height: 70px !important;
+  height: 80px !important;
 }
 #immusignatureplot {
   width: 100%;

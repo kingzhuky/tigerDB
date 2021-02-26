@@ -7,7 +7,7 @@
           id="survivaltable"
           ref="singleTable"
           border
-          max-height="800"
+          max-height="900"
           :data="tableData"
           @cell-click="heandleclick"
           :cell-style="tableCellStyle"
@@ -173,7 +173,7 @@ export default {
         this.isShow = true;
         this.signature = row["group"];
         this.datasetid = column["label"];
-        this.$refs.detailPlot.gettable(this.gene,column["label"]);
+        this.$refs.detailPlot.gettable(this.gene,row["group"],column["label"]);
         setTimeout(() => { toTarget(820) }, 200); 
       }
     },

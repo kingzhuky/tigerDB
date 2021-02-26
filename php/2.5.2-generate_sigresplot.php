@@ -1,12 +1,13 @@
 <?php 
 header("Content-Type:application/json;charset=UTF8");
-$gene=trim($_GET['gene']); 
+$gene=trim($_GET['gene']);
+$sigid=trim($_GET['sigid']);
 $dataset=trim($_GET['dataset']); 
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript 2.5.1-generate_sigtable.R $gene $dataset";
+  $zhiling="sudo Rscript 2.5.2-generate_sigresplot.R $gene $sigid $dataset";
 }else{
-  $zhiling="Rscript 2.5.1-generate_sigtable.R $gene $dataset";
+  $zhiling="Rscript 2.5.2-generate_sigresplot.R $gene $sigid $dataset";
 }
 
 

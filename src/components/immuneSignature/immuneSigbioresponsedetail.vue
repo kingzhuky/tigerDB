@@ -69,6 +69,9 @@
 
 <script>
 import goTop from "../public/goTop";
+import {
+  gStyle
+} from "../../../static/js/utils.js";
 
 export default {
   props: {
@@ -132,14 +135,15 @@ export default {
     //       console.log(res);
     //     });
     // },
-    gettable(genestr,datasetid) {
+    gettable(genestr, signatureid, datasetid) {
       var that = this;
       that.loading = true;
       this.$http
-        .get("/tiger/2.5.1-generate_sigtable.php", {
+        .get("/tiger/2.5.2-generate_sigtable.php", {
           params: {
             gene: genestr.trim().replace(" ",""),
-            dataset: datasetid
+            dataset: datasetid,
+            sigid: signatureid
           },
         })
         .then(function (res) {

@@ -14,7 +14,7 @@ if(nchar(maintitle) > 200) {
                      "TCGA",sep="-")
 }
 
-if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200 ){
+# if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200 ){
   load(paste0(loading.data.path,"TCGA.data.table.RData"))
   tablecortest <- function(x,y){
     test.res <- cor.test(x,y)
@@ -46,7 +46,7 @@ if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200 
     toJSON(pretty=TRUE,.)
   cat(SIG.cor.matrix.json, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)
-}
+# }
 cat(maintitle)
 
 
