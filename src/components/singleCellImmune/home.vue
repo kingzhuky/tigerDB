@@ -205,8 +205,8 @@ export default {
   },
   {
     "name": "Lung",
-    "datasetid": "NSCLC_NSCLC1_NSCLC3_NSCLC4_NSCLC5_NSCLC6",
-    "datasetname": "NSCLC | Lambrechts D, et al. Nat Med. 2018_NSCLC | Wu TD, et al. Nature. 2020_NSCLC | Zilionis R, et al. Immunity. 2019_NSCLC | Guo X, et al. Nat Med. 2018_NSCLC | Kim, N., et al. Nat Commu 2020_NSCLC | Ashley Maynard, et al. Cell. 2020",
+    "datasetid": "NSCLC_NSCLC1_NSCLC3_NSCLC4_NSCLC5_NSCLC6_NSCLC7",
+    "datasetname": "NSCLC | Lambrechts D, et al. Nat Med. 2018_NSCLC | Wu TD, et al. Nature. 2020_NSCLC | Zilionis R, et al. Immunity. 2019_NSCLC | Guo X, et al. Nat Med. 2018_NSCLC | Kim, N., et al. Nat Commu 2020_NSCLC | Ashley Maynard, et al. Cell. 2020_NSCLC | Laughney, A.M., Nat Med 2020",
     "PMID": "29988129_32103181_30979687_29942094_32686767_32822576",
     "icon": require("../../assets/Icons/Lung.png")
   },
@@ -226,15 +226,15 @@ export default {
   },
   {
     "name": "Pancreas",
-    "datasetid": "PDAC",
-    "datasetname": "PDAC | Peng J, et al. Cell Res. 2019 Sep",
+    "datasetid": "PDAC_PDAC2",
+    "datasetname": "PDAC | Peng J, et al. Cell Res. 2019_PDAC | Steele, Nina G, et al. Nat Cancer. 2020",
     "PMID": "31273297",
     "icon": require("../../assets/Icons/Pancreas.png")
   },
   {
     "name": "Skin",
-    "datasetid": "BCC_MCC_SKCM1",
-    "datasetname": "BCC | Yost KE, et al. Nat Med. 2019_MCC | Paulson KG, et al. Nat Commun. 2018_SKCM | Sade-Feldman M, et al. Cell. 2018",
+    "datasetid": "BCC_MCC_SKCM1_SKCM3",
+    "datasetname": "BCC | Yost KE, et al. Nat Med. 2019_MCC | Paulson KG, et al. Nat Commun. 2018_SKCM | Sade-Feldman M, et al. Cell. 2018_SKCM | Slyper, M., Nat Med 2020",
     "PMID": "31359002_30250229_30388456",
     "icon": require("../../assets/Icons/Skin.png")
   },
@@ -247,8 +247,8 @@ export default {
   },
   {
     "name": "Uterine",
-    "datasetid": "UCEC",
-    "datasetname": "UCEC | Wu TD, et al. Nature. 2020",
+    "datasetid": "UCEC_MUC",
+    "datasetname": "UCEC | Wu TD, et al. Nature. 2020_MUC | Yuen, K.C., et al. Nat Med 2020",
     "PMID": "32103181",
     "icon": require("../../assets/Icons/Uterine.png")
   },
@@ -264,12 +264,12 @@ export default {
     "datasetname": "OS | Zhou, Y., et al Nat Commun. 2020",
     "icon": require("../../assets/Icons/Bone.png")
   },
-  // {
-  //   "name": "Esophagus",
-  //   "datasetid": "ESCC",
-  //   "datasetname": "ESCC | Zheng, Y., Nat Commun 2020",
-  //   "icon": require("../../assets/Icons/Esophagus.png")
-  // },
+  {
+    "name": "Esophagus",
+    "datasetid": "ESCC",
+    "datasetname": "ESCC | Zheng, Y., Nat Commun 2020",
+    "icon": require("../../assets/Icons/Esophagus.png")
+  },
 ]
     };
   },
