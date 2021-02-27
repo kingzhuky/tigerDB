@@ -6,38 +6,53 @@ library(pROC)
 library(jsonlite)
 library(survival)
 library(survminer)
+library(plotROC)
+colors=c("#cc4a5399",'#00ADDB99','#7142AC99',"#42B54099",'#00008099','#07702b99',"#7FFF0099","#AD002A","#ED000099",'#ABD20599','#F0BE7E','#4D221399',"#FDAF9199",'#85E1D099','#C979CD99','#F26A1299',"#ADB6B699",'#4B79AB99',"#0099B499",'#FF149399','#00800099',"#1B191999")
+my36colors <-c('#D6E7A3',"orange1", 'lightblue','#7142AC',"darkcyan","royalblue1","red3",'#53A85F',"deeppink",
+               "mediumvioletred","gold","darkorange2", "tan2","darkorange2","darkorchid","chocolate4","darkred","lightskyblue","gold1")
+mytheme <- theme_bw() + 
+  theme(plot.title=element_text(size=rel(2),hjust=0.5),
+        axis.title=element_text(size=rel(1)),
+        axis.text.x = element_text(angle=0,hjust=0.5, vjust=0.5,size = rel(1.2),color="black"),
+        axis.text.y = element_text(angle=0,hjust=1, vjust=0.5,size = rel(1.2),color="black"),
+        panel.grid.major=element_line(color="grey96"),
+        panel.grid.minor=element_line(color="grey96"),
+        panel.border=element_rect(color="black",size=1),
+        axis.line=element_line(color="black",size=0.5))
+
 Args <- commandArgs(T)
-#Args <- c("CD274,CD3D","Melanoma-GSE100797_ACT")
+#Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
 gene <- unlist(strsplit(Args[1],split=','))
-mergedatasets <- unlist(strsplit(Args[2],split=','))
+sigid <- Args[2]
+mergedatasets <- Args[3]
 
 
 maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_"),
-                    "table",sep="-")
-maintitle2 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_"),
-                    "survival",sep="-")
+                    "bar",sep="-")
+maintitle2 <- paste(sigid,paste(mergedatasets,collapse = "_"),
+                    "roc",sep="-")
 if(nchar(maintitle1) > 200) {
   maintitle1 <- paste("longSig",
-                      "response-auctable",sep="-")
+                      "response-barplot",sep="-")
   maintitle2 <- paste("longSig",
-                      "response-survtable",sep="-")
+                      "response-rocplot",sep="-")
 }
 
 normalMed <- ""
 loading.data.path <- "Response_data/"
 result.path <- "./img/"
 load(paste0(loading.data.path,"ResponseData.RData"))
+SIG.mat <- readRDS("Signature_data/SIG.mat.RDS")
+SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
 title.gene <- "Custom Geneset"
-exp.cutoff <- 0.5
 # if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle1) > 200 ){
-  for (sl.dataset in mergedatasets){
-    exp.mergearray <- NULL
-    exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
-    exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
-    exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
-    exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
-    exp.mergearray <- rbind(exp.mergearray,t(exp.array))
-  }  
+  exp.mergearray <- NULL
+  exp.table <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))
+  exp.array <- exp.table[GENE_SYMBOL %in% c(gene)]
+  exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
+  exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
+  exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
+  exp.mergearray <- rbind(exp.mergearray,t(exp.array))
   exp.mergearray <- data.table(sample_id = rownames(exp.mergearray), exp.mergearray)
   exp.mergearray$sample_id <- gsub("^X", "", exp.mergearray$sample_id)
   if(nrow(na.omit(exp.mergearray)) > 3){
@@ -53,8 +68,8 @@ exp.cutoff <- 0.5
     plot.data$group[plot.data$response_NR %in% c("R","MR")] <- "Responder (R)"
     plot.data$group[plot.data$response_NR %in% c("N","NR","Resistance","NE")] <- "Non-Responder (NR)"
     plot.data <- plot.data[plot.data$group %in% c("Non-Responder (NR)","Responder (R)"),]
-    
-    auc.score <- auc(roc(factor(plot.data[,group],levels = c("Responder (R)","Non-Responder (NR)")),plot.data[,gene.exp],levels=c("Responder (R)","Non-Responder (NR)")))[1]
+    roc.data <- roc(factor(plot.data[,group],levels = c("Responder (R)","Non-Responder (NR)")),plot.data[,gene.exp],levels=c("Responder (R)","Non-Responder (NR)"))
+    auc.score <- auc(roc.data)[1]
   }else{
     auc.score <- 0
   }
@@ -62,79 +77,49 @@ exp.cutoff <- 0.5
   auc.data.mean <- auc.data[, lapply(.SD, mean), by = group, .SDcols = c("value")] # merge dataset
   auc.plot.data <- rbind(data.table(group = title.gene, value = auc.score),auc.data.mean)
   names(auc.plot.data)[2] <- "AUC" 
-  auc.table <- SIG.info[,c("SignatureID","SignatureCite")][auc.plot.data, on = c("SignatureID" = "group"),nomatch = NA]
-  auc.table[1,"SignatureCite"] <- title.gene
-  colnames(auc.table)[c(1:2)] <- c("signature_id","Signature_Cite")
-  auc.table.json <- toJSON(pretty=TRUE,auc.table)
-  cat(auc.table.json, file = (con <- file(paste0(result.path,maintitle1,".json"), "w", encoding = "UTF-8")))
-  close(con)
+  auc.table <- SIG.info[,c("SignatureID","SignatureName")][auc.plot.data, on = c("SignatureID" = "group"),nomatch = NA]
+  auc.table[1,"SignatureName"] <- title.gene
+  colnames(auc.table)[c(1:2)] <- c("signature_id","Signature_Name")
+  bar.plot <- ggplot(na.omit(auc.table),aes(x = Signature_Name, y = AUC, fill = Signature_Name)) + 
+    geom_bar(stat = 'identity', position = 'dodge', width = 0.7) + mytheme +
+    scale_fill_manual(values = my36colors[1:20]) +
+    geom_text(mapping = aes(label = round(AUC,2))) + 
+    coord_flip() + theme(legend.position='none') + ylab("AUC") + xlab("")
   
-  plot.data <- exp.mergearray[sample.info[,c(1,9,10)], on = c("sample_id"), nomatch = F]
-  plot.data <- plot.data[,lapply(.SD, function(x)x[1]), by = c("sample_id")] ## remove same samples
-  colnames(plot.data)[seq(ncol(plot.data)-1,ncol(plot.data))] <- c("Overall_survival_days","Status")
-  plot.data$Status <- ifelse(plot.data$Status == "Dead", 1, 0)
-  if( sum(!is.na(plot.data$Overall_survival_days)) < 3 ){
-    maintitle2 <- "0"
-  }else{
-    if (normalMed == "gene"){
-      plot.data$gene.exp <- plot.data[,CustomGene]/plot.data[,NormalGene]
-      plot.data <- plot.data[abs(gene.exp) != Inf,] ## delete nonsense values
-    }else{
-      plot.data$gene.exp <- plot.data[,CustomGene]
-    }
-    surv.plot.data <- plot.data[!is.na(plot.data$Overall_survival_days),]
-    order.index <-  order(surv.plot.data$gene.exp,decreasing = T)
-    up.index <- order.index[seq(1,round(nrow(surv.plot.data)*exp.cutoff))]
-    down.index <- order.index[seq(round(nrow(surv.plot.data)*(1-exp.cutoff))+1,nrow(surv.plot.data))]
-    surv.plot.data$group <- "0"
-    surv.plot.data[up.index,"group"] <- "Custom_high"
-    surv.plot.data[down.index,"group"] <- "Custom_low"
-    surv.plot.data <- subset(surv.plot.data,group != "0")
-    surv.plot.data$group <- factor(surv.plot.data$group)
-    surv.sample.info <- sample.info[!is.na(`overall survival (days)`),]
-    colnames(surv.sample.info)[c(9,10)] <- c("Overall_survival_days","Status")
-    surv.sample.info$Status <- ifelse(surv.sample.info$Status == "Dead", 1, 0)
-    valid.sig <- c("gene.exp",colnames(SIG.score.list)[-1])
-    surv.SIG.list <- surv.plot.data[SIG.score.list,on = c("sample_id"), nomatch = F]
-    dataset <- t(data.frame(row.names = surv.SIG.list[,sample_id],surv.SIG.list[,..valid.sig]))
-    dataset <- na.omit(dataset)
-    dataset <- as.data.frame(dataset)
-    covariates <- rownames(dataset)
-    forest.plot.data <- sapply(covariates, function(x){
-      surv.data <- data.table(sample_id = colnames(dataset), t(dataset[x,]))
-      surv.data <- surv.data[surv.sample.info[,c(1,9,10)], on = c("sample_id"), nomatch = F][,-c("sample_id")]
-      order.index <-  order(surv.data[,1],decreasing = T)
-      up.index <- order.index[seq(1,round(nrow(surv.data)*exp.cutoff))]
-      down.index <- order.index[seq(round(nrow(surv.data)*(1-exp.cutoff))+1,nrow(surv.data))]
-      surv.data$group <- "0"
-      surv.data[up.index,"group"] <- paste0(x,"_high")
-      surv.data[down.index,"group"] <- paste0(x,"_low")
-      surv.data <- subset(surv.data,group != "0")
-      surv.data$group <- factor(surv.data$group)
-      sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
-      
-      cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.data)
-      cox.res <- summary(cox.res)
-      cox.res$table
-      p.value <- signif(surv_pvalue(sfit)$pval, digits=4)
-      wald.test <- signif(cox.res$wald["test"], digits=4)
-      beta<-signif(cox.res$coef[1], digits=4);#coeficient beta
-      HR <-signif(cox.res$coef[2], digits=4);#exp(beta)
-      HR.confint.lower <- signif(cox.res$conf.int[,"lower .95"],4)
-      HR.confint.upper <- signif(cox.res$conf.int[,"upper .95"],4)
-      res<-c(beta, HR, p.value,HR,HR.confint.lower,HR.confint.upper )
-      names(res)<-c("beta", "HR", "p.value","mean","lower","upper")
-      return(res)
-    })
-    colnames(forest.plot.data)[1] <- "Custom Geneset"
-    forest.plot.data.table <- data.table(SignatureID = colnames(forest.plot.data),t(forest.plot.data))
-    forest.plot.data.table[,`:=`(beta = NULL, mean = NULL, CI95 = paste0(lower,"-",upper),lower = NULL, upper = NULL)]
-    forest.plot.data.table <- SIG.info[,c("SignatureID","SignatureCite")][forest.plot.data.table, on = c("SignatureID"),nomatch = NA]
-    setnames(forest.plot.data.table,c("SignatureID","SignatureCite","p.value"),c("signature_id","Signature_Cite","PValue"))
-    forest.plot.data.table[1,"Signature_Cite"] <- "Custom Geneset"
-    forest.plot.data.table.json <- toJSON(pretty=TRUE, forest.plot.data.table)
-    cat(forest.plot.data.table.json, file = (con2 <- file(paste0(result.path,maintitle2,".json"), "w", encoding = "UTF-8")))
-    close(con2)
+  GenerateTCGASigScore <- function(exp.table,sig.weighted.mat){
+    tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+    sig.weighted.mat <- sig.weighted.mat[tmp.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+    SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
   }
+  system.time(
+    SIG.score.response.seplist <- GenerateTCGASigScore(exp.table,SIG.matrix)
+  )
+  SIG.score.list <- list.rbind(SIG.score.response.seplist) %>% data.frame(row.names = names(SIG.score.response.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)
+  SIG.score.list$sample_id <- gsub("^X", "", SIG.score.list[,sample_id])
+  SIG.score.plot.data <- merge(SIG.score.list,plot.data,by = "sample_id",all.y = T)
+  setnames(SIG.score.plot.data,"gene.exp",title.gene)
+  keep.col <- c(sigid,"group")
+  roc.plot.data <- melt(SIG.score.plot.data[,..keep.col], "group", variable.name = "sigid", value.name = "AUC")
+  if(sigid %in% SIG.info$SignatureID){
+    signame <- SIG.info[SignatureID == sigid][["SignatureName"]]
+  }else{
+    signame <- sigid
+  }
+  
+  p <- ggplot(roc.plot.data, aes(d = group, m = value)) +
+    geom_roc(show.legend = TRUE, labels=FALSE)+ ggpubr::theme_classic2() +
+    scale_color_manual(values = my36colors[1:20]) + xlab("1 - Specificity") + ylab("Sensitivity") + 
+    scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
+  ng <- levels(factor(roc.plot.data[, variable]))
+  auc <- calc_auc(p)$AUC
+  names(auc) <- ng
+  auc <- base::sort(auc, decreasing = TRUE)
+  roc.plot <- p + annotate("text", x = .75, y = .25, 
+                           label = paste0(signame, paste(" AUC =", round(auc, 3), "\n"),collapse = ""),
+                           size = 4)
 # }
+  filename = paste0(result.path,maintitle1,".png")
+  filename2 = paste0(result.path,maintitle2,".png")
+  ggsave(filename = filename, plot = bar.plot, width = 300, height =120, unit = "mm", dpi=100)
+  ggsave(filename = filename2, plot = roc.plot, width = 200, height =120, unit = "mm", dpi=100)
 cat(paste(maintitle1,maintitle2,sep = ","))
