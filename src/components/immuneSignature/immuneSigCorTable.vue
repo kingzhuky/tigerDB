@@ -11,7 +11,7 @@
           tableData.filter(
             (data) =>
               !search ||
-              data.Signature.toLowerCase().includes(search.toLowerCase())
+              data.SignatureID.toLowerCase().includes(search.toLowerCase())
           )
         "
         @cell-click="heandleclick"
@@ -19,8 +19,8 @@
         style="100%"
       >
         <el-table-column
-          v-for="(item, index) in tableDataheader"
-          :key="index"
+          v-for="item in tableDataheader"
+          :key="item"
           :property="item"
           :label="item"
           sortable
@@ -165,7 +165,7 @@ export default {
         .then((res) => {
           this.loading = false;
           this.tableData = res.data;
-          this.tableDataheader = Object.keys(res.data[0]);
+          this.tableDataheader = Object.keys(res.data[0]).filter((item) => item != "SignatureID")
         })
         .catch((error) => {
           console.log(error);
@@ -185,14 +185,14 @@ export default {
       if (column["label"] !== "") {
         this.isShow = true;
         this.m6aMsg = this.gene.trim();
-        this.signature = row["Signature"];
+        this.signature = row["SignatureID"];
         this.cancerMsg = column["label"];
         this.$refs.detailPlot.Plot(
           this.gene.trim(),
           column["label"],
-          row["Signature"]
+          row["SignatureID"]
         );
-        this.$refs.detailPlot.artivcleDetail(row["Signature"]);
+        this.$refs.detailPlot.artivcleDetail(row["SignatureID"]);
         setTimeout(() => {
           toTarget(820);
         }, 200);

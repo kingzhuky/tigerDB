@@ -20,7 +20,7 @@ result.path <- "./img/"
 load(paste0(loading.data.path,"ResponseData.RData"))
 mergedatasets <- dir(loading.data.path,pattern = ".Response.Rds")
 auc.arr <- data.table(group="Custom Geneset")
-if(!file.exists(paste0(result.path,maintitle,".json")) |nchar(maintitle) > 200){
+# if(!file.exists(paste0(result.path,maintitle,".json")) ){
   for (sl.dataset in colnames(auc.data.list)[-1]){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
@@ -51,8 +51,10 @@ if(!file.exists(paste0(result.path,maintitle,".json")) |nchar(maintitle) > 200){
     auc.arr <- cbind(auc.arr,auc.score)
     setnames(auc.arr,"auc.score",sl.dataset)
   }
-  auc.table <- rbind(auc.arr,auc.data.list) %>% toJSON(pretty=TRUE,.)
+  auc.table <- rbind(auc.arr,auc.data.list) %>% 
+    merge(SIG.info[,.(SignatureID,SignatureName)], ., by.x = "SignatureID", by.y = "group") %>%
+    toJSON(pretty=TRUE,.)
   cat(auc.table, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)
-}
+# }
 cat(maintitle)

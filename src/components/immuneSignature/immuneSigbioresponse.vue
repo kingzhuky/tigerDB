@@ -14,8 +14,8 @@
           style="100%"
         >
           <el-table-column
-            v-for="(item, index) in tableDataheader"
-            :key="index"
+            v-for="item in tableDataheader"
+            :key="item"
             :property="item"
             :label="item"
             sortable
@@ -163,8 +163,8 @@ export default {
         .then((res) => {
           this.loading = false;
           this.tableData = res.data;
-          // console.log(this.tableData)
-          this.tableDataheader = Object.keys(res.data[0]);
+          this.tableDataheader = Object.keys(res.data[0]).filter((item) => item != "SignatureID")
+          // console.log(this.tableDataheader)
         })
         .catch((error) => {
           console.log(error);
@@ -176,11 +176,11 @@ export default {
       this.datatype = "response";
       if (column["label"] !== "") {
         this.isShow = true;
-        this.signature = row["group"];
+        this.signature = row["SignatureID"];
         this.datasetid = column["label"];
         this.$refs.detailPlot.gettable(
           this.gene,
-          row["group"],
+          row["SignatureID"],
           column["label"]
         );
         setTimeout(() => {

@@ -2,6 +2,8 @@ library(stringr);library(plyr);library(ggplot2);library(data.table);library(magr
 library(reshape2)
 library(rlist)
 library(jsonlite)
+library(RobustRankAggreg)
+
 Args <- commandArgs(TRUE)
 #Args <- c("Download/customSig_example.exp.tsv.zip","none","asdasda")
 #Args <- c("Download/customSig_example.exp.tsv","none","png")
@@ -30,7 +32,8 @@ loading.data.path <- "Signature_data/"
 result.path <- "./img/"
 
 
-sig.mat <- readRDS(paste0(loading.data.path,"SIG.mat.RDS"))
+sig.mat <- readRDS(paste0(loading.data.path,"SIG.mat.RDS"))[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")] 
+load("Response_data/ResponseData.RData")
 
 maintitle1 <- paste("ImmuneSig-Custom","SigScore","table",keyID,sep="-")
 maintitle2 <- "0"
@@ -38,14 +41,30 @@ maintitle2 <- "0"
 ## Generate SigScore Table
 
 sig.mat <- sig.mat[exp.matrix.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+gene.arr <- exp.matrix.table$GENE_SYMBOL
+exp.matrix.table <- exp.matrix.table[,lapply(.SD,function(x){log2(x+1)}), .SDcols=-c("GENE_SYMBOL")]
+setDF(exp.matrix.table,rownames = gene.arr)
+exp.matrix.table <- t(apply(exp.matrix.table,1,function(x){x-mean(x,na.rm = TRUE)})) %>% as.data.table(keep.rownames = "GENE_SYMBOL")
 GenerateSigScore <- function(exp.table,sig.weighted.mat){
   tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  sig.weighted.mat <- sig.weighted.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")] 
   SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
 }
 SIG.score.seplist <- GenerateSigScore(exp.matrix.table,sig.mat)
-# SIG.score.table <- data.table(sig_id = names(SIG.score.seplist), list.rbind(SIG.score.seplist))
 SIG.score.table <- list.rbind(SIG.score.seplist) %>% data.frame(row.names = names(SIG.score.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)
+SIG.anno <- data.frame(row.names = SIG.info$SignatureID,SIG.title = SIG.info[,paste(SignatureID,SignatureName,sep = ",")])
+SIG.anno$SIG.title <- as.character(SIG.anno$SIG.title)
+setnames(SIG.score.table,colnames(SIG.score.table)[-1],
+         SIG.anno[colnames(SIG.score.table)[-1],"SIG.title"]
+         )
+SIG.list <- SIG.score.table[,lapply(.SD, function(x){
+  SIG.score.table$sample_id[order(x,decreasing = TRUE)]
+  }), .SDcols = -c("sample_id")] %>% as.list()
+rank.score <- aggregateRanks(glist = SIG.list, N = length(SIG.list), method = "RRA", full = TRUE)
+setDT(rank.score)
+rank.score[,`:=`(Score = -log10(as.numeric(Score)), Name = as.character(Name))]
+setnames(rank.score,c("sample_id","Rank Score"))
+SIG.score.table <- rank.score[SIG.score.table,on = c("sample_id"), nomatch = FALSE]
+
 ## Generate Group Score boxplot
 if(!is.na(sample.anno.file)){
   unique(SIG.score.table$group)

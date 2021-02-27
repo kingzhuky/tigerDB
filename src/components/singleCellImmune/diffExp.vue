@@ -420,6 +420,7 @@ export default {
               }
             }
             this.tableDataheader = new_columns
+            console.log(this.tableData)
             // console.log(new_rows)
         })
         .catch((error) => {
