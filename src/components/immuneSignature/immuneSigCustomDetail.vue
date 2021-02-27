@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading">
-    <el-row>
+    <!-- <el-row>
       <div class="geneExp">
         <div
           id="predictscore"
@@ -8,7 +8,7 @@
           style="width: 1200px; height: 400px"
         ></div>
       </div>
-    </el-row>
+    </el-row> -->
     <el-row>
       <p class="card-title">Signature Score Table</p>
       <div class="detailimg">

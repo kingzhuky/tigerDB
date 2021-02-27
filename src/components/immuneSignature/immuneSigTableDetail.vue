@@ -77,7 +77,7 @@
             ></el-table-column>
           </el-table>
         </el-row>
-        <p class="card-title">
+        <!-- <p class="card-title">
           Signature Score in Different Dataset (Response vs Non-Response)
         </p>
         <el-row v-loading="artloading">
@@ -92,7 +92,7 @@
           <el-col span="12" push="6">
             <img width="100%" :src="imgUrlTNBox" />
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-col>
     </el-row>
   </div>
