@@ -245,7 +245,8 @@ div#norult {
 }
 .imgtitle{
   text-align: center;
-  color: rgb(19, 58, 56);
+  color: rgb(20,146,140);
+  font-weight: bold;
   font-size: 1.2em;
   margin-bottom: 15px;
 }

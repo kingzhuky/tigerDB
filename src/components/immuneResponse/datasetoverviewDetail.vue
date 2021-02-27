@@ -82,6 +82,7 @@ export default {
     },
 
     draw_chart(data) {
+      // console.log(data)
       var targetdiv = document.getElementById(this.conditi);
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为

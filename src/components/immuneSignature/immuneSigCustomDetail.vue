@@ -3,9 +3,9 @@
     <el-row>
       <div class="geneExp">
         <div
-          :id="conditi"
-          class="scaterPlot"
-          style="width: 800px; height: 400px"
+          id="predictscore"
+          class="barPlot"
+          style="width: 1200px; height: 400px"
         ></div>
       </div>
     </el-row>
@@ -115,6 +115,14 @@ export default {
         .get("/tiger/img/" + samplejsonUrl + ".json")
         .then((res) => {
           this.sigsampletable = res.data;
+          // function subsetid(element) {
+          //   return [element["sample_id"], element["SIG1"]]
+          // }
+          var plotdata = this.sigsampletable.map(function (n) {
+            return [n["sample_id"], n["SIG1"]];
+          });
+          // console.log(plotdata);
+          this.draw_chart(plotdata, "predictscore");
           this.sigsampletableheader = Object.keys(res.data[0]);
           // console.log(res.data);
         })
@@ -136,6 +144,7 @@ export default {
         });
       this.grouploading = false;
     },
+
     analysisData(expDataPath, annoDataPath, taskuid) {
       var that = this;
       that.loading = true;
@@ -183,6 +192,49 @@ export default {
       } else {
         this.isShow = false;
       }
+    },
+
+    draw_chart(data, id) {
+      var targetdiv = document.getElementById(id);
+      console.log(data)
+      //let myChart_mercor = this.$echarts.init(targetdiv);
+      //cdn替换为
+      let myChart_mercor = window.echarts.init(targetdiv);
+      myChart_mercor.clear();
+      let option = {
+        dataset: [
+          {
+            dimensions: ["sampleid", "score"],
+            source: data
+          },
+          {
+            transform: {
+              type: "sort",
+              config: { dimension: "score", order: "desc" },
+            },
+          },
+        ],
+        xAxis: {
+          type: "category",
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          {
+            type: "bar",
+            encode: { x: 'sampleid', y: 'score' },
+            datasetIndex: 1
+          },
+        ],
+      };
+
+      myChart_mercor.clear();
+      myChart_mercor.setOption(option);
+
+      window.onresize = function () {
+        myChart_mercor.resize();
+      };
     },
     // tableCellStyle({ row, column }) {
     //   if (row[column["label"]] === null) {
