@@ -19,6 +19,7 @@ mytheme <- theme_bw() +
 
 Args <- commandArgs(T)
 # Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
+# Args <- c("CD274,CD3D","SIG1","Melanoma-PRJEB23709_anti-CTLA-4+anti-PD-1_Female")
 gene <- unlist(strsplit(Args[1],split=','))
 sigid <- Args[2]
 mergedatasets <- Args[3]
@@ -54,15 +55,12 @@ surv.sample.info$Status <- ifelse(surv.sample.info$Status == "Dead", 1, 0)
 exp.cutoff <- 0.5
 SIG.mat <- readRDS("Signature_data/SIG.mat.RDS")
 SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
-
-
-
 # if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle1) > 200 ){
   exp.mergearray <- NULL
   exp.table <- readRDS(paste0(loading.data.path,mergedatasets,".Response.Rds"))
   exp.array <- exp.table[GENE_SYMBOL %in% c(gene)]
   exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
-  exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
+  exp.array <- exp.array[,lapply(.SD, function(x){mean(x,na.rm = TRUE)}), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
   exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
   exp.mergearray <- rbind(exp.mergearray,t(exp.array))
   exp.mergearray <- data.table(sample_id = rownames(exp.mergearray), exp.mergearray)
@@ -120,7 +118,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
     signame <- sigid
   }
   setnames(surv.plot.data, sigid, "gene.exp")
-  surv.plot.data <- plot.data[!is.na(plot.data$Overall_survival_days),]
+  surv.plot.data <- surv.plot.data[!is.na(plot.data$Overall_survival_days),]
   order.index <-  order(surv.plot.data$gene.exp,decreasing = T)
   up.index <- order.index[seq(1,round(nrow(surv.plot.data)*exp.cutoff))]
   down.index <- order.index[seq(round(nrow(surv.plot.data)*(1-exp.cutoff))+1,nrow(surv.plot.data))]
@@ -131,7 +129,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
   surv.plot.data$group <- factor(surv.plot.data$group)
   sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
   surv.plot <- ggsurvplot(sfit, conf.int = TRUE, pval = TRUE, risk.table = TRUE,
-                                   legend.labs = c("High", "Low"), legend.title = title.gene,
+                                   legend.labs = c("High", "Low"), legend.title = signame,
                                    xlab = "Time (Days)",
                                    palette = c("dodgerblue2", "orchid2"),
                                    risk.table.height = 0.3,

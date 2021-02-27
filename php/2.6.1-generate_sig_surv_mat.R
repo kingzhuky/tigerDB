@@ -24,12 +24,12 @@ mergedatasets <- dir(loading.data.path,pattern = ".Response.Rds")
 
 title.gene <- "Custom Geneset"
 pscore.arr <- data.table(signature = title.gene)
-if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200){
+# if(!file.exists(paste0(result.path,maintitle,".json")) ){
   for (sl.dataset in colnames(surv.zscore.table)[-1]){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
     exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
-    exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
+    exp.array <- exp.array[,lapply(.SD, function(x){mean(x,na.rm = TRUE)}), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
     exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
     exp.mergearray <- rbind(exp.mergearray,t(exp.array))
     exp.mergearray <- data.table(sample_id = rownames(exp.mergearray), exp.mergearray)
@@ -65,8 +65,9 @@ if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200)
     setnames(pscore.arr,"pscore",sl.dataset)
   }
   surv.zscore <- surv.zscore.table[,lapply(.SD, function(x){strsplit(x,"_")[[1]][3]}),by = c("signature")]
+  
   pscore.table <- rbind(pscore.arr, surv.zscore) %>% toJSON(pretty=TRUE,.)
   cat(pscore.table, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)
-}
+# }
 cat(maintitle)

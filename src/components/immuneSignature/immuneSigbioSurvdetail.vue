@@ -13,7 +13,7 @@
           <el-row v-loading="loading">
             <el-row class="scdetailimg">
             <el-col :span="16" style="position:relative;left:20px;top:0px;">
-              <p class="imgtitle">Predict Response</p>
+              <p class="imgtitle">Survival Analysis of Signatures</p>
               <img
                 id="singleimg"
                 fit="fill"
@@ -22,7 +22,7 @@
                 @click="previewImg(0, ['tiger/img/' + imgpath[0] +'.png', 'tiger/img/' + imgpath[1] +'.png'])">
             </el-col>
             <el-col :span="8" style="position:relative;left:40px;top:0px;">
-              <p class="imgtitle">{{sign}} ROC curve</p>
+              <p class="imgtitle">{{sign}} Survival</p>
               <img
                 id="singleimg"
                 fit="fill"
