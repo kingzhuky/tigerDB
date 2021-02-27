@@ -3,10 +3,8 @@ library(data.table)
 library(dplyr)
 library(gtools)
 library(pROC)
-library(jsonlite)
-library(survival)
-library(survminer)
 library(plotROC)
+library(rlist)
 colors=c("#cc4a5399",'#00ADDB99','#7142AC99',"#42B54099",'#00008099','#07702b99',"#7FFF0099","#AD002A","#ED000099",'#ABD20599','#F0BE7E','#4D221399',"#FDAF9199",'#85E1D099','#C979CD99','#F26A1299',"#ADB6B699",'#4B79AB99',"#0099B499",'#FF149399','#00800099',"#1B191999")
 my36colors <-c('#D6E7A3',"orange1", 'lightblue','#7142AC',"darkcyan","royalblue1","red3",'#53A85F',"deeppink",
                "mediumvioletred","gold","darkorange2", "tan2","darkorange2","darkorchid","chocolate4","darkred","lightskyblue","gold1")
@@ -21,7 +19,7 @@ mytheme <- theme_bw() +
         axis.line=element_line(color="black",size=0.5))
 
 Args <- commandArgs(T)
-Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
+# Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
 gene <- unlist(strsplit(Args[1],split=','))
 sigid <- Args[2]
 mergedatasets <- Args[3]
@@ -47,7 +45,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
 title.gene <- "Custom Geneset"
 # if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle1) > 200 ){
 exp.mergearray <- NULL
-exp.table <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))
+exp.table <- readRDS(paste0(loading.data.path,mergedatasets,".Response.Rds"))
 exp.array <- exp.table[GENE_SYMBOL %in% c(gene)]
 exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
 exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
@@ -91,9 +89,7 @@ GenerateTCGASigScore <- function(exp.table,sig.weighted.mat){
   sig.weighted.mat <- sig.weighted.mat[tmp.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
   SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
 }
-system.time(
-  SIG.score.response.seplist <- GenerateTCGASigScore(exp.table,SIG.matrix)
-)
+SIG.score.response.seplist <- GenerateTCGASigScore(exp.table,SIG.matrix)
 SIG.score.list <- list.rbind(SIG.score.response.seplist) %>% data.frame(row.names = names(SIG.score.response.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)
 SIG.score.list$sample_id <- gsub("^X", "", SIG.score.list[,sample_id])
 SIG.score.plot.data <- merge(SIG.score.list,plot.data,by = "sample_id",all.y = T)

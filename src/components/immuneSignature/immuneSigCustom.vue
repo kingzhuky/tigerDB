@@ -14,25 +14,41 @@
             :before-remove="beforeRemove"
             :limit="1"
             :on-exceed="handleExceed"
-            :on-success="handleAvatarSuccess">
-              <el-button id="immusignatureplot">Upload Expression Matrix  
-                <el-tooltip class="item" effect="light" trigger='hover' content="A RPKM matrix of Bluk RNA-Seq with tab separated" placement="top-start">
-                    <i class="el-icon-info"></i>
-                  </el-tooltip>
-                </el-button>
+            :on-success="handleAvatarSuccess"
+          >
+            <el-button id="immusignatureplot"
+              >Upload Expression Matrix
+              <el-tooltip
+                class="item"
+                effect="light"
+                trigger="hover"
+                content="A RPKM matrix of Bluk RNA-Seq with tab separated"
+                placement="top-start"
+              >
+                <i class="el-icon-info"></i>
+              </el-tooltip>
+            </el-button>
           </el-upload>
         </el-col>
         <el-col span="8" push="2" align="center">
-            <p class=downloadtext >
-              <a id="download" href="/tiger/Download/customSig_example.exp.tsv.zip">Download</a> Or
-              <a href="javascript:void(0);" @click="runExpample()">Run</a>
-              the example expression matrix.</p>
+          <p class="downloadtext">
+            <a
+              id="download"
+              href="/tiger/Download/customSig_example.exp.tsv.zip"
+              >Download</a
+            >
+            Or
+            <a href="javascript:void(0);" @click="runExpample()">Run</a>
+            the example expression matrix.
+          </p>
         </el-col>
         <el-col span="4" push="4">
-          <el-button id="immusignatureplot" @click="submitAnalysis">Submit</el-button>
+          <el-button id="immusignatureplot" @click="submitAnalysis"
+            >Submit</el-button
+          >
         </el-col>
       </el-row>
-      <br/>
+      <br />
       <!-- <el-row>
         <el-col span="6" push="2">
             <div class="tiggeneinfo">
@@ -83,8 +99,7 @@
         :taskuid="taskuid"
       ></v-customdetail>
     </el-card>
-
-    </div>
+  </div>
 </template>
 
 
@@ -105,9 +120,7 @@ export default {
       taskuid: "",
     };
   },
-  created(){
-
-  },
+  created() {},
 
   methods: {
     handleRemove(file, fileList) {
@@ -117,39 +130,46 @@ export default {
       // console.log(file);
     },
     handleExceed(files, fileList) {
-      fileList[0].name = files[0].name
+      fileList[0].name = files[0].name;
     },
     beforeRemove(file, fileList) {
-      return this.$confi
-      rm(`确定移除 ${ file.name }？`);
+      return this.$confi;
+      rm(`确定移除 ${file.name}？`);
     },
-    handleAvatarSuccess(response, file){
+    handleAvatarSuccess(response, file) {
       // console.log(response.list);
-      this.expDataPath = response.list
-      this.taskuid = file.uid
+      this.expDataPath = response.list;
+      this.taskuid = file.uid;
     },
-    handleAvatarSuccess2(response, file){
+    handleAvatarSuccess2(response, file) {
       // console.log(response.list)
-      this.annoDataPath = response.list
+      this.annoDataPath = response.list;
     },
-    submitAnalysis(){
+    submitAnalysis() {
       // console.log("start ~~");
-      this.expDataPath = this.expDataPath == "" ? "Download/customSig_example.exp.tsv.zip" : this.expDataPath
+      this.expDataPath =
+        this.expDataPath == ""
+          ? "Download/customSig_example.exp.tsv.zip"
+          : this.expDataPath;
       // this.annoDataPath = this.annoDataPath == "none" && this.expDataPath == "" ? "Download/customSig_example.anno.tsv" : this.annoDataPath
       // this.expDataPath = "Download/customSig_example.exp.tsv.zip";
       // this.annoDataPath = "Download/customSig_example.anno.tsv.zip";
-      this.$refs.immuneSigCustomDetail.analysisData(this.expDataPath,this.annoDataPath,this.taskuid)
-      this.isShow = true
+      this.$refs.immuneSigCustomDetail.analysisData(
+        this.expDataPath,
+        this.annoDataPath,
+        this.taskuid
+      );
+      this.isShow = true;
     },
-    runExpample(){
-      this.expDataPath = "Download/customSig_example.exp.tsv.zip"
-      // this.annoDataPath = "Download/customSig_example.anno.tsv" 
-      this.submitAnalysis()
+    runExpample() {
+      this.expDataPath = "Download/customSig_example.exp.tsv.zip";
+      // this.annoDataPath = "Download/customSig_example.anno.tsv"
+      this.submitAnalysis();
     },
-    handleEdit(){
-      window.open("/tiger/Download/customSig_example.exp.tsv.zip")
+    handleEdit() {
+      window.open("/tiger/Download/customSig_example.exp.tsv.zip");
       // window.open("/tiger/Download/customSig_example.anno.tsv.zip")
-    }
+    },
   },
   components: {
     "v-customdetail": () => import("./immuneSigCustomDetail.vue"),
@@ -168,7 +188,7 @@ export default {
   color: white;
   font-weight: bold;
 }
-.item{
+.item {
   font-size: 12px;
   font-weight: bold;
 }

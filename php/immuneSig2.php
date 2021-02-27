@@ -10,9 +10,9 @@ if($condition=="response"){
   }
 }else if($condition=="survival"){
   if(PATH_SEPARATOR==':'){
-    $zhiling="sudo Rscript 2.6.1-generate_sig_sur_mat.R $gene";
+    $zhiling="sudo Rscript 2.6.1-generate_sig_surv_mat.R $gene";
   }else{
-    $zhiling="Rscript 2.6.1-generate_sig_sur_mat.R $gene";
+    $zhiling="Rscript 2.6.1-generate_sig_surv_mat.R $gene";
   }
 }else{
   if(PATH_SEPARATOR==':'){

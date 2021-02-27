@@ -4,16 +4,19 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{ gene }} -- {{cancer}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              {{ gene }} -- {{ cancer }}
+            </h1>
           </div>
         </el-card>
       </div>
       <div class="infor">
         <el-card>
-
-          <p class="card-title">Correlation between Custom Signature and Selected Signature</p>
+          <p class="card-title">
+            Correlation between Custom Signature and Selected Signature
+          </p>
           <el-row v-show="resultShow" v-loading="loading" class="detailimg">
-             <el-col span="4" push="2">
+            <el-col span="4" push="2">
               <div class="wergeneinfo">
                 <div id="collapseCard">
                   <el-collapse>
@@ -34,12 +37,21 @@
                       <el-row class="detail1">Correlation Coefficient</el-row>
 
                       <el-row>
-                        <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
-                        <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
+                        <el-radio v-model="corMed" label="pearson"
+                          >Pearson</el-radio
+                        >
+                        <el-radio v-model="corMed" label="spearman"
+                          >Spearman</el-radio
+                        >
                       </el-row>
                       <br />
                       <el-row class="plot">
-                        <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+                        <el-button
+                          id="anabt"
+                          @click="clickPlot()"
+                          style="width: 100%"
+                          >Plot</el-button
+                        >
                       </el-row>
                     </el-collapse-item>
                   </el-collapse>
@@ -51,7 +63,11 @@
             </el-col>
           </el-row>
           <p class="card-title">Signature Informations</p>
-          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+          <el-table
+            :data="articleData"
+            style="width: 100%"
+            v-loading="artloading"
+          >
             <el-table-column prop="title" label width="180"></el-table-column>
             <el-table-column prop="value" label></el-table-column>
           </el-table>

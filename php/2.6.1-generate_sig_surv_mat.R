@@ -2,6 +2,8 @@ library(jsonlite)
 library(data.table)
 library(dplyr)
 library(gtools)
+library(survival)
+library(survminer)
 library(rlist)
 Args <- commandArgs(T)
 #Args <- c("PDCD1,CD3D")
@@ -22,7 +24,7 @@ mergedatasets <- dir(loading.data.path,pattern = ".Response.Rds")
 
 title.gene <- "Custom Geneset"
 pscore.arr <- data.table(signature = title.gene)
-# if(!file.exists(paste0(result.path,maintitle,".json"))){
+if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200){
   for (sl.dataset in colnames(surv.zscore.table)[-1]){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
@@ -66,5 +68,5 @@ pscore.arr <- data.table(signature = title.gene)
   pscore.table <- rbind(pscore.arr, surv.zscore) %>% toJSON(pretty=TRUE,.)
   cat(pscore.table, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)
-# }
+}
 cat(maintitle)

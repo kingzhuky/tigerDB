@@ -1,29 +1,49 @@
 <template>
-  <div id='sigtablepage' class="detail-card">
+  <div id="sigtablepage" class="detail-card">
     <el-card class="infor">
       <el-row>
         <el-col :push="1" :span="22">
-        <el-table v-loading="loading" :data="sigtable" max-height="620" stripe border style="width: 100%">
+          <el-table
+            v-loading="loading"
+            :data="sigtable"
+            max-height="620"
+            stripe
+            border
+            style="width: 100%"
+          >
             <!-- <el-table-column property="SignatureID" label="Signature ID" align="center" ></el-table-column> -->
-            <el-table-column property="SignatureName" label="Signature Name" align="center" ></el-table-column>
+            <el-table-column
+              property="SignatureName"
+              label="Signature Name"
+              align="center"
+            ></el-table-column>
             <el-table-column property="PMID" label="PMID" align="center">
-                <template slot-scope="scope">
-                  <a :href="'https://pubmed.ncbi.nlm.nih.gov/'+scope.row.PMID"
-                    target="_blank"
-                    class="buttonText">{{scope.row.PMID}}</a>
-                </template>
-              </el-table-column>
-            <el-table-column prop="AUC" label="AUC" align="center" sortable></el-table-column>
-            <el-table-column label="Detail" align="center" width="120%">
-                <template slot-scope="scope">
-                    <el-button
-                    id="immusignatureplot"
-                    icon="el-icon-s-marketing"
-                    @click="showDetail(scope.row)"
-                    >Detail</el-button>
-                </template>
+              <template slot-scope="scope">
+                <a
+                  :href="'https://pubmed.ncbi.nlm.nih.gov/' + scope.row.PMID"
+                  target="_blank"
+                  class="buttonText"
+                  >{{ scope.row.PMID }}</a
+                >
+              </template>
             </el-table-column>
-        </el-table>
+            <el-table-column
+              prop="AUC"
+              label="AUC"
+              align="center"
+              sortable
+            ></el-table-column>
+            <el-table-column label="Detail" align="center" width="120%">
+              <template slot-scope="scope">
+                <el-button
+                  id="immusignatureplot"
+                  icon="el-icon-s-marketing"
+                  @click="showDetail(scope.row)"
+                  >Detail</el-button
+                >
+              </template>
+            </el-table-column>
+          </el-table>
         </el-col>
       </el-row>
     </el-card>
@@ -54,11 +74,11 @@ import {
 export default {
   data() {
     return {
-      sigtable:[],
-      sigID:"SIG1",
+      sigtable: [],
+      sigID: "SIG1",
       sigName: "T cell-inflamed GEP",
       isShow: true,
-      loading: true, 
+      loading: true,
     };
   },
   created() {
@@ -76,14 +96,16 @@ export default {
       });
       // console.log(this.sigtable)
     },
-    showDetail(row){
+    showDetail(row) {
       // console.log(sigID)
-      this.sigID = row["SignatureID"]
-      this.sigName = row["SignatureName"]
-      this.$refs.immuneSigDetail.renewDetail(this.sigID)
-      setTimeout(() => { toTarget(720) }, 300);  
+      this.sigID = row["SignatureID"];
+      this.sigName = row["SignatureName"];
+      this.$refs.immuneSigDetail.renewDetail(this.sigID);
+      setTimeout(() => {
+        toTarget(720);
+      }, 300);
       // console.log(this.sigID)
-    }
+    },
   },
   components: {
     "v-sigdetail": () => import("./immuneSigTableDetail.vue"),
@@ -118,7 +140,9 @@ export default {
   width: 1350px;
 }
 
-#survivaltable th,#therapyTable th, #responseTable th {
+#survivaltable th,
+#therapyTable th,
+#responseTable th {
   left: 135px !important;
   height: 270px !important;
 }

@@ -1,39 +1,50 @@
 <template>
   <div>
     <div v-show="immuneTabShow" v-loading="loading">
-        <el-table
-          class="tigtablele"
-          id="immuneSigTable"
-          ref="singleTable"
-          border
-          max-height="800"
-          :data="tableData.filter(data => !search || data.Signature.toLowerCase().includes(search.toLowerCase()))"
-          @cell-click="heandleclick"
-          :cell-style="tableCellStyle"
-          style="100%"
+      <el-table
+        class="tigtablele"
+        id="immuneSigTable"
+        ref="singleTable"
+        border
+        max-height="800"
+        :data="
+          tableData.filter(
+            (data) =>
+              !search ||
+              data.Signature.toLowerCase().includes(search.toLowerCase())
+          )
+        "
+        @cell-click="heandleclick"
+        :cell-style="tableCellStyle"
+        style="100%"
+      >
+        <el-table-column
+          v-for="(item, index) in tableDataheader"
+          :key="index"
+          :property="item"
+          :label="item"
+          sortable
+          align="center"
+          width="80"
         >
-          <el-table-column
-            v-for="(item,index) in tableDataheader"
-            :key="index"
-            :property="item"
-            :label="item"
-            sortable
-            align="center"
-            width="80"
-          >
-            <template
-              slot-scope="scope"
-            >{{ scope.row[item]===undefined ? '': scope.row[item].split('_')[0] }}</template>
-          </el-table-column>
-          <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-        </el-table>
+          <template slot-scope="scope">{{
+            scope.row[item] === undefined ? "" : scope.row[item].split("_")[0]
+          }}</template>
+        </el-table-column>
+        <el-table-column
+          property=" "
+          label=" "
+          align="center"
+          width="120"
+        ></el-table-column>
+      </el-table>
 
-        <div class="colorbar">
-          <span>Negative correlation</span>
-          <span class="heatMapTable--colorbar"></span>
-          <span>Positive correlation</span>
-        </div>
-        <div id="logFC">correlation</div>
+      <div class="colorbar">
+        <span>Negative correlation</span>
+        <span class="heatMapTable--colorbar"></span>
+        <span>Positive correlation</span>
+      </div>
+      <div id="logFC">correlation</div>
     </div>
 
     <!-- 详细页显示与否 -->
@@ -133,8 +144,8 @@ export default {
       this.$http
         .get("/tiger/immuneSig2.php", {
           params: {
-            gene: this.gene.trim().replace(" ",""),
-            condi: "tcga"
+            gene: this.gene.trim().replace(" ", ""),
+            condi: "tcga",
           },
         })
         .then((res) => {
@@ -182,7 +193,9 @@ export default {
           row["Signature"]
         );
         this.$refs.detailPlot.artivcleDetail(row["Signature"]);
-        setTimeout(() => { toTarget(820) }, 200); 
+        setTimeout(() => {
+          toTarget(820);
+        }, 200);
       }
     },
 
@@ -215,7 +228,6 @@ export default {
 
 
 <style>
-
 #immuneSigTable th {
   left: 35px !important;
   height: 90px !important;

@@ -5,9 +5,9 @@ $sigid=trim($_GET['sigid']);
 $dataset=trim($_GET['dataset']); 
 
 if(PATH_SEPARATOR==':'){
-  $zhiling="sudo Rscript 2.5.2-generate_sigresplot.R $gene \"$sigid\" $dataset";
+  $zhiling="sudo Rscript 2.6.2-generate_sigsurvplot.R $gene \"$sigid\" $dataset";
 }else{
-  $zhiling="Rscript 2.5.2-generate_sigresplot.R $gene \"$sigid\" $dataset";
+  $zhiling="Rscript 2.6.2-generate_sigsurvplot.R $gene \"$sigid\" $dataset";
 }
 
 

@@ -4,6 +4,7 @@ library(dplyr)
 library(gtools)
 library(survival)
 library(survminer)
+library(rlist)
 my36colors <-c('#D6E7A3',"orange1", 'lightblue','#7142AC',"darkcyan","royalblue1","red3",'#53A85F',"deeppink",
                "mediumvioletred","gold","darkorange2", "tan2","darkorange2","darkorchid","chocolate4","darkred","lightskyblue","gold1")
 mytheme <- theme_bw() + 
@@ -17,7 +18,7 @@ mytheme <- theme_bw() +
         axis.line=element_line(color="black",size=0.5))
 
 Args <- commandArgs(T)
-Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
+# Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
 gene <- unlist(strsplit(Args[1],split=','))
 sigid <- Args[2]
 mergedatasets <- Args[3]
@@ -104,7 +105,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
   hr.p.plot.data <- hr.p.plot.data[,lapply(.SD, as.numeric),by = c("signature")]
   hr.p.plot.data <- hr.p.plot.data[SIG.info[,c("SignatureID","SignatureName")], on = c("signature" = "SignatureID"), nomatch = FALSE]
   dot.plot <- ggplot(na.omit(hr.p.plot.data), aes(x = hr, y = -log(p,10), color = SignatureName)) + 
-    geom_point() + mytheme +
+    geom_point(size = 6) + mytheme +
     scale_color_manual(values = my36colors)
   SIG.score.response.seplist <- GenerateTCGASigScore(exp.table,SIG.matrix)
   SIG.score.list <- list.rbind(SIG.score.response.seplist) %>% data.frame(row.names = names(SIG.score.response.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)

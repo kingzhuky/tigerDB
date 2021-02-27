@@ -3,7 +3,7 @@ library(data.table)
 library(dplyr)
 library(gtools)
 library(pROC)
-library(jsonlite)
+library(rlist)
 Args <- commandArgs(T)
 #Args <- c("PDCD1,CD3D")
 gene <- unlist(strsplit(Args[1],split=','))
@@ -20,7 +20,7 @@ result.path <- "./img/"
 load(paste0(loading.data.path,"ResponseData.RData"))
 mergedatasets <- dir(loading.data.path,pattern = ".Response.Rds")
 auc.arr <- data.table(group="Custom Geneset")
-# if(!file.exists(paste0(result.path,maintitle,".json")) ){
+if(!file.exists(paste0(result.path,maintitle,".json")) |nchar(maintitle) > 200){
   for (sl.dataset in colnames(auc.data.list)[-1]){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
@@ -54,5 +54,5 @@ auc.arr <- data.table(group="Custom Geneset")
   auc.table <- rbind(auc.arr,auc.data.list) %>% toJSON(pretty=TRUE,.)
   cat(auc.table, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)
-# }
+}
 cat(maintitle)

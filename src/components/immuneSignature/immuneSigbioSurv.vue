@@ -14,7 +14,7 @@
           style="100%"
         >
           <el-table-column
-            v-for="(item, index) in tableDataheader"
+            v-for="(item,index) in tableDataheader"
             :key="index"
             :property="item"
             :label="item"
@@ -26,31 +26,26 @@
               slot-scope="scope"
             >{{ scope.row[item]===undefined ? '': scope.row[item].split('_')[0] }}</template> -->
           </el-table-column>
-          <el-table-column
-            property=" "
-            label=" "
-            align="center"
-            width="120"
-          ></el-table-column>
+          <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
         </el-table>
 
         <div class="colorbar">
-          <span class="crossTable--colorbar"></span>
-          <span>Better Performance</span>
+          <span>Good Prognosis</span>
+          <span class="heatMapTable--colorbar"></span>
+          <span>Bad Prognosis</span>
         </div>
-        <div id="logFC">AUC</div>
       </el-card>
     </div>
 
     <!-- 详细页显示与否 -->
-    <v-immuneSigResdetail
+    <v-immuneSigSurvdetail
       ref="detailPlot"
       v-show="isShow"
       :sign="signature"
       :datatype="datatype"
       :dataset="datasetid"
       :path="path"
-    ></v-immuneSigResdetail>
+    ></v-immuneSigSurvdetail>
   </div>
 </template>
 
@@ -142,8 +137,8 @@ export default {
       this.$http
         .get("/tiger/immuneSig2.php", {
           params: {
-            gene: this.gene.trim().replace(" ", ""),
-            condi: "response",
+            gene: this.gene.trim().replace(" ",""),
+            condi: "survival"
           },
         })
         .then((res) => {
@@ -176,16 +171,10 @@ export default {
       this.datatype = "response";
       if (column["label"] !== "") {
         this.isShow = true;
-        this.signature = row["group"];
+        this.signature = row["signature"];
         this.datasetid = column["label"];
-        this.$refs.detailPlot.gettable(
-          this.gene,
-          row["group"],
-          column["label"]
-        );
-        setTimeout(() => {
-          toTarget(820);
-        }, 200);
+        this.$refs.detailPlot.gettable(this.gene,row["signature"],column["label"]);
+        setTimeout(() => { toTarget(820) }, 200); 
       }
     },
 
@@ -196,12 +185,7 @@ export default {
           background: "white",
         };
       }
-      var mycolr = gStyle(
-        parseFloat(
-          row[column["label"]] === undefined ? "" : row[column["label"]]
-        ),
-        2.25
-      );
+      var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
         color: mycolr["color"],
@@ -209,13 +193,14 @@ export default {
     },
   },
   components: {
-    "v-immuneSigResdetail": () => import("./immuneSigbioresponsedetail.vue"),
+    "v-immuneSigSurvdetail": () => import("./immuneSigbioSurvdetail.vue"),
   },
 };
 </script>
 
 
 <style>
+
 /* #immuneSigResTable th {
   left: 35px !important;
   height: 70px !important;
