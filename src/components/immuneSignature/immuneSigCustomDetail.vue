@@ -1,9 +1,9 @@
 <template>
   <div v-loading="loading">
-    <!-- <el-row>
+    <el-row v-show="predictshow">
       <div class="geneExp">
         <div
-          id="predictscore"
+          id="RankScore"
           class="barPlot"
           style="width: 1200px; height: 400px"
         ></div>
@@ -16,7 +16,7 @@
           id="immuneSigTable"
           class="tigtablele"
           border
-          max-height="800"
+          max-height="650"
           v-loading="loading"
           :data="sigsampletable"
           @cell-click="heandleclick"
@@ -26,14 +26,22 @@
           <el-table-column
             v-for="(item, index) in sigsampletableheader"
             :key="index"
-            :property="item"
-            :label="item"
+            :property="item.key"
+            :label="item.name"
+            :type="item.sigid"
             sortable
             align="center"
             width="80"
           >
           </el-table-column>
         </el-table>
+        <div class="geneExp" v-show="isShow">
+          <div
+            id="sigbarplot"
+            class="barPlot"
+            style="width: 1200px; height: 400px"
+          ></div>
+        </div>
       </div>
     </el-row>
     <!-- <el-row v-show="isgroupshow">
@@ -103,6 +111,7 @@ export default {
       isgroupshow: false,
       sigID: "",
       isShow: false,
+      predictshow: false,
     };
   },
   created() {
@@ -115,16 +124,39 @@ export default {
         .get("/tiger/img/" + samplejsonUrl + ".json")
         .then((res) => {
           this.sigsampletable = res.data;
-          // function subsetid(element) {
-          //   return [element["sample_id"], element["SIG1"]]
-          // }
-          var plotdata = this.sigsampletable.map(function (n) {
-            return [n["sample_id"], n["SIG1"]];
-          });
-          // console.log(plotdata);
-          this.draw_chart(plotdata, "predictscore");
           this.sigsampletableheader = Object.keys(res.data[0]);
-          // console.log(res.data);
+          // console.log(this.sigsampletable)
+          var new_rows = []; // matrix key .替换为_
+          for (const row of this.sigsampletable) {
+            var new_row = {};
+            for (const key in row) {
+              let new_key = key.replace(".", "_");
+              new_row[new_key] = row[key];
+            }
+            new_rows.push(new_row);
+          }
+          this.sigsampletable = new_rows; // matrix key .替换为_
+          var new_columns = []; // generate header
+          for (const column of this.sigsampletableheader) {
+            var col_obj = {};
+            col_obj.name = column.split(",").pop();
+            col_obj.key = column.replace(".", "_");
+            col_obj.sigid = column.split(",")[0];
+            new_columns.push(col_obj);
+          }
+          this.sigsampletableheader = new_columns;
+          // console.log(this.sigsampletableheader);
+          var plotdata = this.sigsampletable.map(function (n) {
+            return [n["sample_id"], n["Rank Score"]];
+          });
+          this.draw_chart(
+            plotdata.sort(function (a, b) {
+              return b[1] - a[1];
+            }),
+            "RankScore",
+            "Rank Score"
+          );
+          this.predictshow = true;
         })
         .catch((error) => {
           console.log(error);
@@ -180,10 +212,29 @@ export default {
     //点击单个格子
     heandleclick(row, column) {
       this.datatype = "immunescreening";
-      if (column["label"] !== "sample_id" && column["label"] !== "group") {
+      if (
+        column["type"] !== "sample_id" &&
+        column["type"] !== "group" &&
+        column["type"] !== "Rank Score"
+      ) {
         this.isShow = true;
-        this.sigID = column["label"];
+        this.sigID = column["type"];
+        console.log(this.sigID)
         this.$refs.immuneSigDetail.renewDetail(this.sigID);
+        var plotdata = this.sigsampletable.map(function (n) {
+          return [n["sample_id"], n[column["property"]]];
+        });
+        this.draw_chart(
+          plotdata.sort(function (a, b) {
+            return b[1] - a[1];
+          }),
+          "sigbarplot",
+          column["label"]
+        );
+        setTimeout(() => {
+          toTarget(900);
+        }, 200);
+
         // this.m6aMsg = row["gene"];
         // this.cancerMsg = column["label"];
         // setTimeout(() => { toTarget(820) }, 200);
@@ -194,37 +245,31 @@ export default {
       }
     },
 
-    draw_chart(data, id) {
+    draw_chart(data, id, title) {
       var targetdiv = document.getElementById(id);
-      console.log(data)
-      //let myChart_mercor = this.$echarts.init(targetdiv);
-      //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
       let option = {
-        dataset: [
-          {
-            dimensions: ["sampleid", "score"],
-            source: data
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
           },
-          {
-            transform: {
-              type: "sort",
-              config: { dimension: "score", order: "desc" },
-            },
-          },
-        ],
+        },
         xAxis: {
           type: "category",
+          axisLabel: {
+            rotate: 45,
+          },
         },
         yAxis: {
           type: "value",
+          name: title,
         },
         series: [
           {
             type: "bar",
-            encode: { x: 'sampleid', y: 'score' },
-            datasetIndex: 1
+            data: data,
           },
         ],
       };
@@ -265,7 +310,7 @@ export default {
 <style>
 #immuneSigTable th {
   left: 35px !important;
-  height: 80px !important;
+  height: 200px !important;
 }
 #immusignatureplot {
   width: 100%;
