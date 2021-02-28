@@ -25,7 +25,7 @@
           :label="item"
           sortable
           align="center"
-          width="80"
+          :width="item === 'SignatureName' ? 160 : 80"
         >
           <template slot-scope="scope">{{
             scope.row[item] === undefined ? "" : scope.row[item].split("_")[0]
@@ -164,8 +164,20 @@ export default {
         .get("/tiger/img/" + file + ".json")
         .then((res) => {
           this.loading = false;
-          this.tableData = res.data;
-          this.tableDataheader = Object.keys(res.data[0]).filter((item) => item != "SignatureID")
+          this.tableData = res.data.filter((item) => {
+            if (item["SignatureName"] === "Tertiary lymphoid structures") {
+              item["SignatureName"] = "TLS";
+            } else if (
+              item["SignatureName"] ===
+              "Tertiary lymphoid structures in melanoma"
+            ) {
+              item["SignatureName"] = "TLS-melanoma";
+            }
+            return item;
+          });
+          this.tableDataheader = Object.keys(res.data[0]).filter(
+            (item) => item != "SignatureID"
+          );
         })
         .catch((error) => {
           console.log(error);
@@ -230,7 +242,7 @@ export default {
 <style>
 #immuneSigTable th {
   left: 35px !important;
-  height: 90px !important;
+  height: 100px !important;
 }
 
 #immusignatureplot {

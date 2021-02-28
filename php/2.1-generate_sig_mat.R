@@ -13,9 +13,10 @@ if(nchar(maintitle) > 200) {
   maintitle <- paste("longSig",
                      "TCGA",sep="-")
 }
-load("Response_data/ResponseData.RData")
+
 # if(!file.exists(paste0(result.path,maintitle,".json")) | nchar(maintitle) > 200 ){
   load(paste0(loading.data.path,"TCGA.data.table.RData"))
+  load("Response_data/ResponseData.RData")
   tablecortest <- function(x,y){
     test.res <- cor.test(x,y)
     res <- paste0(round(c(test.res$estimate,test.res$p.value),3), collapse = "_")
@@ -43,7 +44,7 @@ load("Response_data/ResponseData.RData")
   SIG.cor.matrix <- SIG.cor.matrix[,..sort.index]
   SIG.cor.matrix.json <- data.frame(row.names = SIG.cor.matrix[,cancer_type],SIG.cor.matrix[,-c("cancer_type")]) %>% 
     t() %>% data.table(Signature = rownames(.),.) %>%
-    merge(SIG.info[,.(SignatureID,SignatureName)], ., by.x = "SignatureID", by.y = "Signature") %>%
+    merge(SIG.info[,.(SignatureID,SignatureName)], ., by.x = "SignatureID", by.y = "Signature",all.x = TRUE) %>%
     toJSON(pretty=TRUE,.)
   cat(SIG.cor.matrix.json, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)

@@ -101,7 +101,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
   hr.p.plot.data <- hr.data.table[p.data.table, on=c("signature")]
   setnames(hr.p.plot.data,c("signature","hr","p"))
   hr.p.plot.data <- hr.p.plot.data[,lapply(.SD, as.numeric),by = c("signature")]
-  hr.p.plot.data <- hr.p.plot.data[SIG.info[,c("SignatureID","SignatureName")], on = c("signature" = "SignatureID"), nomatch = FALSE]
+  hr.p.plot.data <- hr.p.plot.data[rbind(data.table(SignatureID = "Custom Geneset", SignatureName = "Custom Geneset"), SIG.info[,.(SignatureID,SignatureName)]), on = c("signature" = "SignatureID"), nomatch = FALSE]
   dot.plot <- ggplot(na.omit(hr.p.plot.data), aes(x = hr, y = -log(p,10), color = SignatureName)) + 
     geom_point(size = 6) + mytheme +
     scale_color_manual(values = my36colors)

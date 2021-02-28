@@ -82,19 +82,37 @@ export default {
     };
   },
   created() {
-    this.getsigtable();
+    // this.getsigtable();
   },
   mounted() {
     this.getsigtable();
   },
   methods: {
+    // getsigtable() {
+    //   this.$http.get("/tiger/immuneSigView.json").then((res) => {
+    //     this.sigtable = res.data;
+    //     this.loading = false;
+    //     // console.log(this.sigtable)
+    //   });
+    //   // console.log(this.sigtable)
+    // },
     getsigtable() {
-      this.$http.get("/tiger/immuneSigView.json").then((res) => {
-        this.sigtable = res.data;
-        this.loading = false;
-        // console.log(this.sigtable)
-      });
-      // console.log(this.sigtable)
+      this.loading = true;
+      this.$http
+        .get("/tiger/signatureOverview.php", {
+          params: {
+            table: "siginfo",
+          },
+        })
+        .then((res) => {
+          if (res.data.status === 200) {
+            this.sigtable = res.data.list;
+            this.loading = false;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     showDetail(row) {
       // console.log(sigID)

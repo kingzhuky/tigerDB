@@ -37,7 +37,7 @@
             <div class="header-nav">Immunotherapy Response</div>
           </el-menu-item>
           <el-menu-item index="/immuneSignature">
-            <div class="header-nav">Immunotherapy Response Signature</div>
+            <div class="header-nav">Response Signature</div>
           </el-menu-item>
           <el-menu-item index="/immuneScreen">
             <div class="header-nav">Immune Screening</div>

@@ -52,7 +52,7 @@ auc.arr <- data.table(group="Custom Geneset")
     setnames(auc.arr,"auc.score",sl.dataset)
   }
   auc.table <- rbind(auc.arr,auc.data.list) %>% 
-    merge(SIG.info[,.(SignatureID,SignatureName)], ., by.x = "SignatureID", by.y = "group") %>%
+    merge(rbind(data.table(SignatureID = "Custom Geneset", SignatureName = "Custom Geneset"), SIG.info[,.(SignatureID,SignatureName)]), ., by.x = "SignatureID", by.y = "group") %>%
     toJSON(pretty=TRUE,.)
   cat(auc.table, file = (con <- file(paste0(result.path,maintitle,".json"), "w", encoding = "UTF-8")))
   close(con)

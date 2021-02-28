@@ -102,7 +102,7 @@ if(sigid %in% SIG.info$SignatureID){
   signame <- sigid
 }
 
-p <- ggplot(roc.plot.data, aes(d = as.numeric(factor(group,levels = c("Non-Responder (NR)","Responder (R)"))), m = AUC)) +
+p <- ggplot(roc.plot.data, aes(d = group, m = AUC)) +
   geom_roc(show.legend = TRUE, labels=FALSE,pointsize = 0)+ ggpubr::theme_classic2() +
   scale_color_manual(values = my36colors[1:20]) + xlab("1 - Specificity") + ylab("Sensitivity") + 
   scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))

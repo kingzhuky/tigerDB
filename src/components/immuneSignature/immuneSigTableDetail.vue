@@ -15,6 +15,7 @@
               <span v-if="title === 'SignatureID'">Signature ID</span>
               <span v-else-if="title === 'SignatureName'">Signature Name</span>
               <span v-else-if="title === 'SignatureCite'">Signature Cite</span>
+              <span v-else-if="title === 'Gene Symbol'">Signature Description</span>
               <span v-else>{{ title }}</span>
             </template>
           </el-table-column>

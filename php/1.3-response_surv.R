@@ -6,7 +6,7 @@ library(data.table)
 library(jsonlite)
 
 Args <- commandArgs(T)
-#Args <- c("CD274,CD3D","Melanoma-PRJEB23709_anti-CTLA-4+anti-PD-1","None","None","0.5","pdf")
+#Args <- c("CD274,CD3D","Melanoma-PRJEB23709_ALL","None","None","0.5","pdf")
 #Args <- c("TP53","ccRCC_Braun_2020_EVEROLIMUS","None","None","0.5","png")
 #Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL","None","None","0.2","png")
 gene <- unlist(strsplit(Args[1],split=','))
@@ -131,9 +131,10 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     colnames(forest.plot.data)[1] <- title.gene
     forest.plot.data.table <- data.table(SignatureID = colnames(forest.plot.data),t(forest.plot.data))
     forest.plot.data.table[,`:=`(beta = NULL, mean = NULL, CI95 = paste0(lower,"-",upper),lower = NULL, upper = NULL)]
-    forest.plot.data.table <- SIG.info[,c("SignatureID","SignatureCite")][forest.plot.data.table, on = c("SignatureID"),nomatch = NA]
-    setnames(forest.plot.data.table,c("SignatureID","SignatureCite","p.value"),c("signature_id","Signature_Cite","PValue"))
-    forest.plot.data.table[1,"Signature_Cite"] <- title.gene
+    forest.plot.data.table <- SIG.info[,c("SignatureID","SignatureName","Gene Symbol")][forest.plot.data.table, on = c("SignatureID"),nomatch = NA]
+    setnames(forest.plot.data.table,c("SignatureID","SignatureName","Gene Symbol","p.value"),c("signature_id","signature_name","description","PValue"))
+    forest.plot.data.table[1,"signature_name"] <- title.gene
+    forest.plot.data.table[1,"description"] <- title.gene
     forest.plot.data.table.json <- toJSON(pretty=TRUE, forest.plot.data.table)
     cat(forest.plot.data.table.json, file = (con <- file(paste0(result.path,maintitle2,".json"), "w", encoding = "UTF-8")))
     close(con)
@@ -150,4 +151,3 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     cat(paste(maintitle1,maintitle2,sep=","))
   }
 # }
-

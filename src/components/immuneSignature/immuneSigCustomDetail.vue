@@ -8,7 +8,7 @@
           style="width: 1200px; height: 400px"
         ></div>
       </div>
-    </el-row> -->
+    </el-row>
     <el-row>
       <p class="card-title">Signature Score Table</p>
       <div class="detailimg">
@@ -34,6 +34,17 @@
             width="80"
           >
           </el-table-column>
+          <el-table-column>
+            <template slot-scope="scope">{{
+              scope.row[item] === undefined ? "" : scope.row[item].split("_")[0]
+            }}</template>
+          </el-table-column>
+          <el-table-column
+            property=" "
+            label=" "
+            align="center"
+            width="120"
+          ></el-table-column>
         </el-table>
         <div class="geneExp" v-show="isShow">
           <div
@@ -219,7 +230,7 @@ export default {
       ) {
         this.isShow = true;
         this.sigID = column["type"];
-        console.log(this.sigID)
+        console.log(this.sigID);
         this.$refs.immuneSigDetail.renewDetail(this.sigID);
         var plotdata = this.sigsampletable.map(function (n) {
           return [n["sample_id"], n[column["property"]]];
@@ -310,7 +321,7 @@ export default {
 <style>
 #immuneSigTable th {
   left: 35px !important;
-  height: 200px !important;
+  height: 140px !important;
 }
 #immusignatureplot {
   width: 100%;

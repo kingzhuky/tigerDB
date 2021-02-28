@@ -19,7 +19,7 @@
         </el-row>
         <el-row>
           <p class="homedesrc">
-            TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,145 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,042,791 immune cells of 655 samples, among which 88,584 immune cells of 49 samples have immunotherapy clinical data. 
+            TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,144 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,116,945 immune cells of 655 samples, among which 119,039 immune cells of 63 samples have immunotherapy clinical data. 
           </p>
         </el-row>
       </el-col>
@@ -57,7 +57,7 @@
           <el-col :span="5" >
             <el-card shadow="hover" class="box-card" style="position:relative;left:60px;" @click.native="openpage('immuneSignature')">
               <div slot="header" class="clearfix" style="text-align:center;">
-                <span class="homedesrc">Immunotherapy Response Signature</span>
+                <span class="homedesrc">Response Signature</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
               <div style="text-align:center;">

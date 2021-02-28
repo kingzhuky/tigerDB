@@ -77,7 +77,7 @@
               :is="evolutionVue"
             ></component>
           </el-tab-pane>
-          <el-tab-pane label="Cross Talk" name="crosstalk">
+          <el-tab-pane label="Cell-Cell Communication" name="crosstalk">
             <component 
             :is="crosstalkVue" 
             :cancer="cancer"

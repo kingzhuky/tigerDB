@@ -64,11 +64,12 @@
                 @row-click="openDetails"
                 style="100%"
               >
-                <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
-                <el-table-column prop="Signature_Cite" label="Description" width="130%" ></el-table-column>
+                <!-- <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column> -->
+                <el-table-column prop="signature_name" label="Signature Name" width="90%" ></el-table-column>
+                <el-table-column prop="description" label="Description" width="140%" ></el-table-column>
                 <el-table-column prop="HR" label="HR" width="80%" sortable></el-table-column>
-                <el-table-column prop="CI95" label="95% CI" width="90%" sortable></el-table-column>
-                <el-table-column prop="PValue" label="P Value" width="90%" sortable></el-table-column>
+                <el-table-column prop="CI95" label="95% CI" width="100%" sortable></el-table-column>
+                <el-table-column prop="PValue" label="P Value" width="100%" sortable></el-table-column>
               </el-table>
             </div>
           </el-col>

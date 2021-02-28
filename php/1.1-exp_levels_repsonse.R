@@ -121,9 +121,10 @@ if(whether.in.auc.list){
   auc.data.mean <- auc.data[, lapply(.SD, mean), by = group, .SDcols = c("value")] # merge dataset
   auc.plot.data <- rbind(data.table(group = title.gene, value = auc.score),auc.data.mean)
   names(auc.plot.data)[2] <- "AUC" 
-  auc.table <- SIG.info[,c("SignatureID","SignatureCite")][auc.plot.data, on = c("SignatureID" = "group"),nomatch = NA]
-  auc.table[1,"SignatureCite"] <- title.gene
-  colnames(auc.table)[c(1:2)] <- c("signature_id","Signature_Cite")
+  auc.table <- SIG.info[,c("SignatureID","SignatureName","Gene Symbol")][auc.plot.data, on = c("SignatureID" = "group"),nomatch = NA]
+  auc.table[1,"SignatureName"] <- title.gene
+  auc.table[1,"Gene Symbol"] <- title.gene
+  setnames(auc.table,c("signature_id","signature_name","description","AUC"))
   auc.table.json <- toJSON(pretty=TRUE,auc.table)
   cat(auc.table.json, file = (con <- file(paste0(result.path,maintitle2,".json"), "w", encoding = "UTF-8")))
   close(con)

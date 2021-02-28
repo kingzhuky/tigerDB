@@ -7,7 +7,7 @@
         <el-divider></el-divider>
         <el-row>
           <el-col :span="12">
-            <p>TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,145 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,042,791 immune cells of 655 samples, among which 88,584 immune cells of 49 samples have immunotherapy clinical data. Besides, we also collected eight CRISPR and two shRNA screening data from studies identifying genes responsible of anticancer immune response. Moreover, we collected 63 gene signatures that could be potentially used to predict the immunotherapy response from public literature.</p>
+            <p>TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,144 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,116,945 immune cells of 655 samples, among which 119,039 immune cells of 63 samples have immunotherapy clinical data. Besides, we also collected eight CRISPR and two shRNA screening data from studies identifying genes responsible of anticancer immune response. Moreover, we collected 63 gene signatures that could be potentially used to predict the immunotherapy response from public literature.</p>
           </el-col>
           <el-col :span="10" :offset="2">
             <img alt="help" v-lazy="home" />
@@ -18,7 +18,7 @@
       <div class="main_con" id="4" ref="userinfo4">
         <h1 class="subtitle">Usage of TIGER</h1>
         <el-divider></el-divider>
-        <p>TIGER is composed of four major modules, including Immunotherapy Response, Immunotherapy Response Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
+        <p>TIGER is composed of four major modules, including Immunotherapy Response, Response Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
       </div>
       <el-row>
          <el-col :span="4" :push="0" >
@@ -46,7 +46,7 @@
         <el-col :span="4" :push="2">
           <el-card shadow="hover" class="box-card" @click.native="handleEdit('signature')">
             <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Immunotherapy Response Signature</span>
+              <span class="homedesrc">Response Signature</span>
               <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
             </div>
             <div style="text-align:center;">

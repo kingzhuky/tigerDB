@@ -12,7 +12,7 @@
       <div align="center">
         <img alt="help1" v-lazy="help1" />
       </div>
-      <p>TIGER will comprehensively analyze the functions of the four modules (Immunotherapy Response, Immunotherapy Response Signature, Singcell Immunity, Immune Screening) to obtain an integrated result.<br/>
+      <p>TIGER will comprehensively analyze the functions of the four modules (Immunotherapy Response, Response Signature, Singcell Immunity, Immune Screening) to obtain an integrated result.<br/>
       Firstly, There is a summary of Gene interested in, which including Gene Information and Pathway Information.</p>
       <div align="center">
         <img class="helpimg-detail" alt="search1_1" v-lazy="search1_1" />
@@ -27,7 +27,7 @@
       <div align="center">
         <img class="helpimg-detail" alt="search4_1" v-lazy="search4_1" />
       </div>
-      <p>Through the correlation analysis of the gene in Pan-cancer, you can know which Immunotherapy Response Signature of the gene is more related, and you can see the specific correlation scatter diagram by clicking the cell of table.</p>
+      <p>Through the correlation analysis of the gene in Pan-cancer, you can know which Response Signature of the gene is more related, and you can see the specific correlation scatter diagram by clicking the cell of table.</p>
       <div align="center">
         <img class="helpimg-detail" alt="search5_1" v-lazy="search5_1" />
       </div>
@@ -64,20 +64,20 @@
     </div>
 
     <div v-show="signatureshow">
-      <h2 class="sub">Module of Immunotherapy Response Signature</h2>
+      <h2 class="sub">Module of Response Signature</h2>
       
       <h3 class="sub">Overview</h3>
-      <p>Use the Overview table of Immunotherapy Response Signature to show the degree of correlation between each Immunotherapy Response Signature and immune response (AUC is obtained from the analysis of all immune response data collected).</p>
+      <p>Use the Overview table of Response Signature to show the degree of correlation between each Response Signature and immune response (AUC is obtained from the analysis of all immune response data collected).</p>
       <div align="center">
         <img class="helpimg-detail" alt="signature1_1" v-lazy="signature1_1" />
       </div>
-      <p>Click on the detail button in the table, and TIGER will display the related information of changing Immunotherapy Response Signature, as well as the Differential Signature Score Analysis in immune response data and Tumor/Normal expression data.</p>
+      <p>Click on the detail button in the table, and TIGER will display the related information of changing Response Signature, as well as the Differential Signature Score Analysis in immune response data and Tumor/Normal expression data.</p>
       <div align="center">
          <img class="helpimg-detail" alt="signature1_2" v-lazy="signature1_2" />
       </div>
       
       <h3 class="sub">Custom Analysis</h3>
-      <p>Through Immunotherapy Response Signature analysis of the expression matrix and sample information provided by the user, the correlation between the sample and the Immunotherapy Response Signature is shown to be related to the immune response of the tumor.</p>
+      <p>Through Response Signature analysis of the expression matrix and sample information provided by the user, the correlation between the sample and the Response Signature is shown to be related to the immune response of the tumor.</p>
       <div align="center">
          <img class="helpimg-detail" alt="signature2_1" v-lazy="signature2_1" />
       </div>

@@ -40,12 +40,6 @@
     </el-card>
     <el-card class="anaCard" id="inputCard" v-show="isShow">
       <el-tabs v-model="tabactiveName" @tab-click="handleClick">
-        <el-tab-pane label="Correlation Matrix" name="cormat">
-          <v-immuneSigTable
-            ref="immuSignatureRef"
-            :gene="gene"
-          ></v-immuneSigTable>
-        </el-tab-pane>
         <el-tab-pane label="AUC Matrix" name="response">
           <v-immuneSigBioRes
             ref="immuSigbioresRef"
@@ -57,6 +51,12 @@
             ref="immuSigbioSurvRef"
             :gene="gene"
           ></v-immuneSigBioSurv>
+        </el-tab-pane>
+        <el-tab-pane label="Correlation Matrix" name="cormat">
+          <v-immuneSigTable
+            ref="immuSignatureRef"
+            :gene="gene"
+          ></v-immuneSigTable>
         </el-tab-pane>
       </el-tabs>
     </el-card>

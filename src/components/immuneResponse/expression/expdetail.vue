@@ -90,9 +90,10 @@
                 @row-click="openDetails"
                 style="100%"
               >
-                <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column>
-                <el-table-column prop="Signature_Cite" label="Description" width="180%" ></el-table-column>
-                <el-table-column prop="AUC" label="AUC" width="90%" :render-header="renderHeader" sortable> 
+                <!-- <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column> -->
+                <el-table-column prop="signature_name" label="Signature Name" width="110%" ></el-table-column>
+                <el-table-column prop="description" label="Description" width="160%" ></el-table-column>
+                <el-table-column prop="AUC" label="AUC" width="120%" :render-header="renderHeader" sortable> 
                   <template slot-scope="scope">
                     <span class="skucost-pruice">{{scope.row.AUC}}</span>
                   </template>
