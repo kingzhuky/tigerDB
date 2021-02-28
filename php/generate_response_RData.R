@@ -246,6 +246,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
 
 GenerateTCGASigScore <- function(exp.table,sig.weighted.mat){
   tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+  sig.weighted.mat <- sig.weighted.mat[tmp.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
   SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
 }
 SIG.res.matrix <- response.data.table[,.(GENE_SYMBOL)][SIG.matrix, on= c("GENE_SYMBOL"), nomatch = F]
@@ -333,6 +334,7 @@ for (dataset.name in colnames(auc.data.list)[-1]){
     surv.data <- subset(surv.data,group != "0")
     surv.data$group <- factor(surv.data$group)
     # sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
+    surv.data$group <- factor(surv.data$group,levels = c(paste0(x,"_low"),paste0(x,"_high")))
     cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status) ~ group,data =surv.data)
     cox.res <- summary(cox.res)
     tmp.res <- cox.res$coefficients[c(2,5)]

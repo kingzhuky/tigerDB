@@ -189,6 +189,7 @@ for (dataset.name in names(response.data.list)){
     surv.data <- subset(surv.data,group != "0")
     surv.data$group <- factor(surv.data$group)
     # sfit <- survfit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
+    surv.data$group <- factor(surv.data$group,levels = c(paste0(x,"_low"),paste0(x,"_high")))
     cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.data)
     cox.res <- summary(cox.res)
     hr.p.score <- paste(round(cox.res$coefficients[c(4,5)],5),collapse = "_")

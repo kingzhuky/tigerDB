@@ -8,7 +8,7 @@
         <el-tab-pane label="Biomarker Analysis" name="biomarker">
           <component :is="biomarkerVue"></component>
         </el-tab-pane>
-        <el-tab-pane label="Immunotherapy Response Prediction" name="customsig">
+        <el-tab-pane label="Response Prediction" name="customsig">
           <component :is="customsigVue"></component>
         </el-tab-pane>
       </el-tabs>

@@ -86,7 +86,7 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
     surv.plot.data[up.index,"group"] <- "Custom_high"
     surv.plot.data[down.index,"group"] <- "Custom_low"
     surv.plot.data <- subset(surv.plot.data,group != "0")
-    surv.plot.data$group <- factor(surv.plot.data$group)
+    surv.plot.data$group <- factor(surv.plot.data$group,levels = c("Custom_low","Custom_high"))
     cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.plot.data)
     cox.res <- summary(cox.res)
     tmp.res <- cox.res$coefficients[c(2,5)]
@@ -126,10 +126,10 @@ SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
   surv.plot.data[up.index,"group"] <- "Custom_high"
   surv.plot.data[down.index,"group"] <- "Custom_low"
   surv.plot.data <- subset(surv.plot.data,group != "0")
-  surv.plot.data$group <- factor(surv.plot.data$group)
+  surv.plot.data$group <- factor(surv.plot.data$group,levels = c("Custom_low","Custom_high"))
   sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
   surv.plot <- ggsurvplot(sfit, conf.int = TRUE, pval = TRUE, risk.table = TRUE,
-                                   legend.labs = c("High", "Low"), legend.title = signame,
+                                   legend.labs = c("Low", "High"), legend.title = signame,
                                    xlab = "Time (Days)",
                                    palette = c("dodgerblue2", "orchid2"),
                                    risk.table.height = 0.3,

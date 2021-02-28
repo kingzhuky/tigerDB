@@ -6,7 +6,7 @@ library(data.table)
 library(jsonlite)
 
 Args <- commandArgs(T)
-#Args <- c("CD274,CD3D","Melanoma-PRJEB23709_ALL","None","None","0.5","pdf")
+#Args <- c("CD8A","Melanoma-PRJEB23709_ALL","None","None","0.5","pdf")
 #Args <- c("TP53","ccRCC_Braun_2020_EVEROLIMUS","None","None","0.5","png")
 #Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL","None","None","0.2","png")
 gene <- unlist(strsplit(Args[1],split=','))
@@ -77,10 +77,10 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
     surv.plot.data[up.index,"group"] <- "Custom_high"
     surv.plot.data[down.index,"group"] <- "Custom_low"
     surv.plot.data <- subset(surv.plot.data,group != "0")
-    surv.plot.data$group <- factor(surv.plot.data$group)
+    surv.plot.data$group <- factor(surv.plot.data$group,levels = c("Custom_low","Custom_high"))
     sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.plot.data)
     response.surv.plot <- ggsurvplot(sfit, conf.int = TRUE, pval = TRUE, risk.table = TRUE,
-                                     legend.labs = c("High", "Low"), legend.title = title.gene,
+                                     legend.labs = c("Low", "High"), legend.title = title.gene,
                                      xlab = "Time (Days)",
                                      palette = c("dodgerblue2", "orchid2"),
                                      risk.table.height = 0.3,
@@ -88,6 +88,7 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
                                        theme(text = element_text(size = 15),
                                              plot.title = element_text(size = 20, hjust = 0.5),
                                              axis.text = element_text(color = "black")))
+    summary(sfit)
     surv.sample.info <- sample.info[!is.na(`overall survival (days)`),]
     colnames(surv.sample.info)[c(9,10)] <- c("Overall_survival_days","Status")
     surv.sample.info$Status <- ifelse(surv.sample.info$Status == "Dead", 1, 0)
@@ -106,9 +107,9 @@ if(nchar(maintitle1) > 200 | nchar(maintitle2) > 200) {
       surv.data[up.index,"group"] <- paste0(x,"_high")
       surv.data[down.index,"group"] <- paste0(x,"_low")
       surv.data <- subset(surv.data,group != "0")
-      surv.data$group <- factor(surv.data$group)
-      sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data=surv.data)
-      cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.data)
+      surv.data$group <- factor(surv.data$group,levels = c(paste0(x,"_low"),paste0(x,"_high")))
+      sfit <- surv_fit(Surv(as.numeric(Overall_survival_days),Status)~group,data = surv.data)
+      cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data = surv.data)
       cox.res <- summary(cox.res)
       p.value <- signif(surv_pvalue(sfit)$pval, digits=4)
       wald.test <- signif(cox.res$wald["test"], digits=4)

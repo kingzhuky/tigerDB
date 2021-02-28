@@ -55,7 +55,7 @@ pscore.arr <- data.table(signature = title.gene)
       surv.plot.data[up.index,"group"] <- "Custom_high"
       surv.plot.data[down.index,"group"] <- "Custom_low"
       surv.plot.data <- subset(surv.plot.data,group != "0")
-      surv.plot.data$group <- factor(surv.plot.data$group)
+      surv.plot.data$group <- factor(surv.plot.data$group,levels = c("Custom_low","Custom_high"))
       cox.res <- coxph(Surv(as.numeric(Overall_survival_days),Status)~group,data =surv.plot.data)
       cox.res <- summary(cox.res)
       tmp.res <- cox.res$coefficients[c(2,5)]
