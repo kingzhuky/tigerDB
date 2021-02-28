@@ -4,9 +4,11 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1
-              style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Cell Type: {{gloclu == "All" ? celltype : gloclu}}<br>Gene Symobl: {{gene}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              Cancer Type: {{ cancer }}<br />Cell Type:
+              {{ gloclu == "All" ? celltype : gloclu }}<br />Gene Symobl:
+              {{ gene }}
+            </h1>
           </div>
         </el-card>
       </div>
@@ -16,35 +18,73 @@
           <el-row v-loading="evoluloading">
             <el-row v-show="evolushow" class="scdetailimg">
               <!-- <p class="card-title">tSNE</p> -->
-            <el-col :span="6" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-              <p class="imgtitle">Cell Types Distribution</p>
-              <img
-                id="singleimg"
-                fit="fill"
-                width="100%"
-                :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
-                @click="previewImg(0,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-            </el-col>
-            <el-col :span="6" v-show="evolushow2" style="position:relative;left:100px;top:0px;">
-              <p class="imgtitle">{{gene}} Expression</p>
-              <img
-                id="singleimg"
-                fit="fill"
-                width="100%"
-                :src="'tiger/img/' + evoluplots.split(',')[1]"
-                @click="previewImg(1,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-            </el-col>
-            <el-col :span="12" v-show="evolushow2" style="position:relative;left:40px;top:0px;">
-              <p class="imgtitle">{{gene}} Expression Difference</p>
-              <img
-                id="singleimg"
-                fit="fill"
-                height="250px"
-                :src="'tiger/img/' + evoluplots.split(',')[0]"
-                @click="previewImg(2,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + evoluplots.split(',')[1],'tiger/img/' + evoluplots.split(',')[0]])">
-            </el-col>
+              <el-col
+                :span="6"
+                v-show="evolushow2"
+                style="position: relative; left: 20px; top: 0px"
+              >
+                <p class="imgtitle">Cell Types Distribution</p>
+                <img
+                  id="singleimg"
+                  fit="fill"
+                  width="100%"
+                  :src="'tiger/img/' + overviewimg.split(',')[0] + '.png'"
+                  @click="
+                    previewImg(0, [
+                      'tiger/img/' + overviewimg.split(',')[0] + '.png',
+                      'tiger/img/' + evoluplots.split(',')[1],
+                      'tiger/img/' + evoluplots.split(',')[0],
+                    ])
+                  "
+                />
+              </el-col>
+              <el-col
+                :span="6"
+                v-show="evolushow2"
+                style="position: relative; left: 100px; top: 0px"
+              >
+                <p class="imgtitle">{{ gene }} Expression</p>
+                <img
+                  id="singleimg"
+                  fit="fill"
+                  width="100%"
+                  :src="'tiger/img/' + evoluplots.split(',')[1]"
+                  @click="
+                    previewImg(1, [
+                      'tiger/img/' + overviewimg.split(',')[0] + '.png',
+                      'tiger/img/' + evoluplots.split(',')[1],
+                      'tiger/img/' + evoluplots.split(',')[0],
+                    ])
+                  "
+                />
+              </el-col>
+              <el-col
+                :span="12"
+                v-show="evolushow2"
+                style="position: relative; left: 40px; top: 0px"
+              >
+                <p class="imgtitle">{{ gene }} Expression Difference</p>
+                <img
+                  id="singleimg"
+                  fit="fill"
+                  height="250px"
+                  :src="'tiger/img/' + evoluplots.split(',')[0]"
+                  @click="
+                    previewImg(2, [
+                      'tiger/img/' + overviewimg.split(',')[0] + '.png',
+                      'tiger/img/' + evoluplots.split(',')[1],
+                      'tiger/img/' + evoluplots.split(',')[0],
+                    ])
+                  "
+                />
+              </el-col>
             </el-row>
-            <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
+            <el-col
+              :span="20"
+              :offset="2"
+              v-show="!evolushow"
+              v-loading="loading"
+            >
               <div id="norult">No result</div>
             </el-col>
           </el-row>
@@ -52,17 +92,40 @@
         <br />
         <el-card v-loading="detailload" class="decard" v-if="wershow">
           <p class="card-title">Gene Information</p>
-          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+          <el-table
+            :data="articleData"
+            style="width: 100%"
+            v-loading="artloading"
+          >
             <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
-            <el-table-column prop="title" label style="font-weight:700;" width="250">
-              <template slot-scope="{row: {title}}" class="csstitle">
-                <span class="csstitle" v-if="title === 'Symbol'">Gene Symbol</span>
-                <span class="csstitle" v-else-if="title === 'description'">Description</span>
-                <span class="csstitle" v-else-if="title === 'type_of_gene'">Gene Type</span>
-                <span class="csstitle" v-else-if="title === 'Synonyms'">Aliases</span>
-                <span class="csstitle" v-else-if="title === 'Other_designations'">Summary</span>
-                <span class="csstitle" v-else-if="title === 'GeneID'">Entrez Gene</span>
-                <span class="csstitle" v-else>{{title}}</span>
+            <el-table-column
+              prop="title"
+              label
+              style="font-weight: 700"
+              width="250"
+            >
+              <template slot-scope="{ row: { title } }" class="csstitle">
+                <span class="csstitle" v-if="title === 'Symbol'"
+                  >Gene Symbol</span
+                >
+                <span class="csstitle" v-else-if="title === 'description'"
+                  >Description</span
+                >
+                <span class="csstitle" v-else-if="title === 'type_of_gene'"
+                  >Gene Type</span
+                >
+                <span class="csstitle" v-else-if="title === 'Synonyms'"
+                  >Aliases</span
+                >
+                <span
+                  class="csstitle"
+                  v-else-if="title === 'Other_designations'"
+                  >Summary</span
+                >
+                <span class="csstitle" v-else-if="title === 'GeneID'"
+                  >Entrez Gene</span
+                >
+                <span class="csstitle" v-else>{{ title }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="value" label></el-table-column>
@@ -85,11 +148,11 @@ export default {
     cancer: {
       type: String,
     },
-    celltype: { 
-      type: String 
+    celltype: {
+      type: String,
     },
-    gloclu: { 
-      type: String 
+    gloclu: {
+      type: String,
     },
     tabname: {
       type: String,
@@ -219,7 +282,7 @@ export default {
               celltype: celltype,
               type: "celltype",
               gene: gene,
-              gloclu: gloclu
+              gloclu: gloclu,
             },
           })
           .then(function (res) {
@@ -250,15 +313,15 @@ export default {
           });
       }
     },
-    previewImg(index,url){
+    previewImg(index, url) {
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: index, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-        closeColor: 'rgba(255,255,255,.5)'
-      })
+        mainBackground: "rgba(0, 0, 0, .5)", // 整体背景颜色
+        closeColor: "rgba(255,255,255,.5)",
+      });
     },
   },
 

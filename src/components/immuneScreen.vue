@@ -34,10 +34,17 @@
         @sort-change="sortChangeClick"
         style="100%"
       >
-        <el-table-column fixed property="gene" label align="center" width="110" id="geneCol"></el-table-column>
+        <el-table-column
+          fixed
+          property="gene"
+          label
+          align="center"
+          width="110"
+          id="geneCol"
+        ></el-table-column>
 
         <el-table-column
-          v-for="(item,index) in tableDataheader"
+          v-for="(item, index) in tableDataheader"
           :key="index"
           :property="item"
           :label="item"
@@ -45,7 +52,12 @@
           align="center"
           width="80"
         ></el-table-column>
-        <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+        <el-table-column
+          property=" "
+          label=" "
+          align="center"
+          width="120"
+        ></el-table-column>
       </el-table>
 
       <div class="colorbar">
@@ -74,7 +86,7 @@ import {
   gStyle,
   move,
   stop,
-  toTarget
+  toTarget,
 } from "../../static/js/utils.js";
 
 export default {
@@ -266,7 +278,9 @@ export default {
         this.isShow = true;
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
-        setTimeout(() => { toTarget(720) }, 300);  
+        setTimeout(() => {
+          toTarget(720);
+        }, 300);
         this.$refs.detailPlot.tableDetail(row["gene"]);
         this.$refs.detailPlot.artivcleDetail(column["label"]);
       }
@@ -305,7 +319,6 @@ export default {
 
 
 <style>
-
 #tableScreenTable th {
   left: 90px !important;
   height: 180px !important;

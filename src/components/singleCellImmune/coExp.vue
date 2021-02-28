@@ -15,7 +15,11 @@
       </el-col>
       <el-col :span="6">
         <span class="demonstration">Cell Type:</span>
-        <el-select v-model="CellType" v-loading="CellTypeLoading" @change="subClusterChange">
+        <el-select
+          v-model="CellType"
+          v-loading="CellTypeLoading"
+          @change="subClusterChange"
+        >
           <el-option
             v-for="item in CellTypeCluoptions"
             :key="item.CellType"
@@ -135,7 +139,7 @@ export default {
           params: {
             gene: this.search,
             species: "Human",
-          }
+          },
         })
         .then((res) => {
           cb(res.data.datasetinfo);

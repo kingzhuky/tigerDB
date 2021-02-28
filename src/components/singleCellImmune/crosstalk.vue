@@ -26,7 +26,7 @@
       style="100%"
     >
       <el-table-column
-        v-for="(item,index) in tableDataheader"
+        v-for="(item, index) in tableDataheader"
         :key="index"
         :property="item.key"
         :label="item.name"
@@ -36,7 +36,12 @@
         align="center"
         width="80"
       ></el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
     </el-table>
 
     <div class="colorbar">
@@ -124,7 +129,7 @@ export default {
       this.getTableData(this.loadpage, column.prop, column.order);
     },
     headerStyle({ column }) {
-      let cancer = column.type
+      let cancer = column.type;
       switch (cancer) {
         case "All":
           return "scglo-all";
@@ -215,30 +220,30 @@ export default {
               });
               this.tableDataheader = Object.keys(res.data.list[0]);
             }
-            var new_rows = [];// matrix key .替换为_
+            var new_rows = []; // matrix key .替换为_
             for (const row of this.tableData) {
-              var new_row = {}
+              var new_row = {};
               for (const key in row) {
-                let new_key = key
-                if(new_key === "gene"){
-                  new_row[new_key] = row[key]
-                }else{
-                  new_row[new_key] = row[key].split("_")[0]
-                }              
+                let new_key = key;
+                if (new_key === "gene") {
+                  new_row[new_key] = row[key];
+                } else {
+                  new_row[new_key] = row[key].split("_")[0];
+                }
               }
-              new_rows.push(new_row)
+              new_rows.push(new_row);
             }
-            this.tableData = new_rows  // matrix key .替换为_
-            var new_columns = [] // generate header
+            this.tableData = new_rows; // matrix key .替换为_
+            var new_columns = []; // generate header
             for (const column of this.tableDataheader) {
               var col_obj = {};
-              col_obj.name = column.split(',').pop()
-              col_obj.key = column
-              col_obj.type = column.split(',')[0]
+              col_obj.name = column.split(",").pop();
+              col_obj.key = column;
+              col_obj.type = column.split(",")[0];
               // console.log(col_obj)
-              new_columns.push(col_obj)
+              new_columns.push(col_obj);
             }
-            this.tableDataheader = new_columns
+            this.tableDataheader = new_columns;
             // console.log(new_rows)
           }
         })
@@ -264,18 +269,20 @@ export default {
         this.celltype = column["label"];
         this.gloclu = column["type"];
         this.$refs.detailPlot.markerPlot(row["gene"], column["label"]);
-        setTimeout(() => { toTarget(820) }, 200); 
+        setTimeout(() => {
+          toTarget(820);
+        }, 200);
       }
     },
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["property"]] === null || column["property"] == 'gene') {
+      if (row[column["property"]] === null || column["property"] == "gene") {
         return {
           background: "white",
         };
       }
-      var mycolr = onesidecolor(0,60,parseFloat(row[column["property"]]));
+      var mycolr = onesidecolor(0, 60, parseFloat(row[column["property"]]));
       return {
         background: mycolr["background"],
         color: mycolr["color"],
@@ -294,5 +301,4 @@ export default {
   left: 70px !important;
   height: 140px !important;
 }
-
 </style>

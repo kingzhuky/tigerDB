@@ -18,7 +18,9 @@
             ></el-autocomplete>
           </el-col>
           <el-col :span="4">
-            <el-button id="homebt" @click="submsearch"  :disabled="isDisable">Search</el-button>
+            <el-button id="homebt" @click="submsearch" :disabled="isDisable"
+              >Search</el-button
+            >
           </el-col>
         </el-row>
         <br />
@@ -29,7 +31,13 @@
     <div id="homecard">
       <el-card v-show="homeShow">
         <div>
-          <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigtable">
+          <el-tabs
+            v-model="activeName"
+            type="card"
+            @tab-click="handleClick"
+            stretch
+            class="tigtable"
+          >
             <el-tab-pane label="Gene Information" name="generalInformation">
               <component
                 :is="generalInformationVue"
@@ -39,19 +47,35 @@
             </el-tab-pane>
 
             <el-tab-pane label="Single-Cell Immunity" name="singleCellImmunity">
-              <component :is="singleCellImmunityVue" ref="singleCellImmunityVueRef" :seargene="seargene"></component>
+              <component
+                :is="singleCellImmunityVue"
+                ref="singleCellImmunityVueRef"
+                :seargene="seargene"
+              ></component>
             </el-tab-pane>
-            
+
             <el-tab-pane label="Immunotherapy Response" name="immuneResponse">
-              <component  :is="immuneResponseVue" ref="immuResponseVueRef" :seargene="seargene"></component>
+              <component
+                :is="immuneResponseVue"
+                ref="immuResponseVueRef"
+                :seargene="seargene"
+              ></component>
             </el-tab-pane>
-            
+
             <el-tab-pane label="Immune Screening" name="immuneScreening">
-              <component :is="immuneScreeningVue" ref="immuneScreeningVueRef" :seargene="seargene"></component>
-            </el-tab-pane> 
+              <component
+                :is="immuneScreeningVue"
+                ref="immuneScreeningVueRef"
+                :seargene="seargene"
+              ></component>
+            </el-tab-pane>
             <el-tab-pane label="Signature Analysis" name="signature">
-              <component :is="signatureVue" ref="immuSignatureRef" :gene="seargene"></component>
-            </el-tab-pane> 
+              <component
+                :is="signatureVue"
+                ref="immuSignatureRef"
+                :gene="seargene"
+              ></component>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </el-card>
@@ -61,11 +85,14 @@
 
 
 <script>
-const wercelltype = (resolve) => require(["./singleCell/singleCellImmunity.vue"], resolve);
-const werimmuneResponse = (resolve) => require(["./immuneResponse.vue"], resolve);
+const wercelltype = (resolve) =>
+  require(["./singleCell/singleCellImmunity.vue"], resolve);
+const werimmuneResponse = (resolve) =>
+  require(["./immuneResponse.vue"], resolve);
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
 //const wergeneralInformation = "./generalInformation.vue";
-const werimmuneScreening= (resolve) => require(["./immuneScreening.vue"], resolve);
+const werimmuneScreening = (resolve) =>
+  require(["./immuneScreening.vue"], resolve);
 //const wersignature = () => import('@/components/immuneSignatureTable')
 
 import wergeneralInformation from "./generalInformation.vue";
@@ -145,7 +172,7 @@ export default {
       }
     },
 
-     querySearchAsync(queryString, cb) {
+    querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {
           params: {
@@ -158,7 +185,7 @@ export default {
         });
     },
   },
-    
+
   components: {
     generalInformationVue: wergeneralInformation,
   },
@@ -166,7 +193,6 @@ export default {
 </script>
 
 <style>
-
 .textitem {
   padding-bottom: 20px;
 }
@@ -246,11 +272,16 @@ div#readmeCard {
   margin-left: 70px !important;
 }
 
-#tab-generalInformation, #tab-immuneResponse, #tab-singleCellImmunity, #tab-immuneResponse ,#tab-immuneScreening,#tab-signature{
-    font-size: 20px;
-    height: 55px;
-    padding: 10px;
-    font-weight: bold !important;
+#tab-generalInformation,
+#tab-immuneResponse,
+#tab-singleCellImmunity,
+#tab-immuneResponse,
+#tab-immuneScreening,
+#tab-signature {
+  font-size: 20px;
+  height: 55px;
+  padding: 10px;
+  font-weight: bold !important;
 }
 #homeInput .el-autocomplete {
   width: 100%;

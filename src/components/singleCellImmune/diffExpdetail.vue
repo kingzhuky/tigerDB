@@ -4,9 +4,11 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1
-              style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Cell Type: {{gloclu == "All" ? celltype : gloclu}}<br>Gene Symobl: {{gene}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              Cancer Type: {{ cancer }}<br />Cell Type:
+              {{ gloclu == "All" ? celltype : gloclu }}<br />Gene Symobl:
+              {{ gene }}
+            </h1>
           </div>
         </el-card>
       </div>
@@ -14,34 +16,67 @@
       <div class="infor">
         <el-card>
           <el-row v-loading="geneloading">
-            <el-row class="scdetailimg" v-show="geneshow" :gutter="20" type="flex" justify="space-around">
-              <el-col :span="4" >
+            <el-row
+              class="scdetailimg"
+              v-show="geneshow"
+              :gutter="20"
+              type="flex"
+              justify="space-around"
+            >
+              <el-col :span="4">
                 <p class="imgtitle">Cell Types Distribution</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[0] + '.png'"
-                  @click="previewImg(0,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="
+                    previewImg(0, [
+                      'tiger/img/' + geneplots.split(',')[0] + '.png',
+                      'tiger/img/' + geneplots.split(',')[1] + '.png',
+                      'tiger/img/' + geneplots.split(',')[2] + '.png',
+                      'tiger/img/' + geneplots.split(',')[3] + '.png',
+                      'tiger/img/' + geneplots.split(',')[4] + '.png',
+                    ])
+                  "
+                />
               </el-col>
-              <el-col :span="4" >
+              <el-col :span="4">
                 <p class="imgtitle">Tissue Types Distribution</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[1] + '.png'"
-                  @click="previewImg(1,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="
+                    previewImg(1, [
+                      'tiger/img/' + geneplots.split(',')[0] + '.png',
+                      'tiger/img/' + geneplots.split(',')[1] + '.png',
+                      'tiger/img/' + geneplots.split(',')[2] + '.png',
+                      'tiger/img/' + geneplots.split(',')[3] + '.png',
+                      'tiger/img/' + geneplots.split(',')[4] + '.png',
+                    ])
+                  "
+                />
               </el-col>
               <el-col :span="4">
-                <div class="imgspan"> 
-                <p class="imgtitle">{{gene}} Expression</p>
+                <div class="imgspan">
+                  <p class="imgtitle">{{ gene }} Expression</p>
                   <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + geneplots.split(',')[3] + '.png'"
-                  @click="previewImg(3,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                    id="singleimg"
+                    fit="fill"
+                    width="100%"
+                    :src="'tiger/img/' + geneplots.split(',')[3] + '.png'"
+                    @click="
+                      previewImg(3, [
+                        'tiger/img/' + geneplots.split(',')[0] + '.png',
+                        'tiger/img/' + geneplots.split(',')[1] + '.png',
+                        'tiger/img/' + geneplots.split(',')[2] + '.png',
+                        'tiger/img/' + geneplots.split(',')[3] + '.png',
+                        'tiger/img/' + geneplots.split(',')[4] + '.png',
+                      ])
+                    "
+                  />
                 </div>
               </el-col>
               <el-col :span="4">
@@ -51,23 +86,46 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + geneplots.split(',')[2] + '.png'"
-                  @click="previewImg(2,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                  @click="
+                    previewImg(2, [
+                      'tiger/img/' + geneplots.split(',')[0] + '.png',
+                      'tiger/img/' + geneplots.split(',')[1] + '.png',
+                      'tiger/img/' + geneplots.split(',')[2] + '.png',
+                      'tiger/img/' + geneplots.split(',')[3] + '.png',
+                      'tiger/img/' + geneplots.split(',')[4] + '.png',
+                    ])
+                  "
+                />
               </el-col>
               <el-col :span="4">
-                <div class="imgspan"> 
-                <p class="imgtitle"> {{gene}} Expression Difference</p>
+                <div class="imgspan">
+                  <p class="imgtitle">{{ gene }} Expression Difference</p>
                   <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + geneplots.split(',')[4] + '.png'"
-                  @click="previewImg(4,['tiger/img/' + geneplots.split(',')[0] + '.png','tiger/img/' + geneplots.split(',')[1] + '.png','tiger/img/' + geneplots.split(',')[2] + '.png','tiger/img/' + geneplots.split(',')[3] + '.png','tiger/img/' + geneplots.split(',')[4] + '.png'])">
+                    id="singleimg"
+                    fit="fill"
+                    width="100%"
+                    :src="'tiger/img/' + geneplots.split(',')[4] + '.png'"
+                    @click="
+                      previewImg(4, [
+                        'tiger/img/' + geneplots.split(',')[0] + '.png',
+                        'tiger/img/' + geneplots.split(',')[1] + '.png',
+                        'tiger/img/' + geneplots.split(',')[2] + '.png',
+                        'tiger/img/' + geneplots.split(',')[3] + '.png',
+                        'tiger/img/' + geneplots.split(',')[4] + '.png',
+                      ])
+                    "
+                  />
                 </div>
               </el-col>
-            </el-row> 
-              <el-col :span="16" :offset="2" v-show="!geneshow" v-loading="loading">
-                <div id="norult">No result</div>
-              </el-col>
+            </el-row>
+            <el-col
+              :span="16"
+              :offset="2"
+              v-show="!geneshow"
+              v-loading="loading"
+            >
+              <div id="norult">No result</div>
+            </el-col>
           </el-row>
           <br />
           <br />
@@ -75,22 +133,45 @@
         <br />
         <el-card v-loading="detailload" class="decard" v-if="wershow">
           <p class="card-title">Gene Information</p>
-          <el-table :data="articleData" style="width: 100%" v-loading="artloading">
+          <el-table
+            :data="articleData"
+            style="width: 100%"
+            v-loading="artloading"
+          >
             <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
-            <el-table-column prop="title" label style="font-weight:700;" width="250">
-              <template slot-scope="{row: {title}}" class="csstitle">
-                <span class="csstitle" v-if="title === 'Symbol'">Gene Symbol</span>
-                <span class="csstitle" v-else-if="title === 'description'">Description</span>
-                <span class="csstitle" v-else-if="title === 'type_of_gene'">Gene Type</span>
-                <span class="csstitle" v-else-if="title === 'Synonyms'">Aliases</span>
-                <span class="csstitle" v-else-if="title === 'Other_designations'">Summary</span>
-                <span class="csstitle" v-else-if="title === 'GeneID'">Entrez Gene</span>
-                <span class="csstitle" v-else>{{title}}</span>
+            <el-table-column
+              prop="title"
+              label
+              style="font-weight: 700"
+              width="250"
+            >
+              <template slot-scope="{ row: { title } }" class="csstitle">
+                <span class="csstitle" v-if="title === 'Symbol'"
+                  >Gene Symbol</span
+                >
+                <span class="csstitle" v-else-if="title === 'description'"
+                  >Description</span
+                >
+                <span class="csstitle" v-else-if="title === 'type_of_gene'"
+                  >Gene Type</span
+                >
+                <span class="csstitle" v-else-if="title === 'Synonyms'"
+                  >Aliases</span
+                >
+                <span
+                  class="csstitle"
+                  v-else-if="title === 'Other_designations'"
+                  >Summary</span
+                >
+                <span class="csstitle" v-else-if="title === 'GeneID'"
+                  >Entrez Gene</span
+                >
+                <span class="csstitle" v-else>{{ title }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="value" label></el-table-column>
           </el-table>
-        </el-card>        
+        </el-card>
       </div>
       <v-goTop></v-goTop>
     </div>
@@ -109,8 +190,8 @@ export default {
       type: String,
     },
     celltype: { type: String },
-    gloclu: { 
-      type: String 
+    gloclu: {
+      type: String,
     },
     clickGene: {
       type: String,
@@ -207,7 +288,7 @@ export default {
               gene: clickgene,
               type: "exp",
               celltype: celltype,
-              gloclu: gloclu
+              gloclu: gloclu,
             },
           })
           .then(function (res) {
@@ -216,12 +297,13 @@ export default {
                 that.geneshow = false;
               } else {
                 that.geneshow = true;
-                that.geneplots = res.data.output2[0].split(",")[0] + ',' + res.data.output[0];
+                that.geneplots =
+                  res.data.output2[0].split(",")[0] + "," + res.data.output[0];
               }
               //that.geneplots = res.data.output[0];
-            // console.log(that.geneloading)
-            that.geneloading = false;
-            // console.log(that.geneloading)
+              // console.log(that.geneloading)
+              that.geneloading = false;
+              // console.log(that.geneloading)
             }
           })
           .catch(function (res) {
@@ -229,15 +311,15 @@ export default {
           });
       }
     },
-    previewImg(index,url){
+    previewImg(index, url) {
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: index, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-        closeColor: 'rgba(255,255,255,.5)'
-      })
+        mainBackground: "rgba(0, 0, 0, .5)", // 整体背景颜色
+        closeColor: "rgba(255,255,255,.5)",
+      });
     },
   },
 
@@ -263,7 +345,6 @@ export default {
 </script>
 
 <style>
-
 </style>
 
 

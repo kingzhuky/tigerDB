@@ -24,7 +24,7 @@
 <script>
 export default {
   props: {
-    seargene: {type: String},
+    seargene: { type: String },
   },
   data() {
     return {

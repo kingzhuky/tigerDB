@@ -26,7 +26,12 @@
               slot-scope="scope"
             >{{ scope.row[item]===undefined ? '': scope.row[item].split('_')[0] }}</template> -->
           </el-table-column>
-          <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+          <el-table-column
+            property=" "
+            label=" "
+            align="center"
+            width="120"
+          ></el-table-column>
         </el-table>
 
         <div class="colorbar">
@@ -137,8 +142,8 @@ export default {
       this.$http
         .get("/tiger/immuneSig2.php", {
           params: {
-            gene: this.gene.trim().replace(" ",""),
-            condi: "survival"
+            gene: this.gene.trim().replace(" ", ""),
+            condi: "survival",
           },
         })
         .then((res) => {
@@ -160,10 +165,13 @@ export default {
           this.tableData = res.data.filter((item) => {
             if (item["SignatureName"] === "Tertiary lymphoid structures") {
               item["SignatureName"] = "TLS";
-            } else if (item["SignatureName"] === "Tertiary lymphoid structures in melanoma") {
+            } else if (
+              item["SignatureName"] ===
+              "Tertiary lymphoid structures in melanoma"
+            ) {
               item["SignatureName"] = "TLS-melanoma";
             }
-            return item
+            return item;
           });
           this.tableDataheader = Object.keys(res.data[0]).filter(
             (item) => item != "SignatureID"
@@ -181,8 +189,14 @@ export default {
         this.isShow = true;
         this.signature = row["SignatureID"];
         this.datasetid = column["label"];
-        this.$refs.detailPlot.gettable(this.gene,row["SignatureID"],column["label"]);
-        setTimeout(() => { toTarget(820) }, 200); 
+        this.$refs.detailPlot.gettable(
+          this.gene,
+          row["SignatureID"],
+          column["label"]
+        );
+        setTimeout(() => {
+          toTarget(820);
+        }, 200);
       }
     },
 
@@ -208,7 +222,6 @@ export default {
 
 
 <style>
-
 /* #immuneSigResTable th {
   left: 35px !important;
   height: 70px !important;

@@ -3,12 +3,27 @@
     <el-card shadow="hover" class="cancercard">
       <el-row gutter="10">
         <el-col :span="7">
-          <img class="iconsCancer" style="position:relative;top:40px;left:10px" alt="imgurl" :src="imgurl" />
+          <img
+            class="iconsCancer"
+            style="position: relative; top: 40px; left: 10px"
+            alt="imgurl"
+            :src="imgurl"
+          />
         </el-col>
         <el-col :span="15">
-          <p class="cancertitle">{{IconName}}</p>
-          <el-row class="rowbutton" v-for="(dataset, index) in datasets" :key="dataset">
-            <el-button size="medium" type="text" @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</el-button>
+          <p class="cancertitle">{{ IconName }}</p>
+          <el-row
+            class="rowbutton"
+            v-for="(dataset, index) in datasets"
+            :key="dataset"
+          >
+            <el-button
+              size="medium"
+              type="text"
+              @click="changedataset(dataset)"
+              :disabled="dataisrenew(dataset)"
+              >{{ datasetsname[index] }}</el-button
+            >
             <!-- <p @click="changedataset(dataset)" :disabled="dataisrenew(dataset)">{{datasetsname[index]}}</p> -->
           </el-row>
         </el-col>
@@ -25,46 +40,83 @@ export default {
     datasets: Array,
     datasetsname: Array,
   },
-  data(){
-    return{
-       datasetrenewed: ["CAC","BC","BCC","MPAL","CRC1","BTCC","UM","CRC2","UCEC","BC1","NSCLC","OV","MCC","HCC","PDAC","NSCLC6","NSCLC1","NSCLC3","CCRCC","TNBC","ICC","NSCLC4","HNSC","NPC","MUC","PRAD2","STAD","PRAD1"
-       ,"CRPC","OS","CRPC2","BTCC1","SKCM1","NSCLC5","ESCC","SKCM3","PDAC2","NSCLC7"],
+  data() {
+    return {
+      datasetrenewed: [
+        "CAC",
+        "BC",
+        "BCC",
+        "MPAL",
+        "CRC1",
+        "BTCC",
+        "UM",
+        "CRC2",
+        "UCEC",
+        "BC1",
+        "NSCLC",
+        "OV",
+        "MCC",
+        "HCC",
+        "PDAC",
+        "NSCLC6",
+        "NSCLC1",
+        "NSCLC3",
+        "CCRCC",
+        "TNBC",
+        "ICC",
+        "NSCLC4",
+        "HNSC",
+        "NPC",
+        "MUC",
+        "PRAD2",
+        "STAD",
+        "PRAD1",
+        "CRPC",
+        "OS",
+        "CRPC2",
+        "BTCC1",
+        "SKCM1",
+        "NSCLC5",
+        "ESCC",
+        "SKCM3",
+        "PDAC2",
+        "NSCLC7",
+      ],
       //  ,"OS"],
-    }
+    };
   },
-  methods:{
-    changedataset(datasetid){
+  methods: {
+    changedataset(datasetid) {
       // console.log(this.imgurl)
       // console.log("child: " + datasetid)
-      this.$emit("datasetid",datasetid)
+      this.$emit("datasetid", datasetid);
     },
-    dataisrenew(datasetid){
+    dataisrenew(datasetid) {
       // console.log(datasetid)
-      for(const reneweddata of this.datasetrenewed){
+      for (const reneweddata of this.datasetrenewed) {
         // console.log(reneweddata)
-        if(datasetid === reneweddata){
-          return false
+        if (datasetid === reneweddata) {
+          return false;
         }
       }
-      return true
+      return true;
     },
-  }
-
-}
+  },
+};
 </script>
 
 <style>
 .el-card {
   margin-bottom: 20px;
 }
-.cancercard{
+.cancercard {
   height: 220px;
 }
-.iconsCancer{
+.iconsCancer {
   width: 90px;
   height: 90px;
 }
-.rowbutton{
+.rowbutton {
   margin-top: -15px;
   font: 22px;
 }

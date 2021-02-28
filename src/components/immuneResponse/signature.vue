@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 15px;">
+  <div style="margin-bottom: 15px">
     <!-- <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
       1. Input your intersecting signature. (Using comma to seprate genes. eg. PDCD1, CD274) or select known signature.
@@ -20,7 +20,7 @@
                   v-loading="inputloading"
                   maxlength="300000"
                   show-word-limit
-                  :autosize="{ minRows: 2, maxRows: 4}"
+                  :autosize="{ minRows: 2, maxRows: 4 }"
                   type="textarea"
                   v-model="gene"
                   placeholder="CD274,CD3D"
@@ -54,15 +54,29 @@
           </el-row>
 
           <el-row>
-            <el-select v-model="cancer" placeholder="Cancer" style="width:100%">
-              <el-option v-for="item in datasetOptions" :key="item" :label="item" :value="item"></el-option>
+            <el-select
+              v-model="cancer"
+              placeholder="Cancer"
+              style="width: 100%"
+            >
+              <el-option
+                v-for="item in datasetOptions"
+                :key="item"
+                :label="item"
+                :value="item"
+              ></el-option>
             </el-select>
           </el-row>
         </el-col>
 
         <el-col :span="4" :offset="1">
           <el-row id="submitBt">
-            <el-button id="signatureplot" v-on:click="submetBt" :disabled="isDisable">Submit</el-button>
+            <el-button
+              id="signatureplot"
+              v-on:click="submetBt"
+              :disabled="isDisable"
+              >Submit</el-button
+            >
           </el-row>
         </el-col>
       </el-row>
@@ -79,7 +93,7 @@
                   v-model="responder"
                   multiple
                   placeholder="Choose at least one"
-                  style="width:100%"
+                  style="width: 100%"
                 >
                   <el-option
                     v-for="item in responseGroupOption"
@@ -96,7 +110,7 @@
                   v-model="noresponder"
                   multiple
                   placeholder="Choose at least one"
-                  style="width:100%"
+                  style="width: 100%"
                 >
                   <el-option
                     v-for="item in noresponseGroupOption"
@@ -115,7 +129,11 @@
               <el-radio v-model="normalMedDiff" label="gene">Gene</el-radio>
             </el-row>
             <el-row>
-              <el-input v-model="normalGeneDiff" v-show='normalMedDiff!="None"' placeholder="Please Input Gene Symbol"></el-input>
+              <el-input
+                v-model="normalGeneDiff"
+                v-show="normalMedDiff != 'None'"
+                placeholder="Please Input Gene Symbol"
+              ></el-input>
             </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
@@ -126,7 +144,12 @@
             </el-row>
             <br />
             <el-row class="plot">
-              <el-button id="anabt" @click="signatureDiffPlot" style="width:100%">Plot</el-button>
+              <el-button
+                id="anabt"
+                @click="signatureDiffPlot"
+                style="width: 100%"
+                >Plot</el-button
+              >
             </el-row>
           </el-col>
           <el-col :span="8" :offset="1" v-show="resultShow">
@@ -137,16 +160,38 @@
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
             <div v-loading="loadingDiff" class="detailimg">
-              <el-table :cell-style="tableCellStyle" ref="singleTable" border max-height="400" header-row-class-name="tableHead" :data="tableData" @row-click="openDetails" style="100%">
-          <!-- <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column> -->
-                <el-table-column prop="signature_name" label="Signature Name" width="110%" ></el-table-column>
-                <el-table-column prop="description" label="Description" width="160%" ></el-table-column>
-                <el-table-column prop="AUC" label="AUC" width="120%" :render-header="renderHeader" sortable> 
+              <el-table
+                :cell-style="tableCellStyle"
+                ref="singleTable"
+                border
+                max-height="360"
+                header-row-class-name="tableHead"
+                :data="tableData"
+                @row-click="openDetails"
+                style="100%"
+              >
+                <!-- <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column> -->
+                <el-table-column
+                  prop="signature_name"
+                  label="Signature Name"
+                  width="110%"
+                ></el-table-column>
+                <el-table-column
+                  prop="description"
+                  label="Description"
+                  width="160%"
+                ></el-table-column>
+                <el-table-column
+                  prop="AUC"
+                  label="AUC"
+                  width="120%"
+                  :render-header="renderHeader"
+                  sortable
+                >
                   <template slot-scope="scope">
-                    <span class="skucost-pruice">{{scope.row.AUC}}</span>
+                    <span class="skucost-pruice">{{ scope.row.AUC }}</span>
                   </template>
                 </el-table-column>
-
               </el-table>
             </div>
           </el-col>
@@ -166,13 +211,22 @@
               <el-radio v-model="normalMedSur" label="gene">Gene</el-radio>
             </el-row>
             <el-row>
-              <el-input v-model="normalGeneSur" v-show='normalMedSur!="None"' placeholder="Please Input Gene Symbol"></el-input>
+              <el-input
+                v-model="normalGeneSur"
+                v-show="normalMedSur != 'None'"
+                placeholder="Please Input Gene Symbol"
+              ></el-input>
             </el-row>
             <br />
             <el-row class="detail1">Group Cutoff</el-row>
 
             <el-row>
-              <el-slider v-model="expcutoff" :min="0.10" :max="0.50" :step="0.10"></el-slider>
+              <el-slider
+                v-model="expcutoff"
+                :min="0.1"
+                :max="0.5"
+                :step="0.1"
+              ></el-slider>
             </el-row>
             <el-row>
               <el-col :span="12">
@@ -187,7 +241,12 @@
             <br />
 
             <el-row class="plot">
-              <el-button id="anabt" @click="signatureSurPlot" style="width:100%">Plot</el-button>
+              <el-button
+                id="anabt"
+                @click="signatureSurPlot"
+                style="width: 100%"
+                >Plot</el-button
+              >
             </el-row>
             <br />
           </el-col>
@@ -211,11 +270,34 @@
                 style="100%"
               >
                 <!-- <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column> -->
-                <el-table-column prop="signature_name" label="Signature Name" width="90%" ></el-table-column>
-                <el-table-column prop="description" label="Description" width="140%" ></el-table-column>
-                <el-table-column prop="HR" label="HR" width="80%" sortable></el-table-column>
-                <el-table-column prop="CI95" label="95% CI" width="100%" sortable></el-table-column>
-                <el-table-column prop="PValue" label="P Value" width="100%" sortable></el-table-column>
+                <el-table-column
+                  prop="signature_name"
+                  label="Signature Name"
+                  width="90%"
+                ></el-table-column>
+                <el-table-column
+                  prop="description"
+                  label="Description"
+                  width="140%"
+                ></el-table-column>
+                <el-table-column
+                  prop="HR"
+                  label="HR"
+                  width="80%"
+                  sortable
+                ></el-table-column>
+                <el-table-column
+                  prop="CI95"
+                  label="95% CI"
+                  width="100%"
+                  sortable
+                ></el-table-column>
+                <el-table-column
+                  prop="PValue"
+                  label="P Value"
+                  width="100%"
+                  sortable
+                ></el-table-column>
               </el-table>
             </div>
           </el-col>
@@ -233,17 +315,15 @@
 <script>
 import goTop from "../public/goTop";
 import qs from "qs";
-import {
-  gStyle
-} from "../../../static/js/utils.js";
+import { gStyle } from "../../../static/js/utils.js";
 
 export default {
   data() {
     return {
       resultShow: true,
       surresultShow: true,
-      expcutoff: 0.50,
-      expcutoff2: 0.50,
+      expcutoff: 0.5,
+      expcutoff2: 0.5,
       inputloading: false,
       logScale: "FALSE",
       responder: ["CR", "PR"],
@@ -269,7 +349,7 @@ export default {
         { value: "RBM15" },
         { value: "RBM15B" },
         { value: "METTL16" },
-        { value: "ALKBH5" }
+        { value: "ALKBH5" },
       ],
       geneset: "",
       genesetOptions: [],
@@ -289,22 +369,22 @@ export default {
       responseGroupOption: [
         {
           value: "CR",
-          label: "CR"
+          label: "CR",
         },
         {
           value: "PR",
-          label: "PR"
-        }
+          label: "PR",
+        },
       ],
       noresponseGroupOption: [
         {
           value: "PD",
-          label: "PD"
+          label: "PD",
         },
         {
           value: "SD",
-          label: "SD"
-        }
+          label: "SD",
+        },
       ],
       imgpath: "",
       imgpathSur: "",
@@ -316,21 +396,21 @@ export default {
   },
 
   computed: {
-    imgUrlBox: function() {
+    imgUrlBox: function () {
       return "tiger/img/" + this.imgpathBox + ".png";
     },
-    imgUrlBar: function() {
+    imgUrlBar: function () {
       return "tiger/img/" + this.imgpathBar + ".png";
     },
-    imgUrlSign: function() {
+    imgUrlSign: function () {
       return "tiger/img/" + this.imgpath + ".png";
     },
-    imgUrlSignSur: function() {
+    imgUrlSignSur: function () {
       return "tiger/img/" + this.imgpathSur + ".png";
-    }
+    },
   },
 
-  mounted: function() {
+  mounted: function () {
     this.getColumn("tablecolumn", "immuneresponseunion");
     this.getgeneset("siginfo", "SignatureName");
   },
@@ -341,42 +421,52 @@ export default {
     },
     expcutoff2() {
       this.expcutoff = (1 - this.expcutoff2).toFixed(2);
-    }
+    },
   },
 
   methods: {
-    renderHeader(h){
-       return h('span', {}, [
-        h('span', {}, 'AUC'),
-        h('el-popover', { props: { placement: 'top-start', width: '200', trigger: 'hover', content: 'AUC indicates the performance of immunotherapy response prediction' }}, [
-           h('i', { slot: 'reference', class:'el-icon-question'}, '')
-          ])
-       ])
+    renderHeader(h) {
+      return h("span", {}, [
+        h("span", {}, "AUC"),
+        h(
+          "el-popover",
+          {
+            props: {
+              placement: "top-start",
+              width: "200",
+              trigger: "hover",
+              content:
+                "AUC indicates the performance of immunotherapy response prediction",
+            },
+          },
+          [h("i", { slot: "reference", class: "el-icon-question" }, "")]
+        ),
+      ]);
     },
     gettableDataSur(jsonUrl) {
       var that = this;
       this.$http
         .get("/tiger/img/" + jsonUrl + ".json")
-        .then(function(res) {
+        .then(function (res) {
           that.tableDataSur = res.data;
         })
-        .catch(function(res) {
+        .catch(function (res) {
           // console.log(res);
         });
     },
-    tableCellStyleSur({row}) {
+    tableCellStyleSur({ row }) {
       // console.log(row["PValue"])
-      var mycolr = ""
-      if(parseFloat(row["PValue"]) < 0.1){
-        mycolr = "#f0b6b6"
-      }else{
-        mycolr = "rgb(255,255,255)"
+      var mycolr = "";
+      if (parseFloat(row["PValue"]) < 0.1) {
+        mycolr = "#f0b6b6";
+      } else {
+        mycolr = "rgb(255,255,255)";
       }
       return {
-        background: mycolr
+        background: mycolr,
       };
     },
-    openDetails(row){
+    openDetails(row) {
       // console.log(row.signature_id);
       this.$router.push({
         name: "immuneSignature",
@@ -390,16 +480,16 @@ export default {
         .get("/tiger/tablecolumn.php", {
           params: {
             tabl: tabl,
-            mycolumn: mycolumn
-          }
+            mycolumn: mycolumn,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             //console.log(res.data.list);
             this.genesetOptions = res.data.list;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -408,16 +498,16 @@ export default {
         .get("/tiger/tablecolumn.php", {
           params: {
             tabl: tabl,
-            mycolumn: mycolumn
-          }
+            mycolumn: mycolumn,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             //console.log(res.data.list);
             this.datasetOptions = res.data.list;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -431,11 +521,11 @@ export default {
       var params = qs.stringify({ gene: this.geneset, type: "siginfo" });
       this.$http
         .post("/tiger/signature2geneset.php", params, { emulateJSON: true })
-        .then(function(res) {
+        .then(function (res) {
           that.gene = res.data.list[0].GeneSymbol;
           that.inputloading = false;
         })
-        .catch(function(res) {
+        .catch(function (res) {
           console.log(res);
         });
     },
@@ -455,8 +545,8 @@ export default {
         this.normalGeneDiff = "";
         this.normalMedSur = "None";
         this.normalGeneSur = "";
-        this.expcutoff = 0.50;
-        this.expcutoff2 = 0.50;
+        this.expcutoff = 0.5;
+        this.expcutoff2 = 0.5;
         this.logScale = "FALSE";
         this.responder = ["CR", "PR"];
         this.noresponder = ["PD", "SD"];
@@ -471,10 +561,10 @@ export default {
       var that = this;
       this.$http
         .get("/tiger/img/" + jsonUrl + ".json")
-        .then(function(res) {
+        .then(function (res) {
           that.tableData = res.data;
         })
-        .catch(function(res) {
+        .catch(function (res) {
           console.log(res);
         });
     },
@@ -496,10 +586,10 @@ export default {
               normalGene:
                 this.normalMedDiff === "None" ? "None" : this.normalGeneDiff,
               logScale: this.logScale,
-              datatype: "png"
-            }
+              datatype: "png",
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
               that.resultShow = true;
               let imgpath = res.data.output[0].split(",");
@@ -512,17 +602,17 @@ export default {
               that.resultShow = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
     },
 
-    tableCellStyle({ row, column}) {
+    tableCellStyle({ row, column }) {
       var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
-        color: mycolr["color"]
+        color: mycolr["color"],
       };
     },
 
@@ -540,37 +630,37 @@ export default {
               normalMed: this.normalMedSur,
               normalGene:
                 this.normalMedSur === "None" ? "None" : this.normalGeneSur,
-              datatype: "png"
-            }
+              datatype: "png",
+            },
           })
-          .then(function(res) {
-            if (res.data.status == 0 ) {
-              if(res.data.output[0] == '0'){
+          .then(function (res) {
+            if (res.data.status == 0) {
+              if (res.data.output[0] == "0") {
                 that.surresultShow = false;
-              }else{
+              } else {
                 let imgpath2 = res.data.output[0].split(",");
                 setTimeout((that.imgpath = imgpath2[0]), 1000);
                 that.gettableDataSur(imgpath2[1]);
                 // that.imgpath = imgpath2[0];
                 // that.imgpathSur = imgpath2[1];
                 that.loadingSur = false;
-                console.log("haha")
+                console.log("haha");
               }
             } else {
               that.surresultShow = false;
             }
-            console.log(that.surresultShow)
+            console.log(that.surresultShow);
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
-    }
+    },
   },
 
   components: {
-    "v-goTop": goTop
-  }
+    "v-goTop": goTop,
+  },
 };
 </script>
 
@@ -627,12 +717,12 @@ button#resetbt {
 #responseplot {
   width: 480px;
 }
-.tableHead{
+.tableHead {
   font-size: 18px;
   color: #000000;
-  font-weight:bold;
+  font-weight: bold;
 }
-.el-table--enable-row-hover .el-table__body tr:hover{
+.el-table--enable-row-hover .el-table__body tr:hover {
   cursor: pointer;
 }
 </style>

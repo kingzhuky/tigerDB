@@ -1,49 +1,86 @@
 <template>
   <div class="textitem" v-show="show" v-loading="loading">
-    <p class="card-title">{{title}}</p>
+    <p class="card-title">{{ title }}</p>
     <div class="geneExp">
-      <div :id="conditi" class="scaterPlot" style="width: 800px;height:400px;"></div>
+      <div
+        :id="conditi"
+        class="scaterPlot"
+        style="width: 800px; height: 400px"
+      ></div>
     </div>
     <el-table
-        max-height="600"
-        :data="TableData"
-        :row-key="getRowKeys"
-        :expand-row-keys="expands"
-        @expand-change="rowExpand"
-        @sort-change="sortChangeClick"
-        style="width: 100%"
-      >
-      <el-table-column type="expand" >
+      max-height="600"
+      :data="TableData"
+      :row-key="getRowKeys"
+      :expand-row-keys="expands"
+      @expand-change="rowExpand"
+      @sort-change="sortChangeClick"
+      style="width: 100%"
+    >
+      <el-table-column type="expand">
         <template slot-scope="scope">
           <div class="detailimg" v-loading="imgloading">
-            <el-row class="scdetailimg" v-show="imgshow" :gutter="20" type="flex" justify="space-around">
-              <el-col :span="4" >
+            <el-row
+              class="scdetailimg"
+              v-show="imgshow"
+              :gutter="20"
+              type="flex"
+              justify="space-around"
+            >
+              <el-col :span="4">
                 <p class="imgtitle">Cell Types Distribution</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[0] + '.png'"
-                  @click="previewImg(0,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="
+                    previewImg(0, [
+                      'tiger/img/' + diffexpimg.split(',')[0] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[1] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[2] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[3] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[4] + '.png',
+                    ])
+                  "
+                />
               </el-col>
-              <el-col :span="4" >
+              <el-col :span="4">
                 <p class="imgtitle">Tissue Types Distribution</p>
                 <img
                   id="singleimg"
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[1] + '.png'"
-                  @click="previewImg(1,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="
+                    previewImg(1, [
+                      'tiger/img/' + diffexpimg.split(',')[0] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[1] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[2] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[3] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[4] + '.png',
+                    ])
+                  "
+                />
               </el-col>
               <el-col :span="4">
-                <div class="imgspan"> 
-                <p class="imgtitle">{{seargene}} Expression</p>
+                <div class="imgspan">
+                  <p class="imgtitle">{{ seargene }} Expression</p>
                   <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + diffexpimg.split(',')[3] + '.png'"
-                  @click="previewImg(3,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                    id="singleimg"
+                    fit="fill"
+                    width="100%"
+                    :src="'tiger/img/' + diffexpimg.split(',')[3] + '.png'"
+                    @click="
+                      previewImg(3, [
+                        'tiger/img/' + diffexpimg.split(',')[0] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[1] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[2] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[3] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[4] + '.png',
+                      ])
+                    "
+                  />
                 </div>
               </el-col>
               <el-col :span="4">
@@ -53,32 +90,76 @@
                   fit="fill"
                   width="100%"
                   :src="'tiger/img/' + diffexpimg.split(',')[2] + '.png'"
-                  @click="previewImg(2,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                  @click="
+                    previewImg(2, [
+                      'tiger/img/' + diffexpimg.split(',')[0] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[1] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[2] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[3] + '.png',
+                      'tiger/img/' + diffexpimg.split(',')[4] + '.png',
+                    ])
+                  "
+                />
               </el-col>
               <el-col :span="4">
-                <div class="imgspan"> 
-                <p class="imgtitle">{{seargene}} Expression Difference</p>
+                <div class="imgspan">
+                  <p class="imgtitle">{{ seargene }} Expression Difference</p>
                   <img
-                  id="singleimg"
-                  fit="fill"
-                  width="100%"
-                  :src="'tiger/img/' + diffexpimg.split(',')[4] + '.png'"
-                  @click="previewImg(4,['tiger/img/' + diffexpimg.split(',')[0] + '.png','tiger/img/' + diffexpimg.split(',')[1] + '.png','tiger/img/' + diffexpimg.split(',')[2] + '.png','tiger/img/' + diffexpimg.split(',')[3] + '.png','tiger/img/' + diffexpimg.split(',')[4] + '.png'])">
+                    id="singleimg"
+                    fit="fill"
+                    width="100%"
+                    :src="'tiger/img/' + diffexpimg.split(',')[4] + '.png'"
+                    @click="
+                      previewImg(4, [
+                        'tiger/img/' + diffexpimg.split(',')[0] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[1] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[2] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[3] + '.png',
+                        'tiger/img/' + diffexpimg.split(',')[4] + '.png',
+                      ])
+                    "
+                  />
                 </div>
               </el-col>
-            </el-row> 
+            </el-row>
             <div v-show="!imgshow">no result</div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable="custom"></el-table-column>
-      <el-table-column prop="datasetid" label="Dataset ID" width="120%" sortable="custom"></el-table-column>
-      <el-table-column prop="GlobalCluster" label="Main Lineage" sortable="custom"></el-table-column>
-      <el-table-column prop="CellType" label="Cell Type" sortable="custom"></el-table-column>
-      <el-table-column prop="Log2FoldChange" label="Log2 Fold Change" sortable="custom"></el-table-column>
-      <el-table-column prop="P_Value" label="-log10 (P Value)" sortable="custom"></el-table-column>
+      <el-table-column
+        prop="CancerType"
+        label="Cancer Type"
+        width="400%"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="datasetid"
+        label="Dataset ID"
+        width="120%"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="GlobalCluster"
+        label="Main Lineage"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="CellType"
+        label="Cell Type"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="Log2FoldChange"
+        label="Log2 Fold Change"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="P_Value"
+        label="-log10 (P Value)"
+        sortable="custom"
+      ></el-table-column>
     </el-table>
-    <br />   
+    <br />
     <el-row>
       <el-pagination
         class="scPagination"
@@ -115,7 +196,7 @@ export default {
       imgparam: [],
       sortCol: "",
       sortOrder: "",
-      imgparam: {}  
+      imgparam: {},
     };
   },
   mounted() {
@@ -200,7 +281,15 @@ export default {
         false
       );
     },
-    getTableData(gene, conditi, currentPage, pageSize, sortCol, sortOrder, ifplot){
+    getTableData(
+      gene,
+      conditi,
+      currentPage,
+      pageSize,
+      sortCol,
+      sortOrder,
+      ifplot
+    ) {
       this.show = true;
       this.imgshow = false;
       this.diffexpimg = "";
@@ -223,7 +312,7 @@ export default {
             } else {
               this.loading = false;
               this.TableData = res.data.datatable;
-              this.total = res.data.total[0]
+              this.total = res.data.total[0];
               if (ifplot) this.draw_chart(res.data.list, conditi);
             }
           } else {
@@ -258,7 +347,8 @@ export default {
               that.imgshow = true;
               that.imgloading = false;
               that.diffexpimg = res.data.output[0];
-              that.diffexpimg = res.data.output2[0].split(",")[0] + ',' + that.diffexpimg;
+              that.diffexpimg =
+                res.data.output2[0].split(",")[0] + "," + that.diffexpimg;
             }
           } else {
             that.imgshow = false;
@@ -269,13 +359,21 @@ export default {
         });
     },
     getRowKeys: function (row) {
-      return (row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_');
+      return (row.datasetid + row.GlobalCluster + row.CellType).replace(
+        /\ /g,
+        "_"
+      );
     },
     rowExpand: function (row, expandedRows) {
       if (expandedRows.length) {
         this.expands = [];
         if (row) {
-          this.expands.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
+          this.expands.push(
+            (row.datasetid + row.GlobalCluster + row.CellType).replace(
+              /\ /g,
+              "_"
+            )
+          );
         }
       } else {
         this.expands = [];
@@ -330,15 +428,15 @@ export default {
       };
     },
 
-    previewImg(index,url){
+    previewImg(index, url) {
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: index, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-        closeColor: 'rgba(255,255,255,.5)'
-      })
+        mainBackground: "rgba(0, 0, 0, .5)", // 整体背景颜色
+        closeColor: "rgba(255,255,255,.5)",
+      });
     },
     clickPlot() {
       this.expandPlot(

@@ -4,7 +4,9 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}}<br>Gene:{{gene}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              {{ cancer }}<br />Gene:{{ gene }}
+            </h1>
           </div>
         </el-card>
       </div>
@@ -19,7 +21,7 @@
                   v-model="responder"
                   multiple
                   placeholder="Choose at least one"
-                  style="width:100%"
+                  style="width: 100%"
                 >
                   <el-option
                     v-for="item in responseGroupOption"
@@ -36,7 +38,7 @@
                   v-model="noresponder"
                   multiple
                   placeholder="Choose at least one"
-                  style="width:100%"
+                  style="width: 100%"
                 >
                   <el-option
                     v-for="item in noresponseGroupOption"
@@ -56,7 +58,11 @@
             </el-row>
             <br />
             <el-row>
-              <el-input v-model="normalGene" v-show='normalMed != "None"' placeholder="Please Input A Gene Symbol"></el-input>
+              <el-input
+                v-model="normalGene"
+                v-show="normalMed != 'None'"
+                placeholder="Please Input A Gene Symbol"
+              ></el-input>
             </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
@@ -67,13 +73,19 @@
             </el-row>
             <br />
             <el-row class="plot">
-              <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+              <el-button id="anabt" @click="clickPlot()" style="width: 100%"
+                >Plot</el-button
+              >
             </el-row>
           </el-col>
           <el-col :span="8" :offset="1" v-show="resultShow">
             <div class="detailimg" v-loading="loading">
               <p class="imgtitle">Differential Expression between R and NR</p>
-              <img style="position:relative;top:10px;right:20px;" width="500px" :src="imgUrlBox" />
+              <img
+                style="position: relative; top: 10px; right: 20px"
+                width="500px"
+                :src="imgUrlBox"
+              />
             </div>
           </el-col>
           <el-col :span="7" :offset="1" v-show="resultShow">
@@ -81,7 +93,7 @@
               <el-table
                 ref="singleTable"
                 border
-                max-height="420"
+                max-height="360"
                 :data="tableData"
                 v-loading="loading"
                 :row-style="tableCellStyle"
@@ -91,11 +103,25 @@
                 style="100%"
               >
                 <!-- <el-table-column prop="signature_id" label="ID" width="90%" ></el-table-column> -->
-                <el-table-column prop="signature_name" label="Signature Name" width="110%" ></el-table-column>
-                <el-table-column prop="description" label="Description" width="160%" ></el-table-column>
-                <el-table-column prop="AUC" label="AUC" width="120%" :render-header="renderHeader" sortable> 
+                <el-table-column
+                  prop="signature_name"
+                  label="Signature Name"
+                  width="110%"
+                ></el-table-column>
+                <el-table-column
+                  prop="description"
+                  label="Description"
+                  width="160%"
+                ></el-table-column>
+                <el-table-column
+                  prop="AUC"
+                  label="AUC"
+                  width="120%"
+                  :render-header="renderHeader"
+                  sortable
+                >
                   <template slot-scope="scope">
-                    <span class="skucost-pruice">{{scope.row.AUC}}</span>
+                    <span class="skucost-pruice">{{ scope.row.AUC }}</span>
                   </template>
                 </el-table-column>
                 <!-- <el-table-column prop="AUC" label="AUC" width="80%"></el-table-column> -->
@@ -103,15 +129,11 @@
             </div>
           </el-col>
 
-          <el-col  :span="14" v-show="!resultShow" v-loading="loading">
+          <el-col :span="14" v-show="!resultShow" v-loading="loading">
             <div id="norult">No result</div>
           </el-col>
-
-
-
         </el-card>
-                <v-sampleDetail ref="sampleDetail"></v-sampleDetail>
-
+        <v-sampleDetail ref="sampleDetail"></v-sampleDetail>
       </div>
       <v-goTop></v-goTop>
     </div>
@@ -123,21 +145,19 @@ import goTop from "../../public/goTop";
 import sampleDetail from "../sampledetail";
 
 //import { downloadFile } from "../../../static/js/utils.js";
-import {
-  gStyle
-} from "../../../../static/js/utils.js";
+import { gStyle } from "../../../../static/js/utils.js";
 
 export default {
   props: {
-    gene: '',
-    cancer: '',
-    datatype: ''
+    gene: "",
+    cancer: "",
+    datatype: "",
   },
 
   data() {
     return {
       tableLoading: "",
-      resultShow:true,
+      resultShow: true,
       normalMed: "None",
       normalGene: "",
       logScale: "FALSE",
@@ -146,38 +166,48 @@ export default {
       responseGroupOption: [
         {
           value: "CR",
-          label: "CR"
+          label: "CR",
         },
         {
           value: "PR",
-          label: "PR"
-        }
+          label: "PR",
+        },
       ],
       noresponseGroupOption: [
         {
           value: "PD",
-          label: "PD"
+          label: "PD",
         },
         {
           value: "SD",
-          label: "SD"
-        }
+          label: "SD",
+        },
       ],
       imgpathBox: "",
       imgpathBar: "",
       loading: true,
-      tableData:[],
+      tableData: [],
     };
   },
 
   methods: {
-    renderHeader(h){
-       return h('span', {}, [
-        h('span', {}, 'AUC'),
-        h('el-popover', { props: { placement: 'top-start', width: '200', trigger: 'hover', content: 'AUC indicates the performance of immunotherapy response prediction' }}, [
-           h('i', { slot: 'reference', class:'el-icon-question'}, '')
-          ])
-       ])
+    renderHeader(h) {
+      return h("span", {}, [
+        h("span", {}, "AUC"),
+        h(
+          "el-popover",
+          {
+            props: {
+              placement: "top-start",
+              width: "200",
+              trigger: "hover",
+              content:
+                "AUC indicates the performance of immunotherapy response prediction",
+            },
+          },
+          [h("i", { slot: "reference", class: "el-icon-question" }, "")]
+        ),
+      ]);
     },
     checkInput() {
       if (this.normalMed !== "None" && this.normalGene.length == 0) {
@@ -203,34 +233,37 @@ export default {
       var that = this;
       this.$http
         .get("/tiger/img/" + jsonUrl + ".json")
-        .then(function(res) {
+        .then(function (res) {
           that.tableData = res.data;
         })
-        .catch(function(res) {
+        .catch(function (res) {
           // console.log(res);
         });
     },
 
-        //渲染每个格子的颜色
-    tableCellStyle({row}) {
+    //渲染每个格子的颜色
+    tableCellStyle({ row }) {
       // console.log(row["AUC"])
-      var mycolr = gStyle(parseFloat(row["AUC"]===undefined?"":row["AUC"]), 2.25);
+      var mycolr = gStyle(
+        parseFloat(row["AUC"] === undefined ? "" : row["AUC"]),
+        2.25
+      );
       return {
         background: mycolr["background"],
-        color: mycolr["color"]
+        color: mycolr["color"],
       };
     },
-    getSampleDetail(sample){
-      this.$refs.sampleDetail.getTableData(sample)
+    getSampleDetail(sample) {
+      this.$refs.sampleDetail.getTableData(sample);
     },
-    getGeneDetail(gene){
-      this.$refs.sampleDetail.getGeneData(gene)
+    getGeneDetail(gene) {
+      this.$refs.sampleDetail.getGeneData(gene);
     },
     getPlot(gene, mergedatasets) {
       if (this.checkInput()) {
         var that = this;
         that.loading = true;
-        that.resultShow=true
+        that.resultShow = true;
         this.$http
           .get("/tiger/1.1.responseDiff.php", {
             params: {
@@ -241,25 +274,25 @@ export default {
               normalMed: this.normalMed,
               normalGene: this.normalMed == "None" ? "None" : this.normalGene,
               logScale: this.logScale,
-              datatype: "png"
-            }
+              datatype: "png",
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
               let imgpath = res.data.output[0].split(",");
-              setTimeout(that.imgpathBox = imgpath[0],1000);
+              setTimeout((that.imgpathBox = imgpath[0]), 1000);
               that.gettableData(imgpath[1]);
               that.loading = false;
-            }else{
-              that.resultShow=false
+            } else {
+              that.resultShow = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
     },
-    openDetails(row){
+    openDetails(row) {
       // console.log(row.signature_id);
       this.$router.push({
         name: "immuneSignature",
@@ -267,35 +300,34 @@ export default {
           sigid: row.signature_id,
         },
       });
-    }
+    },
   },
 
   computed: {
-    imgUrlBox: function() {
+    imgUrlBox: function () {
       return "tiger/img/" + this.imgpathBox + ".png";
     },
-    imgUrlBar: function() {
+    imgUrlBar: function () {
       return "tiger/img/" + this.imgpathBar + ".png";
-    }
+    },
   },
 
   components: {
     "v-goTop": goTop,
-    "v-sampleDetail":sampleDetail
-  }
+    "v-sampleDetail": sampleDetail,
+  },
 };
 </script>
 
 <style>
-.tableHead{
+.tableHead {
   font-size: 18px;
   color: #000000;
-  font-weight:bold;
+  font-weight: bold;
 }
-.el-table--enable-row-hover .el-table__body tr:hover{
+.el-table--enable-row-hover .el-table__body tr:hover {
   cursor: pointer;
 }
-
 </style>
 
 

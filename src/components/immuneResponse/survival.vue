@@ -8,12 +8,11 @@
           :fetch-suggestions="querySearchAsync"
           @change="searchChange"
           @keyup.enter.native="searchChange"
-
         ></el-autocomplete>
       </el-col>
     </el-row>
     <br />
-<br />
+    <br />
     <el-table
       class="tigtablele"
       id="survivaltable"
@@ -30,10 +29,17 @@
       @sort-change="sortChangeClick"
       style="100%"
     >
-      <el-table-column fixed property="gene" label align="center" width="110" id="geneCol"></el-table-column>
+      <el-table-column
+        fixed
+        property="gene"
+        label
+        align="center"
+        width="110"
+        id="geneCol"
+      ></el-table-column>
 
       <el-table-column
-        v-for="(item,index) in tableDataheader"
+        v-for="(item, index) in tableDataheader"
         :key="index"
         :property="item"
         :label="item"
@@ -41,8 +47,18 @@
         align="center"
         width="80"
       ></el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
     </el-table>
 
     <div class="colorbar">
@@ -148,12 +164,7 @@ export default {
       this.sortOrder = column.order;
       this.loadpage = 1;
       this.tableData = [];
-      this.getTableData(
-        "survival", 
-        this.loadpage, 
-        column.prop, 
-        column.order
-        );
+      this.getTableData("survival", this.loadpage, column.prop, column.order);
     },
     headerStyle({ column }) {
       let cancer = column.label.split("-")[0];
@@ -276,7 +287,9 @@ export default {
         this.$refs.detailPlot.getSampleDetail(column["label"]);
         this.$refs.detailPlot.getGeneDetail(row["gene"]);
         //this.$refs.detailPlot.tableDetail("survival", 1, "");
-        setTimeout(() => { toTarget(820) }, 200); 
+        setTimeout(() => {
+          toTarget(820);
+        }, 200);
       }
     },
 

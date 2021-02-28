@@ -1,8 +1,13 @@
 <template>
   <div id="tigtable">
     <el-card class="box-card-heatmap">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigtable">
-        
+      <el-tabs
+        v-model="activeName"
+        type="card"
+        @tab-click="handleClick"
+        stretch
+        class="tigtable"
+      >
         <el-tab-pane label="Dataset Overview" name="overview">
           <component :is="dataOverviewVue"></component>
         </el-tab-pane>
@@ -22,18 +27,17 @@
         <el-tab-pane label="Gene Set Query" name="signature">
           <component :is="signatureVue"></component>
         </el-tab-pane>
-
       </el-tabs>
     </el-card>
   </div>
 </template>
 
 <script>
-const wersurvival = resolve => require(["./survival.vue"], resolve);
-const werdiffexp = resolve => require(["./expression/home.vue"], resolve);
-const wersignature = resolve => require(["./signature.vue"], resolve);
-const diffpathway = resolve => require(["./pathway.vue"], resolve);
-const dataoverview = resolve => require(["./datasetoverview.vue"], resolve);
+const wersurvival = (resolve) => require(["./survival.vue"], resolve);
+const werdiffexp = (resolve) => require(["./expression/home.vue"], resolve);
+const wersignature = (resolve) => require(["./signature.vue"], resolve);
+const diffpathway = (resolve) => require(["./pathway.vue"], resolve);
+const dataoverview = (resolve) => require(["./datasetoverview.vue"], resolve);
 //import { hsv2rgb, gStyle } from "../../../static/js/utils.js";
 
 export default {
@@ -73,8 +77,8 @@ export default {
           this.dataOverviewVue = dataoverview;
           break;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -102,10 +106,10 @@ div#tigtable {
   width: 1350px;
 }
 
-#survivaltable th,#therapyTable th, #responseTable th {
+#survivaltable th,
+#therapyTable th,
+#responseTable th {
   left: 135px !important;
   height: 270px !important;
 }
-
-
 </style>

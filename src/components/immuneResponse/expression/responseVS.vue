@@ -29,10 +29,17 @@
       @sort-change="sortChangeClick"
       style="100%"
     >
-      <el-table-column fixed property="gene" label align="center" width="110" id="geneCol"></el-table-column>
+      <el-table-column
+        fixed
+        property="gene"
+        label
+        align="center"
+        width="110"
+        id="geneCol"
+      ></el-table-column>
 
       <el-table-column
-        v-for="(item,index) in tableDataheader"
+        v-for="(item, index) in tableDataheader"
         :key="index"
         :label="item"
         sortable="custom"
@@ -40,8 +47,18 @@
         width="80"
         :property="item"
       ></el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
     </el-table>
 
     <div class="colorbar">
@@ -184,7 +201,7 @@ export default {
       }
     },
 
-    //顶部加载更多                                                                                                                               
+    //顶部加载更多
     tableloadlast() {
       this.loadDir = "up";
       if (this.loading == false && this.loadpage > 1) {
@@ -284,7 +301,9 @@ export default {
         this.$refs.detailPlot.Plot(row["gene"], column["label"]);
         this.$refs.detailPlot.getSampleDetail(column["label"]);
         this.$refs.detailPlot.getGeneDetail(row["gene"]);
-        setTimeout(() => { toTarget(820) }, 200); 
+        setTimeout(() => {
+          toTarget(820);
+        }, 200);
       }
     },
 

@@ -7,7 +7,9 @@
         <a href="mailto:zuozhx@sysucc.org.cn" id="mail">zuozhx@sysucc.org.cn</a>
         <p></p>
         <i id="style">Associate Professor of Cancer Genomics</i>
-        <p id="address">Cancer Center, Sun Yat-sen University, Guangzhou 510060, China</p>
+        <p id="address">
+          Cancer Center, Sun Yat-sen University, Guangzhou 510060, China
+        </p>
       </div>
     </el-card>
   </div>

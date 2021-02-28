@@ -1,11 +1,19 @@
 <template>
   <div>
     <div class="textitem">
-      <div class="tablewidth" v-loading="cardLoading" v-show="diffExpResponShow">
-        <p class="card-title">{{title}}</p>
+      <div
+        class="tablewidth"
+        v-loading="cardLoading"
+        v-show="diffExpResponShow"
+      >
+        <p class="card-title">{{ title }}</p>
         <el-row v-loading="diffExpResponloading" justify="center">
           <el-col span="20" push="2">
-            <div :id="conditi" class="scaterPlot" style="width: 1000px;height:400px;"></div>
+            <div
+              :id="conditi"
+              class="scaterPlot"
+              style="width: 1000px; height: 400px"
+            ></div>
           </el-col>
         </el-row>
       </div>
@@ -16,9 +24,9 @@
 <script>
 export default {
   props: {
-    conditi: {type: String},
-    title: {type: String},
-    datasetid: {type: String}
+    conditi: { type: String },
+    title: { type: String },
+    datasetid: { type: String },
   },
 
   data() {
@@ -39,13 +47,13 @@ export default {
         this.datasetid = newValue;
         this.getTableData(this.datasetid, this.conditi);
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   computed: {
     imgUrlBox: function () {
       return "tiger/img/" + this.imgpathBox + ".png";
-    }
+    },
   },
 
   mounted() {
@@ -55,7 +63,6 @@ export default {
   },
 
   methods: {
-
     getTableData(datasetid, conditi) {
       var targetdiv = document.getElementById(this.conditi);
       let myChart_mercor = window.echarts.init(targetdiv);
@@ -72,7 +79,7 @@ export default {
           if (res.data.status === 200) {
             this.cardLoading = false;
             // console.log(res.data.list)
-            this.diffExpResponShow = res.data.list.length != 0
+            this.diffExpResponShow = res.data.list.length != 0;
             this.draw_chart(res.data.list);
           }
         })
@@ -89,15 +96,15 @@ export default {
       let myChart_mercor = window.echarts.init(targetdiv);
       var xAxis = "";
       var yAxis = "";
-      var xlabname = ""
+      var xlabname = "";
       if (this.conditi === "Survival") {
         xAxis = "Hazard Ratio";
         yAxis = "–log10(P Value)";
-        xlabname = "HR: "
+        xlabname = "HR: ";
       } else {
         xAxis = "Log2 (Fold Change)";
         yAxis = "–log10(P Value)";
-        xlabname = "Fold Change: "
+        xlabname = "Fold Change: ";
       }
 
       let option = {
@@ -109,25 +116,33 @@ export default {
           nameLocation: "center",
           nameGap: 25,
           offset: 0,
-          nameTextStyle:{
+          nameTextStyle: {
             fontSize: 18,
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
         },
-        yAxis: { 
+        yAxis: {
           name: yAxis,
           position: "left",
           nameLocation: "center",
           nameGap: 25,
-          nameTextStyle:{
+          nameTextStyle: {
             fontSize: 18,
-            fontWeight: 'bold',
+            fontWeight: "bold",
           },
         },
         tooltip: {
           formatter: function (params) {
-              return "Gene: "+ params.data[2] + "<br />P: " + params.data[1] + "<br />" + xlabname + params.data[0]
-          }
+            return (
+              "Gene: " +
+              params.data[2] +
+              "<br />P: " +
+              params.data[1] +
+              "<br />" +
+              xlabname +
+              params.data[0]
+            );
+          },
         },
         series: [
           {
@@ -150,8 +165,7 @@ export default {
 
 
 <style>
-
-.el-table__expand-icon:after{
+.el-table__expand-icon:after {
   /* content: "View";
   color: #09e1c0; */
   cursor: pointer;

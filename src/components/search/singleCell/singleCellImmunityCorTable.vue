@@ -14,7 +14,7 @@
             <el-table-column type="expand">
               <template slot-scope="props">
                 <div class="detailimg" v-loading="picScatterloading">
-                  <el-row justify="center" >
+                  <el-row justify="center">
                     <el-col span="4" push="2">
                       <el-collapse>
                         <el-collapse-item title="Optional" name="1">
@@ -22,36 +22,70 @@
                             Optional
                             <i class="el-icon-setting"></i>
                           </template>
-                          <el-row class="detail1">Correlation Coefficient</el-row>
+                          <el-row class="detail1"
+                            >Correlation Coefficient</el-row
+                          >
                           <el-row>
-                            <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
-                            <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
+                            <el-radio v-model="corMed" label="pearson"
+                              >Pearson</el-radio
+                            >
+                            <el-radio v-model="corMed" label="spearman"
+                              >Spearman</el-radio
+                            >
                           </el-row>
-                          <el-row class="detail1">Delete Cells Not Express</el-row>
+                          <el-row class="detail1"
+                            >Delete Cells Not Express</el-row
+                          >
                           <el-row>
                             <el-radio v-model="delzero" label="1">Yes</el-radio>
                             <el-radio v-model="delzero" label="0">No</el-radio>
                           </el-row>
                           <br />
                           <el-row class="plot">
-                            <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+                            <el-button
+                              id="anabt"
+                              @click="clickPlot()"
+                              style="width: 100%"
+                              >Plot</el-button
+                            >
                           </el-row>
                         </el-collapse-item>
                       </el-collapse>
                     </el-col>
                     <el-col span="12" push="2">
-                      <img width="300px" :src="picScatter" v-show="detailimgShow" />
+                      <img
+                        width="300px"
+                        :src="picScatter"
+                        v-show="detailimgShow"
+                      />
                     </el-col>
                   </el-row>
                   <div v-show="!detailimgShow">no result</div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="datasetid" label="DatasetID"></el-table-column>
-            <el-table-column prop="GlobalCluster" label="Main Lineage"></el-table-column>
-            <el-table-column prop="CellType" label="Cell Type"></el-table-column>
-            <el-table-column prop="genea" label="Search Gene" width="180"></el-table-column>
-            <el-table-column prop="geneb" label="Correlated Gene" width="180"></el-table-column>
+            <el-table-column
+              prop="datasetid"
+              label="DatasetID"
+            ></el-table-column>
+            <el-table-column
+              prop="GlobalCluster"
+              label="Main Lineage"
+            ></el-table-column>
+            <el-table-column
+              prop="CellType"
+              label="Cell Type"
+            ></el-table-column>
+            <el-table-column
+              prop="genea"
+              label="Search Gene"
+              width="180"
+            ></el-table-column>
+            <el-table-column
+              prop="geneb"
+              label="Correlated Gene"
+              width="180"
+            ></el-table-column>
             <el-table-column label="COR" prop="r" sortable></el-table-column>
             <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
             <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
@@ -122,7 +156,7 @@ export default {
       this.pageSize = val;
       this.currentPage = 1;
       this.getDiagramData(
-        this.seargene, 
+        this.seargene,
         "singleCellCorTumor",
         this.CancerType,
         this.GlobalCluster,
@@ -194,10 +228,18 @@ export default {
         this.imgparam.GlobalCluster,
         this.imgparam.genea,
         this.imgparam.geneb,
-        this.imgparam.CellType,
+        this.imgparam.CellType
       );
     },
-    getDiagramData(gene, id, datasetid, gloclu, celltype, currentPage, pageSize) {
+    getDiagramData(
+      gene,
+      id,
+      datasetid,
+      gloclu,
+      celltype,
+      currentPage,
+      pageSize
+    ) {
       this.sccoexpTable = [];
       this.singleCellCorloading = true;
       this.$http
@@ -238,13 +280,13 @@ export default {
         that.expands = [];
         that.imgparam = [];
       }
-      
+
       this.picScatterPlot(
         row.datasetid,
         row.GlobalCluster,
         row.genea,
         row.geneb,
-        row.CellType,
+        row.CellType
       );
     },
   },

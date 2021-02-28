@@ -4,7 +4,9 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{ gene }} -- {{cancer}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              {{ gene }} -- {{ cancer }}
+            </h1>
           </div>
         </el-card>
       </div>
@@ -19,12 +21,21 @@
                   </template>
                   <el-row class="detail1">Correlation Coefficient</el-row>
                   <el-row>
-                    <el-radio v-model="corMed" label="pearson">Pearson</el-radio>
-                    <el-radio v-model="corMed" label="spearman">Spearman</el-radio>
+                    <el-radio v-model="corMed" label="pearson"
+                      >Pearson</el-radio
+                    >
+                    <el-radio v-model="corMed" label="spearman"
+                      >Spearman</el-radio
+                    >
                   </el-row>
                   <br />
                   <el-row class="plot">
-                    <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+                    <el-button
+                      id="anabt"
+                      @click="clickPlot()"
+                      style="width: 100%"
+                      >Plot</el-button
+                    >
                   </el-row>
                 </el-collapse-item>
               </el-collapse>
@@ -34,7 +45,9 @@
           <el-row v-loading="loading" v-show="resultShow" class="detailimg">
             <img id="scimmuscater" :src="imgUrlWgcna" />
           </el-row>
-          <div v-show="!resultShow" id="norult" v-loading="loading">No result</div>
+          <div v-show="!resultShow" id="norult" v-loading="loading">
+            No result
+          </div>
         </el-card>
       </div>
       <v-goTop></v-goTop>

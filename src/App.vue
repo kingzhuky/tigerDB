@@ -10,8 +10,7 @@
             <span id="subtitle">
               <span class="sub">T</span>umor
               <span class="sub">I</span>mmunotherapy
-              <span class="sub">G</span>ene
-              <span class="sub">E</span>xpression
+              <span class="sub">G</span>ene <span class="sub">E</span>xpression
               <span class="sub">R</span>esource
             </span>
           </el-row>
@@ -68,8 +67,9 @@
         <a
           target="_blank"
           href="https://support.microsoft.com/en-us/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
-        >Edge</a>,
-        <a target="_blank" href="https://www.apple.com/safari/">Safari</a>) are strongly recommended for a better experience!
+          >Edge</a
+        >, <a target="_blank" href="https://www.apple.com/safari/">Safari</a>)
+        are strongly recommended for a better experience!
         <el-button type="primary" @click="myFunction">Got it</el-button>
       </div>
     </div>
@@ -90,7 +90,7 @@ export default {
       showSnackbar: false,
     };
   },
-  components:{
+  components: {
     "v-footer": () => import("./components/public/footer.vue"),
   },
   methods: {

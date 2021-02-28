@@ -1,15 +1,22 @@
 <template>
   <div>
     <el-row>
-      <el-tabs v-model="tabactiveName" @tab-click="handleClick" >
+      <el-tabs v-model="tabactiveName" @tab-click="handleClick">
         <el-tab-pane label="Cell Type Expression" name="marker">
           <el-col span="8">
-            <el-select v-model="selectgloclu" multiple @change="filtergloclu" style="width:100%" placeholder="Select Main Lineage">
+            <el-select
+              v-model="selectgloclu"
+              multiple
+              @change="filtergloclu"
+              style="width: 100%"
+              placeholder="Select Main Lineage"
+            >
               <el-option
                 v-for="item in gloclures"
                 :key="item"
                 :label="item"
-                :value="item">
+                :value="item"
+              >
               </el-option>
             </el-select>
           </el-col>
@@ -21,13 +28,13 @@
               placeholder="Input Gene Symbol"
             ></el-input>
           </el-col>
-        
+
           <br />
           <el-table
             class="tigtablele"
             id="scDiffExpTable"
             ref="singleTable"
-            border=false
+            border="false"
             max-height="750"
             :data="tableData"
             @cell-click="heandleclick"
@@ -40,7 +47,7 @@
             style="100%"
           >
             <el-table-column
-              v-for="(item,index) in tableDataheader"
+              v-for="(item, index) in tableDataheader"
               :key="index"
               :property="item.key"
               :label="item.name"
@@ -49,7 +56,12 @@
               align="center"
               width="80"
             ></el-table-column>
-            <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+            <el-table-column
+              property=" "
+              label=" "
+              align="center"
+              width="120"
+            ></el-table-column>
           </el-table>
 
           <div class="colorbar">
@@ -59,7 +71,7 @@
           </div>
           <div id="detailinfo">
             <v-celltypedetail
-              ref="detailPlot"    
+              ref="detailPlot"
               v-show="isShow"
               :gene="clickGene"
               :cancer="cancer"
@@ -67,15 +79,15 @@
               :gloclu="gloclu"
             ></v-celltypedetail>
           </div>
-        </el-tab-pane>   
+        </el-tab-pane>
         <el-tab-pane label="Pathway Analysis" name="cluster">
           <v-scpathway
-            ref="scpathwayRef" 
+            ref="scpathwayRef"
             :cancer="cancer"
             :gloCluoptions="gloCluoptions"
             tabactiveName="cluster"
           ></v-scpathway>
-        </el-tab-pane>   
+        </el-tab-pane>
       </el-tabs>
     </el-row>
   </div>
@@ -87,7 +99,7 @@ import {
   gStyle,
   move,
   stop,
-  toTarget
+  toTarget,
 } from "../../../static/js/utils.js";
 
 export default {
@@ -110,15 +122,15 @@ export default {
       oldcancer: "",
       celltype: "",
       gloclu: "",
-      gloclures:[],
+      gloclures: [],
       selectgloclu: [],
-      tabactiveName: "marker"
+      tabactiveName: "marker",
     };
   },
 
   mounted: function () {
     // this.plot()
-    this.reset()
+    this.reset();
     this.oldcancer = this.cancer;
     this.oldgloclu = this.gloclu;
     for (let gloclu of this.gloCluoptions) {
@@ -154,7 +166,7 @@ export default {
         (this.oldgloclu !== this.gloclu) |
         (this.oldgloclu === "")
       ) {
-        this.reset()
+        this.reset();
         this.oldcancer = this.cancer;
         this.oldgloclu = this.gloclu;
         this.getTableData(1, "", "");
@@ -169,7 +181,7 @@ export default {
       this.getTableData(this.loadpage, column.prop, column.order);
     },
     headerStyle({ column }) {
-      let glocluster = column.type
+      let glocluster = column.type;
       switch (glocluster) {
         case "All":
           return "scglo-all";
@@ -189,8 +201,8 @@ export default {
           return "defalutColor";
       }
     },
-    filtergloclu(){
-      this.reset()
+    filtergloclu() {
+      this.reset();
       this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
     //顶部加载更多
@@ -259,28 +271,31 @@ export default {
               });
               this.tableDataheader = Object.keys(res.data.list[0]);
             }
-            var new_rows = [];// matrix key .替换为_
+            var new_rows = []; // matrix key .替换为_
             for (const row of this.tableData) {
-              var new_row = {}
+              var new_row = {};
               for (const key in row) {
-                let new_key = key.replace(".","_")
-                new_row[new_key] = row[key]
+                let new_key = key.replace(".", "_");
+                new_row[new_key] = row[key];
               }
-              new_rows.push(new_row)
+              new_rows.push(new_row);
             }
-            this.tableData = new_rows  // matrix key .替换为_
-            var new_columns = [] // generate header
+            this.tableData = new_rows; // matrix key .替换为_
+            var new_columns = []; // generate header
             for (const column of this.tableDataheader) {
               var col_obj = {};
-              col_obj.name = column.split(',').pop()
-              col_obj.key = column.replace(".","_")
-              col_obj.type = column.split(',')[0]
-              if (col_obj.type == "gene" || this.selectgloclu.indexOf(col_obj.type) != -1){
-                new_columns.push(col_obj)
+              col_obj.name = column.split(",").pop();
+              col_obj.key = column.replace(".", "_");
+              col_obj.type = column.split(",")[0];
+              if (
+                col_obj.type == "gene" ||
+                this.selectgloclu.indexOf(col_obj.type) != -1
+              ) {
+                new_columns.push(col_obj);
               }
             }
             // console.log(this.selectgloclu)
-            this.tableDataheader = new_columns
+            this.tableDataheader = new_columns;
           }
         })
         .catch((error) => {
@@ -304,14 +319,20 @@ export default {
         this.celltype = column["label"];
         this.gloclu = column["type"];
         this.$refs.detailPlot.getdatagene(row["gene"]);
-        this.$refs.detailPlot.markerPlot(row["gene"], column["label"], column["type"]);
-        setTimeout(() => { toTarget(720) }, 300);  
+        this.$refs.detailPlot.markerPlot(
+          row["gene"],
+          column["label"],
+          column["type"]
+        );
+        setTimeout(() => {
+          toTarget(720);
+        }, 300);
       }
     },
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["property"]] === null || column["property"] == 'gene') {
+      if (row[column["property"]] === null || column["property"] == "gene") {
         return {
           background: "white",
         };
@@ -333,13 +354,15 @@ export default {
     "v-scpathway": () => import("./scpathway.vue"),
   },
   watch: {
-    clickGene(){
-      console.log("click")
-      this.$nextTick(() =>{
-        setTimeout(() => { toTarget(720) }, 300);  
-      })
-    }
-  }
+    clickGene() {
+      console.log("click");
+      this.$nextTick(() => {
+        setTimeout(() => {
+          toTarget(720);
+        }, 300);
+      });
+    },
+  },
 };
 </script>
 

@@ -165,10 +165,13 @@ export default {
           this.tableData = res.data.filter((item) => {
             if (item["SignatureName"] === "Tertiary lymphoid structures") {
               item["SignatureName"] = "TLS";
-            } else if (item["SignatureName"] === "Tertiary lymphoid structures in melanoma") {
+            } else if (
+              item["SignatureName"] ===
+              "Tertiary lymphoid structures in melanoma"
+            ) {
               item["SignatureName"] = "TLS-melanoma";
             }
-            return item
+            return item;
           });
           this.tableDataheader = Object.keys(res.data[0]).filter(
             (item) => item != "SignatureID"

@@ -12,14 +12,18 @@
         ></el-autocomplete>
       </el-col>
       <el-col :span="4">
-        <el-button id="homebt" @click="searchClick" icon="el-icon-search"></el-button>
+        <el-button
+          id="homebt"
+          @click="searchClick"
+          icon="el-icon-search"
+        ></el-button>
       </el-col>
     </el-row>
     <br />
     <div class="detail-card">
       <div class="infor" v-loading="evoluloading">
         <el-card v-for="gloclu in gloclures" :key="gloclu" class="overiewcard">
-          <p class="card-title">{{gloclu}}</p>
+          <p class="card-title">{{ gloclu }}</p>
           <el-row class="detailimg">
             <el-col :span="10" :offset="1">
               <p class="imgtitle">Pseudo-time of cells</p>
@@ -27,17 +31,31 @@
                 id="singleimg"
                 fit="fill"
                 width="450px"
-                :src="'tiger/img/'+plotsres[gloclu][0]"
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][0],'tiger/img/'+plotsres[gloclu][1]])">
+                :src="'tiger/img/' + plotsres[gloclu][0]"
+                @click="
+                  previewImg([
+                    'tiger/img/' + plotsres[gloclu][0],
+                    'tiger/img/' + plotsres[gloclu][1],
+                  ])
+                "
+              />
             </el-col>
             <el-col :span="10" :offset="1">
-              <p class="imgtitle">Pseudo-time of cells with {{searchinput}} exopression</p>
+              <p class="imgtitle">
+                Pseudo-time of cells with {{ searchinput }} exopression
+              </p>
               <img
                 id="singleimg"
                 fit="fill"
                 width="450px"
-                :src="'tiger/img/'+plotsres[gloclu][1]"
-                @click="previewImg(['tiger/img/'+plotsres[gloclu][1],'tiger/img/'+plotsres[gloclu][0]])">
+                :src="'tiger/img/' + plotsres[gloclu][1]"
+                @click="
+                  previewImg([
+                    'tiger/img/' + plotsres[gloclu][1],
+                    'tiger/img/' + plotsres[gloclu][0],
+                  ])
+                "
+              />
             </el-col>
           </el-row>
         </el-card>
@@ -96,7 +114,7 @@ export default {
                 //alert("no gene file");
               } else {
                 that.evolushow = true;
-                Vue.set(that.plotsres, gloclu, res.data.output[0].split(","))
+                Vue.set(that.plotsres, gloclu, res.data.output[0].split(","));
               }
               //that.evoluplots = res.data.output[0];
               that.evoluloading = false;
@@ -133,15 +151,15 @@ export default {
       // this.sestate = true;
       // return this.sestate
     },
-    previewImg(url){
+    previewImg(url) {
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: 0, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-        closeColor: 'rgba(255,255,255,.5)'
-      })
+        mainBackground: "rgba(0, 0, 0, .5)", // 整体背景颜色
+        closeColor: "rgba(255,255,255,.5)",
+      });
     },
   },
 };

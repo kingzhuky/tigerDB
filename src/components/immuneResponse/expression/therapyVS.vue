@@ -29,10 +29,17 @@
       @sort-change="sortChangeClick"
       style="100%"
     >
-      <el-table-column fixed property="gene" label align="center" width="110" id="geneCol"></el-table-column>
+      <el-table-column
+        fixed
+        property="gene"
+        label
+        align="center"
+        width="110"
+        id="geneCol"
+      ></el-table-column>
 
       <el-table-column
-        v-for="(item,index) in tableDataheader"
+        v-for="(item, index) in tableDataheader"
         :key="index"
         :property="item"
         :label="item"
@@ -41,8 +48,18 @@
         width="80"
       >
       </el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
-      <el-table-column property=" " label=" " align="center" width="120"></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        property=" "
+        label=" "
+        align="center"
+        width="120"
+      ></el-table-column>
     </el-table>
 
     <div class="colorbar">
@@ -69,7 +86,7 @@ import {
   toTarget,
   gStyle,
   move,
-  stop
+  stop,
 } from "../../../../static/js/utils.js";
 
 export default {
@@ -79,101 +96,131 @@ export default {
       wercorcancer_data: [
         {
           value: "ACC",
-          label: "ACC"
-        },{
+          label: "ACC",
+        },
+        {
           value: "BLCA",
-          label: "BLCA"
-        },{
+          label: "BLCA",
+        },
+        {
           value: "BRCA",
-          label: "BRCA"
-        },{
+          label: "BRCA",
+        },
+        {
           value: "CESC",
-          label: "CESC"
-        },{
+          label: "CESC",
+        },
+        {
           value: "CHOL",
-          label: "CHOL"
-        },{
+          label: "CHOL",
+        },
+        {
           value: "COAD",
-          label: "COAD"
-        },{
+          label: "COAD",
+        },
+        {
           value: "DLBC",
-          label: "DLBC"
-        },{
+          label: "DLBC",
+        },
+        {
           value: "ESCA",
-          label: "ESCA"
-        },{
+          label: "ESCA",
+        },
+        {
           value: "GBM",
-          label: "GBM"
-        },{
+          label: "GBM",
+        },
+        {
           value: "HNSC",
-          label: "HNSC"
-        },{
+          label: "HNSC",
+        },
+        {
           value: "KICH",
-          label: "KICH"
-        },{
+          label: "KICH",
+        },
+        {
           value: "KIRC",
-          label: "KIRC"
-        }, {
+          label: "KIRC",
+        },
+        {
           value: "KIRP",
-          label: "KIRP"
-        },{
+          label: "KIRP",
+        },
+        {
           value: "LIHC",
-          label: "LIHC"
-        },{
+          label: "LIHC",
+        },
+        {
           value: "LAML",
-          label: "LAML"
-        },{
+          label: "LAML",
+        },
+        {
           value: "LGG",
-          label: "LGG"
-        },{
+          label: "LGG",
+        },
+        {
           value: "LUAD",
-          label: "LUAD"
-        },{
+          label: "LUAD",
+        },
+        {
           value: "LUSC",
-          label: "LUSC"
-        }, {
+          label: "LUSC",
+        },
+        {
           value: "MESO",
-          label: "MESO"
-        },{
+          label: "MESO",
+        },
+        {
           value: "OV",
-          label: "OV"
-        },{
+          label: "OV",
+        },
+        {
           value: "PAAD",
-          label: "PAAD"
-        },{
+          label: "PAAD",
+        },
+        {
           value: "PCPG",
-          label: "PCPG"
-        },{
+          label: "PCPG",
+        },
+        {
           value: "READ",
-          label: "READ"
-        },{
+          label: "READ",
+        },
+        {
           value: "SKCM",
-          label: "SKCM"
-        },{
+          label: "SKCM",
+        },
+        {
           value: "SARC",
-          label: "SARC"
-        }, {
+          label: "SARC",
+        },
+        {
           value: "STAD",
-          label: "STAD"
-        },{
+          label: "STAD",
+        },
+        {
           value: "TGCT",
-          label: "TGCT"
-        },{
+          label: "TGCT",
+        },
+        {
           value: "THCA",
-          label: "THCA"
-        },{
+          label: "THCA",
+        },
+        {
           value: "THYM",
-          label: "THYM"
-        },{
+          label: "THYM",
+        },
+        {
           value: "UCEC",
-          label: "UCEC"
-        },{
+          label: "UCEC",
+        },
+        {
           value: "UCS",
-          label: "UCS"
-        }
+          label: "UCS",
+        },
       ],
-      datatype:"",
-      m6aMsg:"",
+      datatype: "",
+      m6aMsg: "",
       cancerMsg: "",
       loading: true,
       isShow: false,
@@ -181,35 +228,32 @@ export default {
       tableData: [],
       searchinput: "",
       loadDir: "",
-      sortCol:"",
-      sortOrder:'',
-      tableDataheader: [
-  
-      ]
+      sortCol: "",
+      sortOrder: "",
+      tableDataheader: [],
     };
   },
 
-  mounted: function() {
+  mounted: function () {
     this.getColumn("tablecolumn", "exptherapy");
-    this.getTableData("exptherapy", 1,"","");
+    this.getTableData("exptherapy", 1, "", "");
   },
 
   watch: {
-    
-    loading(){
-      switch(this.loading){
+    loading() {
+      switch (this.loading) {
         case true:
           stop();
-          break
+          break;
         case false:
           move();
-          break
+          break;
       }
-    }
+    },
   },
 
   methods: {
-     querySearchAsync(queryString, cb) {
+    querySearchAsync(queryString, cb) {
       this.$http
         .get("/m6a2target/genesug", {
           params: {
@@ -226,27 +270,32 @@ export default {
         .get("/tiger/tablecolumn.php", {
           params: {
             tabl: tabl,
-            mycolumn: mycolumn
-          }
+            mycolumn: mycolumn,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             //console.log(res.data.list);
             this.tableDataheader = res.data.list;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
-    sortChangeClick(column){
+    sortChangeClick(column) {
       // console.log(column.prop,column.order)
-      this.loadDir =""
-      this.sortCol=column.prop
-      this.sortOrder=column.order
-      this.loadpage=1
-      this.tableData=[]
-      this.getTableData("expresponse", this.loadpage,column.prop,column.order);
+      this.loadDir = "";
+      this.sortCol = column.prop;
+      this.sortOrder = column.order;
+      this.loadpage = 1;
+      this.tableData = [];
+      this.getTableData(
+        "expresponse",
+        this.loadpage,
+        column.prop,
+        column.order
+      );
     },
     headerStyle({ column }) {
       let cancer = column.label.split("-")[0];
@@ -268,48 +317,56 @@ export default {
       }
     },
 
-   
-
     //顶部加载更多
     tableloadlast() {
       this.loadDir = "up";
       if (this.loading == false && this.loadpage > 1) {
         this.loading = true;
         this.loadpage = this.loadpage - 1;
-        this.getTableData("exptherapy", this.loadpage,this.sortCol,this.sortOrder);
+        this.getTableData(
+          "exptherapy",
+          this.loadpage,
+          this.sortCol,
+          this.sortOrder
+        );
         if (this.loadpage > 1) {
-          scrollRow('therapyTable',400);
+          scrollRow("therapyTable", 400);
           this.loading = false;
         }
       }
     },
 
-     //到底部加载更多
+    //到底部加载更多
     tabelloadmore() {
       this.loadDir = "down";
       if (this.loading == false) {
         this.loading = true;
         this.loadpage = this.loadpage + 1;
-        this.getTableData("exptherapy", this.loadpage,this.sortCol,this.sortOrder);
-        scrollRow('therapyTable',780); 
+        this.getTableData(
+          "exptherapy",
+          this.loadpage,
+          this.sortCol,
+          this.sortOrder
+        );
+        scrollRow("therapyTable", 780);
       }
     },
 
     //获取表格数据
-    getTableData(type, page,sortCol,sortOrder) {
+    getTableData(type, page, sortCol, sortOrder) {
       this.$http
         .get("/tiger/responseexpvs.php", {
           params: {
             type: type,
             draw: page,
             search: this.searchinput.trim(),
-            start: (page-1)* 20,
+            start: (page - 1) * 20,
             length: 20,
-            sortcol:sortCol,
-            sortorder:sortOrder===null?"None":sortOrder
-          }
+            sortcol: sortCol,
+            sortorder: sortOrder === null ? "None" : sortOrder,
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             this.loading = false;
             if (this.loadDir === "down") {
@@ -317,76 +374,75 @@ export default {
                 this.tableData.length - 20,
                 this.tableData.length
               );
-              res.data.list.forEach(n => {
+              res.data.list.forEach((n) => {
                 this.tableData.push(n);
               });
             } else if (this.loadDir === "up") {
-              if (res.data.list.length !== 0 ) {
+              if (res.data.list.length !== 0) {
                 let old = this.tableData.slice(0, 20);
                 this.tableData = res.data.list;
-                old.forEach(n => {
+                old.forEach((n) => {
                   this.tableData.push(n);
                 });
               }
             } else {
-              res.data.list.forEach(n => {
+              res.data.list.forEach((n) => {
                 this.tableData.push(n);
               });
             }
-          } 
+          }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
-    searchChange(){
-            this.loading = true
+    searchChange() {
+      this.loading = true;
 
-       this.loadDir =""
-       this.tableData = [];
+      this.loadDir = "";
+      this.tableData = [];
       this.loadpage = 1;
-      this.sortCol=""
-      this.sortOrder=""
-      this.getTableData("exptherapy", this.loadpage,"","");
-
+      this.sortCol = "";
+      this.sortOrder = "";
+      this.getTableData("exptherapy", this.loadpage, "", "");
     },
 
     //点击单个格子
     heandleclick(row, column) {
       this.datatype = "exptherapy";
-      if (column["label"] !== "" && row[column["label"]]!==null) {
+      if (column["label"] !== "" && row[column["label"]] !== null) {
         this.isShow = true;
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
-        this.$refs.detailPlot.Plot(row["gene"],column["label"]);
+        this.$refs.detailPlot.Plot(row["gene"], column["label"]);
         this.$refs.detailPlot.getSampleDetail(column["label"]);
         this.$refs.detailPlot.getGeneDetail(row["gene"]);
-        setTimeout(() => { toTarget(820) }, 200); 
+        setTimeout(() => {
+          toTarget(820);
+        }, 200);
       }
     },
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["label"]]===null){
+      if (row[column["label"]] === null) {
         return {
-            background: "white"
-          }
+          background: "white",
+        };
       }
       var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
-        color: mycolr["color"]
+        color: mycolr["color"],
       };
-    }
+    },
   },
   components: {
-    "v-therapydetail": () => import("./therapydetail.vue")
-  }
+    "v-therapydetail": () => import("./therapydetail.vue"),
+  },
 };
 </script>
 
 
 <style>
-
-
 </style>

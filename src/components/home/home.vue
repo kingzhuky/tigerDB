@@ -3,8 +3,10 @@
     <el-row>
       <el-col :span="20" :offset="2">
         <el-row id="homeinbt">
-            <p class="hometitle" style="text-align:center;">Welcome to TIGER</p>
-            <p class="homesubtitle" style="text-align:center;">A Web Portal of Tumor Immunotherapy Gene Expression Resource</p>
+          <p class="hometitle" style="text-align: center">Welcome to TIGER</p>
+          <p class="homesubtitle" style="text-align: center">
+            A Web Portal of Tumor Immunotherapy Gene Expression Resource
+          </p>
           <el-col :span="8" :offset="6" id="homeInput">
             <el-autocomplete
               v-model="seargene"
@@ -19,7 +21,13 @@
         </el-row>
         <el-row>
           <p class="homedesrc">
-            TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,144 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,116,945 immune cells of 655 samples, among which 119,039 immune cells of 63 samples have immunotherapy clinical data. 
+            TIGER is a web-accessible portal for integrative analysis of the
+            gene expression data related to tumor immunology. TIGER contains
+            bulk transcriptome data for 1,144 tumor samples with immunotherapy
+            clinical outcome and 11,057 tumor/normal samples from TCGA, and
+            single cell transcriptome data for 2,116,945 immune cells of 655
+            samples, among which 119,039 immune cells of 63 samples have
+            immunotherapy clinical data.
           </p>
         </el-row>
       </el-col>
@@ -33,45 +41,64 @@
         </el-row>
         <el-row>
           <el-col :span="5">
-            <el-card shadow="hover" class="box-card"  @click.native="openpage('singleCellImmune')">
-              <div slot="header" class="clearfix" style="text-align:center;">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              @click.native="openpage('singleCellImmune')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
                 <span class="homedesrc">Single Cell Immunity</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
-              <div style="text-align:center;">
+              <div style="text-align: center">
                 <img height="250px" src="../../assets/homesc.png" />
               </div>
             </el-card>
           </el-col>
           <el-col :span="5">
-            <el-card shadow="hover" class="box-card" style="position:relative;left:30px;" @click.native="openpage('immuneResponse')">
-              <div slot="header" class="clearfix" style="text-align:center;">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              style="position: relative; left: 30px"
+              @click.native="openpage('immuneResponse')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
                 <span class="homedesrc">Immunotherapy Response</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
-              <div style="text-align:center;">
+              <div style="text-align: center">
                 <img height="250px" src="../../assets/homeir.png" />
               </div>
             </el-card>
           </el-col>
-          <el-col :span="5" >
-            <el-card shadow="hover" class="box-card" style="position:relative;left:60px;" @click.native="openpage('immuneSignature')">
-              <div slot="header" class="clearfix" style="text-align:center;">
+          <el-col :span="5">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              style="position: relative; left: 60px"
+              @click.native="openpage('immuneSignature')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
                 <span class="homedesrc">Response Signature</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
-              <div style="text-align:center;">
+              <div style="text-align: center">
                 <img height="250px" src="../../assets/homesig.png" />
               </div>
             </el-card>
           </el-col>
           <el-col :span="5">
-            <el-card shadow="hover" class="box-card" style="position:relative;left:90px;" @click.native="openpage('immuneScreen')">
-              <div slot="header" class="clearfix" style="text-align:center;">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              style="position: relative; left: 90px"
+              @click.native="openpage('immuneScreen')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
                 <span class="homedesrc">Immune Screening</span>
                 <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
               </div>
-              <div style="text-align:center;">
+              <div style="text-align: center">
                 <img width="250px" src="../../assets/homeis.png" />
               </div>
             </el-card>
@@ -100,11 +127,13 @@ export default {
   },
 
   methods: {
-    openpage(pagename){
+    openpage(pagename) {
       this.$router.push({
         name: pagename,
       });
-      setTimeout(() => { toTarget(20) }, 200); 
+      setTimeout(() => {
+        toTarget(20);
+      }, 200);
     },
     querySearchAsync(queryString, cb) {
       this.$http
@@ -165,7 +194,7 @@ export default {
 .box-card {
   width: auto;
   cursor: pointer;
-  transition: all .5s;
+  transition: all 0.5s;
   /* margin-left: 100px; */
   /* margin: auto; */
 }
@@ -202,5 +231,4 @@ div#homepic {
 div#homecard {
   padding: 10px;
 }
-
 </style>

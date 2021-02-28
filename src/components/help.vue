@@ -2,87 +2,121 @@
   <div class="outside">
     <el-card class="serachpage" id="helppage">
       <el-col span="22" push="1">
-      <div class="main_con" id="1" ref="userinfo1">
-        <h1 class="subtitle">Introduction to TIGER</h1>
-        <el-divider></el-divider>
+        <div class="main_con" id="1" ref="userinfo1">
+          <h1 class="subtitle">Introduction to TIGER</h1>
+          <el-divider></el-divider>
+          <el-row>
+            <el-col :span="12">
+              <p>
+                TIGER is a web-accessible portal for integrative analysis of the
+                gene expression data related to tumor immunology. TIGER contains
+                bulk transcriptome data for 1,144 tumor samples with
+                immunotherapy clinical outcome and 11,057 tumor/normal samples
+                from TCGA, and single cell transcriptome data for 2,116,945
+                immune cells of 655 samples, among which 119,039 immune cells of
+                63 samples have immunotherapy clinical data. Besides, we also
+                collected eight CRISPR and two shRNA screening data from studies
+                identifying genes responsible of anticancer immune response.
+                Moreover, we collected 63 gene signatures that could be
+                potentially used to predict the immunotherapy response from
+                public literature.
+              </p>
+            </el-col>
+            <el-col :span="10" :offset="2">
+              <img alt="help" v-lazy="home" />
+            </el-col>
+          </el-row>
+        </div>
+
+        <div class="main_con" id="4" ref="userinfo4">
+          <h1 class="subtitle">Usage of TIGER</h1>
+          <el-divider></el-divider>
+          <p>
+            TIGER is composed of four major modules, including Immunotherapy
+            Response, Response Signature, Single-cell Immunity and Immune
+            Screening with a Quick Search module.
+          </p>
+        </div>
         <el-row>
-          <el-col :span="12">
-            <p>TIGER is a web-accessible portal for integrative analysis of the gene expression data related to tumor immunology. TIGER contains bulk transcriptome data for 1,144 tumor samples with immunotherapy clinical outcome and 11,057 tumor/normal samples from TCGA, and single cell transcriptome data for 2,116,945 immune cells of 655 samples, among which 119,039 immune cells of 63 samples have immunotherapy clinical data. Besides, we also collected eight CRISPR and two shRNA screening data from studies identifying genes responsible of anticancer immune response. Moreover, we collected 63 gene signatures that could be potentially used to predict the immunotherapy response from public literature.</p>
+          <el-col :span="4" :push="0">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              @click.native="handleEdit('search')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
+                <span class="homedesrc">Quick<br />Search</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align: center">
+                <img height="150px" src="../assets/homesearch.png" />
+              </div>
+            </el-card>
           </el-col>
-          <el-col :span="10" :offset="2">
-            <img alt="help" v-lazy="home" />
+          <el-col :span="4" :push="1">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              @click.native="handleEdit('response')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
+                <span class="homedesrc">Immunotherapy Response</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align: center">
+                <img height="150px" src="../assets/homeir.png" />
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="4" :push="2">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              @click.native="handleEdit('signature')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
+                <span class="homedesrc">Response Signature</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align: center">
+                <img height="150px" src="../assets/homesig.png" />
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="4" :push="3">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              @click.native="handleEdit('singcell')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
+                <span class="homedesrc">Single Cell Immunity</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align: center">
+                <img height="150px" src="../assets/homesc.png" />
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="4" :push="4">
+            <el-card
+              shadow="hover"
+              class="box-card"
+              @click.native="handleEdit('screen')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
+                <span class="homedesrc">Immune Screening</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align: center">
+                <img width="150px" src="../assets/homeis.png" />
+              </div>
+            </el-card>
           </el-col>
         </el-row>
-      </div>
-
-      <div class="main_con" id="4" ref="userinfo4">
-        <h1 class="subtitle">Usage of TIGER</h1>
-        <el-divider></el-divider>
-        <p>TIGER is composed of four major modules, including Immunotherapy Response, Response Signature, Single-cell Immunity and Immune Screening with a Quick Search module.</p>
-      </div>
-      <el-row>
-         <el-col :span="4" :push="0" >
-          <el-card shadow="hover" class="box-card" @click.native="handleEdit('search')">
-            <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Quick<br/>Search</span>
-              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-            </div>
-            <div style="text-align:center;">
-              <img height="150px" src="../assets/homesearch.png" />
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="4" :push="1" >
-          <el-card shadow="hover" class="box-card" @click.native="handleEdit('response')">
-            <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Immunotherapy Response</span>
-              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-            </div>
-            <div style="text-align:center;">
-              <img height="150px" src="../assets/homeir.png" />
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="4" :push="2">
-          <el-card shadow="hover" class="box-card" @click.native="handleEdit('signature')">
-            <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Response Signature</span>
-              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-            </div>
-            <div style="text-align:center;">
-              <img height="150px" src="../assets/homesig.png" />
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="4" :push="3">
-          <el-card shadow="hover" class="box-card" @click.native="handleEdit('singcell')">
-            <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Single Cell Immunity</span>
-              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-            </div>
-            <div style="text-align:center;">
-              <img height="150px" src="../assets/homesc.png" />
-            </div>
-          </el-card>
-        </el-col>
-        <el-col :span="4" :push="4">
-          <el-card shadow="hover" class="box-card"  @click.native="handleEdit('screen')">
-            <div slot="header" class="clearfix" style="text-align:center;">
-              <span class="homedesrc">Immune Screening</span>
-              <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-            </div>
-            <div style="text-align:center;">
-              <img width="150px" src="../assets/homeis.png" />
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <v-helpdetail
-        ref="helpdetail"
-        v-show="true"
-        :tabname="detailname">
-      </v-helpdetail>
-          </el-col>
+        <v-helpdetail ref="helpdetail" v-show="true" :tabname="detailname">
+        </v-helpdetail>
+      </el-col>
     </el-card>
 
     <goTop></goTop>
@@ -110,17 +144,17 @@ export default {
       detailname: "",
     };
   },
-  created(){
-    this.$refs.helpdetail.changeshow("search")
+  created() {
+    this.$refs.helpdetail.changeshow("search");
   },
   methods: {
-    handleEdit(tabname){
+    handleEdit(tabname) {
       this.detailname = tabname;
-      this.$refs.helpdetail.changeshow(this.detailname)
-    }
+      this.$refs.helpdetail.changeshow(this.detailname);
+    },
   },
   components: {
-    goTop
+    goTop,
   },
   components: {
     "v-helpdetail": () => import("./helpdetail.vue"),

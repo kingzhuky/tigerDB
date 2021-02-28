@@ -1,5 +1,7 @@
 <template>
-  <div class="box-card-footer">TIGER © 2020 Bioinformatics Platform of SYSUCC. All Rights Reserved</div>
+  <div class="box-card-footer">
+    TIGER © 2020 Bioinformatics Platform of SYSUCC. All Rights Reserved
+  </div>
 </template>
 
 <script>
@@ -8,7 +10,7 @@ export default {};
 
 <style>
 .box-card-footer {
-  position: fixed ;
+  position: fixed;
   background-color: #efeded;
   text-align: center;
   height: 30px;

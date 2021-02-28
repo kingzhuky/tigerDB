@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       scrollTop: "",
-      goTopShow: false
+      goTopShow: false,
     };
   },
   methods: {
@@ -42,14 +42,14 @@ export default {
           _that.goTopShow = false;
         }
       });
-    }
+    },
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
-  }
+  },
 };
 </script>
  

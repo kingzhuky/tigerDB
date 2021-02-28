@@ -227,19 +227,19 @@ export default {
       loading: true,
     };
   },
-  created(){
-    this.getBlukTable()
-    this.getScTable()
-    this.getSigTable()
-    this.getImscreenTable()
+  created() {
+    this.getBlukTable();
+    this.getScTable();
+    this.getSigTable();
+    this.getImscreenTable();
     // console.log(this.validationData)
   },
   methods: {
     handleEdit(file) {
-      var index = "/tiger/Download/"
+      var index = "/tiger/Download/";
       window.open(index + file);
     },
-    openurl(url){
+    openurl(url) {
       window.open(url);
     },
     // getBlukTable() {
@@ -256,17 +256,17 @@ export default {
       this.$http
         .get("/tiger/downloadtable.php", {
           params: {
-            table: "downloadtable"
-          }
+            table: "downloadtable",
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             this.bulktable = res.data.tabledata;
             // console.log(this.bulktable)
             this.loading = false;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -275,16 +275,16 @@ export default {
       this.$http
         .get("/tiger/downloadtable.php", {
           params: {
-            table: "scrnaseqinfo"
-          }
+            table: "scrnaseqinfo",
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             this.sctable = res.data.tabledata;
             this.loading = false;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -293,17 +293,17 @@ export default {
       this.$http
         .get("/tiger/downloadtable.php", {
           params: {
-            table: "siginfo"
-          }
+            table: "siginfo",
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             this.sigtable = res.data.tabledata;
             // console.log(this.sigtable)
             this.loading = false;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -312,17 +312,17 @@ export default {
       this.$http
         .get("/tiger/downloadtable.php", {
           params: {
-            table: "immunescreenartle"
-          }
+            table: "immunescreenartle",
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.status === 200) {
             this.imscreentable = res.data.tabledata;
             // console.log(this.imscreentable)
             this.loading = false;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },

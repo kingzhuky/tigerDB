@@ -1,7 +1,13 @@
 <template>
-  <div id='sigpage'>
+  <div id="sigpage">
     <el-card class="box-card-heatmap">
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" stretch class="tigtable">
+      <el-tabs
+        v-model="activeName"
+        type="card"
+        @tab-click="handleClick"
+        stretch
+        class="tigtable"
+      >
         <el-tab-pane label="Overview" name="sigtable">
           <component ref="sigtableRef" :is="sigtableVue"></component>
         </el-tab-pane>
@@ -27,7 +33,7 @@ export default {
   data() {
     return {
       activeName: "sigtable",
-      sigid:"SIG1",
+      sigid: "SIG1",
       sigtableVue: "",
       customsigVue: "",
       biomarkerVue: "",
@@ -70,7 +76,7 @@ export default {
           break;
       }
     },
-  }
+  },
 };
 </script>
 
@@ -96,10 +102,10 @@ div#sigpage {
   width: 1350px;
 }
 
-#survivaltable th,#therapyTable th, #responseTable th {
+#survivaltable th,
+#therapyTable th,
+#responseTable th {
   left: 135px !important;
   height: 270px !important;
 }
-
-
 </style>

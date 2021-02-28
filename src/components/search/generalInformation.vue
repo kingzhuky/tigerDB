@@ -4,15 +4,30 @@
       <p class="card-title">General Information</p>
       <el-table :data="articleData" style="width: 100%" v-loading="artloading">
         <!-- <el-table-column prop="title" label width="180"></el-table-column> -->
-        <el-table-column prop="title" label style="font-weight:700;" width="250">
-          <template slot-scope="{row: {title}}" class="csstitle">
+        <el-table-column
+          prop="title"
+          label
+          style="font-weight: 700"
+          width="250"
+        >
+          <template slot-scope="{ row: { title } }" class="csstitle">
             <span class="csstitle" v-if="title === 'Symbol'">Gene Symbol</span>
-            <span class="csstitle" v-else-if="title === 'description'">Description</span>
-            <span class="csstitle" v-else-if="title === 'type_of_gene'">Gene Type</span>
-            <span class="csstitle" v-else-if="title === 'Synonyms'">Aliases</span>
-            <span class="csstitle" v-else-if="title === 'Other_designations'">Summary</span>
-            <span class="csstitle" v-else-if="title === 'GeneID'">Entrez Gene</span>
-            <span class="csstitle" v-else>{{title}}</span>
+            <span class="csstitle" v-else-if="title === 'description'"
+              >Description</span
+            >
+            <span class="csstitle" v-else-if="title === 'type_of_gene'"
+              >Gene Type</span
+            >
+            <span class="csstitle" v-else-if="title === 'Synonyms'"
+              >Aliases</span
+            >
+            <span class="csstitle" v-else-if="title === 'Other_designations'"
+              >Summary</span
+            >
+            <span class="csstitle" v-else-if="title === 'GeneID'"
+              >Entrez Gene</span
+            >
+            <span class="csstitle" v-else>{{ title }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="value" label></el-table-column>
@@ -26,14 +41,27 @@
           <p class="card-title">Reactome Pathway</p>
           <el-row v-loading="ReactomeLoading" class="detailimg">
             <el-table :data="ReactomeTableData" style="width: 100%">
-              <el-table-column prop="ensembl" label="Ensembl" width="180"></el-table-column>
-              <el-table-column prop="reactomeid" label="Reactome ID" width="180"></el-table-column>
+              <el-table-column
+                prop="ensembl"
+                label="Ensembl"
+                width="180"
+              ></el-table-column>
+              <el-table-column
+                prop="reactomeid"
+                label="Reactome ID"
+                width="180"
+              ></el-table-column>
               <el-table-column label="reactome URL">
                 <template slot-scope="scope">
-                  <a :href="scope.row.reactomeurl" target="_blank">{{scope.row.reactomeurl}}</a>
+                  <a :href="scope.row.reactomeurl" target="_blank">{{
+                    scope.row.reactomeurl
+                  }}</a>
                 </template>
               </el-table-column>
-              <el-table-column prop="description" label="Description"></el-table-column>
+              <el-table-column
+                prop="description"
+                label="Description"
+              ></el-table-column>
               <el-table-column prop="source" label="Source"></el-table-column>
             </el-table>
           </el-row>
@@ -51,22 +79,28 @@
               <el-table-column prop="drugName" label="Drug" width="180">
                 <template slot-scope="scope">
                   <a
-                    :href="'http://dgidb.org/drugs/'+scope.row.drugName"
+                    :href="'http://dgidb.org/drugs/' + scope.row.drugName"
                     target="_blank"
                     class="buttonText"
-                  >{{scope.row.drugName}}</a>
+                    >{{ scope.row.drugName }}</a
+                  >
                 </template>
               </el-table-column>
-              <el-table-column prop="interactionTypes" label="Interaction Type" width="180"></el-table-column>
+              <el-table-column
+                prop="interactionTypes"
+                label="Interaction Type"
+                width="180"
+              ></el-table-column>
               <el-table-column prop="sources" label="sources">
                 <template slot-scope="scope">
                   <a
                     v-for="source in scope.row.sources"
                     :key="source"
-                    :href="'http://dgidb.org/sources/'+source"
+                    :href="'http://dgidb.org/sources/' + source"
                     target="_blank"
                     class="buttonText"
-                  >{{source}},</a>
+                    >{{ source }},</a
+                  >
                 </template>
               </el-table-column>
               <el-table-column prop="pmids" label="PMIDs">
@@ -74,10 +108,11 @@
                   <a
                     v-for="pmid in scope.row.pmids"
                     :key="pmid"
-                    :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term='+pmid"
+                    :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + pmid"
                     target="_blank"
                     class="buttonText"
-                  >{{pmid}},</a>
+                    >{{ pmid }},</a
+                  >
                 </template>
               </el-table-column>
               <el-table-column prop="score" label="Score"></el-table-column>
@@ -193,7 +228,7 @@ export default {
   font-weight: 700 !important;
   font-size: 25px !important;
 }
-span.csstitle{
+span.csstitle {
   font-weight: 700 !important;
 }
 </style>

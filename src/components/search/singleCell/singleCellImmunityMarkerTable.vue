@@ -1,12 +1,12 @@
 <template>
-  <div class="textitem">   
-    <p class="card-title">{{title}}</p>
+  <div class="textitem">
+    <p class="card-title">{{ title }}</p>
     <el-row>
       <el-col :span="16" push="3" v-loading="loading">
-        <div :id="conditi" style="width: 1000px;height:500px;"></div>
+        <div :id="conditi" style="width: 1000px; height: 500px"></div>
       </el-col>
     </el-row>
-    <el-table 
+    <el-table
       max-height="600"
       :data="TableData"
       :row-key="getRowKeys"
@@ -15,7 +15,7 @@
       @sort-change="sortChangeClick"
       style="width: 100%"
     >
-      <el-table-column type="expand" >
+      <el-table-column type="expand">
         <template slot-scope="scope">
           <div class="detailimg" v-loading="imgloading">
             <div>
@@ -23,32 +23,62 @@
               <img id="singleimg" :src="imgUrlBar" /> -->
               <el-row v-show="imgshow" class="scdetailimg">
                 <!-- <p class="card-title">tSNE</p> -->
-                <el-col :span="6" style="position:relative;left:20px;top:0px;">
+                <el-col
+                  :span="6"
+                  style="position: relative; left: 20px; top: 0px"
+                >
                   <p class="imgtitle">Cell Types Distribution</p>
                   <img
                     id="singleimg"
                     fit="fill"
                     width="100%"
-                    :src="'tiger/img/' + overviewimg.split(',')[0]+'.png'"
-                    @click="previewImg(0,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                    :src="'tiger/img/' + overviewimg.split(',')[0] + '.png'"
+                    @click="
+                      previewImg(0, [
+                        'tiger/img/' + overviewimg.split(',')[0] + '.png',
+                        'tiger/img/' + markerimg.split(',')[1],
+                        'tiger/img/' + markerimg.split(',')[0],
+                      ])
+                    "
+                  />
                 </el-col>
-                <el-col :span="6" style="position:relative;left:100px;top:0px;">
-                  <p class="imgtitle">{{seargene}} Expression</p>
+                <el-col
+                  :span="6"
+                  style="position: relative; left: 100px; top: 0px"
+                >
+                  <p class="imgtitle">{{ seargene }} Expression</p>
                   <img
                     id="singleimg"
                     fit="fill"
                     width="100%"
                     :src="'tiger/img/' + markerimg.split(',')[1]"
-                    @click="previewImg(1,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                    @click="
+                      previewImg(1, [
+                        'tiger/img/' + overviewimg.split(',')[0] + '.png',
+                        'tiger/img/' + markerimg.split(',')[1],
+                        'tiger/img/' + markerimg.split(',')[0],
+                      ])
+                    "
+                  />
                 </el-col>
-                <el-col :span="12" style="position:relative;left:40px;top:0px;">
-                  <p class="imgtitle">{{seargene}} Expression Difference</p>
+                <el-col
+                  :span="12"
+                  style="position: relative; left: 40px; top: 0px"
+                >
+                  <p class="imgtitle">{{ seargene }} Expression Difference</p>
                   <img
                     id="singleimg"
                     fit="fill"
                     height="250px"
                     :src="'tiger/img/' + markerimg.split(',')[0]"
-                    @click="previewImg(2,['tiger/img/' + overviewimg.split(',')[0]+'.png','tiger/img/' + markerimg.split(',')[1],'tiger/img/' + markerimg.split(',')[0]])">
+                    @click="
+                      previewImg(2, [
+                        'tiger/img/' + overviewimg.split(',')[0] + '.png',
+                        'tiger/img/' + markerimg.split(',')[1],
+                        'tiger/img/' + markerimg.split(',')[0],
+                      ])
+                    "
+                  />
                 </el-col>
               </el-row>
             </div>
@@ -56,10 +86,28 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="CancerType" label="Cancer Type" width="400%" sortable="custom"></el-table-column>
-      <el-table-column prop="GlobalCluster" label="Main Lineage" width="180%" sortable="custom"></el-table-column>
-      <el-table-column prop="CellType" label="Cell Type" sortable="custom"></el-table-column>
-      <el-table-column prop="Log2FoldChange" label="Log2 ( Fold Change )" sortable="custom"></el-table-column>
+      <el-table-column
+        prop="CancerType"
+        label="Cancer Type"
+        width="400%"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="GlobalCluster"
+        label="Main Lineage"
+        width="180%"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="CellType"
+        label="Cell Type"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
+        prop="Log2FoldChange"
+        label="Log2 ( Fold Change )"
+        sortable="custom"
+      ></el-table-column>
     </el-table>
     <el-row>
       <el-pagination
@@ -73,7 +121,7 @@
         layout="sizes, prev, pager, next"
         :total="total"
       ></el-pagination>
-    </el-row> 
+    </el-row>
   </div>
 </template>
 
@@ -173,7 +221,7 @@ export default {
       this.sortCol = column.prop;
       this.sortOrder = column.order;
       this.currentPage = 1;
-      console.log(column.prop + column.order)
+      console.log(column.prop + column.order);
       this.getTableData(
         this.seargene,
         this.conditi,
@@ -184,8 +232,16 @@ export default {
         false
       );
     },
-    getTableData(gene, conditi, currentPage, pageSize, sortCol, sortOrder, ifplot){
-      console.log("Plot: "+ ifplot)
+    getTableData(
+      gene,
+      conditi,
+      currentPage,
+      pageSize,
+      sortCol,
+      sortOrder,
+      ifplot
+    ) {
+      console.log("Plot: " + ifplot);
       this.show = true;
       this.imgshow = false;
       this.diffexpimg = "";
@@ -208,7 +264,7 @@ export default {
             } else {
               this.loading = false;
               this.TableData = res.data.datatable;
-              this.total = res.data.total[0]
+              this.total = res.data.total[0];
               if (ifplot) this.draw_chart(res.data.list, conditi);
             }
           } else {
@@ -232,7 +288,7 @@ export default {
             gene: that.seargene,
             type: "celltype",
             gloclu: gloclu,
-            celltype: subClu
+            celltype: subClu,
           },
         })
         .then(function (res) {
@@ -241,7 +297,7 @@ export default {
               that.imgshow = false;
               //alert("no gene file");
             } else {
-              that.imgpathBox = 'tiger/img/' + res.data.output[0].split(",")[0];
+              that.imgpathBox = "tiger/img/" + res.data.output[0].split(",")[0];
               // console.log(that.imgpathBox)
               that.markerimg = res.data.output[0];
             }
@@ -253,7 +309,7 @@ export default {
               //alert("no gene file");
             } else {
               // that.evolushow2 = true;
-              (that.overviewimg = res.data.output2[0])
+              that.overviewimg = res.data.output2[0];
             }
             //that.evoluplots = res.data.output[0];
           }
@@ -264,13 +320,21 @@ export default {
         });
     },
     getRowKeys: function (row) {
-      return (row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_');
+      return (row.datasetid + row.GlobalCluster + row.CellType).replace(
+        /\ /g,
+        "_"
+      );
     },
     rowExpand: function (row, expandedRows) {
       if (expandedRows.length) {
         this.expands = [];
         if (row) {
-          this.expands.push((row.datasetid + row.GlobalCluster + row.CellType).replace(/\ /g,'_'));
+          this.expands.push(
+            (row.datasetid + row.GlobalCluster + row.CellType).replace(
+              /\ /g,
+              "_"
+            )
+          );
         }
       } else {
         this.expands = [];
@@ -294,11 +358,11 @@ export default {
         title: {
           text: "Cell Type Marker\n ( |Log2FC| )\n",
           textStyle: {
-            color: '#333',
+            color: "#333",
             lineHeight: 120,
             height: 30,
-            fontFamily: 'Arial',
-          }
+            fontFamily: "Arial",
+          },
           // link: "https://github.com/pissang/echarts-next/graphs/punch-card",
         },
         legend: {
@@ -313,7 +377,7 @@ export default {
           },
           axisLabel: {
             rotate: 45,
-            interval: 0
+            interval: 0,
           },
         },
         angleAxis: {
@@ -376,15 +440,15 @@ export default {
       };
     },
 
-    previewImg(index,url){
+    previewImg(index, url) {
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: index, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-        closeColor: 'rgba(255,255,255,.5)'
-      })
+        mainBackground: "rgba(0, 0, 0, .5)", // 整体背景颜色
+        closeColor: "rgba(255,255,255,.5)",
+      });
     },
     clickPlot() {
       this.expandPlot(

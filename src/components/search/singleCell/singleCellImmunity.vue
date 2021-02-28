@@ -10,9 +10,10 @@
     </el-card>
     <div class="textitem">
       <el-card>
-        <p
-          class="card-title"
-        >Top 10 genes correlated with {{this.seargene}} in each cell type selected</p>
+        <p class="card-title">
+          Top 10 genes correlated with {{ this.seargene }} in each cell type
+          selected
+        </p>
         <div>
           <el-row class="selectrow">
             <el-col :span="8">
@@ -51,7 +52,11 @@
 
             <el-col :span="8">
               <span class="demonstration">Cell Type: </span>
-              <el-select v-model="CellType" v-loading="CellTypeLoading" @change="subClusterChange">
+              <el-select
+                v-model="CellType"
+                v-loading="CellTypeLoading"
+                @change="subClusterChange"
+              >
                 <el-option
                   v-for="item in CellTypeCluoptions"
                   :key="item.CellType"
@@ -132,7 +137,7 @@ export default {
     };
   },
   mounted() {
-    this.CancerTypeSelectChange()
+    this.CancerTypeSelectChange();
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);

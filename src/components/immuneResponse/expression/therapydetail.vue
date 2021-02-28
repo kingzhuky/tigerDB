@@ -4,7 +4,9 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1 style="font-weight: bold;font-size:25px;text-align:center">{{cancer}}<br>Gene:{{gene}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              {{ cancer }}<br />Gene:{{ gene }}
+            </h1>
           </div>
         </el-card>
       </div>
@@ -19,8 +21,12 @@
             </el-row>
             <br />
             <el-row>
-              <el-input v-model="normalGene" v-show='normalMed != "None"' placeholder="Please Input A Gene Symbol"></el-input>
-             </el-row>
+              <el-input
+                v-model="normalGene"
+                v-show="normalMed != 'None'"
+                placeholder="Please Input A Gene Symbol"
+              ></el-input>
+            </el-row>
             <br />
             <el-row class="detail1">Log Scale</el-row>
             <br />
@@ -30,18 +36,26 @@
             </el-row>
             <br />
             <el-row class="plot">
-              <el-button id="anabt" @click="clickPlot()" style="width:100%">Plot</el-button>
+              <el-button id="anabt" @click="clickPlot()" style="width: 100%"
+                >Plot</el-button
+              >
             </el-row>
           </el-col>
           <el-col v-show="resultShow" :span="8" :offset="4" v-loading="loading">
-            <p class="imgtitle">Differential Expression between Post-Therapy and Pre-Therapy</p>
-            <img style="position:relative;left:0px;right:50px;" width="550px" :src="imgUrlBox" />
+            <p class="imgtitle">
+              Differential Expression between Post-Therapy and Pre-Therapy
+            </p>
+            <img
+              style="position: relative; left: 0px; right: 50px"
+              width="550px"
+              :src="imgUrlBox"
+            />
           </el-col>
-          <el-col  :span="15" v-show="!resultShow" v-loading="loading">
+          <el-col :span="15" v-show="!resultShow" v-loading="loading">
             <div id="norult">No result</div>
           </el-col>
         </el-card>
-       <v-sampleDetail ref="sampleDetail"></v-sampleDetail>
+        <v-sampleDetail ref="sampleDetail"></v-sampleDetail>
       </div>
       <v-goTop></v-goTop>
     </div>
@@ -56,14 +70,14 @@ import sampleDetail from "../sampledetail";
 
 export default {
   props: {
-   gene: String,
+    gene: String,
     cancer: String,
-    datatype: String
+    datatype: String,
   },
 
   data() {
     return {
-      resultShow:true,
+      resultShow: true,
       normalMed: "None",
       normalGene: "",
       logScale: "FALSE",
@@ -73,11 +87,11 @@ export default {
   },
 
   methods: {
-    getSampleDetail(sample){
-      this.$refs.sampleDetail.getTableData(sample)
+    getSampleDetail(sample) {
+      this.$refs.sampleDetail.getTableData(sample);
     },
-    getGeneDetail(gene){
-      this.$refs.sampleDetail.getGeneData(gene)
+    getGeneDetail(gene) {
+      this.$refs.sampleDetail.getGeneData(gene);
     },
     checkInput() {
       if (this.normalMed !== "None" && this.normalGene.length == 0) {
@@ -97,21 +111,20 @@ export default {
       this.getPlot(gene, mergedatasets);
     },
 
-        //渲染每个格子的颜色
-    tableCellStyle({ row, column}) {
+    //渲染每个格子的颜色
+    tableCellStyle({ row, column }) {
       var mycolr = gStyle(parseFloat(row[column["label"]]), 2.25);
       return {
         background: mycolr["background"],
-        color: mycolr["color"]
+        color: mycolr["color"],
       };
     },
 
-    
     getPlot(gene, mergedatasets) {
       if (this.checkInput()) {
         var that = this;
         that.loading = true;
-        that.resultShow=true
+        that.resultShow = true;
         this.$http
           .get("/tiger/1.2.responseDiffTherapy.php", {
             params: {
@@ -120,41 +133,40 @@ export default {
               normalMed: this.normalMed,
               normalGene: this.normalMed == "None" ? "None" : this.normalGene,
               logScale: this.logScale,
-              datatype: "png"
-            }
+              datatype: "png",
+            },
           })
-          .then(function(res) {
+          .then(function (res) {
             if (res.data.status == 0) {
-              that.resultShow=true
-              setTimeout(that.imgpathBox =res.data.output[0],1000);
-              
+              that.resultShow = true;
+              setTimeout((that.imgpathBox = res.data.output[0]), 1000);
+
               that.loading = false;
-            }else{
-              that.resultShow=false
+            } else {
+              that.resultShow = false;
             }
           })
-          .catch(function(res) {
+          .catch(function (res) {
             console.log(res);
           });
       }
-    }
+    },
   },
 
   computed: {
-    imgUrlBox: function() {
+    imgUrlBox: function () {
       return "tiger/img/" + this.imgpathBox + ".png";
-    }
+    },
   },
 
   components: {
     "v-goTop": goTop,
-     "v-sampleDetail":sampleDetail
-  }
+    "v-sampleDetail": sampleDetail,
+  },
 };
 </script>
 
 <style>
-
 </style>
 
 

@@ -4,9 +4,10 @@
       <div class="infor">
         <el-card class="box-card-return">
           <div class="text item">
-            <h1
-              style="font-weight: bold;font-size:25px;text-align:center"
-            >Cancer Type: {{cancer}}<br>Cell Type 1: {{gloclu}}<br>Cell Type 2: {{celltype2}}</h1>
+            <h1 style="font-weight: bold; font-size: 25px; text-align: center">
+              Cancer Type: {{ cancer }}<br />Cell Type 1: {{ gloclu }}<br />Cell
+              Type 2: {{ celltype2 }}
+            </h1>
           </div>
         </el-card>
       </div>
@@ -29,7 +30,7 @@
                     style="100%"
                   >
                     <el-table-column
-                      v-for="(item,index) in tableDataheader"
+                      v-for="(item, index) in tableDataheader"
                       :key="index"
                       :property="item"
                       :label="item"
@@ -42,51 +43,104 @@
                   </el-table>
                 </div>
               </el-col>
-              <el-col :span="12" >
+              <el-col :span="12">
                 <el-row v-loading="plotloading">
                   <el-col :span="11" push="1" v-show="evolushow2">
-                    <p class="imgtitle">Tissue in {{celltype_1}} </p>
+                    <p class="imgtitle">Tissue in {{ celltype_1 }}</p>
                     <img
                       id="singleimg"
                       fit="fill"
                       width="100%"
-                      :src="'tiger/img/' + crossimg[0]+ '.png'"
-                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                      :src="'tiger/img/' + crossimg[0] + '.png'"
+                      @click="
+                        previewImg(
+                          [
+                            'tiger/img/' + crossimg[0] + '.png',
+                            'tiger/img/' + crossimg[1] + '.png',
+                            'tiger/img/' + crossimg[0],
+                          ] + '.png'
+                        )
+                      "
+                    />
                   </el-col>
                   <el-col :span="11" push="1" v-show="evolushow2">
-                    <p class="imgtitle">Tissue in {{celltype_2}} </p>
+                    <p class="imgtitle">Tissue in {{ celltype_2 }}</p>
                     <img
                       id="singleimg"
                       fit="fill"
                       width="100%"
                       :src="'tiger/img/' + crossimg[2] + '.png'"
-                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                      @click="
+                        previewImg(
+                          [
+                            'tiger/img/' + crossimg[0] + '.png',
+                            'tiger/img/' + crossimg[1] + '.png',
+                            'tiger/img/' + crossimg[0],
+                          ] + '.png'
+                        )
+                      "
+                    />
                   </el-col>
-                  
                 </el-row>
                 <el-row v-loading="plotloading">
-                  <el-col :span="11" push="1" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-                    <p class="imgtitle">UMAP Plot of {{gene_1}} Expression in {{celltype_1}}</p>
+                  <el-col
+                    :span="11"
+                    push="1"
+                    v-show="evolushow2"
+                    style="position: relative; left: 20px; top: 0px"
+                  >
+                    <p class="imgtitle">
+                      UMAP Plot of {{ gene_1 }} Expression in {{ celltype_1 }}
+                    </p>
                     <img
                       id="singleimg"
                       fit="fill"
                       width="100%"
-                      :src="'tiger/img/' + crossimg[1]+ '.png'"
-                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                      :src="'tiger/img/' + crossimg[1] + '.png'"
+                      @click="
+                        previewImg(
+                          [
+                            'tiger/img/' + crossimg[0] + '.png',
+                            'tiger/img/' + crossimg[1] + '.png',
+                            'tiger/img/' + crossimg[0],
+                          ] + '.png'
+                        )
+                      "
+                    />
                   </el-col>
-                  <el-col :span="11" v-show="evolushow2" style="position:relative;left:20px;top:0px;">
-                    <p class="imgtitle">UMAP Plot of {{gene_2}} Expression in {{celltype_2}}</p>
+                  <el-col
+                    :span="11"
+                    v-show="evolushow2"
+                    style="position: relative; left: 20px; top: 0px"
+                  >
+                    <p class="imgtitle">
+                      UMAP Plot of {{ gene_2 }} Expression in {{ celltype_2 }}
+                    </p>
                     <img
                       id="singleimg"
                       fit="fill"
                       width="100%"
-                      :src="'tiger/img/' + crossimg[3]+ '.png'"
-                      @click="previewImg(['tiger/img/' + crossimg[0]+'.png','tiger/img/' + crossimg[1]+'.png','tiger/img/' + crossimg[0]]+'.png')">
+                      :src="'tiger/img/' + crossimg[3] + '.png'"
+                      @click="
+                        previewImg(
+                          [
+                            'tiger/img/' + crossimg[0] + '.png',
+                            'tiger/img/' + crossimg[1] + '.png',
+                            'tiger/img/' + crossimg[0],
+                          ] + '.png'
+                        )
+                      "
+                    />
                   </el-col>
                 </el-row>
               </el-col>
             </el-row>
-            <el-col :span="20" :offset="2" v-show="!evolushow" v-loading="loading">
+            <el-col
+              :span="20"
+              :offset="2"
+              v-show="!evolushow"
+              v-loading="loading"
+            >
               <div id="norult">No result</div>
             </el-col>
           </el-row>
@@ -116,11 +170,11 @@ export default {
     cancer: {
       type: String,
     },
-    celltype: { 
-      type: String 
+    celltype: {
+      type: String,
     },
-    gloclu: { 
-      type: String 
+    gloclu: {
+      type: String,
     },
     tabname: {
       type: String,
@@ -137,10 +191,10 @@ export default {
       logScale: "FALSE",
       evoluloading: true,
       plotloading: false,
-      celltype_1: '',
-      celltype_2: '',
-      gene_1: '',
-      gene_2: '',
+      celltype_1: "",
+      celltype_2: "",
+      gene_1: "",
+      gene_2: "",
       //geneplots: "",
       evoluplots: "",
       tableData: [],
@@ -161,13 +215,13 @@ export default {
       var that = this;
       this.$http
         .get("/tiger/img/" + jsonUrl + ".json")
-        .then(function(res) {
+        .then(function (res) {
           that.tableData = res.data;
-          that.tableDataheader = Object.keys(res.data[0])
+          that.tableDataheader = Object.keys(res.data[0]);
           // console.log(that.tableDataheader)
           that.resultShow = true;
         })
-        .catch(function(res) {
+        .catch(function (res) {
           // console.log(res);
         });
     },
@@ -188,7 +242,7 @@ export default {
             if (res.data.status == 0) {
               let imgpath = res.data.output[0].split(",");
               // console.log(imgpath[0])
-              that.gettableData(imgpath[0])
+              that.gettableData(imgpath[0]);
               that.evoluloading = false;
               that.evolushow2 = false;
             }
@@ -213,7 +267,7 @@ export default {
           if (res.data.status == 0) {
             let imgpath = res.data.output[0].split(",");
             // console.log(imgpath)
-            that.crossimg = imgpath
+            that.crossimg = imgpath;
           }
         })
         .catch(function (res) {
@@ -225,33 +279,33 @@ export default {
         this.evolushow2 = false;
         this.plotloading = true;
         this.crossimg = [];
-        this.celltype_1 = column["label"].split(",").pop().split('|')[0]
-        this.celltype_2 = column["label"].split('|').pop()
-        this.gene_1 = row["gene"].split('_')[0]
-        this.gene_2 = row["gene"].split('_').pop()
+        this.celltype_1 = column["label"].split(",").pop().split("|")[0];
+        this.celltype_2 = column["label"].split("|").pop();
+        this.gene_1 = row["gene"].split("_")[0];
+        this.gene_2 = row["gene"].split("_").pop();
         this.crossPlot(row["gene"], column["label"]);
         this.plotloading = false;
         this.evolushow2 = true;
-        // setTimeout(() => { toTarget(820) }, 200); 
+        // setTimeout(() => { toTarget(820) }, 200);
       }
     },
-    previewImg(url){
+    previewImg(url) {
       this.$hevueImgPreview({
         imgList: url,
         multiple: true, // 开启多图预览模式
         keyboard: true,
         nowImgIndex: 0, // 多图预览，默认展示第二张图片
-        mainBackground: 'rgba(0, 0, 0, .5)', // 整体背景颜色
-        closeColor: 'rgba(255,255,255,.5)'
-      })
+        mainBackground: "rgba(0, 0, 0, .5)", // 整体背景颜色
+        closeColor: "rgba(255,255,255,.5)",
+      });
     },
     tableCellStyle({ row, column }) {
-      if (row[column["property"]] === null || column["property"] == 'gene') {
+      if (row[column["property"]] === null || column["property"] == "gene") {
         return {
           background: "white",
         };
       }
-      var mycolr = onesidecolor(0,4,parseFloat(row[column["property"]]));
+      var mycolr = onesidecolor(0, 4, parseFloat(row[column["property"]]));
       return {
         background: mycolr["background"],
         color: mycolr["color"],
@@ -265,18 +319,17 @@ export default {
 </script>
 
 <style>
-.detailtable .el-table__body tr>td:hover {
+.detailtable .el-table__body tr > td:hover {
   cursor: pointer;
-  outline: 1px solid rgba(82, 168, 236, .8);
+  outline: 1px solid rgba(82, 168, 236, 0.8);
   outline-offset: -1px;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, .6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, .6);
+  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: 0 0 8px rgba(82, 168, 236, 0.6);
 }
 
-.detailtable .el-table__body tr>th:hover {
+.detailtable .el-table__body tr > th:hover {
   background-color: black;
 }
-
 </style>
 
 
