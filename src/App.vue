@@ -9,7 +9,7 @@
             </span>
             <span id="subtitle">
               <span class="sub">T</span>umor
-              <span class="sub">I</span>mmuno-therapy
+              <span class="sub">I</span>mmunotherapy
               <span class="sub">G</span>ene
               <span class="sub">E</span>xpression
               <span class="sub">R</span>esource
