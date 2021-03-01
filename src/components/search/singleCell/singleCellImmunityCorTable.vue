@@ -11,6 +11,9 @@
             :expand-row-keys="expands"
             @expand-change="diffExpRespontableExpand"
           >
+            <template slot="empty">
+              <p class="imgtilte">This gene is not express in the selected cell type</p>
+            </template>
             <el-table-column type="expand">
               <template slot-scope="props">
                 <div class="detailimg" v-loading="picScatterloading">

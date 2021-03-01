@@ -6,6 +6,11 @@ library(GEOquery)
 library(dplyr)
 
 # Sys.setenv(http_proxy="http://127.0.0.1:7891")
+GenerateTCGASigScore <- function(exp.table,sig.weighted.mat){
+  tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+  sig.weighted.mat <- sig.weighted.mat[tmp.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+  SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
+}
 
 # load("ResponseData.RData")
 id2symbol <- fread('Response_data/hg38/id2symbol.tsv',sep = "\t",header = F)
@@ -87,7 +92,7 @@ colnames(ccRCC_braun_2020.mat) <- gsub("-","_",colnames(ccRCC_braun_2020.mat))
 # Nathanson_2017
 Nathanson_2017 <- fread("Nathanson_2017.csv")
 Nathanson_2017.mat <- acast(Nathanson_2017, gene_short_name ~ sample,value.var = c("FPKM"), fun.aggregate = mean) %>% 
-                      data.table( GENE_SYMBOL = rownames(.), .)
+  data.table( GENE_SYMBOL = rownames(.), .)
 Nathanson_2017.mat <- Nathanson_2017.mat[,lapply(.SD, mean), by = c("GENE_SYMBOL")]
 colnames(Nathanson_2017.mat)
 
@@ -157,9 +162,9 @@ GenerateResponseList <- function(sample.info, response.data.table, dataset_name,
   return(res.list)
 }
 
-intersect(colnames(response.data.table),sample.info[,sample_id])
-setdiff(sample.info[,sample_id],colnames(response.data.table))
-setdiff(colnames(response.data.table),sample.info[,sample_id])
+# intersect(colnames(response.data.table),sample.info[,sample_id])
+# setdiff(sample.info[,sample_id],colnames(response.data.table))
+# setdiff(colnames(response.data.table),sample.info[,sample_id])
 response.data.list <- NULL
 # dataset_name <- "Melanoma_GSE91061"
 for( dataset_name in unique(sample.info[seq_type != "scRNA-seq", dataset_group])){
@@ -180,7 +185,7 @@ for( dataset_name in unique(sample.info[seq_type != "scRNA-seq", dataset_group])
     }
   }
 }
-names(response.data.list)
+# names(response.data.list)
 
 # load("Rscript/Response_datasets.RData")
 # 
@@ -192,64 +197,59 @@ names(response.data.list)
 # response.data.list$Melanoma_PRJEB23709
 
 ## generate SIG score
-library(org.Hs.eg.db)
-library(edgeR)
-SIG.table <- na.omit(fread("SIG_list.csv",sep = ","))
-keep.SIGID.str <- c("SIG1,SIG2,SIG24,SIG29,SIG3,SIG30,SIG56,SIG57,SIG58,SIG59,SIG60,SIG61,SIG62,SIG63")
-keep.SIGID <- strsplit(keep.SIGID.str,",")[[1]]
-SIG.table <- SIG.table[signature_id %in% keep.SIGID]
-SIG.table$Gene_symbol <-  alias2SymbolUsingNCBI(SIG.table[,Gene_symbol],"Homo_sapiens.gene_info",required.columns = c("Symbol"))
-fwrite(SIG.table,file = "SIG.table.csv",sep = ",")
-SIG.mat <- acast(SIG.table, Gene_symbol ~ signature_id, value.var = c("Weight"),fun.aggregate = mean)
-SIG.mat[is.nan(SIG.mat)] <-  0
-SIG.mat <- data.table(GENE_SYMBOL = rownames(SIG.mat),SIG.mat)
-dysfunction.sig <- fread("Dys.csv",sep = ",")[!is.na(symbol),c(4,2,3)]
-exclusion.sig <- fread("Exc.csv",sep = ",")[!is.na(symbol),c(5,2,3,4)]
-colnames(dysfunction.sig)[1] <- "GENE_SYMBOL"
-colnames(exclusion.sig)[1] <- "GENE_SYMBOL"
-dys.exc.sig <- merge(dysfunction.sig,exclusion.sig,all=T)
-colnames(dys.exc.sig) <- c("GENE_SYMBOL","SIG59","SIG60","SIG61" ,"SIG62","SIG63")
-SIG.mat <- merge(SIG.mat ,dys.exc.sig,by= c("GENE_SYMBOL") ,all =T)
-SIG.mat[is.na(SIG.mat)] <- "0"
-SIG.mat <- SIG.mat[,lapply(.SD, max), by = c("GENE_SYMBOL")]
-test <- melt(SIG.mat,id.vars = c("GENE_SYMBOL"))[value!=0,c(2,1)]
-colnames(test) <- c("signature_id","Gene_symbol")
-SIG.symbol <- na.omit(test)[,lapply(.SD, function(x)paste(x,collapse = ",")),by = c("signature_id"),.SDcols = c("Gene_symbol")]
-SIG.info <- fread("SIG.info.csv")
-SIG.info.table <- na.omit(merge(SIG.info,SIG.symbol,all.x = T))
-colnames(SIG.info.table) <- c("SignatureID","SignatureName","SignatureCite","PMID","Title","AuthorInfo","JournalInfo","GeneSymbol")
-fwrite(SIG.info.table,"SIG.info.table.tsv",sep = "\t")
+# library(org.Hs.eg.db)
+# library(edgeR)
+# SIG.table <- na.omit(fread("SIG_list.csv",sep = ","))
+# keep.SIGID.str <- c("SIG1,SIG2,SIG24,SIG29,SIG3,SIG30,SIG56,SIG57,SIG58,SIG59,SIG60,SIG61,SIG62,SIG63")
+# keep.SIGID <- strsplit(keep.SIGID.str,",")[[1]]
+# SIG.table <- SIG.table[signature_id %in% keep.SIGID]
+# SIG.table$Gene_symbol <-  alias2SymbolUsingNCBI(SIG.table[,Gene_symbol],"Homo_sapiens.gene_info",required.columns = c("Symbol"))
+# fwrite(SIG.table,file = "SIG.table.csv",sep = ",")
+# SIG.mat <- acast(SIG.table, Gene_symbol ~ signature_id, value.var = c("Weight"),fun.aggregate = mean)
+# SIG.mat[is.nan(SIG.mat)] <-  0
+# SIG.mat <- data.table(GENE_SYMBOL = rownames(SIG.mat),SIG.mat)
+# dysfunction.sig <- fread("Dys.csv",sep = ",")[!is.na(symbol),c(4,2,3)]
+# exclusion.sig <- fread("Exc.csv",sep = ",")[!is.na(symbol),c(5,2,3,4)]
+# colnames(dysfunction.sig)[1] <- "GENE_SYMBOL"
+# colnames(exclusion.sig)[1] <- "GENE_SYMBOL"
+# dys.exc.sig <- merge(dysfunction.sig,exclusion.sig,all=T)
+# colnames(dys.exc.sig) <- c("GENE_SYMBOL","SIG59","SIG60","SIG61" ,"SIG62","SIG63")
+# SIG.mat <- merge(SIG.mat ,dys.exc.sig,by= c("GENE_SYMBOL") ,all =T)
+# SIG.mat[is.na(SIG.mat)] <- "0"
+# SIG.mat <- SIG.mat[,lapply(.SD, max), by = c("GENE_SYMBOL")]
+# test <- melt(SIG.mat,id.vars = c("GENE_SYMBOL"))[value!=0,c(2,1)]
+# colnames(test) <- c("signature_id","Gene_symbol")
+# SIG.symbol <- na.omit(test)[,lapply(.SD, function(x)paste(x,collapse = ",")),by = c("signature_id"),.SDcols = c("Gene_symbol")]
+# SIG.info <- fread("SIG.info.csv")
+# SIG.info.table <- na.omit(merge(SIG.info,SIG.symbol,all.x = T))
+# colnames(SIG.info.table) <- c("SignatureID","SignatureName","SignatureCite","PMID","Title","AuthorInfo","JournalInfo","GeneSymbol")
+# fwrite(SIG.info.table,"SIG.info.table.tsv",sep = "\t")
 
 ## generate signatrue socre list
 ### generate SIG weight matrix
-SIG.table <-  na.omit(fread("SIG_list.csv",sep = ","))
-fwrite(SIG.table,file = "SIG.table.csv",sep = ",")
-SIG.table <- SIG.table[signature_id %in% keep.SIGID]
-SIG.mat <- acast(SIG.table, Gene_symbol ~ signature_id, value.var = c("Weight"),fun.aggregate = mean)
-SIG.mat[is.nan(SIG.mat)] <-  0
-SIG.mat <- data.table(GENE_SYMBOL = rownames(SIG.mat),SIG.mat)
-dysfunction.sig <- fread("Dys.csv",sep = ",")[!is.na(symbol),c(4,2,3)]
-exclusion.sig <- fread("Exc.csv",sep = ",")[!is.na(symbol),c(5,2,3,4)]
-colnames(dysfunction.sig)[1] <- "GENE_SYMBOL"
-colnames(exclusion.sig)[1] <- "GENE_SYMBOL"
-dys.exc.sig <- merge(dysfunction.sig,exclusion.sig,all=T)
-colnames(dys.exc.sig) <- c("GENE_SYMBOL","SIG59","SIG60","SIG61" ,"SIG62","SIG63")
-SIG.mat <- merge(SIG.mat ,dys.exc.sig,by= c("GENE_SYMBOL") ,all =T)
-SIG.mat[is.na(SIG.mat)] <- "0"
-SIG.mat <- SIG.mat[,lapply(.SD, max), by = c("GENE_SYMBOL")]
-SIG.mat$sum <- apply(SIG.mat[,-1], 1, function(x){sum(x!=0)})
-SIG.mat <- SIG.mat[sum!=0]
-SIG.mat[,sum:=NULL]
-SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
+# SIG.table <-  na.omit(fread("SIG_list.csv",sep = ","))
+# fwrite(SIG.table,file = "SIG.table.csv",sep = ",")
+# SIG.table <- SIG.table[signature_id %in% keep.SIGID]
+# SIG.mat <- acast(SIG.table, Gene_symbol ~ signature_id, value.var = c("Weight"),fun.aggregate = mean)
+# SIG.mat[is.nan(SIG.mat)] <-  0
+# SIG.mat <- data.table(GENE_SYMBOL = rownames(SIG.mat),SIG.mat)
+# dysfunction.sig <- fread("Dys.csv",sep = ",")[!is.na(symbol),c(4,2,3)]
+# exclusion.sig <- fread("Exc.csv",sep = ",")[!is.na(symbol),c(5,2,3,4)]
+# colnames(dysfunction.sig)[1] <- "GENE_SYMBOL"
+# colnames(exclusion.sig)[1] <- "GENE_SYMBOL"
+# dys.exc.sig <- merge(dysfunction.sig,exclusion.sig,all=T)
+# colnames(dys.exc.sig) <- c("GENE_SYMBOL","SIG59","SIG60","SIG61" ,"SIG62","SIG63")
+# SIG.mat <- merge(SIG.mat ,dys.exc.sig,by= c("GENE_SYMBOL") ,all =T)
+# SIG.mat[is.na(SIG.mat)] <- "0"
+# SIG.mat <- SIG.mat[,lapply(.SD, max), by = c("GENE_SYMBOL")]
+# SIG.mat$sum <- apply(SIG.mat[,-1], 1, function(x){sum(x!=0)})
+# SIG.mat <- SIG.mat[sum!=0]
+# SIG.mat[,sum:=NULL]
+# SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
 
 ## generate sigscore matrix
-
-GenerateTCGASigScore <- function(exp.table,sig.weighted.mat){
-  tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  sig.weighted.mat <- sig.weighted.mat[tmp.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
-}
-SIG.res.matrix <- response.data.table[,.(GENE_SYMBOL)][SIG.matrix, on= c("GENE_SYMBOL"), nomatch = F]
+SIG.mat <- readRDS("Signature_data/SIG.mat.RDS")[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
+SIG.res.matrix <- response.data.table[,.(GENE_SYMBOL)][SIG.mat, on= c("GENE_SYMBOL"), nomatch = F]
 system.time(
   SIG.score.response.seplist <- GenerateTCGASigScore(response.data.table,SIG.res.matrix)
 )
@@ -259,11 +259,11 @@ SIG.score.list$sample_id <- gsub("^X", "", SIG.score.list[,sample_id])
 auc.data.list <- data.table()
 for (dataset.name in names(response.data.list)){
   dataset <- response.data.list[[dataset.name]]
-  # SIG.matrix <-  SIG.mat[,.(SIG1,GENE_SYMBOL)][dataset, on= c("GENE_SYMBOL"), nomatch = NA]
-  subset.SIG.matrix <-  SIG.matrix[dataset[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  subset.SIG.matrix[is.na(subset.SIG.matrix)] <- 0
-  dataset <- dataset[SIG.matrix[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  SIG.score.seplist <- lapply(subset.SIG.matrix[,-c("GENE_SYMBOL")], function(x){dataset[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
+  # SIG.mat <-  SIG.mat[,.(SIG1,GENE_SYMBOL)][dataset, on= c("GENE_SYMBOL"), nomatch = NA]
+  subset.SIG.mat <-  SIG.mat[dataset[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+  subset.SIG.mat[is.na(subset.SIG.mat)] <- 0
+  dataset <- dataset[SIG.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
+  SIG.score.seplist <- lapply(subset.SIG.mat[,-c("GENE_SYMBOL")], function(x){dataset[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
   SIG.score <- data.table(SIG_ID = names(SIG.score.seplist),list.rbind(SIG.score.seplist))
   intersect.sample_id <- intersect(colnames(dataset),colnames(SIG.score))
   R.id <- sample.info[sample_id %in% intersect.sample_id & response_NR == "R", sample_id]
@@ -285,33 +285,25 @@ for (dataset.name in names(response.data.list)){
 }
 
 
-SIG.info <- SIG.info.table
+SIG.info <- fread("siginfo.txt",sep = "\t")
 Article.info <- fread("Ariticle.info.csv",sep = ",")
 
 
 ## generate survival matrix
-GenerateTCGASigScore <- function(exp.table,sig.weighted.mat){
-  tmp.table <- exp.table[sig.weighted.mat[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  sig.weighted.mat <- sig.weighted.mat[tmp.table[,.(GENE_SYMBOL)], on= c("GENE_SYMBOL"), nomatch = F]
-  SIG.score.seplist <- lapply(sig.weighted.mat[,-c("GENE_SYMBOL")], function(x){tmp.table[,lapply(.SD,weighted.mean,w=x), .SDcols=-c("GENE_SYMBOL")]})
-}
-
 surv.sample.info <- sample.info[!is.na(`overall survival (days)`),]
 colnames(surv.sample.info)[c(9,10)] <- c("Overall_survival_days","Status")
 surv.sample.info$Status <- ifelse(surv.sample.info$Status == "Dead", 1, 0)
 zscore.mat <- NULL
 exp.cutoff <- 0.5
-SIG.mat <- readRDS("Signature_data/SIG.mat.RDS")
-SIG.matrix <- SIG.mat[,lapply(.SD, as.numeric),by = c("GENE_SYMBOL")]
 for (dataset.name in colnames(auc.data.list)[-1]){
-  dataset <- readRDS(paste0(loading.data.path,dataset.name,".Response.Rds"))[,lapply(.SD, max), by = c("GENE_SYMBOL")]
+  dataset <- readRDS(paste0("Response_data/",dataset.name,".Response.Rds"))[,lapply(.SD, max), by = c("GENE_SYMBOL")]
   whether_surv <- nrow(surv.sample.info[,c(1,9,10)][data.table(sample_id = colnames(dataset)), on = c("sample_id"), nomatch = FALSE]) < 2
   if(whether_surv) next
-  SIG.score.response.seplist <- GenerateTCGASigScore(dataset,SIG.matrix)
-  SIG.score.list <- list.rbind(SIG.score.response.seplist) %>% data.frame(row.names = names(SIG.score.response.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)
-  SIG.score.list$sample_id <- gsub("^X", "", SIG.score.list[,sample_id])
-  sample.names <- SIG.score.list$sample_id
-  dataset <- t(SIG.score.list[,-1])
+  SIG.score.response.seplist <- GenerateTCGASigScore(dataset,SIG.mat)
+  dataset.SIG.score.list <- list.rbind(SIG.score.response.seplist) %>% data.frame(row.names = names(SIG.score.response.seplist), .) %>% t() %>% data.table(sample_id = row.names(.), .)
+  dataset.SIG.score.list$sample_id <- gsub("^X", "", dataset.SIG.score.list[,sample_id])
+  sample.names <- dataset.SIG.score.list$sample_id
+  dataset <- t(dataset.SIG.score.list[,-1])
   colnames(dataset) <- sample.names
   dataset <- as.data.frame(dataset)
   covariates <- rownames(dataset)
@@ -354,7 +346,6 @@ for (dataset.name in colnames(auc.data.list)[-1]){
 }
 surv.zscore.table <- zscore.mat
 setnames(surv.zscore.table,"GENE_SYMBOL","signature")
-surv.zscore.table[signature == "SIG57", "Melanoma-GSE106128_DCs_treated_Male"]
 
 save(sample.info,SIG.score.list,auc.data.list,surv.zscore.table,SIG.info,Article.info,file = "Response_data/ResponseData.RData")
 for (dataset.name in names(response.data.list)){
@@ -365,3 +356,17 @@ for (dataset.name in names(response.data.list)){
 immunesig.auc.table <- data.table(t(auc.data.list)[-1,],keep.rownames = T,check.names = F)
 setnames(immunesig.auc.table,c("dataset_id",auc.data.list$group))
 fwrite(immunesig.auc.table,"Signature_data/sigauctable.csv")
+
+load("Response_data/ResponseData.RData")
+immuneSigView.df <- as.data.frame(auc.data.list)
+rownames(immuneSigView.df) <- immuneSigView.df$group
+immuneSigView.df <- immuneSigView.df[,-1]
+immuneSigView.df[1:3,1:4]
+immuneSigMeanAUC <- apply(immuneSigView.df[,1:10],1,function(x){
+  mean(as.numeric(x)[!is.na(x)])
+})
+immuneSigMeanAUC.table <- data.table(SignatureID = names(immuneSigMeanAUC), AUC = immuneSigMeanAUC)
+immuneSigMeanAUC.table <- SIG.info[,.(SignatureID,SignatureName,SignatureCite,PMID)][immuneSigMeanAUC.table, on = c("SignatureID")]
+# immuneSigMeanAUC.table.json <- toJSON(pretty = TRUE, immuneSigMeanAUC.table)
+# cat(immuneSigMeanAUC.table.json, file = (con <- file("immuneSigView.json", "w", encoding = "UTF-8")))
+# close(con)

@@ -138,11 +138,11 @@ export default {
   },
   mounted() {
     this.CancerTypeSelectChange();
+    this.getcancer();
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
       this.getTableData(this.seargene);
       this.searchTable();
-      this.getcancer();
       this.getgloClu();
       this.getCellType();
     });
@@ -183,7 +183,9 @@ export default {
     },
     CancerTypeSelectChange() {
       this.getgloClu();
-      this.getCellType();
+      // this.$nextTick(() => {
+      //   this.getCellType();
+      // });
     },
     GlobalClusterChange() {
       this.getCellType();
@@ -203,7 +205,7 @@ export default {
           this.gloCluoptions = res.data.list;
           this.GlobalCluster = res.data.list[0].GlobalCluster;
           this.gloClu = res.data.list[0].GlobalCluster;
-          this.getcrossClu();
+          this.getCellType();
         });
     },
     getCellType() {
