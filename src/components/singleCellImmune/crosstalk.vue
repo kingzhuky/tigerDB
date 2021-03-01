@@ -157,7 +157,7 @@ export default {
         this.loadpage = this.loadpage - 1;
         this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
         if (this.loadpage > 1) {
-          console.log(this.loadpage);
+          // console.log(this.loadpage);
           scrollRow("scDiffExpTable", 400);
           this.loading = false;
         }

@@ -302,7 +302,7 @@ export default {
         this.$refs.detailPlot.getSampleDetail(column["label"]);
         this.$refs.detailPlot.getGeneDetail(row["gene"]);
         setTimeout(() => {
-          toTarget(820);
+          toTarget(620);
         }, 200);
       }
     },

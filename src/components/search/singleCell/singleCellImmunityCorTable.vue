@@ -89,7 +89,7 @@
               label="Correlated Gene"
               width="180"
             ></el-table-column>
-            <el-table-column label="COR" prop="r" sortable></el-table-column>
+            <el-table-column label="COR" prop="r" sortable :sort-method="sortByNumber"></el-table-column>
             <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
             <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
           </el-table>
@@ -292,6 +292,11 @@ export default {
         row.CellType
       );
     },
+    sortByNumber(obj1, obj2) {
+      let val1 = obj1.r
+      let val2 = obj2.r
+      return val1 - val2
+    }
   },
 };
 </script>

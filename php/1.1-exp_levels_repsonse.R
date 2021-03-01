@@ -13,8 +13,8 @@ mytheme <- theme_bw() +
         axis.line=element_line(color="black",size=0.5))
 
 Args <- commandArgs(T)
-#Args <- c("CD274,CD3D","RCC-Braun_2020_ALL","CR","SD,PD","NULL","NULL","TRUE","pdf")
-#Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","PR,CR","SD,PD","NULL","NULL","TRUE","pdf")
+# Args <- c("CD274,CD3D","Melanoma-Nathanson_2017_anti-CTLA-4","CR","SD,PD","NULL","NULL","TRUE","pdf")
+# Args <- c("ALPL,BST1,CD93,CEACAM3,CREB5,CRISPLD2,CSF3R,CXCR1,CXCR2,CYP4F3,DYSF,FCAR,FCGR3B,FPR1,FPR2,G0S2,H2BC5,HPSE,KCNJ15,LILRB2,MGAM,MME,NA,PDE4B,S100A12,SIGLEC5,SLC22A4,SLC25A37,TECPR2,TNFRSF10C,VNN3","Melanoma_PRJEB23709_ALL,Melanoma_PRJEB23709_anti-PD-1","PR,CR","SD,PD","NULL","NULL","TRUE","pdf")
 gene <- unlist(strsplit(Args[1],split=','))
 mergedatasets <- unlist(strsplit(Args[2],split=','))
 response.group <- unlist(strsplit(Args[3],split=','))
@@ -61,7 +61,7 @@ for (sl.dataset in mergedatasets){
   exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(normalGene,gene)]
   exp.array$score_group <- ifelse(exp.array[,GENE_SYMBOL] %in% gene, "CustomGene","NormalGene")
   exp.array <- exp.array[,lapply(.SD, mean), by = c("score_group") , .SDcols = -c("GENE_SYMBOL")] # Weighted gene = 1
-  exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")])
+  exp.array <- data.frame(row.names = exp.array[,score_group],exp.array[,-c("score_group")],check.names = F)
   exp.mergearray <- rbind(exp.mergearray,t(exp.array))
   
   # exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(normalGene,gene)]

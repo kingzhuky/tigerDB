@@ -73,7 +73,7 @@ export default {
       isShow: false,
       loadpage: 1,
       gene: "CD274,CD3D",
-      tabactiveName: "cormat",
+      tabactiveName: "response",
     };
   },
 

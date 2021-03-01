@@ -221,7 +221,7 @@ export default {
       this.sortCol = column.prop;
       this.sortOrder = column.order;
       this.currentPage = 1;
-      console.log(column.prop + column.order);
+      // console.log(column.prop + column.order);
       this.getTableData(
         this.seargene,
         this.conditi,
@@ -241,7 +241,6 @@ export default {
       sortOrder,
       ifplot
     ) {
-      console.log("Plot: " + ifplot);
       this.show = true;
       this.imgshow = false;
       this.diffexpimg = "";

@@ -143,7 +143,7 @@ export default {
           },
         })
         .then(function (res) {
-          console.log(res.data.output[0].split(","));
+          // console.log(res.data.output[0].split(","));
           that.imgpath = res.data.output[0].split(",");
           that.loading = false;
         })

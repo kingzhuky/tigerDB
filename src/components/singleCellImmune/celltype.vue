@@ -355,7 +355,7 @@ export default {
   },
   watch: {
     clickGene() {
-      console.log("click");
+      // console.log("click");
       this.$nextTick(() => {
         setTimeout(() => {
           toTarget(720);

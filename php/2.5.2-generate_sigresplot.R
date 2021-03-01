@@ -2,8 +2,8 @@ library(jsonlite)
 library(data.table)
 library(dplyr)
 library(gtools)
+library(ggplot2)
 library(pROC)
-library(plotROC)
 library(rlist)
 colors=c("#cc4a5399",'#00ADDB99','#7142AC99',"#42B54099",'#00008099','#07702b99',"#7FFF0099","#AD002A","#ED000099",'#ABD20599','#F0BE7E','#4D221399',"#FDAF9199",'#85E1D099','#C979CD99','#F26A1299',"#ADB6B699",'#4B79AB99',"#0099B499",'#FF149399','#00800099',"#1B191999")
 my36colors <-c('#D6E7A3',"orange1", 'lightblue','#7142AC',"darkcyan","royalblue1","red3",'#53A85F',"deeppink",
@@ -20,6 +20,8 @@ mytheme <- theme_bw() +
 
 Args <- commandArgs(T)
 # Args <- c("CD274,CD3D","SIG1","Melanoma-GSE100797_ACT")
+# Args <- c("CD274,CD3D","SIG6","Melanoma-GSE115821_anti-PD-1")
+
 gene <- unlist(strsplit(Args[1],split=','))
 sigid <- Args[2]
 mergedatasets <- Args[3]
@@ -101,15 +103,15 @@ if(sigid %in% SIG.info$SignatureID){
 }else{
   signame <- sigid
 }
-
-p <- ggplot(roc.plot.data, aes(d = group, m = AUC)) +
-  geom_roc(show.legend = TRUE, labels=FALSE,pointsize = 0)+ ggpubr::theme_classic2() +
-  scale_color_manual(values = my36colors[1:20]) + xlab("1 - Specificity") + ylab("Sensitivity") + 
-  scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
-auc <- calc_auc(p)$AUC
-roc.plot <- p + annotate("text", x = .75, y = .25, 
-                         label = paste0(signame, paste(" AUC =", round(auc, 3), "\n"),collapse = ""),
-                         size = 4)
+roc.plot.data$group <- factor(roc.plot.data$group,levels = c("Responder (R)","Non-Responder (NR)"))
+roc.data <- roc(roc.plot.data$group, roc.plot.data$AUC)
+roc.plot <- pROC::ggroc(roc.data) + ggpubr::theme_classic2() + xlab("1 - Specificity") + ylab("Sensitivity") +
+              geom_segment(aes(x = 1, xend = 0, y = 0, yend = 1), color="darkgrey", linetype="dashed") +
+              annotate("text", x = 0.25, y = .25,
+                       label = paste0(signame, paste(" AUC =", round(auc(roc.data), 3), "\n"),collapse = ""),
+                       size = 4) +
+              theme(text = element_text(size = 15),
+                    axis.text = element_text(color = "black"))
 # }
 filename = paste0(result.path,maintitle1,".png")
 filename2 = paste0(result.path,maintitle2,".png")

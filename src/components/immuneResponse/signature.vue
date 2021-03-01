@@ -644,12 +644,10 @@ export default {
                 // that.imgpath = imgpath2[0];
                 // that.imgpathSur = imgpath2[1];
                 that.loadingSur = false;
-                console.log("haha");
               }
             } else {
               that.surresultShow = false;
             }
-            console.log(that.surresultShow);
           })
           .catch(function (res) {
             console.log(res);

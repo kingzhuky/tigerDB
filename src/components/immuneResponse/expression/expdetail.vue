@@ -160,7 +160,7 @@ export default {
       resultShow: true,
       normalMed: "None",
       normalGene: "",
-      logScale: "FALSE",
+      logScale: "TRUE",
       responder: ["CR", "PR"],
       noresponder: ["PD", "SD"],
       responseGroupOption: [
@@ -225,7 +225,7 @@ export default {
       this.responder = ["CR", "PR"];
       this.noresponder = ["PD", "SD"];
       this.normalMed = "None";
-      this.logScale = "FALSE";
+      this.logScale = "TRUE";
       this.getPlot(gene, mergedatasets);
     },
 

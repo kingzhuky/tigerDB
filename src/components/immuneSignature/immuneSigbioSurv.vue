@@ -19,6 +19,7 @@
             :property="item"
             :label="item"
             sortable
+            :sort-method="(a,b)=>{return a[item] - b[item]}" 
             align="center"
             :width="item === 'SignatureName' ? 160 : 80"
           >
@@ -213,6 +214,11 @@ export default {
         color: mycolr["color"],
       };
     },
+    sortByNumber(obj1, obj2) {
+      let val1 = obj1.r
+      let val2 = obj2.r
+      return val1 - val2
+    }
   },
   components: {
     "v-immuneSigSurvdetail": () => import("./immuneSigbioSurvdetail.vue"),
