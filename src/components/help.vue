@@ -17,7 +17,7 @@
                 63 samples have immunotherapy clinical data. Besides, we also
                 collected eight CRISPR and two shRNA screening data from studies
                 identifying genes responsible of anticancer immune response.
-                Moreover, we collected 63 gene signatures that could be
+                Moreover, we collected 11 gene signatures that could be
                 potentially used to predict the immunotherapy response from
                 public literature.
               </p>
@@ -57,6 +57,21 @@
             <el-card
               shadow="hover"
               class="box-card"
+              @click.native="handleEdit('singcell')"
+            >
+              <div slot="header" class="clearfix" style="text-align: center">
+                <span class="homedesrc">Single Cell Immunity</span>
+                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+              </div>
+              <div style="text-align: center">
+                <img height="150px" src="../assets/homesc.png" />
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="4" :push="2">
+            <el-card
+              shadow="hover"
+              class="box-card"
               @click.native="handleEdit('response')"
             >
               <div slot="header" class="clearfix" style="text-align: center">
@@ -68,7 +83,7 @@
               </div>
             </el-card>
           </el-col>
-          <el-col :span="4" :push="2">
+          <el-col :span="4" :push="3">
             <el-card
               shadow="hover"
               class="box-card"
@@ -80,21 +95,6 @@
               </div>
               <div style="text-align: center">
                 <img height="150px" src="../assets/homesig.png" />
-              </div>
-            </el-card>
-          </el-col>
-          <el-col :span="4" :push="3">
-            <el-card
-              shadow="hover"
-              class="box-card"
-              @click.native="handleEdit('singcell')"
-            >
-              <div slot="header" class="clearfix" style="text-align: center">
-                <span class="homedesrc">Single Cell Immunity</span>
-                <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
-              </div>
-              <div style="text-align: center">
-                <img height="150px" src="../assets/homesc.png" />
               </div>
             </el-card>
           </el-col>
