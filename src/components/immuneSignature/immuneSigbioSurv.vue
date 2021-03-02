@@ -49,6 +49,7 @@
       ref="detailPlot"
       v-show="isShow"
       :sign="signature"
+      :signame="signame"
       :datatype="datatype"
       :dataset="datasetid"
       :path="path"
@@ -85,6 +86,7 @@ export default {
       search: "",
       loadDir: "",
       path: "",
+      signame: "",
     };
   },
 
@@ -190,6 +192,7 @@ export default {
       if (column["label"] !== "") {
         this.isShow = true;
         this.signature = row["SignatureID"];
+        this.signame = row["SignatureName"]
         this.datasetid = column["label"];
         this.$refs.detailPlot.gettable(
           this.gene,
@@ -205,7 +208,7 @@ export default {
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
       // console.log(row[column["label"]])
-      if (row[column["label"]] === undefined) {
+      if (row[column["label"]] === undefined || row[column["label"]] === null || row[column["label"]] === 0 || row[column["label"]] === -0) {
         return {
           background: "white",
         };

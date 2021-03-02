@@ -227,12 +227,17 @@ font-size: 20px;
 padding-bottom: 10px;
 }
 
+
 div#readmeCard {
 font-size: 16px;
 line-height: 22px;
 border-color: rgb(20, 146, 140);
 margin-bottom: 20px;
 }
+.readmeEmp{
+  font-weight: bolder;
+}
+
 .label {
 font-size: 16px;
 }

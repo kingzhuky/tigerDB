@@ -5,7 +5,7 @@
         <el-card class="box-card-return">
           <div class="text item">
             <h1 style="font-weight: bold; font-size: 25px; text-align: center">
-              {{ sign }} -- {{ dataset }}
+              {{ signame }} -- {{ dataset }}
             </h1>
           </div>
         </el-card>
@@ -36,7 +36,7 @@
                 :span="8"
                 style="position: relative; left: 40px; top: 0px"
               >
-                <p class="imgtitle">{{ sign }} Survival</p>
+                <p class="imgtitle">{{ signame }} Survival</p>
                 <img
                   id="singleimg"
                   fit="fill"
@@ -80,6 +80,9 @@ export default {
       type: String,
     },
     path: {
+      type: String,
+    },
+    signame: {
       type: String,
     },
     dataset: {},

@@ -49,6 +49,7 @@
       ref="detailPlot"
       v-show="isShow"
       :sign="signature"
+      :signame="signame"
       :datatype="datatype"
       :dataset="datasetid"
       :path="path"
@@ -85,6 +86,7 @@ export default {
       search: "",
       loadDir: "",
       path: "",
+      signame: "",
     };
   },
 
@@ -191,6 +193,7 @@ export default {
       if (column["label"] !== "") {
         this.isShow = true;
         this.signature = row["SignatureID"];
+        this.signame = row["SignatureName"];
         this.datasetid = column["label"];
         this.$refs.detailPlot.gettable(
           this.gene,

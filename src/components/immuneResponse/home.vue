@@ -1,5 +1,19 @@
 <template>
   <div id="tigtable">
+    <el-card id="readmeCard">
+      <el-row id="readme">Readme:</el-row>
+      1. This module provides functions for the analysis of
+      <span class="readmeEmp">bulk transcriptome gene expression</span> data
+      with immunotherapy clinical information.<br />
+      2. In the <span class="readmeEmp">interactive heatmap</span>, users could
+      click the cell/tab of table for detail information, such as
+      <span class="readmeEmp">survival analysis</span> and
+      <span class="readmeEmp">differential expression</span> of the selected
+      gene between <span class="readmeEmp">responder and non-responder</span> or
+      between <span class="readmeEmp">pre- and post-therapy</span><br />
+      3. Moreover, users could adjust the survival analysis parameters and
+      compare the performance with known signatures.
+    </el-card>
     <el-card class="box-card-heatmap">
       <el-tabs
         v-model="activeName"

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <!-- <el-row id="readme">Readme:</el-row>
     <el-card id="readmeCard">
-      1.The integration of CRISPR Screen and shRNA Screen shows the correlation between genes and immunity in cell experiments.
-      <br />2.Click to get detailed Screen data information and gene-related drug information.
-    </el-card> -->
-
+      <el-row id="readme">Readme:</el-row>
+      Users can quickly obtain the <span class="readmeEmp">comprehensive analysis</span> results of the above
+      four modules by searching a gene of interest.
+    </el-card>
     <div class="serachpage">
       <el-card class="box-card3" id="searchpart">
         <el-row class="searchrow">
@@ -25,8 +24,6 @@
         </el-row>
         <br />
       </el-card>
-
-      <br />
     </div>
     <div id="homecard">
       <el-card v-show="homeShow">
@@ -62,18 +59,19 @@
               ></component>
             </el-tab-pane>
 
-            <el-tab-pane label="Immune Screening" name="immuneScreening">
-              <component
-                :is="immuneScreeningVue"
-                ref="immuneScreeningVueRef"
-                :seargene="seargene"
-              ></component>
-            </el-tab-pane>
             <el-tab-pane label="Signature Analysis" name="signature">
               <component
                 :is="signatureVue"
                 ref="immuSignatureRef"
                 :gene="seargene"
+              ></component>
+            </el-tab-pane>
+
+            <el-tab-pane label="Immune Screening" name="immuneScreening">
+              <component
+                :is="immuneScreeningVue"
+                ref="immuneScreeningVueRef"
+                :seargene="seargene"
               ></component>
             </el-tab-pane>
           </el-tabs>

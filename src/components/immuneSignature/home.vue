@@ -1,5 +1,26 @@
 <template>
   <div id="sigpage">
+    <el-card id="readmeCard">
+      <el-row id="readme">Readme:</el-row>
+      1. This module provides analysis functions for exploring cancer
+      immunotherapy using known <span class="readmeEmp">immunotherapy response signatures</span> collected from
+      public literature.<br />
+      2. <span class="readmeEmp">Biomarker Analysis:</span> <br />
+      <el-row class="tab"
+        >In <span class="readmeEmp">AUC Matrix</span> and <span class="readmeEmp">Survival Matrix</span>, users can compare the performance of
+        their own biomarkers with known immunotherapy response signature using
+        the gene expression data with immunotherapy clinical information</el-row
+      >
+      <el-row class="tab"
+        >In <span class="readmeEmp">Correlation Matrix</span>, users could check whether the genes of interest
+        are correlated with the known immunotherapy response signature using the
+        TCGA gene expression data without immunotherapy clinical
+        information</el-row
+      >
+      3. In <span class="readmeEmp">Response Prediction</span>, users can predict the patient immunotherapy
+      response by applying published gene signatures to the user-provided
+      baseline gene expression profiles
+    </el-card>
     <el-card class="box-card-heatmap">
       <el-tabs
         v-model="activeName"
@@ -81,6 +102,10 @@ export default {
 </script>
 
 <style>
+.tab {
+  /* display:inline-block;  */
+  margin-left: 20px;
+}
 div#sigpage {
   margin-bottom: 20px;
 }

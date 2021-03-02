@@ -1,5 +1,24 @@
 <template>
   <div class="outside">
+    <el-card id="readmeCard">
+      <el-row id="readme">Readme:</el-row>
+      1. This module provides users with
+      <span class="readmeEmp">plentiful scRNA-seq analysis</span> functions in
+      six tabs including the <span class="readmeEmp">Overview</span>,
+      <span class="readmeEmp">Cell Type Marker</span>,
+      <span class="readmeEmp">Differential Expression Analysis</span>,
+      <span class="readmeEmp">Correlation Analysis</span>,
+      <span class="readmeEmp">Trajectory Analysis</span> and
+      <span class="readmeEmp">Cell-Cell Communication</span> tabs.<br />
+      2. In the <span class="readmeEmp">interactive heatmap</span>, users could
+      use a selection box provided to quickly
+      <span class="readmeEmp">locate main lineage cell types</span> of interest,
+      and a text box is provided to allow users to
+      <span class="readmeEmp">search genes</span> of interest.<br />
+      3. Moreover, users can click tab/cell of a table for detail information,
+      such as UMAP plots and boxplot used to visualize the clustering
+      results of selected main lineage cells.
+    </el-card>
     <el-card id="scimmucard">
       <el-row id="scImmuInput">
         <el-col>

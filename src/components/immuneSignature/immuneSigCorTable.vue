@@ -209,7 +209,7 @@ export default {
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["label"]] === null) {
+      if (row[column["property"]] === null || row[column["property"]] === 0 || row[column["property"]] === -0) {
         return {
           background: "white",
         };
