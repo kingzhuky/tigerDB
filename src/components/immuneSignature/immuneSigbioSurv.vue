@@ -11,6 +11,7 @@
           :data="tableData"
           @cell-click="heandleclick"
           :cell-style="tableCellStyle"
+          @sort-change="sortChangeClick"
           style="100%"
         >
           <el-table-column
@@ -18,8 +19,8 @@
             :key="item"
             :property="item"
             :label="item"
-            sortable
-            :sort-method="(a,b)=>{return a[item] - b[item]}" 
+            :sort-orders="['ascending', 'descending']"
+            sortable="custom"
             align="center"
             :width="item === 'SignatureName' ? 160 : 80"
           >
@@ -203,7 +204,8 @@ export default {
 
     //渲染每个格子的颜色
     tableCellStyle({ row, column }) {
-      if (row[column["label"]] === null) {
+      // console.log(row[column["label"]])
+      if (row[column["label"]] === undefined) {
         return {
           background: "white",
         };
@@ -214,11 +216,27 @@ export default {
         color: mycolr["color"],
       };
     },
-    sortByNumber(obj1, obj2) {
-      let val1 = obj1.r
-      let val2 = obj2.r
-      return val1 - val2
-    }
+    sortChangeClick(column) {
+      var sortCol = column.prop;
+      var sortOrder = column.order;
+      function sortByNumber(obj1, obj2, index) {
+        if (obj1 === undefined) {
+          return 1;
+        } else if (obj2 === undefined) {
+          return -1;
+        }
+        if (index === "descending") {
+          return obj2 - obj1;
+        } else if (index === "ascending") {
+          return obj1 - obj2;
+        } else {
+          return 0;
+        }
+      }
+      this.tableData.sort(function (a, b) {
+        return sortByNumber(a[sortCol], b[sortCol], sortOrder);
+      });
+    },
   },
   components: {
     "v-immuneSigSurvdetail": () => import("./immuneSigbioSurvdetail.vue"),

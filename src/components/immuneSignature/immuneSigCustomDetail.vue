@@ -20,6 +20,7 @@
           :data="sigsampletable"
           @cell-click="heandleclick"
           :cell-style="tableCellStyle"
+          @sort-change="sortChangeClick"
           style="100%"
         >
           <el-table-column
@@ -28,7 +29,8 @@
             :property="item.key"
             :label="item.name"
             :type="item.sigid"
-            sortable
+            :sort-orders="['ascending', 'descending']"
+            sortable="custom"
             align="center"
             width="80"
           >
@@ -310,6 +312,41 @@ export default {
     //     color: mycolr["color"],
     //   };
     // },
+    // tableCellStyle({ row, column }) {
+    //   console.log(row[column["property"]] )
+    //   if (row[column["property"]] === null || row[column["property"]] === 0 || row[column["property"]] === -0) {
+    //     return {
+    //       background: "white",
+    //     };
+    //   }
+    //   var mycolr = gStyle(parseFloat(row[column["property"]]), 2.25);
+    //   return {
+    //     background: mycolr["background"],
+    //     color: mycolr["color"],
+    //   };
+    // },
+    sortChangeClick(column) {
+      console.log(column.order)
+      var sortCol = column.prop;
+      var sortOrder = column.order;
+      function sortByNumber(obj1, obj2, index) {
+        if (obj1 === undefined) {
+          return 1;
+        } else if (obj2 === undefined) {
+          return -1;
+        }
+        if (index === "descending") {
+          return obj2 - obj1;
+        } else if (index === "ascending") {
+          return obj1 - obj2;
+        } else {
+          return 0;
+        }
+      }
+      this.sigsampletable.sort(function (a, b) {
+        return sortByNumber(a[sortCol], b[sortCol], sortOrder);
+      });
+    },
   },
   components: {
     "v-sigdetail": () => import("./immuneSigTableDetail.vue"),

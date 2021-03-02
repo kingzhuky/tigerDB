@@ -7,23 +7,19 @@
         ref="singleTable"
         border
         max-height="800"
-        :data="
-          tableData.filter(
-            (data) =>
-              !search ||
-              data.SignatureID.toLowerCase().includes(search.toLowerCase())
-          )
-        "
+        :data="tableData"
         @cell-click="heandleclick"
         :cell-style="tableCellStyle"
+        @sort-change="sortChangeClick"
         style="100%"
       >
         <el-table-column
-          v-for="item in tableDataheader"
-          :key="item"
+          v-for="(item, index ) in tableDataheader"
+          :key="index"
           :property="item"
           :label="item"
-          sortable
+          :sort-orders="['ascending', 'descending']"
+          sortable="custom"
           align="center"
           :width="item === 'SignatureName' ? 160 : 80"
         >
@@ -230,6 +226,27 @@ export default {
         background: mycolr["background"],
         color: mycolr["color"],
       };
+    },
+    sortChangeClick(column) {
+      var sortCol = column.prop;
+      var sortOrder = column.order;
+      function sortByNumber(obj1, obj2, index) {
+        if (obj1 === undefined) {
+          return 1;
+        } else if (obj2 === undefined) {
+          return -1;
+        }
+        if (index === "descending") {
+          return obj2 - obj1;
+        } else if (index === "ascending") {
+          return obj1 - obj2;
+        } else {
+          return 0;
+        }
+      }
+      this.tableData.sort(function (a, b) {
+        return sortByNumber(a[sortCol].split("_")[0], b[sortCol].split("_")[0], sortOrder);
+      });
     },
   },
   components: {
