@@ -200,7 +200,7 @@ export default {
           column["label"],
           row["SignatureID"]
         );
-        this.$refs.detailPlot.artivcleDetail(row["SignatureID"]);
+        this.$refs.detailPlot.articleDetail(row["SignatureID"]);
         setTimeout(() => {
           toTarget(820);
         }, 200);

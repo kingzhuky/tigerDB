@@ -251,7 +251,7 @@ export default {
         // this.cancerMsg = column["label"];
         // setTimeout(() => { toTarget(820) }, 200);
         // this.$refs.detailPlot.tableDetail(row["gene"]);
-        // this.$refs.detailPlot.artivcleDetail(column["label"]);
+        // this.$refs.detailPlot.articleDetail(column["label"]);
       } else {
         this.isShow = false;
       }

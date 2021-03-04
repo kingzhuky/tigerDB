@@ -128,7 +128,7 @@ export default {
       this.Plot(this.gene, this.cancer, this.sign);
     },
 
-    artivcleDetail(sample) {
+    articleDetail(sample) {
       var that = this;
       that.artloading = true;
       this.$http

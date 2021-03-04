@@ -6,7 +6,6 @@
       <el-row>
         <el-col :push="1" :span="22">
           <p class="title">Data Statistics</p>
-          
         </el-col>
       </el-row>
       <el-row>
@@ -24,6 +23,7 @@
         </el-col>
       </el-row>
     </el-card>
+    <br />
   </div>
 </template>
 

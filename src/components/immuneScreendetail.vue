@@ -13,6 +13,11 @@
 
       <div class="infor">
         <el-card>
+          <div
+            id="barplot"
+            class="scaterPlot"
+            style="width: 1300px; height: 700px"
+          ></div>
           <p class="card-title">Article Infomations</p>
           <!-- <el-table :data="articleData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>
@@ -119,6 +124,9 @@ export default {
     datatype: {
       type: String,
     },
+    bardata: {
+      type: Array,
+    },
   },
 
   data() {
@@ -136,8 +144,11 @@ export default {
     };
   },
   mounted() {
-    this.tableDetail(this.gene);
-    this.artivcleDetail(this.cancer);
+    console.log(this.bardata);
+    // this.tableDetail(this.gene);
+    this.articleDetail(this.cancer);
+
+    this.draw_chart(this.bardata);
   },
 
   methods: {
@@ -176,7 +187,7 @@ export default {
         });
     },
 
-    artivcleDetail(sample) {
+    articleDetail(sample) {
       var that = this;
       that.artloading = true;
       this.$http
@@ -194,6 +205,44 @@ export default {
         .catch(function (res) {
           console.log(res);
         });
+    },
+    draw_chart(data) {
+      console.log(data);
+      var targetdiv = document.getElementById("barplot");
+      //let myChart_mercor = this.$echarts.init(targetdiv);
+      //cdn替换为
+      var xdata = Object.keys(data);
+      var ydata = Object.values(data);
+      xdata.splice(0, 1);
+      ydata.splice(0, 1);
+      console.log(xdata);
+      console.log(ydata.map(Number));
+      let myChart_mercor = window.echarts.init(targetdiv);
+      let option = {
+        xAxis: {
+          type: "category",
+          data: xdata,
+          axisLabel: {
+            rotate: 45,
+            interval: 0,
+          },
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          {
+            data: ydata.map(Number),
+            type: "bar",
+          },
+        ],
+      };
+
+      myChart_mercor.clear();
+      myChart_mercor.setOption(option);
+      window.onresize = function () {
+        myChart_mercor.resize();
+      };
     },
   },
 

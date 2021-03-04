@@ -76,6 +76,7 @@
       :datatype="datatype"
       :gene="m6aMsg"
       :cancer="cancerMsg"
+      :bardata="bardata"
     ></v-immuneScreendetail>
   </div>
 </template>
@@ -113,6 +114,7 @@ export default {
       sortCol: "",
       sortOrder: "",
       tableDataheader: [],
+      bardata: [],
     };
   },
 
@@ -279,11 +281,14 @@ export default {
         this.isShow = true;
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
+        this.bardata = row
+        console.log(this.bardata)
         setTimeout(() => {
           toTarget(720);
         }, 300);
-        this.$refs.detailPlot.tableDetail(row["gene"]);
-        this.$refs.detailPlot.artivcleDetail(column["label"]);
+        // this.$refs.detailPlot.tableDetail(row["gene"]);
+        this.$refs.detailPlot.articleDetail(column["label"]);
+        this.$refs.detailPlot.draw_chart(row);
       }
     },
     querySearchAsync(queryString, cb) {
