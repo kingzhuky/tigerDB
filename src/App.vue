@@ -50,6 +50,9 @@
           <el-menu-item index="/download">
             <div class="header-nav">Download</div>
           </el-menu-item>
+          <el-menu-item index="/statistics">
+            <div class="header-nav">Statistics</div>
+          </el-menu-item>
           <el-menu-item index="/contact">
             <div class="header-nav">Contact</div>
           </el-menu-item>

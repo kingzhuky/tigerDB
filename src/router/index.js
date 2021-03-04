@@ -13,7 +13,7 @@ const download = () => import('@/components/download')
 const help = () => import('@/components/help')
 const contact = () => import('@/components/contact')
 const search = () => import('@/components/search/home')
-
+const statistics = () => import('@/components/statistics')
 export default new VueRouter({
   routes: [{
     path: '/',
@@ -53,8 +53,8 @@ export default new VueRouter({
     component: help
   },
   {
-    path: '/contact',
-    component: contact
+    path: '/statistics',
+    component: statistics
   }
 
   ]

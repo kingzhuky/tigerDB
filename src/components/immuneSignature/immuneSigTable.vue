@@ -38,7 +38,7 @@
                 <el-button
                   id="immusignatureplot"
                   icon="el-icon-s-marketing"
-                  @click="showDetail(scope.row)"
+                  @click="showDetail(scope.row.SignatureID)"
                   >Detail</el-button
                 >
               </template>
@@ -72,10 +72,13 @@ import {
 } from "../../../static/js/utils.js";
 
 export default {
+  props: {
+    sigID: String,
+  },
   data() {
     return {
       sigtable: [],
-      sigID: "SIG1",
+      // sigID: "SIG1",
       sigName: "T cell-inflamed GEP",
       isShow: true,
       loading: true,
@@ -88,14 +91,6 @@ export default {
     this.getsigtable();
   },
   methods: {
-    // getsigtable() {
-    //   this.$http.get("/tiger/immuneSigView.json").then((res) => {
-    //     this.sigtable = res.data;
-    //     this.loading = false;
-    //     // console.log(this.sigtable)
-    //   });
-    //   // console.log(this.sigtable)
-    // },
     getsigtable() {
       this.loading = true;
       this.$http
@@ -108,16 +103,19 @@ export default {
           if (res.data.status === 200) {
             this.sigtable = res.data.list;
             this.loading = false;
+            this.showDetail(this.sigID);
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    showDetail(row) {
-      // console.log(sigID)
-      this.sigID = row["SignatureID"];
-      this.sigName = row["SignatureName"];
+    showDetail(sigid) {
+      console.log(sigid);
+      this.sigID = sigid;
+      this.sigName = this.sigtable.find(
+        (item) => item.SignatureID === sigid
+      ).SignatureName;
       this.$refs.immuneSigDetail.renewDetail(this.sigID);
       setTimeout(() => {
         toTarget(720);
