@@ -55,8 +55,11 @@ export default new VueRouter({
   {
     path: '/statistics',
     component: statistics
+  },
+  {
+    path: '/contact',
+    component: contact
   }
-
   ]
 
 })
