@@ -1,0 +1,50 @@
+[
+  {
+    "Cancertype": "Melanoma",
+    "Response": 396,
+    "Non-response": 230,
+    "Unkown-response": 44
+  },
+  {
+    "Cancertype": "Renal cell carcinoma (RCC)",
+    "Response": 244,
+    "Non-response": 48,
+    "Unkown-response": 30
+  },
+  {
+    "Cancertype": "Stomach adenocarcinoma (STAD)",
+    "Response": 57,
+    "Non-response": 21,
+    "Unkown-response": 0
+  },
+  {
+    "Cancertype": "Glioblastoma multiforme (GBM) ",
+    "Response": 17,
+    "Non-response": 17,
+    "Unkown-response": 0
+  },
+  {
+    "Cancertype": "Non-squamous non-small cell lung cancer (nonsqNSCLC)",
+    "Response": 16,
+    "Non-response": 6,
+    "Unkown-response": 0
+  },
+  {
+    "Cancertype": "Squamous cell carcinoma (LUSC)",
+    "Response": 10,
+    "Non-response": 3,
+    "Unkown-response": 0
+  },
+  {
+    "Cancertype": "Head-Neck Squamous Cell Carcinoma (HNSC)",
+    "Response": 3,
+    "Non-response": 2,
+    "Unkown-response": 0
+  },
+  {
+    "Cancertype": "Total",
+    "Response": 743,
+    "Non-response": 325,
+    "Unkown-response": 74
+  }
+]

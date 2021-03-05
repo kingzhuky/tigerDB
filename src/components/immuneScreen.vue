@@ -282,13 +282,12 @@ export default {
         this.m6aMsg = row["gene"];
         this.cancerMsg = column["label"];
         this.bardata = row
-        console.log(this.bardata)
         setTimeout(() => {
           toTarget(720);
         }, 300);
         // this.$refs.detailPlot.tableDetail(row["gene"]);
         this.$refs.detailPlot.articleDetail(column["label"]);
-        this.$refs.detailPlot.draw_chart(row);
+        this.$refs.detailPlot.draw_chart(row, this.m6aMsg, this.cancerMsg);
       }
     },
     querySearchAsync(queryString, cb) {

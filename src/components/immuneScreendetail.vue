@@ -13,11 +13,8 @@
 
       <div class="infor">
         <el-card>
-          <div
-            id="barplot"
-            class="scaterPlot"
-            style="width: 1300px; height: 700px"
-          ></div>
+          <p class="card-title">{{ gene }} in Different Situation</p>
+          <div id="barplot" style="width: 1300px; height: 450px"></div>
           <p class="card-title">Article Infomations</p>
           <!-- <el-table :data="articleData" style="width: 100%" v-loading="artloading">
             <el-table-column prop="title" label width="180"></el-table-column>
@@ -144,11 +141,10 @@ export default {
     };
   },
   mounted() {
-    console.log(this.bardata);
     // this.tableDetail(this.gene);
     this.articleDetail(this.cancer);
 
-    this.draw_chart(this.bardata);
+    this.draw_chart(this.bardata, this.gene, this.cancer);
   },
 
   methods: {
@@ -206,34 +202,57 @@ export default {
           console.log(res);
         });
     },
-    draw_chart(data) {
-      console.log(data);
+    draw_chart(data, gene, dataset) {
+      var plotdata = [];
+      for (var i in data) {
+        if (data[i] !== null && i !== "gene") {
+          plotdata.push([i, Number(data[i])]);
+        }
+      }
+      // console.log(plotdata);
       var targetdiv = document.getElementById("barplot");
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
-      var xdata = Object.keys(data);
-      var ydata = Object.values(data);
-      xdata.splice(0, 1);
-      ydata.splice(0, 1);
-      console.log(xdata);
-      console.log(ydata.map(Number));
       let myChart_mercor = window.echarts.init(targetdiv);
       let option = {
         xAxis: {
           type: "category",
-          data: xdata,
           axisLabel: {
-            rotate: 45,
+            rotate: 30,
             interval: 0,
+            margin: 10,
+            fontSize: 12,
+            fontWeight: "bold",
           },
+          position: "bottom",
+          nameLocation: "center",
+          nameGap: 25,
+          offset: 0,
         },
         yAxis: {
           type: "value",
+          name: gene,
+          position: "left",
+          nameLocation: "center",
+          nameGap: 25,
+          nameTextStyle: {
+            fontSize: 18,
+            fontWeight: "bold",
+          },
+        },
+        grid: {
+          bottom: "25%",
         },
         series: [
           {
-            data: ydata.map(Number),
+            data: plotdata,
             type: "bar",
+            itemStyle: {
+              color: function (param) {
+                // console.log(param);
+                return param.name === dataset ? "#a90000" : "#5470c6";
+              },
+            },
           },
         ],
       };

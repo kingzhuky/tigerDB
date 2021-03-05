@@ -326,7 +326,7 @@ export default {
     //   };
     // },
     sortChangeClick(column) {
-      console.log(column.order)
+      // console.log(column.order)
       var sortCol = column.prop;
       var sortOrder = column.order;
       function sortByNumber(obj1, obj2, index) {

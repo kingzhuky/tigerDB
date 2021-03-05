@@ -70,7 +70,7 @@ export default {
   created() {
     if (this.$route.params.sigid !== undefined) {
       this.sigid = this.$route.params.sigid;
-      console.log(this.sigid)
+      // console.log(this.sigid)
     }
     this.sigtableVue = sigtablepage;
     

@@ -82,8 +82,8 @@ exec($zhiling2,$output2,$status2);
 
 //执行成功都是返回0
 echo json_encode(array(
-   "zhiling" =>$zhiling,
-   "zhiling2" => $zhiling2,
+  //  "zhiling" =>$zhiling,
+  //  "zhiling2" => $zhiling2,
    "output" => $output,
    "output2" => $output2,
  // "sql"=>$sql,

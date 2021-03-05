@@ -111,7 +111,7 @@ export default {
         });
     },
     showDetail(sigid) {
-      console.log(sigid);
+      // console.log(sigid);
       this.sigID = sigid;
       this.sigName = this.sigtable.find(
         (item) => item.SignatureID === sigid
