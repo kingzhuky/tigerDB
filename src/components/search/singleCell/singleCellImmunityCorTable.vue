@@ -69,7 +69,7 @@
             </el-table-column>
             <el-table-column
               prop="datasetid"
-              label="DatasetID"
+              label="Dataset ID"
             ></el-table-column>
             <el-table-column
               prop="GlobalCluster"

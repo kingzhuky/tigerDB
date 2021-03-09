@@ -93,6 +93,12 @@
         sortable="custom"
       ></el-table-column>
       <el-table-column
+        prop="datasetid"
+        label="Dataset ID"
+        width="120%"
+        sortable="custom"
+      ></el-table-column>
+      <el-table-column
         prop="GlobalCluster"
         label="Main Lineage"
         width="180%"
@@ -349,11 +355,19 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
-      // console.log("data:")
-      // console.log(data)
-      // console.log("cancer:")
-      // console.log(cancer)
-      var option2 = {
+      // console.log("data:");
+      // console.log(data);
+      // var cancer = [];
+      // for (let i in data) {
+      //   cancer.push(data[i][1]);
+      // }
+      // function unique(arr) {
+      //   return Array.from(new Set(arr));
+      // }
+      // // cancer = unique(cancer);
+      // console.log("cancer:");
+      // console.log();
+      var option = {
         title: {
           text: "Cell Type Marker\n ( |Log2FC| )\n",
           textStyle: {
@@ -381,7 +395,9 @@ export default {
         },
         angleAxis: {
           type: "category",
+          // data: unique(cancer),
           boundaryGap: false,
+          // startAngle: 20,
           splitLine: {
             show: true,
             lineStyle: {
@@ -389,13 +405,14 @@ export default {
               type: "dashed",
             },
           },
-          axisLine: {
-            show: true,
-          },
           axisLabel: {
+            // show: true,
+            // inside: true,
             interval: 0,
-            margin: 12,
-            // rotate: 45,
+            margin: 20,
+            // width: 20,
+            // overflow: "breakAll",
+            rotate: 45,
           },
         },
         series: [
@@ -433,7 +450,7 @@ export default {
         ],
       };
       myChart_mercor.clear();
-      myChart_mercor.setOption(option2);
+      myChart_mercor.setOption(option);
       window.onresize = function () {
         myChart_mercor.resize();
       };
