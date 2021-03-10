@@ -66,7 +66,7 @@ if(!file.exists(paste0(result.path,maintitle,".json")) ){
     setnames(pscore.arr,"pscore",sl.dataset)
   }
   surv.zscore <- surv.zscore.table[,lapply(.SD, function(x){strsplit(x,"_")[[1]][3]}),by = c("signature")]
-  
+  surv.zscore <- surv.zscore[,lapply(.SD, as.numeric),by = c("signature")]
   pscore.table <- rbind(pscore.arr, surv.zscore)%>% 
     merge(rbind(data.table(SignatureID = "Custom Geneset", SignatureName = "Custom Geneset"), SIG.info[,.(SignatureID,SignatureName)]), ., by.x = "SignatureID", by.y = "signature") %>%
     toJSON(pretty=TRUE,.)
