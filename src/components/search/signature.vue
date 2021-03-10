@@ -31,9 +31,12 @@ import immuneSigBioRes from "../immuneSignature/immuneSigbioresponse.vue";
 import immuneSigBioSurv from "../immuneSignature/immuneSigbioSurv.vue";
 
 export default {
+  props: {
+    gene: { type: String },
+  },
   data() {
     return {
-      gene: "CXCL13",
+      oldgene: "",
       tabactiveName: "response",
     };
   },

@@ -144,7 +144,7 @@ export default {
       this.loading = true;
       this.immuneTabShow = true;
       this.$http
-        .get("/tiger/immuneSig2.php", {
+        .get("/tiger/immuneSig.php", {
           params: {
             gene: this.gene.trim().replace(" ", ""),
             condi: "survival",

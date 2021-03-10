@@ -33,7 +33,9 @@ export default {
   },
 
   mounted() {
-    this.oldseargene = this.seargene;
+    this.$nextTick(() => {
+      this.oldseargene = this.seargene;
+    });
   },
 
   methods: {

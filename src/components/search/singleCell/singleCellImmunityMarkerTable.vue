@@ -2,8 +2,8 @@
   <div class="textitem">
     <p class="card-title">{{ title }}</p>
     <el-row>
-      <el-col :span="16" push="3" v-loading="loading">
-        <div :id="conditi" style="width: 1000px; height: 500px"></div>
+      <el-col :span="20" :push="2" v-loading="loading">
+        <div :id="conditi" style="width: 1200px; height: 600px"></div>
       </el-col>
     </el-row>
     <el-table
@@ -355,34 +355,25 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
-      // console.log("data:");
-      // console.log(data);
-      // var cancer = [];
-      // for (let i in data) {
-      //   cancer.push(data[i][1]);
-      // }
-      // function unique(arr) {
-      //   return Array.from(new Set(arr));
-      // }
-      // // cancer = unique(cancer);
-      // console.log("cancer:");
-      // console.log();
       var option = {
         title: {
           text: "Cell Type Marker\n ( |Log2FC| )\n",
+          left: "20%",
           textStyle: {
             color: "#333",
             lineHeight: 120,
             height: 30,
             fontFamily: "Arial",
           },
-          // link: "https://github.com/pissang/echarts-next/graphs/punch-card",
         },
         legend: {
           data: ["Punch Card"],
           left: "right",
         },
-        polar: {},
+        polar: {
+          radius: "70%",
+          center: ["50%", "50%"],
+        },
         radiusAxis: {
           type: "value",
           axisLine: {
@@ -397,7 +388,7 @@ export default {
           type: "category",
           // data: unique(cancer),
           boundaryGap: false,
-          // startAngle: 20,
+          startAngle: 20,
           splitLine: {
             show: true,
             lineStyle: {
@@ -406,13 +397,13 @@ export default {
             },
           },
           axisLabel: {
-            // show: true,
-            // inside: true,
             interval: 0,
             margin: 20,
-            // width: 20,
-            // overflow: "breakAll",
-            rotate: 45,
+            formatter: function (value, index) {
+              var reg = /[, ]/g;
+              value = value.replace(reg, "\n");
+              return value;
+            },
           },
         },
         series: [
@@ -422,7 +413,9 @@ export default {
             coordinateSystem: "polar",
             large: true,
             data: data,
-            symbolSize: 15,
+            symbolSize: function (val) {
+              return val[0] * 8;
+            },
             animation: false,
             emphasis: {
               label: {

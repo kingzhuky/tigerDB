@@ -2,7 +2,8 @@
   <div>
     <el-card id="readmeCard">
       <el-row id="readme">Readme:</el-row>
-      Users can quickly obtain the <span class="readmeEmp">comprehensive analysis</span> results of the above
+      Users can quickly obtain the
+      <span class="readmeEmp">comprehensive analysis</span> results of the above
       four modules by searching a gene of interest.
     </el-card>
     <div class="serachpage">
@@ -83,16 +84,16 @@
 
 
 <script>
+
 const wercelltype = (resolve) =>
   require(["./singleCell/singleCellImmunity.vue"], resolve);
-const werimmuneResponse = (resolve) =>
-  require(["./immuneResponse.vue"], resolve);
+
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
 //const wergeneralInformation = "./generalInformation.vue";
 const werimmuneScreening = (resolve) =>
   require(["./immuneScreening.vue"], resolve);
 //const wersignature = () => import('@/components/immuneSignatureTable')
-
+import werimmuneResponse from "./immuneResponse.vue";
 import wergeneralInformation from "./generalInformation.vue";
 
 export default {
