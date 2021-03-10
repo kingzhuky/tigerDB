@@ -60,11 +60,6 @@ export default {
       this.signatureDiffPlot();
     });
   },
-  created() {
-    this.$nextTick(() => {
-      this.signatureDiffPlot();
-    });
-  },
   components: {
     "v-immuneSigTable": immuneSigTable,
     "v-immuneSigBioRes": immuneSigBioRes,

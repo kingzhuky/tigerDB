@@ -12,7 +12,9 @@
             @expand-change="diffExpRespontableExpand"
           >
             <template slot="empty">
-              <p class="imgtilte">This gene is not express in the selected cell type</p>
+              <p class="imgtilte">
+                This gene is not express in the selected cell type
+              </p>
             </template>
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -89,7 +91,12 @@
               label="Correlated Gene"
               width="180"
             ></el-table-column>
-            <el-table-column label="COR" prop="r" sortable :sort-method="sortByNumber"></el-table-column>
+            <el-table-column
+              label="COR"
+              prop="r"
+              sortable
+              :sort-method="sortByNumber"
+            ></el-table-column>
             <!-- <el-table-column prop="COEAID" label="COEAID"></el-table-column> -->
             <!-- <el-table-column prop="SCID" label="SCID"></el-table-column> -->
           </el-table>
@@ -140,8 +147,9 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.oldseargene = this.seargene;
-      //this.clickPlot();
+      if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
+        this.oldseargene = this.seargene;
+      }
     });
   },
 
@@ -154,6 +162,23 @@ export default {
   methods: {
     reset() {
       this.sccoexpTable = [];
+    },
+    plot() {
+      this.sccoexpTable = [];
+      this.$nextTick(() => {
+        if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
+          this.oldseargene = this.seargene;
+        }
+      });
+      this.getDiagramData(
+        this.seargene,
+        "singleCellCorTumor",
+        this.CancerType,
+        this.GlobalCluster,
+        this.CellType,
+        1,
+        val
+      );
     },
     handleSizeChange(val) {
       this.pageSize = val;
@@ -293,10 +318,10 @@ export default {
       );
     },
     sortByNumber(obj1, obj2) {
-      let val1 = obj1.r
-      let val2 = obj2.r
-      return val1 - val2
-    }
+      let val1 = obj1.r;
+      let val2 = obj2.r;
+      return val1 - val2;
+    },
   },
 };
 </script>

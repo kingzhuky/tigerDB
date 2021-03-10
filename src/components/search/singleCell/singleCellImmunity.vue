@@ -127,10 +127,8 @@ export default {
       ReactomeTableData: [],
       geneshow: false,
       oldseargene: "",
-      imgpathBar3: "",
       picScattername: "",
       picScatterloading: true,
-      DiffExpTumorTableData: [],
       MarkerTable: [],
       markerimg: "",
       overviewimg: "",
@@ -141,38 +139,23 @@ export default {
     this.getcancer();
     this.$nextTick(() => {
       this.oldseargene = this.seargene;
-      this.getTableData(this.seargene);
       this.searchTable();
       this.getgloClu();
       this.getCellType();
     });
   },
-  components: {
-    "v-singleCellImmunityCorTable": singleCellImmunityCorTable,
-    "v-singleCellMarker": singleCellMarker,
-    "v-singleCellDiffexp": singleCellDiffexp,
-  },
-
-  computed: {
-    // imgUrlBar: function () {
-    //   return this.imgpathBar;
-    // },
-  },
 
   methods: {
-    reset() {
-      this.DiffExpTumorTableData = [];
-      this.DiffExpTumorTableData = [];
-      this.imgpathBox = "";
-      this.imgpathBar = "";
-    },
-
+    reset() {},
     plot() {
       if ((this.oldseargene !== this.seargene) | (this.oldseargene === "")) {
         this.reset();
-        this.$refs.singleCellImmunityCorTableRef.reset();
         this.oldseargene = this.seargene;
-        this.getTableData(this.seargene);
+        console.log(this.seargene);
+        this.$refs.singleCellImmunityCorTableRef.plot();
+        this.$refs.singlecellmarker.plot();
+        this.$refs.singlecelldiffTN.plot();
+        this.$refs.singlecelldiffRNR.plot();
       }
     },
 
@@ -260,6 +243,11 @@ export default {
           this.subClu = res.data.list;
         });
     },
+  },
+  components: {
+    "v-singleCellImmunityCorTable": singleCellImmunityCorTable,
+    "v-singleCellMarker": singleCellMarker,
+    "v-singleCellDiffexp": singleCellDiffexp,
   },
 };
 </script>

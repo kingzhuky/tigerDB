@@ -85,14 +85,13 @@
 
 <script>
 
-const wercelltype = (resolve) =>
-  require(["./singleCell/singleCellImmunity.vue"], resolve);
 
 const wersignature = (resolve) => require(["./signature.vue"], resolve);
 //const wergeneralInformation = "./generalInformation.vue";
 const werimmuneScreening = (resolve) =>
   require(["./immuneScreening.vue"], resolve);
 //const wersignature = () => import('@/components/immuneSignatureTable')
+import wercelltype from "./singleCell/singleCellImmunity.vue";
 import werimmuneResponse from "./immuneResponse.vue";
 import wergeneralInformation from "./generalInformation.vue";
 

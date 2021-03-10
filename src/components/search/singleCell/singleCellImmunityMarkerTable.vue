@@ -355,6 +355,10 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
+      var max = data.reduce(function (a, b) {
+        return b[0] > a[0] ? b[0] : a[0];
+      });
+      // console.log(max)
       var option = {
         title: {
           text: "Cell Type Marker\n ( |Log2FC| )\n",
@@ -414,7 +418,7 @@ export default {
             large: true,
             data: data,
             symbolSize: function (val) {
-              return val[0] * 8;
+              return 25/max * val[0];
             },
             animation: false,
             emphasis: {
