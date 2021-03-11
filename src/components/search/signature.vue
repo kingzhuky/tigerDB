@@ -81,9 +81,9 @@ export default {
 #tab-cormat,
 #tab-response,
 #tab-survival {
-  font-size: 18px;
-  height: 40px;
-  padding: 0px 10px;
+  font-size: 20px;
+  height: 55px;
+  padding: 10px;
   font-weight: bold !important;
 }
 </style>

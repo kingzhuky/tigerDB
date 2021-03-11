@@ -429,7 +429,7 @@ div#scimmucard {
 #tab-coexp,
 #tab-crosstalk,
 #tab-evolution {
-  font-size: 18px;
+  font-size: 20px;
   height: 55px;
   padding: 10px;
   font-weight: bold !important;
