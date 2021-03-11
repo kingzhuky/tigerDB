@@ -144,7 +144,7 @@ if ($conditi=="Responder"){
   while ($row = mysqli_fetch_assoc($dataResult)) {
     $temp= array();
     array_push($temp,$row["Log2FoldChange"]);
-    array_push($temp, round(log10(floatval(1+$row["P_Value"])),2)  );
+    array_push($temp, round($row["P_Value"],2)  );
     array_push($temp,$row["datasetid"]);
     array_push($temp,$row["GlobalCluster"]);
     array_push($temp,$row["CellType"]);

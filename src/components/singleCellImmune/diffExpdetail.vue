@@ -22,6 +22,7 @@
               :gutter="20"
               type="flex"
               justify="space-around"
+              style="height: 280px"
             >
               <el-col :span="4">
                 <p class="imgtitle">Cell Types Distribution</p>
@@ -80,7 +81,7 @@
                 </div>
               </el-col>
               <el-col :span="4">
-                <p class="imgtitle">Ductal Cell Type Distribution Difference</p>
+                <p class="imgtitle">{{celltype}} Cell Type Distribution Difference</p>
                 <img
                   id="singleimg"
                   fit="fill"

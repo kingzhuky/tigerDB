@@ -84,7 +84,7 @@
                 </div>
               </el-col>
               <el-col :span="4">
-                <p class="imgtitle">Ductal Cell Type Distribution Difference</p>
+                <p class="imgtitle">{{scope.row.CellType}} Cell Type Distribution Difference</p>
                 <img
                   id="singleimg"
                   fit="fill"
@@ -313,6 +313,10 @@ export default {
               this.loading = false;
               this.TableData = res.data.datatable;
               this.total = res.data.total[0];
+              // console.log("table:")
+              // console.log(res.data.datatable)
+              // console.log("plot:")
+              // console.log(res.data.list)
               if (ifplot) this.draw_chart(res.data.list, conditi);
             }
           } else {
@@ -387,23 +391,89 @@ export default {
       var targetdiv = document.getElementById(id);
       //let myChart_mercor = this.$echarts.init(targetdiv);
       //cdn替换为
+
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
       let option = {
-        xAxis: { name: "Log2FC" },
+        xAxis: {
+          name: "Log2 (Fold Change)",
+          position: "bottom",
+          nameLocation: "center",
+          nameGap: 25,
+          offset: 0,
+          nameTextStyle: {
+            fontSize: 18,
+            fontWeight: "bold",
+          },
+        },
         yAxis: {
           name: "–log10(P Value)",
           axisLine: { show: false },
           axisTick: { show: false },
+          position: "bottom",
+          nameLocation: "center",
+          nameGap: 25,
+          offset: 10,
+          nameTextStyle: {
+            fontSize: 18,
+            fontWeight: "bold",
+          },
+          axisLabel: {
+            margin: -7,
+          },
         },
-        tooltip: {
-          formatter: "{c}",
+        toolbox: {
+          left: "center",
+          feature: {
+            dataZoom: {},
+          },
         },
+        dataZoom: [
+          {
+            type: "inside",
+          },
+          {
+            type: "slider",
+          },
+          {
+            type: "inside",
+            orient: "vertical",
+          },
+          {
+            type: "slider",
+            orient: "vertical",
+          },
+        ],
         series: [
           {
             symbolSize: 20,
             data: data,
             type: "scatter",
+            color: function (val) {
+              return val.data[1] >= 1.3 ? "#b84040" : "#7d7d7d";
+            },
+            emphasis: {
+              label: {
+                borderWidth: 1.5,
+                show: true,
+                position: "right",
+                distance: 10,
+                color: "rgba(255, 255, 255, 1)",
+                fontStyle: "normal",
+                fontWeight: "bold",
+                fontFamily: "Arial",
+                fontSize: 15,
+                align: "left",
+                verticalAlign: "middle",
+                backgroundColor: "rgba(50, 50, 50, 0.8)",
+                borderColor: "rgba(0, 0, 0, 1)",
+                padding: [9, 9, 9, 9],
+                borderRadius: [5, 5, 5, 5],
+                lineHeight: 25,
+                formatter:
+                  "Log2FC: {@[0]}\n-log10(P Value): {@[1]}\nDataset ID: {@[2]}\nMain Lineage: {@[4]}",
+              },
+            },
           },
         ],
       };

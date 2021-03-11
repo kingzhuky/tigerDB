@@ -8,7 +8,7 @@
             <div
               :id="conditi"
               class="scaterPlot"
-              style="width: 1000px; height: 400px"
+              style="width: 1600px; height: 400px"
             ></div>
             <el-table
               max-height="520"
@@ -373,23 +373,49 @@ export default {
             fontWeight: "bold",
           },
         },
-        tooltip: {
-          formatter: function (params) {
-            return (
-              xlabname +
-              params.data[0] +
-              "<br />P: " +
-              params.data[1] +
-              "<br />Dataset: " +
-              params.data[2]
-            );
-          },
+        grid:{
+          right: '40%',
+          left: '20%'
         },
+        // tooltip: {
+        //   formatter: function (params) {
+        //     return (
+        //       xlabname +
+        //       params.data[0] +
+        //       "<br />P: " +
+        //       params.data[1] +
+        //       "<br />Dataset: " +
+        //       params.data[2]
+        //     );
+        //   },
+        // },
         series: [
           {
             symbolSize: 20,
             data: data,
             type: "scatter",
+            emphasis: {
+              label: {
+                borderWidth: 1.5,
+                show: true,
+                position: "right",
+                distance: 10,
+                color: "rgba(255, 255, 255, 1)",
+                fontStyle: "normal",
+                fontWeight: "bold",
+                fontFamily: "Arial",
+                fontSize: 14,
+                align: "left",
+                verticalAlign: "middle",
+                backgroundColor: "rgba(50, 50, 50, 0.8)",
+                borderColor: "rgba(0, 0, 0, 1)",
+                padding: [9, 9, 9, 9],
+                borderRadius: [5, 5, 5, 5],
+                lineHeight: 25,
+                formatter:
+                  "xlabname{@[0]}\n-log10(P Value): {@[1]}\nDataset: {@[2]}",
+              },
+            },
           },
         ],
       };
