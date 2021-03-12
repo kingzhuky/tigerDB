@@ -7,18 +7,26 @@
         middle of the page.
         <br />
       </p>
-      <div align="center">
-        <img class="helpimg-main" alt="helphome" v-lazy="helphome" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <div align="center">
+            <img class="helpimg-main" alt="helphome" v-lazy="helphome" />
+          </div>
+        </el-col>
+      </el-row>
       <p>
         Users can search for the gene symbol of interest to obtain results with
         significant differences in all data sets, such as the difference between
         tumor tissues and normal tissues in different cell types, the difference
         between immunotherapy response and non-response samples.
       </p>
-      <div align="center">
-        <img alt="help1" v-lazy="help1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="14">
+          <div align="center">
+            <img alt="help1" class="helpimg-main" v-lazy="help1" />
+          </div>
+        </el-col>
+      </el-row>
       <p>
         TIGER will comprehensively analyze the functions of the four modules
         (<span class="readmeEmp"
@@ -32,11 +40,15 @@
         <span class="readmeEmp">summary of Gene</span> interested in, which
         including Gene Information and Pathway Information.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search1_1" v-lazy="search1_1" />
-        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <img class="helpimg-detail" alt="search1_2" v-lazy="search1_2" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="14">
+          <img class="helpimg-main" alt="search1_1" v-lazy="search1_1" />
+        </el-col>
+        <el-col :span="14">
+          <img class="helpimg-main" alt="search1_2" v-lazy="search1_2" />
+        </el-col>
+      </el-row>
+
       <h3 class="sub">Single-cell Immunity</h3>
       <p>
         In <span class="readmeEmp">Single-cell Immunity</span>, users can hover
@@ -45,9 +57,11 @@
         type. Moreover, users can click the tab of table to show the detail
         image of this cell type in the dataset.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search6_1" v-lazy="search6_1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search6_1" v-lazy="search6_1" />
+        </el-col>
+      </el-row>
       <p>
         In <span class="readmeEmp">Co-expression Analysis</span>,users can
         calculate the correlation between the expression of a gene of interest
@@ -59,10 +73,15 @@
         expression of the selected gene between different groups in the selected
         tab.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search6_2" v-lazy="search6_2" />
-        <img class="helpimg-detail" alt="search6_3" v-lazy="search6_3" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search6_2" v-lazy="search6_2" />
+        </el-col>
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search6_3" v-lazy="search6_3" />
+        </el-col>
+      </el-row>
+
       <h3 class="sub">Immunotherapy Response</h3>
       <p>
         TIGER will show the
@@ -71,11 +90,18 @@
         scatter plot and the specific difference result table of each dataset
         will be analyzed and displayed.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search2_1" v-lazy="search2_1" />
-        <img class="helpimg-detail" alt="search2_2" v-lazy="search2_2" />
-        <img class="helpimg-detail" alt="search2_3" v-lazy="search2_3" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="10">
+          <img class="helpimg-main" alt="search2_1" v-lazy="search2_1" />
+        </el-col>
+        <el-col :span="10">
+          <img class="helpimg-main" alt="search2_2" v-lazy="search2_2" />
+        </el-col>
+        <el-col :span="10">
+          <img class="helpimg-main" alt="search2_3" v-lazy="search2_3" />
+        </el-col>
+      </el-row>
+
       <h3 class="sub">Response Signature</h3>
       <p class="tab">
         In <span class="readmeEmp">AUC Matrix</span> and
@@ -84,28 +110,36 @@
         signature using the gene expression data with immunotherapy clinical
         information
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search5_2" v-lazy="search5_2" />
-        <img class="helpimg-detail" alt="search5_3" v-lazy="search5_3" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search5_2" v-lazy="search5_2" />
+        </el-col>
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search5_3" v-lazy="search5_3" />
+        </el-col>
+      </el-row>
       <p class="tab">
         In <span class="readmeEmp">Correlation Matrix</span>, users could check
         whether the genes of interest are correlated with the known
         immunotherapy response signature using the TCGA gene expression data
         without immunotherapy clinical information
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search5_1" v-lazy="search5_1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search5_1" v-lazy="search5_1" />
+        </el-col>
+      </el-row>
       <h3 class="sub">Immune Screening</h3>
       <p>
         Gene-related CRISPER Screen and RNAi Screen information will be
         displayed in the form of a table, and you can get the dataset related
         information by clicking on the row of the table.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search4_1" v-lazy="search4_1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search4_1" v-lazy="search4_1" />
+        </el-col>
+      </el-row>
     </div>
 
     <div v-show="responseshow">
@@ -177,14 +211,11 @@
         <span class="readmeEmp">Gene Set Query</span>
         tab
       </p>
-      <div align="center">
-        <img
-          width="150%"
-          class="helpimg-detail"
-          alt="response3_1"
-          v-lazy="response3_1"
-        />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="14">
+          <img class="helpimg-main" alt="response3_1" v-lazy="response3_1" />
+        </el-col>
+      </el-row>
     </div>
 
     <div v-show="signatureshow">
@@ -203,10 +234,15 @@
         Click on the detail button in the table, and TIGER will display the
         related information of changing Response Signature.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="signature1_1" v-lazy="signature1_1" />
-        <img class="helpimg-detail" alt="signature1_2" v-lazy="signature1_2" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="signature1_1" v-lazy="signature1_1" />
+        </el-col>
+        <el-col :span="18">
+          <img class="helpimg-main" alt="signature1_2" v-lazy="signature1_2" />
+        </el-col>
+      </el-row>
+
       <h3 class="sub">Biomarker Analysis</h3>
       <p class="tab">
         In <span class="readmeEmp">AUC Matrix</span> and
@@ -215,19 +251,25 @@
         signature using the gene expression data with immunotherapy clinical
         information
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search5_2" v-lazy="search5_2" />
-        <img class="helpimg-detail" alt="search5_3" v-lazy="search5_3" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search5_2" v-lazy="search5_2" />
+        </el-col>
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search5_3" v-lazy="search5_3" />
+        </el-col>
+      </el-row>
       <p class="tab">
         In <span class="readmeEmp">Correlation Matrix</span>, users could check
         whether the genes of interest are correlated with the known
         immunotherapy response signature using the TCGA gene expression data
         without immunotherapy clinical information
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="search5_1" v-lazy="search5_1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="search5_1" v-lazy="search5_1" />
+        </el-col>
+      </el-row>
 
       <h3 class="sub">Response Prediction</h3>
       <p>
@@ -235,12 +277,11 @@
         the patient immunotherapy response by applying published gene signatures
         to the user-provided baseline gene expression profiles.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="signature2_1" v-lazy="signature2_1" />
-      </div>
-      <!-- <div align="center">
-        <img class="helpimg-detail" alt="signature2_2" v-lazy="signature2_2" />
-      </div> -->
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="signature2_1" v-lazy="signature2_1" />
+        </el-col>
+      </el-row>
     </div>
 
     <div v-show="singcellshow">
@@ -256,9 +297,11 @@
         <span class="readmeEmp">Cell-Cell Communication</span> tabs.<br />
         Users can click the dataset for detail information.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="singcell0" v-lazy="singcell0" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell0" v-lazy="singcell0" />
+        </el-col>
+      </el-row>
       <h3 class="sub">Overview</h3>
       <p>
         Users will obtain the dataset source, cell number and cell type
@@ -267,10 +310,11 @@
         the pre-analyzed clustering results for all cells, T cells, CD4 cells,
         CD8 cells, B cells, and Myeloid cells, respectively
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="singcell1_1" v-lazy="singcell1_1" />
-      </div>
-
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell1_1" v-lazy="singcell1_1" />
+        </el-col>
+      </el-row>
       <h3 class="sub">Cell Type Marker / Differential Expression Analysis</h3>
       <p>
         In the <span class="readmeEmp">Cell Type Marker</span> tab, an
@@ -288,11 +332,14 @@
         provided to allow users to search genes of interest. By clicking a cell,
         users can obtain the detail information below the heatmap.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="singcell2_1" v-lazy="singcell2_1" />
-        <img class="helpimg-detail" alt="singcell3_1" v-lazy="singcell3_1" />
-      </div>
-
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell2_1" v-lazy="singcell2_1" />
+        </el-col>
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell3_1" v-lazy="singcell3_1" />
+        </el-col>
+      </el-row>
       <h3 class="sub">Co-expression Analysis</h3>
       <p>
         In the <span class="readmeEmp">Co-expression Analysis</span> tab, users
@@ -300,28 +347,33 @@
         interest and other genes or between the expression of the input gene
         pairs in different cell types.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="singcell4_1" v-lazy="singcell4_1" />
-      </div>
-
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell4_1" v-lazy="singcell4_1" />
+        </el-col>
+      </el-row>
       <h3 class="sub">Trajectory Analysis</h3>
       <p>
         In the <span class="readmeEmp">Trajectory Analysis</span> tab, users can
         obtain the expression of the genes of interest in the pseudotemporal
         ordering cells inferred by Monocle 2.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="singcell5_1" v-lazy="singcell5_1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell5_1" v-lazy="singcell5_1" />
+        </el-col>
+      </el-row>
       <h3 class="sub">Cell-Cell Communication</h3>
       <p>
         The <span class="readmeEmp">Cell-Cell Communication</span> tab allows
         users to obtain the crosstalk between different cell types inferred by
         receptor-ligand expression.
       </p>
-      <div align="center">
-        <img class="helpimg-detail" alt="singcell6_1" v-lazy="singcell6_1" />
-      </div>
+      <el-row type="flex" justify="space-around">
+        <el-col :span="18">
+          <img class="helpimg-main" alt="singcell6_1" v-lazy="singcell6_1" />
+        </el-col>
+      </el-row>
     </div>
 
     <div v-show="screenshow">
@@ -337,7 +389,6 @@
         <img alt="help10" v-lazy="help10" />
       </div>
     </div>
-
   </div>
 </template>
 
@@ -479,7 +530,7 @@ h3 {
   color: rgb(119, 97, 97);
 }
 .helpimg-main {
-  width: 80%;
+  width: 100%;
 }
 .helpimg-detail {
   width: 30%;
