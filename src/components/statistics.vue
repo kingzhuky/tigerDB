@@ -305,13 +305,13 @@ export default {
       // console.log(data);
       let myChart_mercor = window.echarts.init(targetdiv);
       let option = {
-        // tooltip: {
-        //   trigger: "axis",
-        //   axisPointer: {
-        //     // Use axis to trigger tooltip
-        //     type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
-        //   },
-        // },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // Use axis to trigger tooltip
+            type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+          },
+        },
         legend: {
           data: legenddata,
           textStyle: {
