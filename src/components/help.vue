@@ -13,7 +13,7 @@
                 bulk transcriptome data for 1,144 tumor samples with
                 immunotherapy clinical outcome and 11,057 tumor/normal samples
                 from TCGA, and single cell transcriptome data for 2,116,945
-                immune cells of 655 samples, among which 119,039 immune cells of
+                cells of 655 samples, among which 119,039 cells of
                 63 samples have immunotherapy clinical data. Besides, we also
                 collected eight CRISPR and two shRNA screening data from studies
                 identifying genes responsible of anticancer immune response.

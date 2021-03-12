@@ -16,6 +16,15 @@
               <div id="scstat_sample" style="width: 600px; height: 500px"></div>
             </el-col>
           </el-row>
+          <el-row :gutter="20" type="flex" justify="space-around">
+            <el-col :span="24">
+              <p class="imgtitle">Immune Cells Statistics</p>
+              <div
+                id="immunecellstat"
+                style="width: 1200px; height: 320px"
+              ></div>
+            </el-col>
+          </el-row>
           <el-row>
             <el-col :span="16" :push="4">
               <p class="imgtitle">
@@ -52,11 +61,13 @@ export default {
     return {
       bulkRNA: [],
       scRNA: [],
+      immuneCellNum: [],
     };
   },
   created() {
     this.getbulkRNA();
     this.getscRNA();
+    this.getimcellnum();
   },
   methods: {
     getbulkRNA() {
@@ -70,6 +81,13 @@ export default {
         this.scRNA = res.data;
         this.draw_sc_chart(this.scRNA, "scstat_cell", "cell");
         this.draw_sc_chart(this.scRNA, "scstat_sample", "sample");
+      });
+    },
+    getimcellnum() {
+      this.$http.get("/tiger/cellnum_stat.json").then((res) => {
+        this.immuneCellNum = res.data;
+        console.log(this.immuneCellNum);
+        this.draw_imcell_chart(this.immuneCellNum, "immunecellstat");
       });
     },
     draw_bulk_chart(data, id) {
@@ -198,7 +216,7 @@ export default {
           },
           tooltip: {
             show: true,
-            formatter: 'Immune checkpoint blockade (ICB)',
+            formatter: "Immune checkpoint blockade (ICB)",
           },
         },
         grid: {
@@ -252,6 +270,88 @@ export default {
             data: data.map((item) => item[xdata2_key]),
           },
         ],
+      };
+      myChart_mercor.clear();
+      myChart_mercor.setOption(option);
+      window.onresize = function () {
+        myChart_mercor.resize();
+      };
+    },
+
+    draw_imcell_chart(data, id) {
+      var targetdiv = document.getElementById(id);
+      //let myChart_mercor = this.$echarts.init(targetdiv);
+      //cdn替换为
+      // sort the data
+      data = data.filter((item) => item["GlobelCluster"] !== "All");
+      // .sort(function (a, b) {
+      //   return a["Response"] - b["Response"];
+      // });
+      var ydata = data.map((item) => item["GlobelCluster"]); // get ylab name
+      var legenddata = Object.keys(data[0]).filter(
+        (item) => item !== "GlobelCluster"
+      );
+      var seriesList = [];
+
+      seriesList = legenddata.map((cancertype) => {
+        var seriesObject = {};
+        seriesObject.name = cancertype;
+        seriesObject.type = "bar";
+        seriesObject.stack = "total";
+        seriesObject.emphasis = { focus: "series" };
+        seriesObject.data = data.map((item) => item[cancertype]);
+        return seriesObject;
+      });
+      // console.log(data);
+      let myChart_mercor = window.echarts.init(targetdiv);
+      let option = {
+        // tooltip: {
+        //   trigger: "axis",
+        //   axisPointer: {
+        //     // Use axis to trigger tooltip
+        //     type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+        //   },
+        // },
+        legend: {
+          data: legenddata,
+          textStyle: {
+            fontSize: 12,
+            fontWeight: "bold",
+          },
+          orient: "vertical",
+          x: "right", //可设定图例在左、右、居中
+          y: "center", //可设定图例在上、下、居中
+          padding: [0, 50, 0, 200], //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+        },
+        grid: {
+          left: "3%",
+          right: "60%",
+          bottom: "0%",
+          top: "0%",
+          containLabel: true,
+        },
+        xAxis: {
+          type: "value",
+          axisLabel: {
+            rotate: 30,
+            margin: 10,
+            fontSize: 12,
+            fontWeight: "bold",
+          },
+        },
+        yAxis: {
+          type: "category",
+          data: ydata,
+          axisLabel: {
+            rotate: 0,
+            interval: 0,
+            margin: 10,
+            fontSize: 12,
+            fontWeight: "bold",
+          },
+        },
+
+        series: seriesList,
       };
       myChart_mercor.clear();
       myChart_mercor.setOption(option);

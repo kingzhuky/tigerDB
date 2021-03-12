@@ -25,8 +25,8 @@
             gene expression data related to tumor immunology. TIGER contains
             bulk transcriptome data for 1,144 tumor samples with immunotherapy
             clinical outcome and 11,057 tumor/normal samples from TCGA, and
-            single cell transcriptome data for 2,116,945 immune cells of 655
-            samples, among which 119,039 immune cells of 63 samples have
+            single cell transcriptome data for 2,116,945 cells of 655
+            samples, among which 119,039 cells of 63 samples have
             immunotherapy clinical data.
           </p>
         </el-row>

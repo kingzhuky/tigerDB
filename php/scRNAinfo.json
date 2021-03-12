@@ -1,0 +1,184 @@
+[
+ {
+   "Cancertype": "Basal cell carcinoma (BCC)",
+   "no_ICB_cell": null,
+   "ICB_cell": 49480,
+   "no_ICB_sample": null,
+   "ICB_sample": 12
+ },
+ {
+   "Cancertype": "Bladder Transitional Cell Carcinoma (BTCC)",
+   "no_ICB_cell": 82393,
+   "ICB_cell": 30455,
+   "no_ICB_sample": 11,
+   "ICB_sample": 14
+ },
+ {
+   "Cancertype": "Breast cancer (BC)",
+   "no_ICB_cell": 107573,
+   "ICB_cell": null,
+   "no_ICB_sample": 32,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Castration-Resistant Prostate Cancer (CRPC)",
+   "no_ICB_cell": 93213,
+   "ICB_cell": null,
+   "no_ICB_sample": 15,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Clear cell renal cell carcinoma (CCRCC)",
+   "no_ICB_cell": 52340,
+   "ICB_cell": null,
+   "no_ICB_sample": 9,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Colorectal cancer (CRC)",
+   "no_ICB_cell": 145087,
+   "ICB_cell": null,
+   "no_ICB_sample": 69,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Esophageal squamous cell carcinoma (ESCC) ",
+   "no_ICB_cell": 105556,
+   "ICB_cell": null,
+   "no_ICB_sample": 14,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Head-Neck Squamous Cell Carcinoma (HNSC)",
+   "no_ICB_cell": 128242,
+   "ICB_cell": null,
+   "no_ICB_sample": 63,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Hepatocellular carcinoma (HCC)",
+   "no_ICB_cell": 9777,
+   "ICB_cell": null,
+   "no_ICB_sample": 19,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Intrahepatic cholangiocarcinoma (ICC)",
+   "no_ICB_cell": 32259,
+   "ICB_cell": null,
+   "no_ICB_sample": 7,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Merkel cell carcinoma (MCC)",
+   "no_ICB_cell": 10578,
+   "ICB_cell": null,
+   "no_ICB_sample": 2,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Metastatic renal cell carcinoma (MRCC)",
+   "no_ICB_cell": 26972,
+   "ICB_cell": null,
+   "no_ICB_sample": 8,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Mixed phenotype acute leukemia (MPAL)",
+   "no_ICB_cell": 52030,
+   "ICB_cell": null,
+   "no_ICB_sample": 10,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Nasopharyngeal carcinoma (NPC) ",
+   "no_ICB_cell": 118468,
+   "ICB_cell": null,
+   "no_ICB_sample": 16,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Non-small-cell lung carcinoma (NSCLC)",
+   "no_ICB_cell": 498765,
+   "ICB_cell": null,
+   "no_ICB_sample": 179,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Osteosarcoma (OS)",
+   "no_ICB_cell": 97838,
+   "ICB_cell": null,
+   "no_ICB_sample": 11,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Ovarian cancer (OV)",
+   "no_ICB_cell": 40225,
+   "ICB_cell": null,
+   "no_ICB_sample": 7,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Pancreatic ductal adenocarcinoma (PDAC)",
+   "no_ICB_cell": 193098,
+   "ICB_cell": null,
+   "no_ICB_sample": 74,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Prostate Adenocarcinoma (PRAD)",
+   "no_ICB_cell": 53878,
+   "ICB_cell": null,
+   "no_ICB_sample": 15,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Skin cutaneous melanoma (SKCM)",
+   "no_ICB_cell": 8545,
+   "ICB_cell": 15719,
+   "no_ICB_sample": 2,
+   "ICB_sample": 32
+ },
+ {
+   "Cancertype": "Stomach adenocarcinoma (STAD)",
+   "no_ICB_cell": 33219,
+   "ICB_cell": null,
+   "no_ICB_sample": 10,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Triple-negative breast cancer (TNBC)",
+   "no_ICB_cell": 6182,
+   "ICB_cell": null,
+   "no_ICB_sample": 2,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Urothelial carcinoma (MUC)",
+   "no_ICB_cell": null,
+   "ICB_cell": 23385,
+   "no_ICB_sample": null,
+   "ICB_sample": 5
+ },
+ {
+   "Cancertype": "Uterine Corpus Endometrial Carcinoma (UCEC)",
+   "no_ICB_cell": 33976,
+   "ICB_cell": null,
+   "no_ICB_sample": 6,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Uveal Melanoma (UM)",
+   "no_ICB_cell": 67692,
+   "ICB_cell": null,
+   "no_ICB_sample": 11,
+   "ICB_sample": null
+ },
+ {
+   "Cancertype": "Total",
+   "no_ICB_cell": 1997906,
+   "ICB_cell": 119039,
+   "no_ICB_sample": 592,
+   "ICB_sample": 63
+ }
+]

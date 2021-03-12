@@ -2,7 +2,7 @@
   <div class="textitem">
     <p class="card-title">{{ title }}</p>
     <el-row>
-      <el-col :span="20" :push="2" v-loading="loading">
+      <el-col :span="20" :push="1" v-loading="loading">
         <div :id="conditi" style="width: 1200px; height: 600px"></div>
       </el-col>
     </el-row>
