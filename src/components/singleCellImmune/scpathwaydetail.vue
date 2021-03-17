@@ -148,7 +148,7 @@ export default {
           }
           if (res.data.status2 == 0) {
             that.pathwayplots =
-              res.data.output[0] + "," + res.data.output2[0].split(",")[0];
+              res.data.output2[0].split(",")[0] + "," + res.data.output[0];
           }
           that.geneloading = false;
           // console.log(that.pathwayplots)
