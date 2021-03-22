@@ -49,8 +49,10 @@ if ($type=="celltype"){
 }else if($type=="pathwaydiff"){
   if(PATH_SEPARATOR==':'){
     $zhiling="sudo Rscript pic.TN.pathway.R $cancer $gloclu \"$gene\"";
+    $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }else{
-    $zhiling="Rscript pic.TN.pathway.R $cancer $gloclu \"$gene\"";
+    $zhiling="sudo Rscript pic.TN.pathway.R $cancer $gloclu \"$gene\"";
+    $zhiling2="sudo Rscript overview.R $cancer $gloclu";
   }
 }else{
   $sql = "SELECT GlobalCluster FROM homescinfo WHERE datasetid = '".$cancer."' AND CellType='".$celltype."'";

@@ -15,55 +15,82 @@
         <el-card>
           <el-row v-loading="geneloading">
             <el-row class="detailimg" v-show="geneshow">
-              <el-col :span="6">
-                <p class="imgtitle">Cell Types</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="250px"
-                  style="position: relative; left: 0px; top: 20px"
-                  :src="'tiger/img/' + pathwayplots.split(',')[0] + '.png'"
-                  @click="
-                    previewImg(0, [
-                      'tiger/img/' + pathwayplots.split(',')[0] + '.png',
-                      'tiger/img/' + pathwayplots.split(',')[1] + '.png',
-                      'tiger/img/' + pathwayplots.split(',')[2] + '.png',
-                    ])
-                  "
-                />
-              </el-col>
-              <el-col :span="6">
-                <p class="imgtitle">UMAP Plot of {{ pathway }} score</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="250px"
-                  :src="'tiger/img/' + pathwayplots.split(',')[1] + '.png'"
-                  @click="
-                    previewImg(1, [
-                      'tiger/img/' + pathwayplots.split(',')[0] + '.png',
-                      'tiger/img/' + pathwayplots.split(',')[1] + '.png',
-                      'tiger/img/' + pathwayplots.split(',')[2] + '.png',
-                    ])
-                  "
-                />
-              </el-col>
-              <el-col :span="12">
-                <p class="imgtitle">Boxplot of {{ pathway }} score</p>
-                <img
-                  id="singleimg"
-                  fit="fill"
-                  width="450px"
-                  :src="'tiger/img/' + pathwayplots.split(',')[2] + '.png'"
-                  @click="
-                    previewImg(2, [
-                      'tiger/img/' + pathwayplots.split(',')[0] + '.png',
-                      'tiger/img/' + pathwayplots.split(',')[1] + '.png',
-                      'tiger/img/' + pathwayplots.split(',')[2] + '.png',
-                    ])
-                  "
-                />
-              </el-col>
+              <div v-if="pathwayplotarr.length === 3">
+                <el-col :span="6">
+                  <p class="imgtitle">Cell Types Distribution</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="250px"
+                    style="position: relative; left: 0px; top: 20px"
+                    :src="pathwayplotarr[0]"
+                    @click="previewImg(0, pathwayplotarr)"
+                  />
+                </el-col>
+                <el-col :span="6">
+                  <p class="imgtitle">UMAP Plot of {{ pathway }} score</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="250px"
+                    :src="pathwayplotarr[1]"
+                    @click="previewImg(1, pathwayplotarr)"
+                  />
+                </el-col>
+                <el-col :span="12">
+                  <p class="imgtitle">Boxplot of {{ pathway }} score</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="450px"
+                    :src="pathwayplotarr[2]"
+                    @click="previewImg(2, pathwayplotarr)"
+                  />
+                </el-col>
+              </div>
+              <div v-else>
+                <el-col :span="6">
+                  <p class="imgtitle">Cell Types Distribution</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="250px"
+                    style="position: relative; left: 0px; top: 20px"
+                    :src="pathwayplotarr[0]"
+                    @click="previewImg(0, pathwayplotarr)"
+                  />
+                </el-col>
+                <el-col :span="6">
+                  <p class="imgtitle">Tissue Types Distribution</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="250px"
+                    :src="pathwayplotarr[1]"
+                    @click="previewImg(1, pathwayplotarr)"
+                  />
+                </el-col>
+                <el-col :span="6">
+                  <p class="imgtitle">UMAP Plot of {{ pathway }} score</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="250px"
+                    :src="pathwayplotarr[2]"
+                    @click="previewImg(2, pathwayplotarr)"
+                  />
+                </el-col>
+                <el-col :span="6">
+                  <p class="imgtitle">Boxplot of {{ pathway }} score</p>
+                  <img
+                    id="singleimg"
+                    fit="fill"
+                    width="250px"
+                    :src="pathwayplotarr[3]"
+                    @click="previewImg(3, pathwayplotarr)"
+                  />
+                </el-col>
+              </div>
             </el-row>
             <el-col :span="16" :offset="2" v-show="!geneshow">
               <div id="norult">No result</div>
@@ -105,6 +132,7 @@ export default {
       geneshow: true,
       geneloading: true,
       pathwayplots: "",
+      pathwayplotarr: [],
     };
   },
 
@@ -150,7 +178,11 @@ export default {
             that.pathwayplots =
               res.data.output2[0].split(",")[0] + "," + res.data.output[0];
           }
+          that.pathwayplotarr = that.pathwayplots
+            .split(",")
+            .map((item) => "tiger/img/" + item + ".png");
           that.geneloading = false;
+          // console.log(that.pathwayplotarr);
           // console.log(that.pathwayplots)
           // console.log(that.geneloading)
         })
