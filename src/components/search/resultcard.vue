@@ -279,7 +279,7 @@ export default {
           if (res.data.status == 0) {
             var imgpath = "";
             if (that.conditi === "Survival") {
-              imgpath = res.data.output[2].split(",");
+              imgpath = res.data.output[0].split(",");
             } else {
               imgpath = res.data.output[0].split(",");
             }

@@ -30,9 +30,9 @@ maintitle1 <- paste(paste(gene,collapse = "_"),paste(mergedatasets,collapse = "_
 maintitle2 <- paste(sigid,paste(mergedatasets,collapse = "_"),
                     "km",sep="-")
 if(nchar(maintitle1) > 200) {
-  maintitle1 <- paste("longSig",
+  maintitle1 <- paste("longSig",paste(mergedatasets,collapse = "_"),
                       "sigsurv-dotplot",sep="-")
-  maintitle2 <- paste("longSig",
+  maintitle2 <- paste("longSig",paste(mergedatasets,collapse = "_"),
                       "sigsurv-kmplot",sep="-")
 }
 

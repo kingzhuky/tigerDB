@@ -252,12 +252,19 @@ export default {
             name: "No-ICB",
             type: "bar",
             stack: "total",
-            // label: {
-            //   show: true,
-            // },
             emphasis: {
               focus: "series",
             },
+            // label: {
+            //   show: true,
+            //   position: "right",
+            //   //计算总数，显示
+            //   formatter: function (params) {
+            //     let idx = params.dataIndex; //获取数据位置
+            //     let total = data[idx][xdata1_key] + data[idx][xdata2_key]; //计算总和
+            //     return total;
+            //   },
+            // },
             data: data.map((item) => item[xdata1_key]),
           },
           {
@@ -267,6 +274,7 @@ export default {
             emphasis: {
               focus: "series",
             },
+
             data: data.map((item) => item[xdata2_key]),
           },
         ],

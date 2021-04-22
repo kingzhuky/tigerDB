@@ -21,7 +21,7 @@ result.path <- "./img/"
 load(paste0(loading.data.path,"ResponseData.RData"))
 mergedatasets <- dir(loading.data.path,pattern = ".Response.Rds")
 auc.arr <- data.table(group="Custom Geneset")
-if(!file.exists(paste0(result.path,maintitle,".json")) ){
+if(!file.exists(paste0(result.path,maintitle,".json")) || maintitle == paste("longSig","response",sep="-")){
   for (sl.dataset in colnames(auc.data.list)[-1]){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]

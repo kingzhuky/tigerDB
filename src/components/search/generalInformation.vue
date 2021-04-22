@@ -148,12 +148,12 @@ export default {
   },
 
   mounted: function () {
-    this.getdatagene();
-    this.tableDetail();
-    this.getdataReactome();
+    this.getdatagene(this.seargene);
+    this.tableDetail(this.seargene);
+    this.getdataReactome(this.seargene);
   },
   methods: {
-    getdatagene() {
+    getdatagene(gene) {
       var that = this;
       that.detailload = true;
       this.$http
@@ -161,7 +161,7 @@ export default {
           params: {
             tabl: "home_geneinfo",
             colu: "Symbol",
-            coluvalue: this.seargene,
+            coluvalue: gene,
           },
         })
         .then(function (res) {
@@ -174,13 +174,13 @@ export default {
         });
     },
 
-    getdataReactome() {
+    getdataReactome(gene) {
       this.ReactomeShow = true;
       this.ReactomeLoading = true;
       this.$http
         .get("/tiger/searchReactome.php", {
           params: {
-            coluvalue: this.seargene,
+            coluvalue: gene,
           },
         })
         .then((res) => {

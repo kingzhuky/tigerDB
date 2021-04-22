@@ -29,6 +29,8 @@ export default {
   data() {
     return {
       oldseargene: "",
+      currentPage: 1,
+      pageSize: 20,
     };
   },
 

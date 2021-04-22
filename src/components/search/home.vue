@@ -14,11 +14,10 @@
               v-model="seargene"
               placeholder="Please Input A Gene Symbol (e.g. PDCD1 or CXCL13)"
               :fetch-suggestions="querySearchAsync"
-              @keyup.enter.native="submsearch"
             ></el-autocomplete>
           </el-col>
           <el-col :span="4">
-            <el-button id="homebt" @click="submsearch" :disabled="isDisable"
+            <el-button id="homebt" @click="submsearch(seargene)" :disabled="isDisable"
               >Search</el-button
             >
           </el-col>
@@ -103,7 +102,7 @@ export default {
       isActive: true,
       restaurants: [],
       showSnackbar: false,
-      seargene: "CXCL13",
+      seargene: "",
       activeName: "generalInformation",
       singleCellImmunityVue: "",
       immuneScreeningVue: "",
@@ -119,16 +118,16 @@ export default {
     next((vm) => {
       if (to.params.gene !== undefined && to.params.gene.length !== 0) {
         vm.seargene = to.params.gene;
-        vm.submsearch();
+        vm.submsearch(to.params.gene);
       }
     });
   },
-  mounted() {
-    if (this.$route.params.gene !== undefined) {
-      this.seargene = this.$route.params.gene;
-      this.submsearch();
-    }
-  },
+  // mounted() {
+  //   if (this.$route.params.gene !== undefined) {
+  //     this.seargene = this.$route.params.gene;
+  //     this.submsearch();
+  //   }
+  // },
 
   methods: {
     handleClick(tab) {
@@ -158,15 +157,16 @@ export default {
           break;
       }
     },
-    submsearch() {
+    submsearch(gene) {
+      console.log(gene)
       if (this.seargene == "") {
         alert("Please input Gene");
       } else {
         this.homeShow = true;
         this.activeName = "generalInformation";
-        this.$refs.generalInformationVueRef.getdatagene();
-        this.$refs.generalInformationVueRef.tableDetail(this.seargene);
-        this.$refs.generalInformationVueRef.getdataReactome();
+        this.$refs.generalInformationVueRef.getdatagene(gene);
+        this.$refs.generalInformationVueRef.tableDetail(gene);
+        this.$refs.generalInformationVueRef.getdataReactome(gene);
       }
     },
 

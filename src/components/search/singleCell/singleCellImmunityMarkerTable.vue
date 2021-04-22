@@ -355,9 +355,8 @@ export default {
       //cdn替换为
       let myChart_mercor = window.echarts.init(targetdiv);
       myChart_mercor.clear();
-      var max = data.reduce(function (a, b) {
-        return b[0] > a[0] ? b[0] : a[0];
-      });
+      var max = Math.max.apply(null,data.map((item) => item[0]))
+      var min = Math.min.apply(null,data.map((item) => item[0]))
       // console.log(max)
       var option = {
         title: {
@@ -418,7 +417,7 @@ export default {
             large: true,
             data: data,
             symbolSize: function (val) {
-              return 25/max * val[0];
+              return (val[0]-min)/(max-min)*25;
             },
             animation: false,
             emphasis: {

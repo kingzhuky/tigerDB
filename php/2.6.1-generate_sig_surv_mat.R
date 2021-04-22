@@ -25,7 +25,7 @@ mergedatasets <- dir(loading.data.path,pattern = ".Response.Rds")
 
 title.gene <- "Custom Geneset"
 pscore.arr <- data.table(signature = title.gene)
-if(!file.exists(paste0(result.path,maintitle,".json")) ){
+if(!file.exists(paste0(result.path,maintitle,".json")) || maintitle == paste("longSig","sig-survival",sep="-")){
   for (sl.dataset in colnames(surv.zscore.table)[-1]){
     exp.mergearray <- NULL
     exp.array <- readRDS(paste0(loading.data.path,sl.dataset,".Response.Rds"))[GENE_SYMBOL %in% c(gene)]
