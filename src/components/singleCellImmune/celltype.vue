@@ -1,94 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-tabs v-model="tabactiveName" @tab-click="handleClick">
-        <el-tab-pane label="Cell Type Expression" name="marker">
-          <el-col span="8">
-            <el-select
-              v-model="selectgloclu"
-              multiple
-              @change="filtergloclu"
-              style="width: 100%"
-              placeholder="Select Main Lineage"
-            >
-              <el-option
-                v-for="item in gloclures"
-                :key="item"
-                :label="item"
-                :value="item"
-              >
-              </el-option>
-            </el-select>
-          </el-col>
-
-          <el-col :span="4" :offset="12">
-            <el-input
-              v-model="searchinput"
-              @change="searchChange"
-              placeholder="Input Gene Symbol"
-            ></el-input>
-          </el-col>
-
-          <br />
-          <el-table
-            class="tigtablele"
-            id="scDiffExpTable"
-            ref="singleTable"
-            border="false"
-            max-height="750"
-            :data="tableData"
-            @cell-click="heandleclick"
-            :cell-style="tableCellStyle"
-            :header-cell-class-name="headerStyle"
-            v-loadmore="tabelloadmore"
-            v-loadlast="tableloadlast"
-            v-loading="loading"
-            @sort-change="sortChangeClick"
-            style="100%"
-          >
-            <el-table-column
-              v-for="(item, index) in tableDataheader"
-              :key="index"
-              :property="item.key"
-              :label="item.name"
-              :type="item.type"
-              sortable="custom"
-              align="center"
-              width="80"
-            ></el-table-column>
-            <el-table-column
-              property=" "
-              label=" "
-              align="center"
-              width="120"
-            ></el-table-column>
-          </el-table>
-
-          <div class="colorbar">
-            <span>Low logFC&lt;0</span>
-            <span class="heatMapTable--colorbar"></span>
-            <span>High logFC&gt;0</span>
-          </div>
-          <div id="detailinfo">
-            <v-celltypedetail
-              ref="detailPlot"
-              v-show="isShow"
-              :gene="clickGene"
-              :cancer="cancer"
-              :celltype="celltype"
-              :gloclu="gloclu"
-            ></v-celltypedetail>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="Pathway Analysis" name="cluster">
-          <v-scpathway
-            ref="scpathwayRef"
-            :cancer="cancer"
-            :gloCluoptions="gloCluoptions"
-            tabactiveName="cluster"
-          ></v-scpathway>
-        </el-tab-pane>
-      </el-tabs>
+      <div id="scumap_celltype" style="width: 1000px; height: 600px"></div>
     </el-row>
   </div>
 </template>
@@ -172,6 +85,126 @@ export default {
         this.getTableData(1, "", "");
       }
     },
+    draw_chart(data, celltypeinfo) {
+      // console.log(data)
+      var targetdiv = document.getElementById("scumap_celltype");
+      //let myChart_mercor = this.$echarts.init(targetdiv);
+      //cdn替换为
+      let myChart_mercor = window.echarts.init(targetdiv);
+      var xAxis = "UMAP_1";
+      var yAxis = "UMAP_2";
+      var xlabname = "";
+      var plotdata = data.map((item) => [
+        item["UMAP_1"],
+        item["UMAP_2"],
+        item["CellType"],
+      ]);
+      var COLOR_ALL = [
+        "#cc4a5399",
+        "#00ADDB99",
+        "#7142AC99",
+        "#42B54099",
+        "#00008099",
+        "#07702b99",
+        "#7FFF0099",
+        "#AD002A",
+        "#ED000099",
+        "#ABD20599",
+        "#F0BE7E",
+        "#4D221399",
+        "#FDAF9199",
+        "#85E1D099",
+        "#C979CD99",
+        "#F26A1299",
+        "#ADB6B699",
+        "#4B79AB99",
+        "#0099B499",
+        "#FF149399",
+        "#00800099",
+        "#1B191999",
+      ];
+      console.log(celltypeinfo);
+      var pieces = celltypeinfo.map((item, index) => [
+        index,
+        item["CellType"],
+        COLOR_ALL[index],
+      ]);
+      var celltype = celltypeinfo.map((item) => [
+        item["CellType"],
+      ]);
+      var CLUSTER_COUNT = pieces.length;
+      var DIENSIION_CLUSTER_INDEX = 2;
+
+      var seriesList = [];
+      seriesList = pieces.map((item) => {
+        var seriesObject = {};
+        seriesObject.name = item[1];
+        seriesObject.type = "scatter";
+        seriesObject.itemStyle = { color: item[2] };
+        seriesObject.emphasis = { focus: "series" };
+        seriesObject.data = plotdata.filter(
+          (data) => data[2] == seriesObject.name
+        );
+        return seriesObject;
+      });
+
+      let option = {
+        animation: false,
+        legend: {
+          data: celltype,
+          textStyle: {
+            fontSize: 12,
+            fontWeight: "bold",
+          },
+          orient: "vertical",
+          x: "right", //可设定图例在左、右、居中
+          y: "center", //可设定图例在上、下、居中
+          padding: [0, 50, 0, 200], //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+        },
+        xAxis: {
+          name: xAxis,
+          // show: false,
+          position: "bottom",
+          nameLocation: "center",
+          nameGap: 25,
+          offset: 0,
+          nameTextStyle: {
+            fontSize: 18,
+            fontWeight: "bold",
+          },
+        },
+        yAxis: {
+          name: yAxis,
+          position: "left",
+          nameLocation: "center",
+          nameGap: 25,
+          nameTextStyle: {
+            fontSize: 18,
+            fontWeight: "bold",
+          },
+        },
+        // tooltip: {
+        //   formatter: function (params) {
+        //     return (
+        //       "Gene: " +
+        //       params.data[2] +
+        //       "<br />P: " +
+        //       params.data[1] +
+        //       "<br />" +
+        //       xlabname +
+        //       params.data[0]
+        //     );
+        //   },
+        // },
+        series: seriesList,
+      };
+
+      myChart_mercor.clear();
+      myChart_mercor.setOption(option);
+      window.onresize = function () {
+        myChart_mercor.resize();
+      };
+    },
     sortChangeClick(column) {
       this.loadDir = "";
       this.sortCol = column.prop;
@@ -205,98 +238,20 @@ export default {
       this.reset();
       this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
     },
-    //顶部加载更多
-    tableloadlast() {
-      this.loadDir = "up";
-      if (this.loading == false && this.loadpage > 1) {
-        this.loading = true;
-        this.loadpage = this.loadpage - 1;
-        this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
-        if (this.loadpage > 1) {
-          // console.log(this.loadpage);
-          scrollRow("scDiffExpTable", 400);
-          this.loading = false;
-        }
-      }
-    },
-
-    //底部加载更多
-    tabelloadmore() {
-      this.loadDir = "down";
-      if (this.loading == false) {
-        this.loading = true;
-        this.loadpage = this.loadpage + 1;
-        this.getTableData(this.loadpage, this.sortCol, this.sortOrder);
-        scrollRow("scDiffExpTable", 780);
-      }
-    },
-
     //获取表格数据
     getTableData(page, sortCol, sortOrder) {
       this.loading = true;
       this.$http
-        .get("/tiger/responseexpvs.php", {
+        .get("/tiger/scumap.php", {
           params: {
-            type: "scmarkermat_" + this.cancer,
-            draw: page,
-            search: this.searchinput.trim(),
-            start: (page - 1) * 20,
-            length: 20,
-            sortcol: sortCol,
-            sortorder: sortOrder === null ? "None" : sortOrder,
+            datasetid: this.cancer,
+            type: "All",
           },
         })
         .then((res) => {
-          if (res.data.status === 200) {
-            this.loading = false;
-            if (this.loadDir === "down") {
-              this.tableData = this.tableData.slice(
-                this.tableData.length - 20,
-                this.tableData.length
-              );
-              res.data.list.forEach((n) => {
-                this.tableData.push(n);
-              });
-            } else if (this.loadDir === "up") {
-              if (res.data.list.length !== 0) {
-                let old = this.tableData.slice(0, 20);
-                this.tableData = res.data.list;
-                old.forEach((n) => {
-                  this.tableData.push(n);
-                });
-              }
-            } else {
-              res.data.list.forEach((n) => {
-                this.tableData.push(n);
-              });
-              this.tableDataheader = Object.keys(res.data.list[0]);
-            }
-            var new_rows = []; // matrix key .替换为_
-            for (const row of this.tableData) {
-              var new_row = {};
-              for (const key in row) {
-                let new_key = key.replace(".", "_");
-                new_row[new_key] = row[key];
-              }
-              new_rows.push(new_row);
-            }
-            this.tableData = new_rows; // matrix key .替换为_
-            var new_columns = []; // generate header
-            for (const column of this.tableDataheader) {
-              var col_obj = {};
-              col_obj.name = column.split(",").pop();
-              col_obj.key = column.replace(".", "_");
-              col_obj.type = column.split(",")[0];
-              if (
-                col_obj.type == "gene" ||
-                this.selectgloclu.indexOf(col_obj.type) != -1
-              ) {
-                new_columns.push(col_obj);
-              }
-            }
-            // console.log(this.selectgloclu)
-            this.tableDataheader = new_columns;
-          }
+          this.tableData = res.data.list;
+          // console.log(this.selectgloclu)
+          this.draw_chart(this.tableData, res.data.total);
         })
         .catch((error) => {
           console.log(error);
