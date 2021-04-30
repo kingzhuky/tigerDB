@@ -347,7 +347,6 @@ export default {
           this.gloCluoptions = res.data.list;
           this.overviewVue = tigoverview;
           this.activeName = "overview";
-          this.$refs.overviewRef.clickPlot();
           // this.$refs.coexpRef.CancerTypeSelectChange();
         });
     },

@@ -251,21 +251,21 @@ export default {
       this.articleDetail();
       this.resflag = true;
       // console.log(this.cancer)
-      this.$http
-        .get("/tiger/scglocluster.php", {
-          params: {
-            cancer: this.cancer,
-            type: "homescinfo",
-          },
-        })
-        .then((res) => {
-          this.gloCluoptions = res.data.list;
-          // console.log(this.gloCluoptions)
-          for (let gloclu of this.gloCluoptions) {
-            this.gloclures.push(gloclu["GlobalCluster"]);
-          }
-          this.Plot(this.cancer, this.gloclures.join(","));
-        });
+      // this.$http
+      //   .get("/tiger/scglocluster.php", {
+      //     params: {
+      //       cancer: this.cancer,
+      //       type: "homescinfo",
+      //     },
+      //   })
+      //   .then((res) => {
+      //     this.gloCluoptions = res.data.list;
+      //     // console.log(this.gloCluoptions)
+      //     for (let gloclu of this.gloCluoptions) {
+      //       this.gloclures.push(gloclu["GlobalCluster"]);
+      //     }
+      //     this.Plot(this.cancer, this.gloclures.join(","));
+      //   });
     },
     Plot(cancer, gloclus) {
       var that = this;

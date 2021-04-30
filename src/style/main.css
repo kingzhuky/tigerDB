@@ -1,257 +1,278 @@
 .infor {
-  margin-top: 15px;
-  width: 1300px;
+    margin-top: 15px;
+    width: 1300px;
 }
 
 .el-collapse-item__header {
-  font-size: 18px;
+    font-size: 18px;
 }
 
 .card-title {
-  text-align: left;
-  padding-left: 10px;
-  border-left: 5px solid rgb(20, 146, 140);
-  color: rgb(20, 146, 140);
-  font-size: 1.5em;
-  margin-bottom: 15px;
-  text-transform: capitalize;
+    text-align: left;
+    padding-left: 10px;
+    border-left: 5px solid rgb(20, 146, 140);
+    color: rgb(20, 146, 140);
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    text-transform: capitalize;
 }
 
 div#collapseCard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tiggeneinfo {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .detail-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #anabt {
-  background: rgb(154, 202, 200);
-  border: 2px solid rgb(105, 176, 172);
-  font-weight: 700;
-  font-size: 18px;
-  border-radius: 12px;
-  color: black;
-} 
+    background: rgb(154, 202, 200);
+    border: 2px solid rgb(105, 176, 172);
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 12px;
+    color: black;
+}
+
 .detailimg {
-  padding-bottom: 20px;
-  text-align: center;
+    padding-bottom: 20px;
+    text-align: center;
 }
+
 .scdetailimg {
-  padding-bottom: 20px;
-  height: 200px;
-  text-align: center;
+    padding-bottom: 20px;
+    height: 200px;
+    text-align: center;
 }
+
 .tigtablele .el-table__body tr>td:hover {
-  cursor: pointer;
-  outline: 1px solid rgba(82, 168, 236, .8);
-  outline-offset: -1px;
-  -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, .6);
-  box-shadow: 0 0 8px rgba(82, 168, 236, .6);
+    cursor: pointer;
+    outline: 1px solid rgba(82, 168, 236, .8);
+    outline-offset: -1px;
+    -webkit-box-shadow: 0 0 8px rgba(82, 168, 236, .6);
+    box-shadow: 0 0 8px rgba(82, 168, 236, .6);
 }
 
 .tigtablele .el-table__body tr>th:hover {
-  background-color: black;
+    background-color: black;
 }
-
 
 .el-table_1_column_1,
 .el-table_2_column_64:hover {
-  cursor: Default !important;
-  outline: none !important;
-  outline-offset: none !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+    cursor: Default !important;
+    outline: none !important;
+    outline-offset: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .tigtablele th {
-  -ms-transform: skew(-45deg, 0deg) !important;
-  -moz-transform: skew(-45deg, 0deg) !important;
-  -webkit-transform: skew(-45deg, 0deg) !important;
-  -o-transform: skew(-45deg, 0deg) !important;
-  transform: skew(-45deg, 0deg) !important;
+    -ms-transform: skew(-45deg, 0deg) !important;
+    -moz-transform: skew(-45deg, 0deg) !important;
+    -webkit-transform: skew(-45deg, 0deg) !important;
+    -o-transform: skew(-45deg, 0deg) !important;
+    transform: skew(-45deg, 0deg) !important;
 }
 
-
 .tigtablele th>.cell {
-  position: absolute!important;
-  transform: skew(45deg, 0deg) rotate(315deg);
-  font-size: 12px !important;
-  padding: 0px !important;
-  word-wrap: normal;
-  text-overflow: ellipsis;
-  vertical-align: middle;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 400px !important;
-  left: -160px;
-  bottom: 140px;
-  position: absolute;
-  text-align: left;
+    position: absolute!important;
+    transform: skew(45deg, 0deg) rotate(315deg);
+    font-size: 12px !important;
+    padding: 0px !important;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 400px !important;
+    left: -160px;
+    bottom: 140px;
+    position: absolute;
+    text-align: left;
 }
 
 th.el-table_1_column_1.is-center.is-leaf .cell {
-  transform: skew(0deg, 0deg) rotate(0deg) !important;
+    transform: skew(0deg, 0deg) rotate(0deg) !important;
 }
 
 .heatMapTable--colorbar {
-  margin: 0 5px;
-  display: inline-block;
-  width: 800px;
-  height: 18px;
-  background: linear-gradient(90deg, #41588c, #fff, #db0000);
+    margin: 0 5px;
+    display: inline-block;
+    width: 800px;
+    height: 18px;
+    background: linear-gradient(90deg, #41588c, #fff, #db0000);
 }
+
+.heatMapTable--colorbar--short {
+    margin: 0 5px;
+    display: inline-block;
+    width: 500px;
+    height: 18px;
+    background: linear-gradient(90deg, #41588c, #fff, #db0000);
+}
+
 .crossTable--colorbar {
-  margin: 0 5px;
-  display: inline-block;
-  width: 800px;
-  height: 18px;
-  background: linear-gradient(90deg, #fff, #db0000);
+    margin: 0 5px;
+    display: inline-block;
+    width: 800px;
+    height: 18px;
+    background: linear-gradient(90deg, #fff, #db0000);
 }
 
 .colorbar {
-  margin-top: 10px;
-  text-align: center;
+    margin-top: 10px;
+    text-align: center;
 }
+
 div#logFC {
-  text-align: center;
-  font-size: 16px;
+    text-align: center;
+    font-size: 16px;
 }
 
 .box-card-return .el-card__body {
-  padding: 0px;
+    padding: 0px;
 }
+
 .box-card-return {
-  background: rgb(20, 146, 140);
-  color: white;
-  border-radius: 30px;
+    background: rgb(20, 146, 140);
+    color: white;
+    border-radius: 30px;
 }
 
-.melanoma{
-  border-top-color: rgb(156, 39, 176);
-  border-top-style: solid;
-  border-top-width: 5px;
+.melanoma {
+    border-top-color: rgb(156, 39, 176);
+    border-top-style: solid;
+    border-top-width: 5px;
 }
 
-.gbm{
-  border-top-color: rgb(0, 188, 212);
-  border-top-style: solid;
-  border-top-width: 5px;
+.gbm {
+    border-top-color: rgb(0, 188, 212);
+    border-top-style: solid;
+    border-top-width: 5px;
 }
 
-.rcc{
-  border-top-color: rgb(181, 224, 28);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.nsclc{
-  border-top-color: rgb(236, 164, 29);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.lusc{
-  border-top-color: rgb(103, 236, 41);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.stad{
-  border-top-color: rgb(47, 133, 8);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.hnsc{
-  border-top-color: rgb(82, 110, 69);
-  border-top-style: solid;
-  border-top-width: 5px;
+.rcc {
+    border-top-color: rgb(181, 224, 28);
+    border-top-style: solid;
+    border-top-width: 5px;
 }
 
-
-.defalutColor{
-  background-color: rgb(28, 224, 250);
-  border-top-style: solid;
-  border-top-width: 5px;
+.nsclc {
+    border-top-color: rgb(236, 164, 29);
+    border-top-style: solid;
+    border-top-width: 5px;
 }
 
-.scglo-all{
-  border-top-color: rgb(224, 28, 28);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.scglo-g1{
-  border-top-color: rgb(181, 224, 28);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.scglo-g2{
-  border-top-color: rgb(236, 164, 29);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.scglo-g3{
-  border-top-color: rgb(103, 236, 41);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.scglo-g4{
-  border-top-color: rgb(47, 133, 8);
-  border-top-style: solid;
-  border-top-width: 5px;
-}
-.scglo-g5{
-  border-top-color: rgb(50, 211, 197);
-  border-top-style: solid;
-  border-top-width: 5px;
+.lusc {
+    border-top-color: rgb(103, 236, 41);
+    border-top-style: solid;
+    border-top-width: 5px;
 }
 
+.stad {
+    border-top-color: rgb(47, 133, 8);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.hnsc {
+    border-top-color: rgb(82, 110, 69);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.defalutColor {
+    background-color: rgb(28, 224, 250);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.scglo-all {
+    border-top-color: rgb(224, 28, 28);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.scglo-g1 {
+    border-top-color: rgb(181, 224, 28);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.scglo-g2 {
+    border-top-color: rgb(236, 164, 29);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.scglo-g3 {
+    border-top-color: rgb(103, 236, 41);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.scglo-g4 {
+    border-top-color: rgb(47, 133, 8);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
+
+.scglo-g5 {
+    border-top-color: rgb(50, 211, 197);
+    border-top-style: solid;
+    border-top-width: 5px;
+}
 
 th.el-table_1_column_1.is-center.is-leaf.defalutColor {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 div#inputCard {
-  margin: 15px 0;
-}
-#readme {
-color: rgb(20, 146, 140);
-font-weight: bold;
-font-size: 20px;
-padding-bottom: 10px;
+    margin: 15px 0;
 }
 
+#readme {
+    color: rgb(20, 146, 140);
+    font-weight: bold;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
 
 div#readmeCard {
-font-size: 16px;
-line-height: 22px;
-border-color: rgb(20, 146, 140);
-margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 22px;
+    border-color: rgb(20, 146, 140);
+    margin-bottom: 20px;
 }
-.readmeEmp{
-  font-weight: bolder;
+
+.readmeEmp {
+    font-weight: bolder;
 }
 
 .label {
-font-size: 16px;
+    font-size: 16px;
 }
 
 div#norult {
-  color: red;
-  font-size: 30px;
-  text-align: center;
-  padding-top: 50px; 
+    color: red;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 50px;
 }
-.imgtitle{
-  text-align: center;
-  color: rgb(20,146,140);
-  font-weight: bold;
-  font-size: 1.2em;
-  margin-bottom: 15px;
+
+.imgtitle {
+    text-align: center;
+    color: rgb(20, 146, 140);
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 15px;
 }
