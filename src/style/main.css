@@ -115,7 +115,7 @@ th.el-table_1_column_1.is-center.is-leaf .cell {
 .heatMapTable--colorbar--short {
     margin: 0 5px;
     display: inline-block;
-    width: 500px;
+    width: 200px;
     height: 18px;
     background: linear-gradient(90deg, #41588c, #fff, #db0000);
 }
