@@ -4,7 +4,8 @@
       <el-col :span="4">
         <el-tree
           :data="treedata"
-          default-expand-all
+          node-key="id"
+          :default-expanded-keys="[1]"
           :highlight-current="true"
           :expand-on-click-node="false"
           :props="defaultProps"
@@ -12,36 +13,96 @@
         ></el-tree
       ></el-col>
       <el-col :span="10" v-loading="picloading">
+        <div id="scumap_celltype" style="width: 600px; height: 400px"></div>
+      </el-col>
+      <el-col :span="10" v-loading="picloading">
         <el-row>
-          <div id="scumap_celltype" style="width: 600px; height: 400px"></div>
+          <div id="scumap_celltype" style="width: 600px; height: 200px"></div>
         </el-row>
         <el-row>
-          <el-tabs v-model="tabactivePlotName" @tab-click="handleClickplot">
-            <el-radio-group v-model="radio">
-              <el-radio
-                v-for="item in propgroup"
-                :key="item.key"
-                :label="item.key"
-                @change="handlegenechange"
-                >{{ item.name }}</el-radio
-              >
-            </el-radio-group>
-            <el-tab-pane label="Expression UMAP" name="expumap">
-              <div
-                id="scumap_celltype2"
-                style="width: 600px; height: 400px"
-              ></div>
-            </el-tab-pane>
-            <el-tab-pane label="Box Plot" name="expbox">
-              <div id="scboxplot" style="width: 600px; height: 400px"></div>
-            </el-tab-pane>
-            <el-tab-pane label="Mountain" name="expmoun">
-              <div id="scmountain" style="width: 600px; height: 400px"></div>
-            </el-tab-pane>
-          </el-tabs>
+          <div id="scumap_celltype" style="width: 600px; height: 200px"></div>
         </el-row>
       </el-col>
-      
+    </el-row>
+    <el-row type="flex" justify="space-around">
+      <el-col :span="14">
+        <el-tabs v-model="tabactiveName" @tab-click="handleClick">
+          <el-tab-pane label="Cell Type Expression" name="marker">
+            <el-col :span="8">
+              <el-input
+                v-model="searchinput"
+                @change="searchChange"
+                placeholder="Input Gene Symbol"
+              ></el-input>
+            </el-col>
+            <br />
+            <el-table
+              class="tigtablele"
+              id="scDiffExpTable"
+              ref="singleTable"
+              border="false"
+              max-height="600"
+              :data="tableData"
+              @cell-click="heandleclick"
+              :cell-style="tableCellStyle"
+              :header-cell-class-name="headerStyle"
+              v-loadmore="tabelloadmore"
+              v-loadlast="tableloadlast"
+              v-loading="loading"
+              @sort-change="sortChangeClick"
+              style="100%"
+            >
+              <el-table-column
+                v-for="(item, index) in tableDataheader"
+                :key="index"
+                :property="item.key"
+                :label="item.name"
+                :type="item.type"
+                sortable="custom"
+                align="center"
+                width="80"
+              ></el-table-column>
+              <el-table-column
+                property=" "
+                label=" "
+                align="center"
+                width="120"
+              ></el-table-column>
+            </el-table>
+
+            <div class="colorbar">
+              <span>Low logFC&lt;0</span>
+              <span class="heatMapTable--colorbar--short"></span>
+              <span>High logFC&gt;0</span>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
+      <el-col :span="8">
+        <el-tabs v-model="tabactivePlotName" @tab-click="handleClickplot">
+          <el-radio-group v-model="radio">
+            <el-radio
+              v-for="item in propgroup"
+              :key="item.key"
+              :label="item.key"
+              @change="handlegenechange"
+              >{{ item.name }}</el-radio
+            >
+          </el-radio-group>
+          <el-tab-pane label="Expression UMAP" name="expumap">
+            <div
+              id="scumap_celltype2"
+              style="width: 600px; height: 400px"
+            ></div>
+          </el-tab-pane>
+          <el-tab-pane label="Box Plot" name="expbox">
+            <div id="scboxplot" style="width: 600px; height: 400px"></div>
+          </el-tab-pane>
+          <el-tab-pane label="Mountain" name="expmoun">
+            <div id="scmountain" style="width: 600px; height: 400px"></div>
+          </el-tab-pane>
+        </el-tabs>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -91,7 +152,8 @@ export default {
       exphashtable: {},
       treedata: [
         {
-          label: "All",
+          id: 1,
+          label: "Select A Cell Type",
           children: [
             {
               label: "Tcell",
@@ -293,7 +355,10 @@ export default {
       seltype[item.label] = true;
       // parent name
       // console.log(e.parent.data.label)
-      if (e.parent.data.label == undefined) {
+      if (
+        e.parent.data.label == undefined ||
+        e.parent.data.label == "Select A Cell Type"
+      ) {
         viewtype = "All";
       } else {
         viewtype = e.parent.data.label;
@@ -670,8 +735,8 @@ export default {
           if (TOTAL_NUM > 8000) {
             //要取得的个数，表示我们要从原数组中随机取3个元素
             var COUNT = 8000,
-            //保存结果的数组
-            result = [];
+              //保存结果的数组
+              result = [];
             // console.log("原数组:", this.umapdata );
             //此段代码由Fisher-Yates shuflle算法更改而来
             var m = this.umapdata.length,
